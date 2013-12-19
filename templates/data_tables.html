@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block extrascript%}
+<script>
+$(document).on('ready', function(){	
+	tablas_busqueda_ajax_prueba();
+});
+</script>
+{%endblock%}
+
+{%block content %}
+
+<table id="id_data_tables" class='table table-striped table-bordered'>
+	<thead>
+		<tr class='alert alert-info'>
+			<th>Nombres</th>
+			<th>Dni</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+{%endblock%}

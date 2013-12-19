@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Parámetros Parroquiales{%endblock%}
+{%block content_title%}
+Lista de Parámetos Parroquiales
+{%endblock%}
+
+{%block content%}
+<table id='id_table_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Parroquia</th>
+			<th>Numero Acta</th>
+			<th>Pagina</th>
+						
+		</tr>
+	</thead>
+	<tbody>
+
+		{%for o in object_list%}
+		<tr>
+			<td><a href="{%url 'parametriza_parroquia_update' pk=o.id%}">{{o.parroquia.nombre}}</a></td>
+			<td>{{o.numero_acta}}</td>
+			<td>{{o.pagina}}</td>
+						
+			
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+<!--{%if perms.sacramentos.add_parametrizaparroquia %}
+<a href="{%url 'parametriza_parroquia_create'%}" class='btn btn-primary'>Nuevo Parámetro</a>
+{%endif%}-->
+
+{%endblock%}

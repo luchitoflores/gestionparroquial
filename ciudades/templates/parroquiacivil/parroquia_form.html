@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+
+
+{% block title%}
+{%if object.id%} 
+Editar Parroquia Civil
+{%else%}
+Agregar Parroquia Civil
+{%endif%}{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Parroquia Civil
+{%else%}
+Agregar Parroquia Civil
+{%endif%}
+{%endblock%}
+
+
+{%block content%}
+
+
+
+<form action="" method='POST' class='form-horizontal'>
+	{%csrf_token%}
+	
+	<div class="control-group">
+		<div class="control-label">
+			{{form.nombre.label}} *
+		</div>
+
+		<div class="controls">
+			{{form.nombre}} 
+		</div>
+		<div class="controls help-text">
+			{{form.nombre.help_text}}
+		</div>
+		<div class="controls errors">
+			{{form.nombre.errors}}
+		</div>	
+	</div>
+	<div class="control-group">
+		<div class="control-label">
+			{{form.abreviatura.label}} *
+		</div>
+
+		<div class="controls">
+			{{form.abreviatura}}
+		</div>
+		<div class="controls help-text">
+			{{form.abreviatura.help_text}}
+		</div>
+		<div class="controls errors">
+			{{form.errors}}
+		</div>	
+	</div>
+	<div class="control-group">
+		<div class="control-label">
+			{{form.canton.label}} * 
+		</div>
+
+		<div class="controls">
+			{{form.canton}}
+		</div>
+		<div class="controls help-text">
+			{{form.canton.help_text}}
+		</div>
+		<div class="controls errors">
+			{{form.canton.errors}}
+		</div>	
+	</div>
+	
+	
+
+	<div class="form-actions">
+		<button type='submit' class='btn btn-primary'>Guardar</button>
+		<a href="{% url 'parroquiacivil_list' %}" class='btn btn-danger'>Cancelar</a>
+	</div>
+</form>
+
+{%endblock%}

@@ -1,0 +1,56 @@
+/* Estilos de bootstrap para datatables.js*/
+
+.dataTables_length{
+	float: right; 
+}
+
+.dataTables_length select{
+	width: auto;
+	margin-top: 6px;
+
+}
+
+.dataTables_filter{
+	float: left;
+}
+
+.dataTables_filter input{
+	margin-top: 6px;
+}
+
+.dataTables_info{
+	float: right;
+	margin-top: 6px;
+}
+
+.table thead tr th{
+	cursor: pointer;
+}
+
+table.table thead tr th{
+	position: relative;
+	padding-right: 20px
+}
+
+table thead th i, table thead th i[class^="icon-"], table thead th i[class*=" icon-"] {
+	display: none;
+	margin-left: 3px;
+	position: absolute;
+	right:1px;
+	top: 10px; 
+}
+
+.sorting_asc i.icon-chevron-down{
+	display: inline-block;
+}
+
+.sorting_desc i.icon-chevron-up{
+	display: inline-block;
+}
+
+
+
+
+
+
+

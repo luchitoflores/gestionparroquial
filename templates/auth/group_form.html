@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{%block title%}
+{%if object.id%}
+Editar Grupo 
+{%else%}
+Agregar Grupo
+{%endif%}
+{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Grupo 
+{%else%}
+Agregar Grupo 
+{%endif%}
+{%endblock%}
+
+{%block extrascript%}
+<script>
+	$(function(){
+		$('#id_permissions').multiSelect({
+			selectableHeader: "<div style='background:#006dcc; color:white; padding:0.5em;text-align:center'>Permisos disponibles</div>",
+			selectionHeader: "<div style='background:#006dcc; color:white; padding:0.5em;text-align:center'> Permisos elegidos</div>"
+		});
+		console.log('prueba de multiselect');
+		$('#id_select_all').click(function(){
+			$('#id_permissions').multiSelect('select_all');
+			return false;
+		});
+		$('#id_delete_all').click(function(){
+			$('#id_permissions').multiSelect('deselect_all');
+			return false;
+		});
+	});
+</script>
+{%endblock%}
+
+{%block content%}
+
+<form action="." method="POST" class="form-horizontal">
+	{%csrf_token%}
+
+	
+	<div class="control-group">
+		{%for f in form%}
+		{%if f.label == 'Nombre'%}
+		<label class="control-label">
+			{{f.label}} *
+		</label>
+		{%else%}
+		</br>
+		<label class="control-label">
+			{{f.label}}
+		</label>
+		{%endif%}
+		<div class="controls">
+			{{f}}
+		</div>
+		<div class="controls">
+			<div class="help-text">{{f.help_text}}</div>	
+		</div>
+		<div class="controls">
+			<div class="errors">{{f.errors}}</div>
+		</div>
+		
+		{%endfor%}
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+		<div class="span2">
+			<a href='#' id='id_select_all'>Seleccionar Todos</a>
+			
+		</div>
+		<div class="span2">
+			<a href='#' id='id_delete_all'>Eliminar Todos</a>
+			
+		</div>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">Guardar</button>
+		<a href="{%url 'group_list'%}" class='btn btn-danger'>Cancelar</a>
+	</div>
+</form>
+
+{%endblock%}

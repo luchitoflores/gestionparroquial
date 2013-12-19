@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+</head> 
+<style>
+@page {
+	/*margin-bottom: 2.5cm;*/
+	size: a4 landscape; 
+	margin: 2.5cm 3cm 2.5cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+th {
+	text-align: center;
+	border: 1px solid gray;
+	font-size: 13px;
+}
+td {
+	text-align: left;
+	border: 1px solid gray;
+	font-size: 12px;
+	vertical-align:middle;
+
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+
+}
+
+</style> 
+<body >
+	<center>
+		
+		
+		<h2> 
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiastica {{asignacion.parroquia|upper}} <br/>
+			{{asignacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}<br/>
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Direccion: "}}{{ asignacion.parroquia.direccion }} {{"Tel: "}}{{asignacion.parroquia.direccion.telefono}}</small><br/>
+		</h2>
+		
+	</center>
+	
+	<p align='right'> <strong>{{asignacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
+	{%if intenciones|length%}
+	<table width="100%" cellspacing="10" cellpadding='3'>
+		<thead>
+			<tr>
+				
+				<th width='20%'>
+					{{"Oferente"}}
+				</th>
+				<th >
+					{{"Intencion"}}
+				</th>
+				<th width='16%'>
+					{{"Iglesia"}}
+				</th>
+				<th width='10%' >
+					{{"Ofrenda ($)"}}
+				</th>
+
+				<th width='12%'>
+					{{"Hora"}}
+				</th>
+				
+
+			</tr>
+		</thead>
+		<tbody>
+			{%for i in intenciones%}
+			<tr>
+				
+				<td>
+					{{i.oferente}}
+				</td>
+				<td>
+					{{i.intencion}}
+				</td>
+				<td>
+					{{i.iglesia}}
+				</td>
+				<td align='center'>
+					{{i.ofrenda}}
+				</td>
+				<td align='center'>
+					{{i.hora|date:'H:i'}}
+				</td>
+			</tr>
+			{%endfor%}
+		</tbody>
+	</table>
+	{%endif%}
+		<div id="footer">
+			<hr style="margin-bottom: 6px;"/>
+			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
+				{{asignacion.persona.user.get_full_name}}
+			</p>
+
+		</div>
+
+
+	
+
+	
+
+	
+
+</body>
+</html>

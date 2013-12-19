@@ -1,0 +1,124 @@
+{% extends 'base.html'%}
+{%block title%}
+{%if object.id%}
+Editar Libro 
+{%else%}
+Agregar Libro
+{%endif%}
+{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Libro 
+{%else%}
+Agregar Libro 
+{%endif%}
+{%endblock%}
+
+{%block content%}
+<div id="id_mensaje">
+	
+</div>
+<form id='id_form_libro' action="." method='POST' class='form-horizontal'>
+	{% csrf_token%}
+	<div class='row'>
+		<div class='span10'>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos del Libro</legend>
+				<div class='row'>
+					
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.numero_libro.label}}
+						</label>
+						<div class="controls">
+							{{form_libro.numero_libro}}
+
+						</div>
+						<div class="controls help-text">
+							{{form_libro.numero_libro.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.numero_libro.errors}}
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.tipo_libro.label}}
+						</label>
+						<div class="controls">
+							{{form_libro.tipo_libro}}
+
+						</div>
+						<div class="controls help-text">
+							{{form_libro.tipo_libro.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.tipo_libro.errors}}
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.estado.label}}
+						</label>
+						<div class="controls">
+							{{form_libro.estado}}
+
+						</div>
+						<div class="controls help-text">
+							{{form_libro.estado.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.estado.errors}}
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.fecha_apertura.label}} *
+						</label>
+						<div class="controls">
+							{{form_libro.fecha_apertura}}
+
+						</div>
+						<div class="controls help-text">
+							{{form_libro.fecha_apertura.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.fecha_apertura.errors}}
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.fecha_cierre.label}}
+						</label>
+						<div class="controls">
+							{{form_libro.fecha_cierre}}
+
+						</div>
+						<div class="controls help-text">
+							{{form_libro.fecha_cierre.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.fecha_cierre.errors}}
+						</div>
+					</div>
+
+
+				</div>
+			</fieldset>
+			<div class="form-actions">
+
+				<button type="submit" class='btn btn-primary'> Guardar </button>
+				<a href="{%url 'libro_list'%}" class='btn btn-danger'>Cancelar</a>
+
+			</div>
+		</div>
+	</div>
+
+	
+
+
+</form>
+
+
+{%endblock%}

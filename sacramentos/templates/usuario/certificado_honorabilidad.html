@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head> 
+<style>
+@page {
+	/*margin-bottom: 2.5cm;*/
+	size: a4; 
+	margin: 2.5cm 3cm 2.5cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+
+body {
+	font-family: Helvetica, Arial,Sans;
+	font-size: 12px;
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+
+}
+h1{
+	font-size: 16px; 
+}
+
+</style> 
+<body>
+	<center>
+		
+		
+		<h2> 
+			
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiastica {{cura.parroquia|upper}} <br/>
+			{{cura.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Dirección: "}}{{ cura.parroquia.direccion.domicilio }} {{"Tel: "}}{{cura.parroquia.direccion.telefono}}</small> <br /> <br /> <br />
+		</h2>
+		<h1>{{"Certificado"|upper}}</h1>
+	</center><br/>
+	<p align='right'> <strong>{{cura.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
+	<p align="justify">
+		Rvdo <strong>{{cura.persona.user.get_full_name|upper}}</strong> Párroco de <strong>{{asignacion.parroquia.nombre|upper}}</strong> certifica conocer personalmente  
+		{%if 's' in perfil.estado_civil and 'f' in perfil.sexo%}
+		a la Srta:<br/><br/>
+		{%endif%}
+		{%if not 's' in perfil.estado_civil and 'f' in perfil.sexo%}
+		a la Sra:<br/><br/>
+		{%endif%}
+		{%if 's' in perfil.estado_civil and 'm' in perfil.sexo%}
+		al Sr:<br/><br/>
+		{%endif%}
+
+
+		<strong>{{perfil.user.get_full_name|upper}}</strong>, con numero de cédula: <strong>{{perfil.dni}}</strong>, quien ha demostrado honestidad, honradez, espíritu de servicio y gran responsabilidad en las tareas asignadas.<br/><br/>
+
+		Es todo cuanto puedo certificar en honor a la verdad, autorizando al interesado hacer uso del presente  documento, para los fines legales pertinentes.</p><br/><br/>
+
+
+
+
+		<center> Atentamente,</center><br/><br/><br/><br/><br/>
+
+		<center>
+			<strong>---------------------------------------------------------------<br/></strong>
+			P. {{cura.persona.user.get_full_name}}<br/>
+			<strong>{{"PARROCO DE"}} {{cura.parroquia|upper}}</strong>
+		</center>
+
+		<br/><br/><br/><br/>
+
+
+		<div id="footer">
+			<hr style="margin-bottom: 1px;"/>
+			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>{{asignacion.persona.user.get_full_name}}</strong></p>
+
+		</div>
+
+	</body>
+
+</body>
+</html>

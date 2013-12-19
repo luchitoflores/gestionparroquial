@@ -1,0 +1,76 @@
+<!doctype html>
+{%extends 'base.html'%}
+{%block title%}
+Reporte de Permisos Sacramentales
+{%endblock%}
+{%block content_title%}
+Reporte de Permisos Sacramentales
+{%endblock%}
+
+{%block content%}
+<form action="." class='form-horizontal' method='POST'>
+	{%csrf_token%}
+	<div class='row'>
+		<div class='span10'>
+			
+			<div class='row'>
+				<div class="span6">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.tipo.label}}
+						</label>
+						<div class='controls'>
+							{{form.tipo}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.tipo.help_text}}
+							<div class="controls">
+								<div class="errors">								
+									{{form.tipo.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="span8">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.feligres.label}}
+						</label>
+						<div class='controls'>
+							{{form.feligres}}
+							<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+							<a href="{%url 'usuario_create'%}" class='btn btn-primary'>
+							<i class='icon-plus'></i> </a>
+
+						</div>
+						<div class="controls help-text">
+							{{form.feligres.help_text}}
+							
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form.feligres.errors}}
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'>Generar Reporte</button> 
+		<a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>
+
+	</div>
+</form>
+{%include 'usuario/buscar_feligreses.html'%}
+{%endblock%}

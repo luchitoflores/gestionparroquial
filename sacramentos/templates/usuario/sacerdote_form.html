@@ -1,0 +1,259 @@
+{%extends 'base.html'%}
+{%load tags_html%}
+{%block title%}
+{%if object.id%}
+Editar Sacerdote
+{%else%}
+Agregar Sacerdote
+{%endif%}
+{%endblock%}
+
+{%block content_title%}
+{%if object.id%} 
+Editar Sacerdote
+{%else%}
+Agregar Sacerdote
+{%endif%}
+{%endblock%}
+
+{% block content%}
+{%if object.id%}
+<div class="btn-toolbar pull-right">
+	<div class="btn-group">
+		<button data-toggle="dropdown" class=" btn btn-primary dropdown-toggle">
+			<i class='icon-print'></i>  Reportes <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right" >
+			<li>
+				<a href="{%url 'reporte_sacerdotes' pk=object.id%}" target="_blank"><i class='icon-file-text-alt'></i> Asignaciones</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{%endif%}
+<input id='id_hiddens' type="hidden" value='{{object.id}}'>
+<form action="." method='POST' class='form-horizontal'>
+	{% csrf_token%}
+
+	<div class="row">
+		<div class="span10">
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos Personales</legend>
+				<div class="control-group">
+					{{form_usuario.first_name|label_with_classes:'control-label'}}
+					<div class="controls">
+						{{form_usuario.first_name}}
+					</div>
+					<div class="controls">
+						<div class="help-text">								
+							{{form_usuario.first_name.help_text}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class="errors">								
+							{{form_usuario.first_name.errors}}
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					{{form_usuario.last_name|label_with_classes:'control-label'}}
+					<div class="controls">
+						{{form_usuario.last_name}}
+					</div>
+					<div class="controls">
+						<div class='help-text'>
+							{{form_usuario.last_name.help_text}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class='errors'>
+							{{form_usuario.last_name.errors}}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span4">
+						<div class="control-group">
+							<div class="control-label">
+								{{form_sacerdote.nacionalidad.label}} *
+							</div>
+							
+							<div class="controls">
+								{{form_sacerdote.nacionalidad}}
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_sacerdote.nacionalidad.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_sacerdote.nacionalidad.errors}}
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="control-label">
+								{{form_sacerdote.dni.label}} *
+							</div>
+							<div class="controls">
+								{{form_sacerdote.dni}} 
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_sacerdote.dni.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_sacerdote.dni.errors}}
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</fieldset>
+
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos de Nacimiento</legend>
+				<div class="control-group">
+					<label for="id_fecha_nacimiento" class='control-label'>
+
+						{{form_sacerdote.fecha_nacimiento.label}} *
+					</label>
+					<div class="controls">
+						<div class='error'>
+							{{form_sacerdote.fecha_nacimiento}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class="help-text">
+							{{form_sacerdote.fecha_nacimiento.help_text}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class="errors">
+							{{form_sacerdote.fecha_nacimiento.errors}}
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="id_lugar_nacimiento" class='control-label'>
+						{{form_sacerdote.lugar_nacimiento.label}} *
+					</label>
+					<div class="controls">
+						{{form_sacerdote.lugar_nacimiento}}
+					</div>
+					<div class="controls">
+						<div class="help-text">
+							{{form_sacerdote.lugar_nacimiento.help_text}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class="errors">
+							{{form_sacerdote.lugar_nacimiento.errors}}
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset class="scheduler-border">
+				<legend class="scheduler-border">Datos de Contacto</legend>
+				<div class="control-group">
+					<label for="id_email" class='control-label'>
+						{{form_usuario.email.label}}
+					</label>
+					<div class='controls'>
+						{{form_usuario.email}}
+					</div>
+					<div class='controls'>
+						<div class="help-text">
+							{{form_usuario.email.help_text}}
+						</div>
+					</div>
+					<div class='controls'>
+						<div class="errors">
+							{{form_usuario.email.errors}}
+						</div>
+					</div>
+
+				</div> 
+
+				<div class="control-group">
+					{{form_sacerdote.celular|label_with_classes:'control-label'}}
+					<div class='controls'>
+						{{form_sacerdote.celular}}
+					</div>
+					<div class="controls">
+						<div class="help-text">
+							{{form_sacerdote.celular.help_text}}
+						</div>
+					</div>
+					<div class="controls">
+						<div class="errors">
+							{{form_sacerdote.celular.errors}}
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			{%if perms.auth.change_group or perms.auth.add_group%}
+			{%if object.id%}
+			<fieldset class="scheduler-border">
+				<legend class="scheduler-border">Grupos</legend>
+				<div class="control-group">
+					{{form_usuario.groups|label_with_classes:'control-label'}}
+					<div class='controls'>
+						{{form_usuario.groups}}
+					</div>
+					<div class='controls'>
+						<div class="help-text">
+							{{form_usuario.groups.help_text}}
+						</div>
+					</div>
+					<div class='controls'>
+						<div class="errors">
+							{{form_usuario.groups.errors}}
+						</div>
+					</div>
+					
+				</div>
+			</fieldset>
+			{%else%}
+			<fieldset class="scheduler-border" style="display:none">
+				<legend class="scheduler-border">Grupos</legend>
+				<div class="control-group">
+					{{form_usuario.groups|label_with_classes:'control-label'}}
+					<div class='controls'>
+						{{form_usuario.groups}}
+					</div>
+					<div class='controls'>
+						<div class="help-text">
+							{{form_usuario.groups.help_text}}
+						</div>
+					</div>
+					<div class='controls'>
+						<div class="errors">
+							{{form_usuario.groups.errors}}
+						</div>
+					</div>
+					
+				</div>
+			</fieldset>
+			{%endif%}
+			{%endif%}
+
+			<div class="form-actions">
+				<button type="submit" class='btn btn-primary'> Guardar </button>
+				<a href="{% url 'sacerdote_list' %}" class='btn btn-danger'>Cancelar</a>
+			</div>
+
+		</div>
+	</div>
+
+
+
+</form>
+{% endblock%}

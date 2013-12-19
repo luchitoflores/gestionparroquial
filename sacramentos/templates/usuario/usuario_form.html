@@ -1,0 +1,439 @@
+{%extends 'base.html'%}
+
+{%load tags%}
+{%load tags_direccion%}
+{%load tags_html%}
+
+{%block title%}
+{%if perfil.id%}
+Editar Feligrés
+{%else%}
+Agregar Feligrés
+{%endif%}
+{%endblock%}
+
+{%block content_title%}
+{%if perfil.id%} 
+Editar Feligres
+{%else%}
+Agregar Feligrés
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<!-- Div para manejar mensajes de error -->
+<div id="id_mensaje">
+	
+</div>
+
+
+
+{%if perms.sacramentos.change_sacramento%}
+{%if perfil.id%}
+<div class="btn-toolbar pull-right">
+	<div class="btn-group">
+		<button data-toggle="dropdown" class=" btn btn-primary dropdown-toggle">
+			<i class='icon-print'></i>  Reportes <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right" >
+			<li>
+				<a href="{%url 'usuario_certificado' pk=perfil.id%}" target="_blank"><i class='icon-file-text-alt'></i> Certificado Honorabilidad</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{%endif%}
+{%endif%}
+
+
+<input id='id_hidden' type="hidden" value='{{perfil.id}}'>
+<!--<div id='id_datos_personales' class='tab-pane active'>-->
+<form id='id_form_usuario_create' method='POST' class='form-horizontal'>
+	{%csrf_token%}
+	
+			<div class="row">
+				<div class="span10">
+					<fieldset class='scheduler-border'>
+						<legend class='scheduler-border'>Datos Personales</legend>
+						<div class="control-group">
+							{{form_usuario.first_name|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_usuario.first_name}}
+							</div>
+							<div class="controls">
+								<div class="help-text">								
+									{{form_usuario.first_name.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_usuario.first_name.errors}}
+								</div>
+							</div>
+							
+						</div>
+						<div class="control-group">
+							{{form_usuario.last_name|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_usuario.last_name}}
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_usuario.last_name.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_usuario.last_name.errors}}
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span4">
+								<div class="control-group">
+									{{form_perfil.sexo|label_with_classes:'control-label'}}
+									<div class="controls">
+										{% for radio in form_perfil.sexo %}
+										{{ radio }}
+										{% endfor %}
+									</div>
+									<div class="controls">
+										<div class="help-text">
+											{{form_perfil.sexo.help_text}}
+										</div>
+									</div>
+									<div class="controls">
+										<div class="errors">
+											{{form_perfil.sexo.errors}}
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									{{form_perfil.nacionalidad|label_with_classes:'control-label'}}
+									<div class="controls">
+										{{form_perfil.nacionalidad}}
+									</div>
+									<div class="controls">
+										<div class='help-text'>
+											{{form_perfil.nacionalidad.help_text}}
+										</div>
+									</div>
+									<div class="controls">
+										<div class='errors'>
+											{{form_perfil.nacionalidad.errors}}
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									{{form_perfil.dni|label_with_classes:'control-label'}}
+									<div class="controls">
+										{{form_perfil.dni}}
+									</div>
+									<div class="controls">
+										<div class='help-text'>
+											{{form_perfil.dni.help_text}}
+										</div>
+									</div>
+									<div class="controls">
+										<div class='errors'>
+											{{form_perfil.dni.errors}}
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="span4">
+								<div class="control-group">
+									{{form_perfil.estado_civil|label_with_classes:'control-label'}}
+									<div class="controls">
+										{{form_perfil.estado_civil}}
+									</div>
+									<div class="controls">
+										<div class='help-text'>
+											{{form_perfil.estado_civil.help_text}}
+										</div>
+									</div>
+									<div class="controls">
+										<div class='errors'>
+											{{form_perfil.estado_civil.errors}}
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									{{form_perfil.profesion|label_with_classes:'control-label'}}
+									<div class="controls">
+										{{form_perfil.profesion}}
+									</div>
+									<div class="controls">
+										<div class="help-text">
+											{{form_perfil.profesion.help_text}}
+										</div>
+									</div>
+									<div class="controls">
+										<div class="errors">
+											{{form_perfil.profesion.errors}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+
+					<fieldset class='scheduler-border'>
+						<legend class='scheduler-border'>Datos de Nacimiento</legend>
+						<div class="control-group">
+							{{form_perfil.fecha_nacimiento|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.fecha_nacimiento}}
+							</div>
+							<div class="controls">
+								<div class="help-text">
+									{{form_perfil.fecha_nacimiento.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form_perfil.fecha_nacimiento.errors}}
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							{{form_perfil.lugar_nacimiento|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.lugar_nacimiento}}
+							</div>
+							<div class="controls">
+								<div class="help-text">
+									{{form_perfil.lugar_nacimiento.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form_perfil.lugar_nacimiento.errors}}
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="scheduler-border">
+						<legend class="scheduler-border">Información sobre los padres</legend>
+						<div class="control-group">
+							{{form_perfil.padre|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.padre}}
+								<a href="#id_buscar_hombres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								<a href="#id_crear_padre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+							</div>
+							<div class="controls">
+								<div class="help-text">
+									{{form_perfil.padre.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form_perfil.padre.errors}}
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							{{form_perfil.madre|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.madre}}
+								<a href="#id_buscar_mujeres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								<a href="#id_crear_madre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+							</div>
+							<div class="controls">
+								<div class="help-text">
+									{{form_perfil.madre.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form_perfil.madre.errors}}
+								</div>
+							</div>
+						</div>
+					</fieldset>
+
+					<fieldset class="scheduler-border">
+						<legend class="scheduler-border">Datos de Contacto</legend>
+						<div class="control-group">
+							{{form_usuario.email|label_with_classes:'control-label'}}
+							<div class='controls'>
+								{{form_usuario.email}}
+							</div>
+							<div class='controls'>
+								<div class="help-text">
+									{{form_usuario.email.help_text}}
+								</div>
+							</div>
+							<div class='controls'>
+								<div class="errors">
+									{{form_usuario.email.errors}}
+								</div>
+							</div>
+							
+						</div> 
+
+						<div class="control-group">
+							{{form_perfil.celular|label_with_classes:'control-label'}}
+							<div class='controls'>
+								{{form_perfil.celular}}
+							</div>
+							<div class="controls">
+								<div class="help-text">
+									{{form_perfil.celular.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form_perfil.celular.errors}}
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					
+					{%if perms.auth.change_group or perms.auth.add_group%}
+					{%if perfil.id%}
+					<fieldset class="scheduler-border">
+						<legend class="scheduler-border">Grupos de Usuario</legend>
+						<div class="control-group">
+							{{form_usuario.groups|label_with_classes:'control-label'}}
+							<div class='controls'>
+								{{form_usuario.groups}}
+							</div>
+							<div class='controls'>
+								<div class="help-text">
+									{{form_usuario.groups.help_text}}
+								</div>
+							</div>
+							<div class='controls'>
+								<div class="errors">
+									{{form_usuario.groups.errors}}
+								</div>
+							</div>
+							
+						</div> 
+					</fieldset>
+					{%endif%}
+					{%else%}
+					<fieldset class="scheduler-border" style="display:none">
+						<legend class="scheduler-border">Grupos de Usuario</legend>
+						<div class="control-group">
+							{{form_usuario.groups|label_with_classes:'control-label'}}
+							<div class='controls'>
+								{{form_usuario.groups}}
+							</div>
+							<div class='controls'>
+								<div class="help-text">
+									{{form_usuario.groups.help_text}}
+								</div>
+							</div>
+							<div class='controls'>
+								<div class="errors">
+									{{form_usuario.groups.errors}}
+								</div>
+							</div>
+							
+						</div> 
+					</fieldset>
+
+					{%endif%}
+
+					<div class="form-actions">
+						<button type="submit" class='btn btn-primary'> Guardar </button>
+						<a href="{%url 'usuario_list'%}" class='btn btn-danger'>Cancelar</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+
+
+
+		<!--<a href="#id_modal_direccion" class='btn btn-primary' data-toggle='modal'>Nueva Dirección</a> -->
+
+		<!-- Inclusion de Modal de Busqueda-->
+		{%include 'usuario/buscar_hombres.html'%}
+		{%include 'usuario/buscar_mujeres.html'%}
+
+		<!-- Modal para crear padre-->
+		<div id="id_crear_padre" class="modal hide fade" data-backdrop='static'>
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Crear Padre</h3>
+			</div>
+			<div class="modal-body">
+				<form id='id_form_crear_padre' class='form-horizontal' method='POST'>
+					{%feligres%}
+
+					<div class="control-group">
+						<div class='controls'>
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<a href="." class="cancelar-modal btn btn-danger" data-dismiss="modal">Cancelar</a>
+			</div>
+		</div>
+
+		<!-- Modal para crear madre-->
+		<div id="id_crear_madre" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Crear Madre</h3>
+			</div>
+			<div class="modal-body">
+				<form id='id_form_crear_madre' class='form-horizontal' method='POST'>
+					{%feligres%}
+					<div class="control-group">
+						<div class='controls'>
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<a href="." class="cancelar-modal btn btn-danger" data-dismiss="modal">Cancelar</a>
+			</div>
+		</div>
+
+	<!-- Modal para asignar la dirección de un feligrés 
+	<div id="id_modal_direccion" class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3>Búsqueda de Feligreses</h3>
+		</div>
+		<div class="modal-body">
+			<form id='id_form_direccion' class='form-horizontal' method='POST'>
+				{%direccion%}
+				<div class="control-group">
+					<div class='controls'>
+						<input type="submit" value='Enviar' class='btn btn-primary'>
+					</div>
+				</div>
+			</form>
+
+		</div>
+		<div class="modal-footer">
+			<a href="." class="btn btn-primary" data-dismiss="modal">Cancelar</a>
+		</div>
+	</div>
+
+-->
+<!-- codigo copiado de twitter, aun no funciona, es para alert
+<div class="alert-messages" id="message-drawer" style="opacity: 1;">
+	<div class="message ">
+		<div class="message-inside">
+			<span class="message-text">Error interno del servidor.</span><a class="dismiss" href="#">×</a>
+		</div>
+	</div>
+</div>
+-->
+
+{% endblock%}

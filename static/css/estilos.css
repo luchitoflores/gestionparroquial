@@ -1,0 +1,183 @@
+@font-face{
+	font-family: 'Open Sans';
+	src: url('../font/Open_Sans/OpenSans-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face{
+	font-family: 'Droid Serif';
+	src: url('../font/Droid_Serif/DroidSerif.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face{
+	font-family: 'Viga';
+	src: url('../font/Viga/Viga-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body
+{
+	background: #A9C7F3;
+	font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
+	font-size: 14px;
+	/*padding: 40px;*/
+}
+
+
+
+h1{
+	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+	/*color: #171717;*/
+}
+
+h2{
+	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+}
+
+
+.help-text {
+	font-size: 9px;
+	color: #808080;
+}
+div.errors ul {
+	color: red;
+	font-size: 9px;
+	list-style-type: none !important;
+	margin: 0;
+	padding: 0;
+}
+
+span.errors {
+	color: red !important; 
+	font-size: 9px !important;
+}
+
+.controls ul {
+	list-style-type: none !important;
+	margin: 0 0 25px;
+}
+
+fieldset.scheduler-border {
+	border: 1px solid #ddd !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow:  0px 0px 0px 0px #000;
+	box-shadow:  0px 0px 0px 0px #000;
+
+}
+
+legend.scheduler-border {
+	width:inherit; /* Or auto */
+	padding:0 10px; /* To give a bit of padding on the left and right */
+	border-bottom:none;
+	font-size: 1em;
+	font-family: 'Viga', sans-serif;
+}
+
+li.item{
+	list-style-type: disc;
+}
+
+#id_title
+{
+	background-image: url(../img/textura10.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+	font-size: 2em;
+	max-height: 100%;
+	max-width: 100%;
+	padding-top: 1em;
+	padding-bottom: 1.5em; 
+}
+
+#id_container{
+	background: white;
+	padding-top: 4em;
+	/*margin-bottom: 10em;*/
+	margin-top: 0px;
+}
+
+#id_footer 
+{
+	background: white;
+	background-image: url(../img/texturapie.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	color: white;	
+	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+	/*height: 100px;*/
+	max-height: 100%;
+	max-width: 100%;
+	margin-top: 1.5em; 
+	padding: 1.5em;
+	text-align: center;
+}
+
+#id_footer p{
+	font-size:0.8em;
+}
+
+.nav {
+	margin-bottom: 0em;
+}
+
+table{
+	width: 100%;
+	margin: 0 auto;
+	clear: both;
+	border-collapse: separate;
+	overflow: 'hidden';
+}
+
+/*th{
+	position: absolute;
+	clear: both;
+}
+img.sorted{
+	float: right;
+	position: absolute;
+	padding-top: 6px;
+	padding-left: 3px;
+}*/
+
+
+
+
+/*td, th {
+	display: table-cell;
+	vertical-align: inherit;
+}
+*/
+/*@media (max-width: 960px) {
+	h1{
+		font-size: 0.75em;	
+		font-family: 'Georgia',
+	}
+}
+
+@media (max-width: 960px) {
+	h2{
+		font-size: 0.85em;	
+		font-family: 'Georgia',
+	}
+}
+
+@media (max-width: 960px) {
+	p, li{
+		font-size: 1em;	
+		font-family: 'Georgia',
+	}
+}*/

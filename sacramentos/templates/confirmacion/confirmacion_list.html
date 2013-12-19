@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+
+{%block title%}Lista de Confirmados{%endblock%}
+{%block content_title%}
+Lista de Confirmados
+{%endblock%}
+
+{%block extrascript%}
+<script src='/static/js/tablas.js'></script>
+
+{%endblock%}
+
+{%block content%}
+
+
+<table id='id_table_confirmacion' class='table table-bordered table-striped'>
+	<thead>
+		<tr class='alert alert-info'>
+			
+			<th>Confirmado</th>
+			<th data-hide='phone'>Fecha Nacimiento</th>
+			<th>Fecha Sacramento</th>
+			<th data-hide='phone, tablet'>Padre</th>
+			<th data-hide='phone, tablet'>Madre</th>
+			
+			
+		</tr>
+		
+	</thead>
+	<tbody>
+		{% for o in object_list %}
+		<tr>
+			<td><a href="{%url 'confirmacion_update' pk=o.id%}"> {{o.confirmado.user.first_name}} {{o.confirmado.user.last_name}}</a></td>
+			<td id='id_fecha_nacimiento'>{{o.confirmado.fecha_nacimiento}}</td>
+			<td id='id_fecha_sacramento'>{{o.fecha_sacramento}}</td>
+			<td>{{o.confirmado.padre.user.first_name}} {{o.confirmado.padre.user.last_name}}</td>
+			<td>{{o.confirmado.madre.user.first_name}} {{o.confirmado.madre.user.last_name}}</td>
+			
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+{%if perms.sacramentos.add_confirmacion %}
+<a href="{% url 'confirmacion_create' %}" class='btn btn-primary'>Nuevo Registro</a>
+{%endif%}
+{%endblock%}

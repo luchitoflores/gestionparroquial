@@ -1,0 +1,207 @@
+{%extends 'base.html'%}
+{%load tags%}
+
+{%block title%}
+{%if object.id%}
+Editar Primera Comunión 
+{%else%}
+Agregar Primera Comunión
+{%endif%}
+{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Primera Comunión 
+{%else%}
+Agregar Primera Comunión 
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+
+<!-- Div para manejar mensajes de error -->
+<div id="id_mensaje">
+	
+</div>
+
+{%if object.id%}
+<div class="btn-toolbar pull-right">
+	<div class="btn-group">
+		<button data-toggle="dropdown" class=" btn btn-primary dropdown-toggle">
+			<i class='icon-print'></i>  Reportes <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right" >
+			<li>
+				<a href="{%url 'eucaristia_reporte' pk=object.id%}" target="_blank"><i class='icon-file-text-alt'></i> Partida de Primera Comunion</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{%endif%}
+
+<form id='id_form_comunion' action="." method='POST' class='form-horizontal'>
+	{% csrf_token%}
+	
+	<div class='row'>
+		<div class='span10'>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos del sacramento</legend>
+				<div class="span4">
+					<div class='control-group'>
+						<label for="id_libro" class='control-label'>{{form_eucaristia.libro.label}}</label>
+						<div class='controls'>
+							{{form_eucaristia.libro}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.libro.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.libro.errors}}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="span8">
+					<div class='control-group'>
+						<label for="id_feligres" class='control-label'>
+							{{form_eucaristia.feligres.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.feligres}}
+							<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.feligres.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.feligres.errors}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="span4">
+					<div class='control-group'>
+						<label for="id_fecha_sacramento" class='control-label'>{{form_eucaristia.fecha_sacramento.label}} *</label>
+						<div class='controls'>
+							{{form_eucaristia.fecha_sacramento}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.fecha_sacramento.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.fecha_sacramento.errors}}
+							</div>
+						</div>
+
+					</div>
+
+					<div class='control-group'>
+						<label for="id_lugar_sacramento" class='control-label'>{{form_eucaristia.lugar_sacramento.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.lugar_sacramento}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.lugar_sacramento.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.lugar_sacramento.errors}}
+							</div>
+						</div>
+					</div>
+
+					<div class='control-group'>
+						<label for="id_padrino" class='control-label'>
+							{{form_eucaristia.padrino.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.padrino}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.padrino.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.padrino.errors}}
+							</div>
+						</div>
+					</div>
+
+					<div class='control-group'>
+						<label for="id_madrina" class='control-label'>
+							{{form_eucaristia.madrina.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.madrina}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.madrina.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.madrina.errors}}
+							</div>
+						</div>
+					</div>
+
+					<div class='control-group'>
+						<label for="id_iglesia" class='control-label'>
+							{{form_eucaristia.iglesia.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.iglesia}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.iglesia.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.iglesia.errors}}
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="span8">
+					<div class='control-group'>
+						<label for="id_celebrante" class='control-label'>
+							{{form_eucaristia.celebrante.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.celebrante}}
+							<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.celebrante.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.celebrante.errors}}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class='btn btn-primary'> Guardar </button>
+				<a href="{%url 'eucaristia_list'%}" class='btn btn-danger'>Cancelar
+				</a>
+			</div>
+		</div>
+	</div>
+	
+</form>
+
+
+<!-- Modales para buscar un usuario y sacerdote respectivamente-->
+{%include 'usuario/buscar_feligreses.html'%}
+{%include 'usuario/buscar_sacerdotes.html'%}
+
+{% endblock%}

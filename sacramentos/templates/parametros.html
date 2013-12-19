@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+
+{%block content_title%}
+Parámetros
+{%endblock%}
+
+{%block content%}
+
+<div class="row">
+	<div class="span10 offset1">
+		<ul class="thumbnails">
+			{%if perms.sacramentos.change_parametrizadiocesis or perms.sacramentos.add_parametrizadiocesis%}
+			<li class="span4">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-home icon-4x' style='color: #ddd'></i>
+						<h2>Diócesis</h2>
+					</div>
+					<p>Ud. puede configurar los parámetros de la Diócesis</p>
+					<p><a href="{%url 'parametriza_create'%}" class='btn btn-primary'>Ir</a></p>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_parametrizaparroquia or perms.sacramentos.add_parametrizaparroquia%}
+			<li class="span4">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-home icon-4x' ></i>
+						<h2>Parroquia</h2>
+					</div>
+					<p>Ud. puede configurar el numero de acta y de la paǵina de los sacramentos que se realizarán en cada parroquia</p>
+					<p><a href="{%url 'parametriza_parroquia_create'%}" class='btn btn-primary'>Ir</a></p>
+				</div>
+			</li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+{%endblock%}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+</head> 
+<style>
+@page {
+	margin-bottom: 2.5cm;
+	size: a4 landscape; 
+	margin: 3cm 3cm 3cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+th {
+	text-align: center;
+	border: 1px solid gray;
+	font-size: 13px;
+}
+td {
+	text-align: left;
+	border: 1px solid gray;
+	font-size: 12px;
+	vertical-align:middle;
+
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+}
+
+</style> 
+<body >
+	<center>
+		
+		
+		<h3> 
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			Dirección: {{d.direccion.domicilio}} <br>
+			Tel: {{d.direccion.telefono}} <br>
+			{%endfor%}
+			<hr style="margin-bottom: 1px;"/>
+			
+			{{"LISTA DE PARROQUIAS Y SUS RESPECTIVOS PERIODOS"}}
+		</h2>
+		
+	</center>
+
+	<br/>
+	
+	
+	
+	<p> 
+		{%for d in p%}
+		<strong>{{d.direccion.canton.nombre|title}}
+		{%endfor%}
+		, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
+		<table width="100%" cellspacing="10" cellpadding='3'>
+			<center>
+				<h3>
+					<figcaption>{{"PÁRROCO: "}}{{cura.user.get_full_name|upper}}
+					</figcaption>
+				</h3>
+			</center>
+			<thead >
+
+				<tr>
+					<th>
+						{{"Parroquia"}}
+					</th>
+
+					<th>
+						{{"Fecha Inicio"}}
+					</th>
+					<th>
+						{{"Fecha Finalizacion"}}
+					</th>
+
+
+				</tr>
+			</thead>
+			<tbody>
+				{%for p in periodos%}
+				<tr>
+					<td>
+						{{p.asignacion.parroquia.nombre}}
+					</td>
+
+					<td align='center'>
+						{{p.inicio}}
+					</td>
+					<td align='center'>
+						{{p.fin}}
+					</td>
+
+
+
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+		<br>
+
+		<br/><br/><br/>
+
+		<center>
+
+
+			-------------------------------------------------------------------<br/>
+			{%if persona.get_full_name%}
+			{{persona.get_full_name}} <br>
+			{%else%}
+			{{persona.username}} <br>
+			{%endif%}
+			<strong>{{"ADMINISTRADOR"}}</strong> 
+
+		</center>	
+
+
+
+
+
+
+
+
+
+		<div id="footer">
+			<hr style="margin-bottom: 1px;"/>
+			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
+				{%if persona.get_full_name%}
+				{{persona.get_full_name}}
+				{%else%}
+				{{persona.username}}
+				{%endif%}
+			</p>
+
+		</div>
+
+	</body>
+	</html>
+

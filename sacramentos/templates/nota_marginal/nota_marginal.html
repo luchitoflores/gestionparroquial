@@ -1,0 +1,21 @@
+{%csrf_token%}
+
+<div class="control-group">
+	<label class="control-label">
+		{{form_nota.descripcion.label}}
+	</label>
+	<div class="controls">
+		{{form_nota.descripcion}}
+	</div>
+	<div class="controls">
+		<div class="help-text">
+			{{form_nota.descripcion.help_text}}
+			
+		</div>
+	</div>
+	<div class="controls">
+		<div id='id_errors_descripcion' class="errors">								
+			{{form_nota.descripcion.errors}}
+		</div>
+	</div>
+</div>

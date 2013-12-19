@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+
+{%block title%}
+{%if periodo.id%}
+Editar Periodo de Asignacion 
+{%else%}
+Nuevo Periodo de Asignación 
+{%endif%}
+{%endblock%}
+
+{%block content_title%}
+{%if periodo.id%}
+Editar Periodo de Asignacion 
+{%else%}
+Nuevo Periodo de Asignación  
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<form action="." method='POST' class='form-horizontal'>
+	{%csrf_token%}
+
+	{% for f in form%}
+	<div class="control-group">
+
+		<div class="control-label">
+			{{f.label}}
+		</div>
+		<div class="controls">
+			{{f}}
+		</div>
+
+		<div class="controls">
+			<div class='help-text'>
+				{{f.help_text}}
+			</div>
+		</div>
+		<div class="controls">
+			<div class='error'>
+				{{f.errors}}
+			</div>
+		</div>
+	</div>
+	{%endfor%}
+
+	
+	
+	
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'> Guardar </button>
+		<a href="{%url 'parroco_periodos_asignacion_list' pk=object.id%}" class='btn btn-danger'>Cancelar</a>
+	</div>
+
+</form>
+
+{%endblock%}

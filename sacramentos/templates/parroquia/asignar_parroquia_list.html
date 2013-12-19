@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Párrocos{%endblock%}
+{%block content_title%}
+Párrocos - {{parroquia.nombre}}
+{%endblock%}
+
+
+
+{% block content%}
+<table id='id_table_asignar_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Sacerdote</th>
+			<th>Parroquia</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for o in object_list%}
+		<tr>
+			<td>{{o.persona}}</td>
+			<td>{{o.parroquia}}</td>
+			{# <!--<td>{%if o.periodo.estado%}<i class='icon-check'>{%else%}<i class=' icon-minus-sign'>{%endif%}</i> </td>--> #}
+			<td><a href="{%url 'parroco_periodos_asignacion_list' pk=o.id%}">Ver Asignaciones</a></td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+<a href="{%url 'asignar_parroco_a_parroquia' pk=parroquia.id%}" class='btn btn-primary'>Nueva Asignación</a>
+<a href="{%url 'parroquia_list'%}" class='btn btn-danger'>Cancelar</a>
+
+{% endblock%}

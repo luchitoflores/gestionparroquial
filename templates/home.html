@@ -1,0 +1,440 @@
+{% extends 'base.html' %}
+
+{% block title %} Escritorio {% endblock %}
+{% block content_title %} Escritorio {% endblock %}
+
+{%block content%}
+		<ul class='thumbnails'>
+
+			{%if perms.sacramentos.change_feligres or perms.sacramentos.add_feligres%}
+			
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-user"></i>
+					</span>
+					<h3>Personas</h3>
+					<div class="caption">
+						<p>Ud. puede agregar, editar un feligres de cada parroquia, puede generar reportes del feligrés
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'usuario_list'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{% if perms.sacramentos.change_bautismo or  perms.sacramentos.add_bautismo or perms.sacramentos.change_eucaristia or  perms.sacramentos.add_eucaristia or perms.sacramentos.change_matrimonio or  perms.sacramentos.add_matrimonio or perms.sacramentos.change_confirmacion or  perms.sacramentos.add_confirmacion %}
+			<li class="span3">
+				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-file-text"></i>
+					</span>
+					<h3>Sacramentos</h3>
+					<div class="caption">
+						<p>Ud. puede acceder a Bautismos, Primeras Comuniones, Confirmaciones y Matrimonios en cada parroquia
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'sacramentos'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_libro or  perms.sacramentos.add_libro%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-book"></i>
+					</span>
+					<h3>Libros</h3>
+					<div class="caption">
+						<p>Ud. puede agregar o editar un libro, elegir el tipo de libro de acuerdo a un sacramento 
+						</p>
+						<p>
+							{%if perms.sacramentos.change_libro and perms.sacramentos.add_libro %}
+							<a class='btn btn-primary' href="{%url 'libro_list'%}">Ir</a>
+							{%endif%}
+							{%if not perms.sacramentos.change_libro and perms.sacramentos.add_libro %}
+							<a class='btn btn-primary' href="{%url 'libro_create'%}">Ir</a>
+							{%endif%}
+						</p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_asignarsecretaria%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<!--<i class="icon-user"></i>-->
+						<i class="icon-keyboard"></i>
+					</span>
+					<h3>Asignar Secretaria</h3>
+					<div class="caption">
+						<p>
+							Ud. puede asignar secretari@s a su parroquia donde está asignado
+						</p>
+						<p><a class="btn btn-primary" href="{%url 'asignar_secretaria_list'%}">Ir</a>
+						</p>
+					</div>				
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.ciudades%}
+			<li class="span3">				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<!--<i class="icon-renren"></i>-->
+						<i class="icon-globe"></i>
+					</span>
+					<h3>Ciudades</h3>
+					<div class="caption">
+						<p>Ud. puede agregar provincias, cantones y parroquias que pertenezcan a un País.
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'ciudades'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_parametrizadiocesis or perms.sacramentos.change_parametrizaparroquia or perms.sacramentos.add_parametrizadiocesis or perms.sacramentos.add_parametrizaparroquia%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-cogs"></i>
+					</span>
+					<h3>Parámetros</h3>
+					<div class="caption">
+						<p>Ud. puede agregar o editar los parámetros de la Diócesis o de la Parroquia.
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'parametros'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_parroquia or perms.sacramentos.add_parroquia%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-home"></i>
+					</span>
+					<h3>Parroquias</h3>
+					<div class="caption">
+						<p>Ud. puede agregar o editar parroquias eclesiásticas, así como obtener un reporte.</p>
+						{%if perms.sacramentos.change_parroquia or perms.sacramentos.add_parroquia%}
+						<p><a class='btn btn-primary' href="{%url 'parroquia_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.sacramentos.change_parroquia and perms.sacramentos.add_parroquia%}
+						<p><a class='btn btn-primary' href="{%url 'parroquia_create'%}">Ir</a></p>
+						{%endif%}
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.auth.change_group or perms.auth.add_group%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-group"></i>
+					</span>
+					<h3>Grupos Y Permisos</h3>
+					<div class="caption">
+						<p>Ud. puede agregar o editar grupos de usuario con sus respectivos permisos para poder accder al sistema
+						</p>
+						{%if perms.auth.change_group and perms.auth.add_group%}
+						<p><a class='btn btn-primary' href="{%url 'group_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.auth.change_group and perms.auth.add_group%}
+						<p><a class='btn btn-primary' href="{%url 'group_create'%}">Ir</a></p>
+						{%endif%}
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.admin.change_logentry%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-book"></i>
+					</span>
+					<h3>Logs</h3>
+					<div class="caption">
+						<p>Ud. puede observar y exportar todas las actividades realizadas por los usuarios en el sistema
+						</p>
+						<p>
+							<a class='btn btn-primary' href="{%url 'log_list'%}">Ir</a>
+						</p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_intenciones or perms.sacramentos.add_intenciones%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<!--<i class="icon-thumbs-up"></i>-->
+						<i class="icon-heart"></i>
+					</span>
+					<h3>Intenciones</h3>
+					<div class="caption">
+						<p>Ud. puede agregar o editar intenciones de misa en cada parroquia, elegir entre intenciones únicas y comunitarias.
+						</p>
+						{%if perms.sacramentos.change_intenciones and perms.sacramentos.add_intenciones%}
+						<p><a class='btn btn-primary' href="{%url 'intencion_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.sacramentos.change_intenciones and perms.sacramentos.add_intenciones%}
+						<p><a class='btn btn-primary' href="{%url 'intencion_list'%}">Ir</a></p>
+						{%endif%}
+					</div>
+
+				</div>
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_bautismo or perms.sacramentos.change_eucaristia or perms.sacramentos.change_confirmacion or perms.sacramentos.change_matrimonio or perms.sacramentos.change_intenciones%}
+			<li class="span3">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x">
+						<i class="icon-circle icon-stack-base icon-muted"></i>
+						<i class="icon-print"></i>
+					</span>
+					<h3>Reportes</h3>
+					<div class="caption">
+						<p>Ud. puede acceder a reportes de: Sacramentos, Intenciones y Permisos</p>
+						<p><a href="{%url 'reportes'%}" class='btn btn-primary'>Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+		</ul>
+
+
+
+{%endblock%}
+
+<!--
+
+<div class="row-fluid">
+	<div class="span11 offset1">
+		<ul class='thumbnails'>
+
+			{%if perms.sacramentos.change_feligres or perms.sacramentos.add_feligres%}
+			
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-user icon-5x "></i>
+						<h2>Personas</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar, editar u obtener un reporte de un feligres de cada parroquia
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'usuario_list'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{% if perms.sacramentos.change_bautismo or  perms.sacramentos.add_bautismo or perms.sacramentos.change_eucaristia or  perms.sacramentos.add_eucaristia or perms.sacramentos.change_matrimonio or  perms.sacramentos.add_matrimonio or perms.sacramentos.change_confirmacion or  perms.sacramentos.add_confirmacion %}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-file-text icon-5x"></i>
+						<h2>Sacramentos</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede acceder a Bautismos, Eucaristías, Confirmaciones y Matrimonios en cada parroquia
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'sacramentos'%}">Ir</a></p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_libro or  perms.sacramentos.add_libro%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-book icon-5x "></i>
+						<h2>Libros</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar o editar un libro perteneciente a una parroquia 
+						</p>
+						<p>
+							{%if perms.sacramentos.change_libro and perms.sacramentos.add_libro %}
+							<a class='btn btn-primary' href="{%url 'libro_list'%}">Ir</a>
+							{%endif%}
+							{%if not perms.sacramentos.change_libro and perms.sacramentos.add_libro %}
+							<a class='btn btn-primary' href="{%url 'libro_create'%}">Ir</a>
+							{%endif%}
+						</p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_asignarsecretaria%}
+			<li class="span5">
+				<div class="thumbnail">
+					<div style='text-align: center'>
+						<i class="icon-user icon-5x"></i>
+						<h2>Asignar Secretaria</h2>
+
+					</div>
+					<div class="caption">
+						<p>
+							Ud. puede asignar secretari@s a su parroquia donde está asignado
+						</p>
+						<p><a class="btn btn-primary" href="{%url 'asignar_secretaria_list'%}">Ir</a>
+							
+
+						</p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.ciudades%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-renren icon-5x "></i>
+						<h2>Ciudades</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar provincias, cantones y parroquias.
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'ciudades'%}">Ir</a></p>
+					</div>
+				</div>
+
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_parametrizadiocesis or perms.sacramentos.change_parametrizaparroquia or perms.sacramentos.add_parametrizadiocesis or perms.sacramentos.add_parametrizaparroquia%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-wrench icon-5x "></i>
+						<h2>Parámetros</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar o editar los parámetros de la Diócesis o de la Parroquia.
+						</p>
+						<p><a class='btn btn-primary' href="{%url 'parametros'%}">Ir</a></p>
+					</div>
+				</div>
+
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_parroquia or perms.sacramentos.add_parroquia%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-thumbs-up icon-5x "></i>
+						<h2>Parroquias</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar o editar parroquias eclesiásticas, así como obtener un reporte.</p>
+						{%if perms.sacramentos.change_parroquia or perms.sacramentos.add_parroquia%}
+						<p><a class='btn btn-primary' href="{%url 'parroquia_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.sacramentos.change_parroquia and perms.sacramentos.add_parroquia%}
+						<p><a class='btn btn-primary' href="{%url 'parroquia_create'%}">Ir</a></p>
+						{%endif%}
+					</div>
+				</div>
+
+			</li>
+			{%endif%}
+			{%if perms.auth.change_group or perms.auth.add_group%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-group icon-5x"></i>
+						<h2>Grupos Y Permisos</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar o editar grupos de usuario con sus respectivos permisos
+						</p>
+						{%if perms.auth.change_group and perms.auth.add_group%}
+						<p><a class='btn btn-primary' href="{%url 'group_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.auth.change_group and perms.auth.add_group%}
+						<p><a class='btn btn-primary' href="{%url 'group_create'%}">Ir</a></p>
+						{%endif%}
+					</div>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.admin.change_logentry%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-book icon-5x "></i>
+						<h2>Logs</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede observar y exportar todas las actividades realizadas por los usuarios en el sistema
+						</p>
+						<p>
+							
+							<a class='btn btn-primary' href="{%url 'log_list'%}">Ir</a>
+
+						</p>
+					</div>
+				</div>
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_intenciones or perms.sacramentos.add_intenciones%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class="icon-thumbs-up icon-5x "></i>
+						<h2>Intenciones de Misa</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede agregar o editar intenciones de misa en cada parroquia 
+						</p>
+						{%if perms.sacramentos.change_intenciones and perms.sacramentos.add_intenciones%}
+						<p><a class='btn btn-primary' href="{%url 'intencion_list'%}">Ir</a></p>
+						{%endif%}
+						{%if not perms.sacramentos.change_intenciones and perms.sacramentos.add_intenciones%}
+						<p><a class='btn btn-primary' href="{%url 'intencion_list'%}">Ir</a></p>
+						{%endif%}
+					</div>
+				</div>
+
+			</li>
+			{%endif%}
+
+			{%if perms.sacramentos.change_bautismo and perms.sacramentos.change_sacramento and perms.sacramentos.change_eucaristia and perms.sacramentos.change_confirmacion and perms.sacramentos.change_matrimonio or perms.sacramentos.change_intenciones%}
+			<li class="span5">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-print icon-5x' ></i>
+						<h2>Reportes</h2>
+					</div>
+					<div class="caption">
+						<p>Ud. puede acceder a reportes de: Sacramentos, Intenciones y Permisos</p>
+						<p><a href="{%url 'reportes'%}" class='btn btn-primary'>Ir</a></p>
+
+					</div>
+					
+				</div>
+			</li>
+			{%endif%}
+			
+		</ul>
+	</div>
+</div>
+
+
+-->

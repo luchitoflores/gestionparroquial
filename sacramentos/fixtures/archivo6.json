@@ -1,0 +1,290 @@
+[
+{
+    "pk": 1, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede agregar permisos", 
+        "codename": "add_permission", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }
+},
+{
+    "pk": 2, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede actualizar permisos", 
+        "codename": "change_permission", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }
+},
+{
+    "pk": 3, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede eliminar permisos", 
+        "codename": "delete_permission", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }
+},
+{
+    "pk": 4, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede agregar grupos", 
+        "codename": "add_group", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }
+},
+{
+    "pk": 5, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede actualizar grupos", 
+        "codename": "change_group", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }
+},
+{
+    "pk": 6, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede eliminar grupos", 
+        "codename": "delete_group", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }
+},
+{
+    "pk": 7, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede agregar usuarios", 
+        "codename": "add_user", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }
+},
+{
+    "pk": 8, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede actualizar usuarios", 
+        "codename": "change_user", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }
+},
+{
+    "pk": 9, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede eliminar usuarios", 
+        "codename": "delete_user", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }
+},
+{
+    "pk": 10, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can add content type", 
+        "codename": "add_contenttype", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }
+},
+{
+    "pk": 11, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can change content type", 
+        "codename": "change_contenttype", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }
+},
+{
+    "pk": 12, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can delete content type", 
+        "codename": "delete_contenttype", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }
+},
+{
+    "pk": 13, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can add session", 
+        "codename": "add_session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }
+},
+{
+    "pk": 14, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can change session", 
+        "codename": "change_session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }
+},
+{
+    "pk": 15, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can delete session", 
+        "codename": "delete_session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }
+},
+{
+    "pk": 16, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can add site", 
+        "codename": "add_site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }
+},
+{
+    "pk": 17, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can change site", 
+        "codename": "change_site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }
+},
+{
+    "pk": 18, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can delete site", 
+        "codename": "delete_site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }
+},
+{
+    "pk": 19, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede agregar logs", 
+        "codename": "add_logentry", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }
+},
+{
+    "pk": 20, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede actualizar logs", 
+        "codename": "change_logentry", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }
+},
+{
+    "pk": 21, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Can delete log entry", 
+        "codename": "delete_logentry", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }
+},
+{
+    "pk": 22, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede agregar libros", 
+        "codename": "add_libro", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }
+},
+{
+    "pk": 23, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede actualizar libros", 
+        "codename": "change_libro", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }
+},
+{
+    "pk": 24, 
+    "model": "auth.permission", 
+    "fields": {
+        "name": "Puede eliminar libros", 
+        "codename": "delete_libro", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }
+}
+]

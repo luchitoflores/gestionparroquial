@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{%block title%}
+{%if object.id%}
+Editar Administrador
+{%else%}
+Agregar Administrador
+{%endif%}
+{%endblock%}
+
+{%block content_title%}
+{%if object.id%} 
+Editar Administrador
+{%else%}
+Agregar Administrador
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<form action="." method="POST" class="form-horizontal">
+	{%csrf_token%}
+	
+
+	<div class="control-group">
+		<div class="control-label">
+			{{ form.administrador.label }}
+		</div>
+		<div class="controls">
+			{{ form.administrador }} 
+			<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+			
+			<a href="{% url 'administrador_create'%}" class="btn btn-primary"><i class='icon-plus'></i></a>
+		</div>
+		<div class="controls">
+			<div class="help-text">
+				{{ form.administrador.help_text }}	
+			</div>
+		</div>
+		<div class="controls">
+			<div class="errors">
+				{{ form.administrador.errors }}
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">
+			{{ form.is_staff.label }}
+		</div>
+		<div class="controls">
+			{{ form.is_staff }} 
+		</div>
+		<div class="controls">
+			<div class="help-text">
+				{{ form.is_staff.help_text }}	
+			</div>
+		</div>
+		<div class="controls">
+			<div class="errors">
+				{{ form.is_staff.errors }}
+			</div>
+		</div>
+	</div>
+
+
+	
+	<div class="form-actions">
+		<button class='btn btn-primary' type="submit">Guardar</button>
+		<a href="{% url 'administrador_list' %}" class='btn btn-danger'>Cancelar</a>
+	</div>
+
+</form>
+
+
+{%include 'usuario/buscar_feligreses.html'%}
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{% block title%} Cantones {% endblock %}
+{%block content_title%}
+Lista de Cantones
+{%endblock%}
+{%block content%}
+
+<table id='id_table_canton' class="table table-bordered table-striped">
+	<thead>
+		<tr class='alert alert-info'>
+			<th>Nombre</th>
+			<th data-hide='phone'>Código</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for o in object_list %}
+		<tr>
+			<td><a href="{{o.get_absolute_url}}">{{o.nombre|title}}</a></td>
+			<td>{{o.abreviatura}}</td>
+		</tr>
+
+		{%endfor%}
+	</tbody>
+</table>
+
+<a href="{% url 'canton_create' %}" class='btn btn-primary'>Nuevo Cantón</a>
+
+{%endblock%}

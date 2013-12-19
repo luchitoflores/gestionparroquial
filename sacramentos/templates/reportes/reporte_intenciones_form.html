@@ -1,0 +1,89 @@
+<!doctype html>
+{%extends 'base.html'%}
+{%block title%}
+Reporte
+{%endblock%}
+{%block content_title%}
+Reporte Intenciones de Misa
+{%endblock%}
+{%block content%}
+<form id='id_form_intenciones_hora' action="." class='form-horizontal'>
+	<div class='row'>
+		<div class='span10'>
+			
+			<div class='row'>
+				<div class="span6">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.tipo.label}}
+						</label>
+						<div class='controls'>
+							{{form.tipo}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.tipo.help_text}}
+							<div class="controls">
+								<div class="errors">								
+									{{form.tipo.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="span6">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.fecha.label}}
+						</label>
+						<div class='controls'>
+							{{form.fecha}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.fecha.help_text}}
+							<div class="controls">
+								<div class="errors">								
+									{{form.fecha.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div id='id_div_hora' class="span6" style="display: none;">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.hora.label}}
+						</label>
+						<div class='controls'>
+							{{form.hora}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.hora.help_text}}
+							<div class="controls">
+								<div class="errors">								
+									{{form.hora.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'>Generar Reporte</button> 
+		<a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>
+
+	</div>
+</form>
+
+{%endblock%}

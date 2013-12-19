@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+{%block title%}Periodos de Asignación{%endblock%}
+{%block content_title%}
+Periodos de Asignación
+{%endblock%}
+
+
+
+
+{%block content%}
+<h3>
+	{{asignacion.persona}} - {{asignacion.parroquia}}
+</h3>
+</br>
+
+<table id='id_table_periodo' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Fecha de Inicio</th>
+			<th>Fecha de Finalización</th>
+			<th>Estado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{%for o in object_list%}
+		<tr>
+			<td><a href="{%url 'parroco_periodos_asignacion_update' pk=o.id%}">{{o.inicio}}</a></td>
+			<td>{%if o.fin%}{{o.fin}}{%else%}No se ha especificado aún{%endif%}</td>
+			<td>{%if o.estado%}Activo{%else%}Desactivo{%endif%} </td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+
+
+<div class="form-actions">
+	<a href="{%url 'nuevo_periodo_asignacion' pk=asignacion.id %}" class='btn btn-primary'>Nuevo Periodo</a>
+	<a href="{%url 'asignar_parroco_list' pk=asignacion.parroquia.id %}" class='btn btn-danger'>Cancelar</a>
+	
+</div>
+
+
+
+{%endblock%}

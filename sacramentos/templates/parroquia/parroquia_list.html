@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Parroquias Eclesiásticas{%endblock%}
+{%block content_title%}
+Lista de Parroquias Eclesiásticas
+{%endblock%}
+
+{%block content%}
+<table id='id_table_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th data-hide='phone'>Lugar</th>
+			<th data-hide='phone, tablet'>Direccion</th>
+			<th data-hide='phone, tablet'>Teléfono</th>
+			<th>Historial Párrocos</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		{%for o in object_list%}
+		<tr>
+			<td>
+				<a href="{{o.get_absolute_url}}">{{o}}</a>
+			</td>
+			<td>{{o.direccion.parroquia}}</td>
+			<td>{{o.direccion.domicilio}}</td>
+			<td>{{o.direccion.telefono}}</td>
+			<td>
+				<a href="{%url 'asignar_parroco_list' pk=o.id%}">
+					Párrocos
+				</a>
+			</td>
+			
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+{%if perms.sacramentos.add_parroquia %}
+<a href="{%url 'parroquia_create'%}" class='btn btn-primary'>Nueva Parroquia</a>
+{%endif%}
+
+{%endblock%}

@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+
+{%block content_title%}
+Reportes
+{%endblock%}
+
+{%block content%}
+
+<div class="row">
+	<div class="span10 offset1">
+		<ul class="thumbnails">
+			{%if perms.sacramentos.change_bautismo and perms.sacramentos.change_eucaristia and perms.sacramentos.change_confirmacion and perms.sacramentos.change_matrimonio%}
+			<li class="span4">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-archive icon-4x'></i>
+						<h2>Anual Sacramentos</h2>
+					</div>
+					<p>Ud. puede obtener el reporte anual de sacramentos: Bautismos, Eucaristías, Confirmaciones y Matrimonios realizados en una parroquia</p>
+					<p><a href="{%url 'reporte_anual'%}" class='btn btn-primary'>Ir</a></p>
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_intenciones%}
+			<li class="span4">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-thumbs-up icon-4x' ></i>
+						<h2>Intenciones de Misa</h2>
+					</div>
+					<p>Ud. puede obtener un reporte de las intenciones de misa que se celebrarán en cada una parroquia</p>
+					<p><a href="{%url 'reporte_intenciones'%}" class='btn btn-primary'>Ir</a></p>
+				</div>
+			</li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="span10 offset1">
+		<ul class="thumbnails">
+			{%if perms.sacramentos.change_bautismo and perms.sacramentos.change_eucaristia and perms.sacramentos.change_confirmacion and perms.sacramentos.change_matrimonio%}		
+			<li class="span4">
+				<div class='thumbnail'>
+					<div style='text-align: center'>
+						<i class='icon-tags icon-4x'></i>
+						<h2>Permisos</h2>
+					</div>
+					<p>Ud. puede emitir un reporte con el permisos para poder realizar un sacramento en cualquier parroquia</p>
+					<p><a href="{%url 'reporte_permiso'%}" class='btn btn-primary'>Ir</a></p>
+				</div>
+			</li>
+			{%endif%}
+			
+
+		</ul>
+	</div>
+</div>
+
+{%endblock%}

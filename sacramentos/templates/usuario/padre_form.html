@@ -1,0 +1,45 @@
+{%csrf_token%}
+<div class="container">
+	<input id='id_padre' type="hidden">
+	<div class="row">
+		<div class="span12">
+			<div class="control-group">
+				<label class="control-label">{{perfil_padre_form.dni.label}} *</label>
+				<div class="controls">
+					{{perfil_padre_form.dni}}
+					<a href="#id_buscar_padre" class='btn btn-primary' data-toggle='modal'>
+						<i class='icon-search icon-white'></i> Busqueda Avanzada</a>
+					</div>
+					<div class="controls">{{perfil_padre_form.dni.help_text}}</div>
+				</div>
+
+				{% for f in usuario_form%}
+
+				<div class="control-group">
+					<label class="control-label">{{f.label}}</label>
+					<div class="controls">{{f}}</div>
+					<div class="controls">{{f.help_text}}</div>
+				</div>
+				{%endfor%}
+				{% for f in perfil_padre_form%}
+				{%if f.label != perfil_padre_form.dni.label %}
+				<div class="control-group">
+					<label class="control-label">{{f.label}} *</label>
+					<div class="controls">{{f}}</div>
+					<div class="controls">{{f.help_text}}</div>
+					<div class="controls">
+						<div class="errors">								
+							{{f.errors}}
+						</div>
+					</div>
+				</div>
+				{%endif%}
+
+				{%endfor%}
+
+				<div class='form-actions'>
+					<button type="submit" class='btn btn-primary'> Guardar </button>
+				</div>
+			</div>
+		</div>
+	</div>

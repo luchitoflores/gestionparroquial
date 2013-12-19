@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head> 
+<style>
+@page {
+	margin-bottom: 2.5cm;
+	size: a4; 
+	margin: 3cm 3cm 3cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+}
+</style>    
+<body>
+	<center>
+		
+		<h2> 
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiastica {{confirmacion.parroquia|upper}} <br/>
+			{{confirmacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Direccion: "}}{{ confirmacion.parroquia.direccion }} {{"Tel: "}}{{confirmacion.parroquia.direccion.telefono}}
+			</small>
+		</h2>
+
+		
+		
+
+		<br/>
+		<h1>{{"Partida de Confirmación"|upper}}</h1>
+
+	</center>
+	<h2> <p>El suscrito Párroco de <strong>{{confirmacion.parroquia|upper}}</strong> CERTIFICA:</h2>
+	Que en el libro: <strong>{{ confirmacion.libro.numero_libro}}</strong>, pagina: <strong>{{ confirmacion.pagina}}</strong> y con el numero: <strong>{{ confirmacion.numero_acta }}</strong> <br/>
+	se encuentra la partida de Confirmación de: <strong>{{ confirmacion.confirmado}}</strong> <br/>
+	{%if "m" in confirmacion.confirmado.sexo%}
+	hijo de: 
+	{%if confirmacion.confirmado.padre%}
+	<strong>{{ confirmacion.confirmado.padre}}</strong> <br/>
+	{%else%}
+	<strong>{{"S/N"}} </strong> <br />
+	{%endif%}
+	{%else%}
+	hija de: 
+	{%if confirmacion.confirmado.padre%}
+	<strong>{{ confirmacion.confirmado.padre}}</strong> <br/>
+	{%else%}
+	<strong>{{"S/N"}} </strong> <br />
+	{%endif%}
+	{%endif%}
+	y de: 
+	{%if confirmacion.confirmado.madre%}
+	<strong>{{ confirmacion.confirmado.madre}}</strong> <br/>
+	{%else%}
+	<strong>{{"S/N"}} </strong> <br />
+	{%endif%}
+	realizado el: <strong>{{confirmacion.fecha_sacramento}}</strong><br/>
+	Confirmante: <strong>{{confirmacion.celebrante}}</strong><br/>
+	{%if confirmacion.padrino and confirmacion.madrina%}
+	Padrinos: <strong>{{ confirmacion.padrino}}</strong> y <strong>{{ confirmacion.madrina}}</strong> <br/><br/>
+	{%endif%}
+	{%if confirmacion.padrino and not confirmacion.madrina%}
+	Padrino: <strong>{{ confirmacion.padrino}}</strong> <br/><br/>
+	{%endif%}
+	{%if not confirmacion.padrino and confirmacion.madrina%}
+	Madrina: <strong>{{ confirmacion.madrina}}</strong> <br/><br/>
+	{%endif%}
+
+	Datos fidedignos tomados del archivo parroquial<br/><br/>
+
+
+
+
+	<strong>{{confirmacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong><br/><br/><br/><br/><br/>
+
+	<table align='center'>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">
+
+
+					---------------------------------------------------<br/>
+					P. {{cura.persona.user.get_full_name}}<br/>
+					<strong>{{"PARROCO"}}</strong> 
+
+				</td>
+				<td style="text-align: center;">
+
+
+					---------------------------------------------------<br/>
+					{{asignacion.persona.user.get_full_name}}<br/>
+					<strong>
+						{%if 'f' in asignacion.persona.sexo %}
+						{{"SECRETARIA"}}
+						{%else%}
+						{{"SECRETARIO"}}
+						{%endif%}
+					</strong>
+
+
+				</td>
+			</tr>
+
+
+		</tbody>
+	</table>
+	<br/>
+
+
+	<div id="footer">
+		<hr style="margin-bottom: 1px;"/>
+		<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>{{asignacion.persona.user.get_full_name}} </strong></p>
+
+	</div>
+
+</body>
+</html>

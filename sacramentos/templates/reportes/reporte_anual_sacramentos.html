@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+</head> 
+<style>
+@page {
+	margin-bottom: 2.5cm;
+	size: a4; 
+	margin: 3cm 3cm 3cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+}
+
+</style> 
+<body >
+	<center>
+		
+		
+		<h2> 
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiastica {{asignacion.parroquia|upper}} <br/>
+			{{asignacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}  <br>
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Direccion: "}}{{ asignacion.parroquia.direccion }} {{"Tel: "}}{{asignacion.parroquia.direccion.telefono}}</small><br/>
+		</h2>
+		
+	</center>
+	<br/>
+	<p align='right'> <strong>{{asignacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
+	{{"El suscrito parroco de "}} <strong>{{asignacion.parroquia|upper}}</strong> {{"CERTIFICA:"}}<br/><br/>
+	{{"Que en el año "}} <strong>{{anio_actual}}</strong> {{"se realizaron los siguientes sacramentos:"}}<br/><br/>
+	<ol>
+		<li>{{"Bautizados durante el año: "}} <strong>{{num_bautizos}}</strong></li>
+		<ul>
+			<li>{{"Hasta 1 año: "}}{{ninios1}}</li>
+			<li>{{"De 1 a 7 años: "}}{{ninios7}}</li>
+			<li>{{"Mayores de 7 años: "}}{{ninios}}</li>
+		</ul><br/>
+		<li>
+			{{"Primeras Comuniones durante el año: "}} <strong>{{eucaristias}}</strong>
+		</li><br/>
+		<li>
+			{{"Confirmaciones durante el año: "}} <strong>{{confirmaciones}}</strong>
+		</li><br/>
+		<li>
+			{{"Matrimonios durante el año: "}} <strong>{{matrimonios}}</strong>
+		</li>
+		<ul>
+			<li>
+				{{"Matrimonios Catolicos: "}} <strong>{{catolicos}}</strong>
+			</li>
+			<li>
+				{{"Matrimonios Mixtos: "}} <strong>{{mixtos}}</strong>
+			</li>
+			
+		</ul>
+	</ol>
+	
+	<br/><br/><br/><br/>
+
+	<table align='center'>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">
+
+
+					-------------------------------------------------------------------<br/>
+					P. {{cura.persona.user.get_full_name}}<br/>
+					<strong>{{"PARROCO"}}</strong> 
+
+				</td>
+
+			</tr>
+
+
+		</tbody>
+	</table>
+
+	
+	
+	
+	
+	
+
+	
+
+	<div id="footer">
+		<hr style="margin-bottom: 1px;"/>
+		<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
+			{{asignacion.persona.user.get_full_name}}
+		</p>
+
+	</div>
+
+</body>
+</html>

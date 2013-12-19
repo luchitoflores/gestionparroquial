@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Intenciones de Misa{%endblock%}
+{%block content_title%}
+Lista de Intenciones de Misa
+{%endblock%}
+
+{%block content%}
+<table id='id_table_parroquia' class='table table-bordered table-striped table-hover' width="100%">
+	<thead>
+		<tr>
+			<th>Oferente</th>
+			<th>Fecha</th>
+			<th>Hora</th>
+			<th data-hide='phone, tablet'>Tipo Intención</th>
+			<th data-hide='phone'>Intención</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		{%for o in object_list%}
+		<tr>
+			<td>
+				<a href="{{o.get_absolute_url}}">{{o.oferente}}</a>
+			</td>
+			<td>{{o.fecha}}</td>
+			<td>{{o.hora|date:'H:i'}}</td>
+			<td>{%if o.individual%}Única{%else%}Comunitaria{%endif%}</td>
+			<td width="40%">{{o.intencion}}</td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+{%if perms.sacramentos.add_intenciones %}
+<a href="{%url 'intencion_create'%}" class='btn btn-primary'>Registrar intenciones de misa</a>
+{%endif%}
+
+{%endblock%}

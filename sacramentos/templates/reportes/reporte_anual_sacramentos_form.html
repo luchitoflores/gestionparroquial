@@ -1,0 +1,38 @@
+<!doctype html>
+{%extends 'base.html'%}
+{%block title%}
+Reporte
+{%endblock%}
+{%block content_title%}
+Reporte Anual de Sacramentos
+{%endblock%}
+
+{%block content%}
+<form id ='id_form_anio' action="." class='form-horizontal'>
+	
+	{% for f in form%}
+	<div class="control-group">
+		<label class='control-label'>
+			{{f.label}}
+		</label>
+		
+		<div class="controls">
+			{{f}}
+		</div>
+		
+		<div class="controls help-text" >
+			{{f.help_text}}
+			<span class="errors" >
+				{{f.errors}}
+			</span>
+		</div>
+	</div>
+	{%endfor%}
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'>Generar Reporte</button> 
+		<a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>
+		
+	</div>
+</form>
+
+{%endblock%}

@@ -1,0 +1,83 @@
+{% extends 'base.html'%}
+{%load tags_html%}
+
+{%block title%}{%if object.id%}Editar Parámetros{%else%}Agregar Parámetros{%endif%}{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Parámetros
+{%else%}
+Agregar Parámetros
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<form action="." method='POST' class="form-horizontal">
+	{%csrf_token%}
+	<div class='row'>
+		<div class='span10'>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Parametrización Parroquial</legend>
+				<div class='row'>
+					<div class="span4">
+						<div class="control-group">
+							<div class='control-label'>
+								{{form_parametriza.numero_acta.label}} *
+							</div>
+							<div class="controls">
+								{{form_parametriza.numero_acta}}
+							</div>
+							<div class="controls help-text">
+								{{form_parametriza.numero_acta.help_text}}
+							</div>
+							<div class="controls errors">
+								{{form_parametriza.numero_acta.errors}}
+							</div>
+						</div>
+						<div class="control-group">
+							<div class='control-label'>
+								{{form_parametriza.pagina.label}} *
+							</div>
+							<div class="controls">
+								{{form_parametriza.pagina}}
+							</div>
+							<div class="controls help-text">
+								{{form_parametriza.pagina.help_text}}
+							</div>
+							<div class="controls errors">
+								{{form_parametriza.pagina.errors}}
+							</div>
+						</div>
+
+
+
+						<div class='control-group'>
+							<div class='control-label'>
+								{{form_parametriza.parroquia.label}} * 
+							</div>
+
+							<div class='controls'>
+								{{form_parametriza.parroquia}}
+							</div>
+							<div class="controls help-text">
+								{{form_parametriza.parroquia.help_text}}
+							</div>
+							<div class='controls'>
+								{{form_parametriza.parroquia.errors}}
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button class='btn btn-primary' type="submit"> Guardar</button>
+		<a href="{%url 'home'%}" class='btn btn-danger'>Cancelar</a>
+	</div>
+</form>
+
+{%endblock%}

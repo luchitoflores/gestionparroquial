@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+
+{%block title%}Lista de Feligreses{%endblock%}
+{%block content_title%}
+Lista de Feligreses
+{%endblock%}
+
+
+{%block content%}
+
+
+<table id='id_table_feligres' class='footable table table-bordered table-striped' width="100%">
+	<thead>
+		<tr class='alert alert-info'>
+			
+			<th>Nombres</th>
+			<th>Dni</th>
+			<th data-hide="phone">Fecha Nacimiento</th>
+			<th data-hide="phone,tablet">Padre</th>
+			<th data-hide="phone,tablet">Madre</th>
+		</tr>
+		
+	</thead>
+	<tbody>
+		{% for o in object_list %}
+		<tr>
+			<td><a href="{%url 'usuario_update' pk=o.id%}"> {{o.user.get_full_name}}</a></td>
+			<td> {{o.dni}}</td>
+			<td id='id_fecha_nacimiento'>{{o.fecha_nacimiento}}</td>
+			<td>{{o.padre.user.get_full_name}}</td>
+			<td>{{o.madre.user.get_full_name}}</td>
+
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+
+{%if perms.sacramentos.add_feligres%}
+<a href="{% url 'usuario_create' %}" class='btn btn-primary'>Nuevo Feligres</a>
+{%endif%}
+
+
+{%endblock%}

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head> 
+<style>
+@page {
+	margin-bottom: 2.5cm;
+	size: a4; 
+	margin: 3cm 3cm 3cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+}
+</style>   
+<body>
+	<center>
+		
+		<h2>
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiástica {{matrimonio.parroquia|upper}} <br/>
+			{{matrimonio.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Dirección: "}}{{ matrimonio.parroquia.direccion }} {{"Tel: "}}{{matrimonio.parroquia.direccion.telefono}}		
+			</small>
+		</h2> <br />
+		<h1>{{"Partida de Matrimonio"|upper}}<p/></h4></center></h1>
+		<h2> <p>El suscrito Párroco de <strong>{{matrimonio.parroquia|upper}}</strong> CERTIFICA:</h2>
+		Que en el libro: <strong>{{ matrimonio.libro.numero_libro}}</strong>, pagina: <strong>{{ matrimonio.pagina}}</strong> y con el numero: <strong>{{ matrimonio.numero_acta }}</strong> </br>
+		se encuentra la Partida Matrimonial de: <strong>{{ matrimonio.novio}}</strong> <br/>
+		con: <strong>{{ matrimonio.novia}}</strong><br/>
+		Presenció el Matrimonio canónico: <strong>{{matrimonio.celebrante}}</strong><br/>
+		realizado el: <strong>{{matrimonio.fecha_sacramento}}</strong><br/><br/>
+		Datos fidedignos tomados del archivo parroquial<br/><br/>
+
+
+
+
+
+
+		<strong>{{matrimonio.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong><br/><br/><br/><br/><br/>
+
+
+		<table align='center'>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">
+
+
+						---------------------------------------------------<br/>
+						P. {{cura.persona.user.get_full_name}}<br/>
+						<strong>{{"PARROCO"}}</strong> 
+
+					</td>
+					<td style="text-align: center;">
+
+
+						---------------------------------------------------<br/>
+						{{asignacion.persona.user.get_full_name}}<br/>
+						<strong>
+							{%if 'f' in asignacion.persona.sexo %}
+							{{"SECRETARIA"}}
+							{%else%}
+							{{"SECRETARIO"}}
+							{%endif%}
+						</strong>
+
+
+					</td>
+				</tr>
+
+
+			</tbody>
+		</table>
+		<br/>
+		{%if notas|length%}
+		Observaciones:<br/>
+
+		{%for n in notas%}
+		<strong>{{n.fecha|date:"SHORT_DATE_FORMAT"}}{{": "}}{{n.descripcion}}</strong><br/>
+		{%endfor%}
+
+		{%endif%}
+
+
+		<div id="footer">
+			<hr style="margin-bottom: 1px;"/>
+			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>{{asignacion.persona.user.get_full_name}} </strong></p>
+
+		</div>
+
+
+	</body>
+	</html>

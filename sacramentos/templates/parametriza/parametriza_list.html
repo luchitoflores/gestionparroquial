@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Parámetros de la Diócesis{%endblock%}
+{%block content_title%}
+Lista de Parroquias Eclesiásticas
+{%endblock%}
+
+{%block content%}
+<table id='id_table_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Diocesis</th>
+			<th>Obispo</th>
+			<th>Direccion</th>
+			<th>Teléfono</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+
+		{%for o in object_list%}
+		<tr>
+			<td><a href="{%url 'parametriza_update' pk=o.id%}">{{o.diocesis}}</a></td>
+			<td>{{o.obispo}}</td>
+			<td>{{o.direccion.domicilio}}</td>
+			<td>{{o.direccion.telefono}}</td>
+			
+			
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+<!--{%if perms.sacramentos.add_parametrizadiocesis %}
+<a href="{%url 'parametriza_create'%}" class='btn btn-primary'>Nuevo Parámetro</a>
+{%endif%}-->
+
+{%endblock%}

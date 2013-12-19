@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block h1%} Eliminar Canton{% endblock %}
+
+{%block content%}
+
+<div class='control-group'>
+
+	<form method="POST" action="." class='form-horizontal'>
+		{%csrf_token%}
+
+		Está seguro de querer eliminar el siguiente cantón:
+		<h4>{{object.nombre}}</h4> 
+
+		<input type="submit" value='Si' class='btn btn-primary'></li>
+		<a class='btn btn-primary' href="{% url 'canton_list' %}">No</a>
+
+	</form>
+
+</div>
+
+{% endblock%}

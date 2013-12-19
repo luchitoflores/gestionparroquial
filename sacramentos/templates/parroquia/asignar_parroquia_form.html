@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+
+{%block title%}
+{%if object.id%}
+Editar Asignación - {{object}}
+{%else%}
+Agregar Asignación de una Parroquia 
+{%endif%}
+{%endblock%}
+
+{%block content_title%}
+{%if object.id%} 
+Asignar un párroco - {{object}}
+{%else%}
+Agregar Asignación - {{object}} 
+{%endif%}
+{%endblock%}
+
+
+{%block content%}
+
+<form action="." method='POST' class='form-horizontal'>
+	{%csrf_token%}
+
+	{% for f in form%}
+	<div class="control-group">
+
+		<div class="control-label">
+			{{f.label}}
+		</div>
+		<div class="controls">
+			{{f}}
+		</div>
+
+		<div class="controls">
+			<div class='help-text'>
+				{{f.help_text}}
+			</div>
+		</div>
+		<div class="controls">
+			<div class='error'>
+				{{f.errors}}
+			</div>
+		</div>
+	</div>
+	{%endfor%}
+
+	
+	{% for f in form_periodo%}
+	<div class="control-group">
+
+		<div class="control-label">
+			{{f.label}}
+		</div>
+		<div class="controls">
+			{{f}}
+		</div>
+
+		<div class="controls">
+			<div class='help-text'>
+				{{f.help_text}}
+			</div>
+		</div>
+		<div class="controls">
+			<div class='error'>
+				{{f.errors}}
+			</div>
+		</div>
+	</div>
+	{%endfor%}
+
+	
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'> Guardar </button>
+		
+		{%if object.id%}
+		<a href="{%url 'asignar_parroco_list' pk=object.id%}" class='btn btn-danger'>Cancelar</a>
+
+		{%endif%}
+	</div>
+
+</form>
+
+{%endblock%}

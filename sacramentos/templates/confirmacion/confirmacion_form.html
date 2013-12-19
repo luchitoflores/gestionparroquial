@@ -1,0 +1,206 @@
+{%extends 'base.html'%}
+{%load tags%}
+
+{%block title%}
+{%if object.id%}
+Editar Confirmacion 
+{%else%}
+Agregar Confirmacion
+{%endif%}
+{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Confirmacion 
+{%else%}
+Agregar Confirmacion 
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+
+<!-- Div para manejar mensajes de error -->
+<div id="id_mensaje">
+	
+</div>
+{%if object.id%}
+<div class="btn-toolbar pull-right">
+	<div class="btn-group">
+		<button data-toggle="dropdown" class=" btn btn-primary dropdown-toggle">
+			<i class='icon-print'></i>  Reportes <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right" >
+			<li>
+				<a href="{%url 'confirmacion_reporte' pk=object.id%}" target="_blank"><i class='icon-file-text-alt'></i> Partida de Confirmacion</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+{%endif%}
+<!-- Pestañas para datos del feligres, y del bautizo -->
+
+<form id='id_form_confirmacion' action="." method='POST' class='form-horizontal'>
+	{% csrf_token%}
+	
+	<div class='row'>
+		<div class='span10'>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos del Sacramento</legend>
+				<div class="row">
+					<div class="span4">
+						<div class='control-group'>
+							<label for="id_libro" class='control-label'>{{form_confirmacion.libro.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.libro}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.libro.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.libro.errors}}
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="span4">
+						
+						<div class='control-group'>
+							<label for="id_fecha_sacramento" class='control-label'>{{form_confirmacion.fecha_sacramento.label}} *
+							</label>
+							<div class='controls'>
+								{{form_confirmacion.fecha_sacramento}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.fecha_sacramento.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.fecha_sacramento.errors}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="span8">
+						<div class='control-group'>
+							<label for="id_confirmado" class='control-label'>{{form_confirmacion.confirmado.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.confirmado}}
+								<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.confirmado.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.confirmado.errors}}
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</fieldset>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
+				<div class="row">
+					<div class="span8">
+						<div class='control-group'>
+							<label for="id_celebrante" class='control-label'>{{form_confirmacion.celebrante.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.celebrante}}
+								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.celebrante.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.celebrante.errors}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="span4">
+						<div class='control-group'>
+							<label for="id_lugar_sacramento" class='control-label'>{{form_confirmacion.lugar_sacramento.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.lugar_sacramento}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.lugar_sacramento.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.lugar_sacramento.errors}}
+								</div>
+							</div>
+						</div>
+						<div class='control-group'>
+							<label for="id_iglesia" class='control-label'>{{form_confirmacion.iglesia.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.iglesia}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.iglesia.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.iglesia.errors}}
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="span4">
+						<div class='control-group'>
+							<label for="id_padrino" class='control-label'>{{form_confirmacion.padrino.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.padrino}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.padrino.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.padrino.errors}}
+								</div>
+							</div>
+						</div>
+						<div class='control-group'>
+							<label for="id_madrina" class='control-label'>{{form_confirmacion.madrina.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.madrina}}
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.madrina.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.madrina.errors}}
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class='btn btn-primary'> Guardar </button>
+				<a href="{%url 'confirmacion_list'%}" class='btn btn-danger'>Cancelar</a>
+			</div>
+		</div>
+	</div>
+
+	
+
+</form>
+
+
+{%include 'usuario/buscar_feligreses.html'%}
+{%include 'usuario/buscar_sacerdotes.html'%}
+{% endblock%}

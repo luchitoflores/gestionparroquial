@@ -1,0 +1,106 @@
+{% extends 'base.html'%}
+
+{%block title%}Lista de Matrimonios {%endblock%}
+{%block content_title%}
+Lista de Matrimonios
+{%endblock%}
+
+{%block extrascript%}
+<script src='/static/js/tablas.js'></script>
+<script>
+// funcion para obtener los nombres de los novios t¿y mostrarlos en el modal
+$(document).ready(function(){
+	$('.id_delete').click(function(){
+		var e=$(this).attr('name');
+
+		$.get('/matrimonio/ajax',function(data){
+			console.log(data.list_matrimonios);
+			var lista = data.list_matrimonios;
+			$.each(lista, function(indice, elemento){
+				var id = elemento.id;
+				if(id == e){
+					$('#id_novio').html('<p>'+elemento.novio+'</p>');
+					$('#id_novia').html('<p>'+elemento.novia+'</p>');
+					$('#id_eliminar').attr('href','/matrimonio/'+e+'/vigencia');
+				}
+			});
+
+		});
+	});		
+
+});
+
+</script>
+
+{%endblock%}
+{%block content%}
+
+
+<table id='id_table_matrimonio' class='table table-bordered table-striped'>
+	<thead>
+		<tr class='alert alert-info'>
+			
+			<th>Acta</th>
+			<th>Novio</th>
+			<th>Novia</th>
+			<th>Fecha Sacramento</th>
+			<th data-hide='phone, tablet'>Testigo</th>
+			<th data-hide='phone, tablet'>Testiga</th>
+			<th>Acciones</th>
+		</tr>
+		
+	</thead>
+	<tbody>
+		{% for o in object_list %}
+		<tr>
+			<td><a href="{%url 'matrimonio_update' pk=o.id%}"> {{o.numero_acta}}</a></td>
+			<td>{{o.novio.user.first_name}} {{o.novio.user.last_name}}</td>
+			<td>{{o.novia.user.first_name}} {{o.novia.user.last_name}}</td>
+			<td id='id_fecha_sacramento'>{{o.fecha_sacramento}}</td>
+			<td>{{o.testigo_novio}}</td>
+			<td>{{o.testigo_novia}}</td>
+			{%if o.vigente%}
+
+			<td>
+				{%if perms.sacramentos.delete_matrimonio %}
+				<a class='id_delete' href="#id_vigencia" role="button" data-toggle="modal" name='{{o.id}}'>Quitar Vigencia
+				</a>
+				{%endif%}
+			</td>
+			{%else%}
+			<td>
+				Sin acciones
+			</td>
+			{%endif%}
+
+			
+			
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+{%if perms.sacramentos.add_matrimonio %}
+<a href="{% url 'matrimonio_create' %}" class='btn btn-primary'>Nueva Acta Matrimonial</a>
+{%endif%}
+
+
+<!-- Modal para quitar la vigencia de un matrimonio-->
+<div  id="id_vigencia" class="modal hide fade"  tabindex="5">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		<h3>Eliminar Vigencia del Matrimonio</h3>
+	</div>
+	<div class="modal-body">
+		<p>Está seguro de querer eliminar la vigencia del matrimonio de:</p>
+		<h5 id='id_novio'></h5> con 
+		<h5 id='id_novia'></h5> 
+	</div>
+	<div class="modal-footer">
+		<a href="." class="btn">Cancelar</a>
+		<a id='id_eliminar' href="." class="btn btn-danger">Eliminar</a>
+	</div>
+</div>
+
+
+{%endblock%}

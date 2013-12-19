@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head> 
+<style>
+@page {
+	margin-bottom: 2.5cm;
+	size: a4; 
+	margin: 3cm 3cm 3cm 3cm;
+	@frame footer {
+		-pdf-frame-content: footer;
+		bottom: 1.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
+		height: 1cm;
+	}
+}
+body {
+	font-family: Helvetica, Arial, Sans;
+	font-size: 12px;
+}
+#footer{
+	text-align:center;
+	font-size: 9px; 
+	color: #666666;
+}
+</style>   
+<body>
+	<center>
+		
+		<h2> 
+			{%for d in p%}
+			{{d.diocesis|upper}}<br/>
+			{%endfor%}
+			Parroquia Eclesiastica {{eucaristia.parroquia|upper}} <br/>
+			{{eucaristia.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
+			<hr style="margin-bottom: 1px;"/>
+			<small>{{"Direccion: "}}{{ eucaristia.parroquia.direccion }} {{"Tel: "}}{{eucaristia.parroquia.direccion.telefono}}</small>
+		</h2><br />
+
+		<h1>{{"Certificado de Primera Comunión"|upper}}<p/></h1></center> <br />
+		<h2> <p>El suscrito Párroco de <strong>{{eucaristia.parroquia|upper}}</strong> CERTIFICA:</h2>
+		Que en el libro: <strong>{{ eucaristia.libro.numero_libro}}</strong>, pagina: <strong>{{ eucaristia.pagina}}</strong> y con el numero: <strong>{{ eucaristia.numero_acta }}</strong> </br>
+		se registra el nombre de: <strong>{{ eucaristia.feligres}}</strong> <br/>
+		Nombre del Padre: 
+		{%if eucaristia.feligres.padre%}
+		<strong>{{ eucaristia.feligres.padre}}</strong> <br/>
+		{%else%}
+		<strong>{{"S/N"}} </strong> <br />
+		{%endif%}
+		Nombre de la Madre: 
+		{%if eucaristia.feligres.madre%}
+		<strong>{{ eucaristia.feligres.madre}}</strong> <br/>
+		{%else%}
+		<strong>{{"S/N"}} </strong> <br />
+		{%endif%}
+		{%if eucaristia.padrino and eucaristia.madrina%}
+		Padrinos: <strong>{{ eucaristia.padrino}}</strong> y <strong>{{ eucaristia.madrina}}</strong> <br/>
+		{%endif%}
+		{%if eucaristia.padrino and not eucaristia.madrina%}
+		Padrino: <strong>{{ eucaristia.padrino}}</strong> <br/>
+		{%endif%}
+		{%if not eucaristia.padrino and eucaristia.madrina%}
+		Madrina: <strong>{{ eucaristia.madrina}}</strong> <br/>
+		{%endif%}
+		Recibió el Sacramento: <strong>{{eucaristia.fecha_sacramento}}</strong>
+		en la iglesia de: <strong>{{ eucaristia.iglesia}}</strong> <br/></p>
+
+
+
+
+		<strong>{{eucaristia.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong><br/><br/><br/><br/><br/>
+
+		<table align='center'>
+			<tbody>
+				<tr>
+					<td style="text-align: center;">
+
+
+						---------------------------------------------------<br/>
+						P. {{cura.persona.user.get_full_name}}<br/>
+						<strong>{{"PARROCO"}}</strong> 
+
+					</td>
+					<td style="text-align: center;">
+
+
+						---------------------------------------------------<br/>
+						{{asignacion.persona.user.get_full_name}}<br/>
+						<strong>
+							{%if 'f' in asignacion.persona.sexo %}
+							{{"SECRETARIA"}}
+							{%else%}
+							{{"SECRETARIO"}}
+							{%endif%}
+						</strong>
+
+
+					</td>
+				</tr>
+
+
+			</tbody>
+		</table>
+		<br/>
+		
+
+
+		<div id="footer">
+			<hr style="margin-bottom: 1px;"/>
+			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>{{asignacion.persona.user.get_full_name}} </strong></p>
+
+		</div>
+
+
+
+	</body>
+	</html>
