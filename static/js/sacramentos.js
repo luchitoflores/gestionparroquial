@@ -966,7 +966,7 @@ function controles_feligres(){
 function controles_intenciones(){
 	($('#id_intencion').alpha({allow:" "}));
 	($('#id_oferente').alpha({allow:" "}));
-	($('#id_ofrenda').numeric());
+	($('#id_ofrenda').alpha({allow:"."}));
 
 }
 function controles_reportes(){
