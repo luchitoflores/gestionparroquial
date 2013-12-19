@@ -170,23 +170,22 @@ class PerfilUsuarioForm(ModelForm):
 				raise forms.ValidationError('El número de cédula no es válido')
 				return cedula
 
-			if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
+			# if email:
+			# usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
+			# if usuario:
+			# 	form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
 			
 			if self.instance.id:
 				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
 				if usuario:
 					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
 					return cedula
-				else:
-					usuario = PerfilUsuario.objects.filter(dni=cedula)
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
 					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
 					return cedula
 				
-
-
 		return cedula
 
 	
