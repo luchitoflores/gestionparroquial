@@ -403,35 +403,35 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_comunion(self):
         try:
-            Eucaristia.objects.get(feligres__id=self.feligres.id)
+            self.feligres
         except ObjectDoesNotExist:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def es_confirmado(self):
         try:
-            Confirmacion.objects.get(confirmado__id=self.confirmado.id)
+            self.confirmado
         except ObjectDoesNotExist:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def es_novio(self):
         try:
-            Matrimonio.objects.get(novio__id=self.novio.id)
+            self.novio
         except ObjectDoesNotExist:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def es_novia(self):
         try:
-            Matrimonio.objects.get(novia__id=self.novia.id)
+            self.novia
         except ObjectDoesNotExist:
-            return False
-        else:
             return True
+        else:
+            return False
 
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
