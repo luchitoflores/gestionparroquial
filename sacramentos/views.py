@@ -219,7 +219,7 @@ def administrator_create_view(request):
 		if perfil:
 			usuario = PerfilUsuario.objects.get(pk=perfil).user
 			if not usuario.email:
-				form.errors["administrador"] = ErrorList([u"El usuario no tiene correo electrónico. Puede asignarle un correo mediante este '<a >formulario</a>'"])
+				form.errors["administrador"] = ErrorList([u"El usuario no tiene correo electrónico. "])
 		
 		is_staff = request.POST.get('is_staff')
 		
