@@ -157,8 +157,7 @@ class PerfilUsuarioForm(ModelForm):
 	def clean_dni(self):
 		cedula = self.cleaned_data['dni']
 		nacionalidad = self.cleaned_data['nacionalidad']
-		print '--------------------------validando cedulas---------------------------------'
-		print self.instance 
+		
 		if nacionalidad == 'EC' and cedula:
 			if not cedula.isdigit():
 				raise forms.ValidationError('El número de cédula no debe contener letras')
