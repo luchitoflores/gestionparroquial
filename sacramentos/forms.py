@@ -416,10 +416,8 @@ class BautismoForm(ModelForm):
 		if fecha_sacramento>date.today():
 			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
-		# if persona.es_casado:
-		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-
-		if persona.es_comunion or persona.es_confirmado:
+		
+		if persona.es_comunion(persona) or persona.es_confirmado(persona) or persona.es_novio(persona) or persona.es_novia(persona):
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 

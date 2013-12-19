@@ -402,29 +402,20 @@ class PerfilUsuario(TimeStampedModel):
 
 
     def es_comunion(self):
-        f=''
         try:
             self.feligres
-            f=self.feligres
         except ObjectDoesNotExist:
-            print 'Nada'
-        
-        if f:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def es_confirmado(self):
-        c=''
         try:
             self.confirmado
-            c=self.confirmado
         except ObjectDoesNotExist:
-            print 'Nada'
-        if c:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def es_novio(self):
         try:
