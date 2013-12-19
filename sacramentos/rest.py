@@ -21,17 +21,6 @@ from sacramentos.forms import PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarg
 from sacramentos.models import (PerfilUsuario,NotaMarginal,Bautismo,Matrimonio,
 	Parroquia)
 
-
-# Api parroquias
-# class ParroquiaResource(ModelResource):
-# 	class Meta:
-# 		queryset = Parroquia.objects.all()
-# 		resource_name = 'parroquia' 
-# 		fields = ('id', 'nombre')
-# 		allowed_methods = ['get']
-
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -56,19 +45,9 @@ def padre_create_ajax(request):
 		if request.method == 'POST':
 			sexo = request.POST.get('sexo')
 			respuesta = False
-			dni = request.POST.get('dni')
-			email = request.POST.get('email')
 			usuario_form = UsuarioPadreForm(request.POST)
 			perfil_form = PadreForm(request.POST)
-			if email:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				if usuario:
-					usuario_form.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-			if dni:
-				usuario = PerfilUsuario.objects.filter(dni=dni)
-				if usuario:
-					perfil_form.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-					
+			
 			if usuario_form.is_valid() and perfil_form.is_valid():
 
 				perfil = perfil_form.save(commit=False)
@@ -104,22 +83,9 @@ def padre_create_ajax(request):
 def secretaria_create_ajax(request):
 	if request.is_ajax():
 		if request.method == 'POST':
-			dni = request.POST.get('dni')
-			email = request.POST.get('email')
 			usuario_form = UsuarioSecretariaForm(request.POST)
 			perfil_form = SecretariaForm(request.POST)
 
-			if email:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				if usuario:
-					usuario_form.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-					
-
-			if dni:
-				usuario = PerfilUsuario.objects.filter(dni=dni)
-				if usuario:
-					perfil_form.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-			
 			if usuario_form.is_valid() and perfil_form.is_valid():
 				perfil = perfil_form.save(commit=False)
 				usuario = usuario_form.save(commit=False)

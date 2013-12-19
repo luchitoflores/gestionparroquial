@@ -82,6 +82,17 @@ class UsuarioPadreForm(ModelForm):
 		model = User
 		fields= ('first_name', 'last_name', 'email')
 
+	def email_clean(self):
+		email = self.cleaned_data.get('email')
+		if email:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+			else:
+				usuario = PerfilUsuario.objects.filter(user__email=email)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+		return email
+
 class UsuarioSecretariaForm(ModelForm):
 	first_name = forms.CharField(required=True, label='Nombres *',
 	 help_text='Ingrese los nombres completos. Ej: Juan José',
@@ -96,6 +107,18 @@ class UsuarioSecretariaForm(ModelForm):
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email')
+
+
+	def email_clean(self):
+		email = self.cleaned_data.get('email')
+		if email:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+			else:
+				usuario = PerfilUsuario.objects.filter(user__email=email)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+		return email
 
 class UsuarioSacerdoteForm(ModelForm):
 	first_name = forms.CharField(required=True, label='Nombres *', 
@@ -121,6 +144,17 @@ class UsuarioSacerdoteForm(ModelForm):
 			self.fields['groups'].required=True
 		else: 
 			self.fields['groups'].required=False
+
+	def email_clean(self):
+		email = self.cleaned_data.get('email')
+		if email:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+			else:
+				usuario = PerfilUsuario.objects.filter(user__email=email)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+		return email
 
 class UsuarioAdministradorForm(ModelForm):
 	first_name = forms.CharField(required=True, label='Nombres *', 
@@ -151,10 +185,18 @@ class UsuarioAdministradorForm(ModelForm):
 		else: 
 			self.fields['groups'].required=False
 
-	# def clean_is_staff(self):
-	# 	data = self.cleaned_data.get('is_staff')
-	# 	print 'el usuario logueado es: %s ' % self.user
-	# 	return data
+	def email_clean(self):
+		email = self.cleaned_data.get('email')
+		if email:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+			else:
+				usuario = PerfilUsuario.objects.filter(user__email=email)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+		return email
+
+
 		
 
 class PerfilUsuarioForm(ModelForm):
@@ -227,18 +269,33 @@ class PadreForm(ModelForm):
 	def clean_dni(self):
 		cedula = self.cleaned_data['dni']
 		nacionalidad = self.cleaned_data['nacionalidad']
-		if nacionalidad == 'EC' and cedula:
-			if not cedula.isdigit():
-				raise forms.ValidationError('El número de cédula no debe contener letras')
-				return cedula
-			if len(cedula)!=10:
-				raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-				return cedula
-			valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-			suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-			if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-				raise forms.ValidationError('El número de cédula no es válido')
-				return cedula
+
+		if cedula:
+			if nacionalidad == 'EC':
+				if not cedula.isdigit():
+					raise forms.ValidationError('El número de cédula no debe contener letras')
+					return cedula
+				if len(cedula)!=10:
+					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
+					return cedula
+				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
+				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
+					raise forms.ValidationError('El número de cédula no es válido')
+					return cedula
+
+
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+		
 		return cedula
 
 	def clean_fecha_nacimiento(self):
@@ -275,18 +332,33 @@ class SecretariaForm(ModelForm):
 	def clean_dni(self):
 		cedula = self.cleaned_data['dni']
 		nacionalidad = self.cleaned_data['nacionalidad']
-		if nacionalidad == 'EC' and cedula:
-			if not cedula.isdigit():
-				raise forms.ValidationError('El número de cédula no debe contener letras')
-				return cedula
-			if len(cedula)!=10:
-				raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-				return cedula
-			valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-			suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-			if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-				raise forms.ValidationError('El número de cédula no es válido')
-				return cedula
+
+		if cedula:
+			if nacionalidad == 'EC':
+				if not cedula.isdigit():
+					raise forms.ValidationError('El número de cédula no debe contener letras')
+					return cedula
+				if len(cedula)!=10:
+					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
+					return cedula
+				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
+				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
+					raise forms.ValidationError('El número de cédula no es válido')
+					return cedula
+
+
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+		
 		return cedula
 
 	class Meta():
@@ -313,19 +385,33 @@ class SacerdoteForm(ModelForm):
 	def clean_dni(self):
 		cedula = self.cleaned_data['dni']
 		nacionalidad = self.cleaned_data['nacionalidad']
-		if nacionalidad == 'EC' and cedula:
-			if not cedula.isdigit():
-				raise forms.ValidationError('El número de cédula no debe contener letras')
-				return cedula
-			if len(cedula)!=10:
-				raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-				return cedula
-			valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-			suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-			if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-				raise forms.ValidationError('El número de cédula no es válido')
-				return cedula
 
+		if cedula:
+			if nacionalidad == 'EC':
+				if not cedula.isdigit():
+					raise forms.ValidationError('El número de cédula no debe contener letras')
+					return cedula
+				if len(cedula)!=10:
+					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
+					return cedula
+				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
+				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
+					raise forms.ValidationError('El número de cédula no es válido')
+					return cedula
+
+
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+		
 		return cedula
 
 	class Meta(): 

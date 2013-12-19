@@ -63,8 +63,7 @@ def usuarioCreateView(request):
 		padre = PerfilUsuario.objects.padre()
 		madre =  PerfilUsuario.objects.madre()
 		form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
-		email = request.POST.get('email')
-		dni = request.POST.get('dni')
+		
 
 		if form_usuario.is_valid() and form_perfil.is_valid():
 			feligres, created = Group.objects.get_or_create(name='Feligres')
@@ -134,8 +133,7 @@ def edit_usuario_view(request,pk):
 		madre =  PerfilUsuario.objects.madre()
 		form_usuario = UsuarioForm(request.POST,instance=user)
 		form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
-		email = request.POST.get('email')
-		dni = request.POST.get('dni')
+		
 
 		if form_usuario.is_valid() and form_perfil.is_valid():
 			form_usuario.save()
@@ -221,7 +219,7 @@ def administrator_create_view(request):
 		if perfil:
 			usuario = PerfilUsuario.objects.get(pk=perfil).user
 			if not usuario.email:
-				form.errors["administrador"] = ErrorList([u'El usuario elegido no tiene correo electrónico'])
+				form.errors["administrador"] = ErrorList([u'El usuario no tiene correo electrónico. Puede asignarle un correo mediante este <a href="#">formulario</a>'])
 		
 		is_staff = request.POST.get('is_staff')
 		
@@ -248,37 +246,10 @@ def administrador_create_view(request):
 	success_url = '/administrador/'
 	
 	if request.method == 'POST':
-		dni = request.POST.get('dni')
-		email = request.POST.get('email')
 		form_sacerdote = AdministradorForm(request.POST)
 		form_usuario = UsuarioAdministradorForm(request.POST)
 
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni)
-			if usuario:
-				form_sacerdote.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
-
 		if form_sacerdote.is_valid() and form_usuario.is_valid():
-			# if dni:
-			# 	usuario = PerfilUsuario.objects.filter(dni=dni)
-			# 	if usuario:
-			# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
-			# 		return render(request, template_name, ctx)
-
-			# if email:
-			# 	usuario = PerfilUsuario.objects.filter(user__email=email)
-			# 	if usuario:
-			# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
-			# 		return render(request, template_name, ctx)
-
-
 			administrador, created = Group.objects.get_or_create(name='Administrador')
 			usuario = form_usuario.save(commit= False) 
 			sacerdote = form_sacerdote.save(commit=False)
@@ -317,41 +288,15 @@ def administrador_update_view(request, pk):
 	template_name = 'usuario/administrador_form.html' 
 	success_url = '/administrador/'
 
-	# if request.user == sacerdote.user or not sacerdote.user.groups.filter(name='Administrador').exists():
-
 	if request.method == 'POST':
 		staff = request.POST.get('is_staff')
-		email = request.POST.get('email')
-		dni = request.POST.get('dni')
 		form_sacerdote = AdministradorForm(request.POST, instance=sacerdote)
 		form_usuario = UsuarioAdministradorForm(request.POST, instance=sacerdote.user)
 
 		if request.user == sacerdote.user and not staff:
 			form_usuario.errors["is_staff"] = ErrorList([u'No está permitido que Ud se desactive del sistema.'])
 
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-			if usuario:
-				form_sacerdote.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
 		if form_sacerdote.is_valid() and form_usuario.is_valid():
-			# if dni:
-			# 	usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-			# 	if usuario:
-			# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
-			# 		return render(request, template_name, ctx)
-			# if email:
-			# 	usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			# 	if usuario:
-			# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
-			# 		return render(request, template_name, ctx)
-
 			usuario = form_usuario.save() 
 			sacerdote = form_sacerdote.save()
 			if not usuario.is_staff:
@@ -368,7 +313,6 @@ def administrador_update_view(request, pk):
 			return HttpResponseRedirect(success_url)
 
 		else:
-			#messages.error(request, 'Uno o más datos son inválidos usuario: %s sacerdote: %s' % (form_usuario.errors, form_sacerdote.errors))
 			messages.error(request, 'Uno o más datos no son válidos')
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
 			return render(request, template_name, ctx)
@@ -408,33 +352,10 @@ def secretaria_update_view(request, pk):
 	template_name = 'usuario/secretaria_form.html'
 	success_url = '/asignar/secretaria/'
 	if request.method == 'POST':
-		email = request.POST.get('email')
-		dni = request.POST.get('dni')
 		perfil_form = SecretariaForm(request.POST, instance=secretaria)
 		usuario_form = UsuarioSecretariaForm(request.POST, instance=secretaria.user)
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			if usuario:
-				usuario_form.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-			if usuario:
-				perfil_form.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
-
+		
 		if usuario_form.is_valid() and perfil_form.is_valid():
-			# if dni:
-			# 	usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-			# 	if usuario:
-			# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-			# 		ctx = {'form_perfil': perfil_form, 'form_usuario':usuario_form, 'object': secretaria}
-			# 		return render(request, template_name, ctx)
-			# if email:
-			# 	usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			# 	if usuario:
-			# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-			# 		ctx = {'form_perfil': perfil_form, 'form_usuario':usuario_form, 'object': secretaria}
-			# 		return render(request, template_name, ctx)
 			perfil = perfil_form.save()
 			usuario = usuario_form.save()
 			LogEntry.objects.log_action(
@@ -465,34 +386,10 @@ def sacerdote_create_view(request):
 	success_url = '/sacerdote/'
 	
 	if request.method == 'POST':
-		dni = request.POST.get('dni')
-		email = request.POST.get('email')
 		form_sacerdote = SacerdoteForm(request.POST)
 		form_usuario = UsuarioSacerdoteForm(request.POST)
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni)
-			if usuario:
-				form_sacerdote.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
+		
 		if form_sacerdote.is_valid() and form_usuario.is_valid():
-			# if dni:
-			# 	usuario = PerfilUsuario.objects.filter(dni=dni)
-			# 	if usuario:
-			# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
-			# 		return render(request, template_name, ctx)
-
-			# if email:
-			# 	usuario = PerfilUsuario.objects.filter(user__email=email)
-			# 	if usuario:
-			# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-			# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
-			# 		return render(request, template_name, ctx)
-
 			sacerdotes, created = Group.objects.get_or_create(name='Sacerdote')
 			usuario = form_usuario.save(commit= False) 
 			sacerdote = form_sacerdote.save(commit=False)
@@ -538,39 +435,12 @@ def sacerdote_update_view(request, pk):
 		raise Http404
 	else: 
 		if request.method == 'POST':
-			email = request.POST.get('email')
-			dni = request.POST.get('dni')
 			form_sacerdote = SacerdoteForm(request.POST, instance=sacerdote)
 			form_usuario = UsuarioSacerdoteForm(request.POST, instance=sacerdote.user)
-			if email:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-				if usuario:
-					form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-			if dni:
-				usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-				if usuario:
-					form_sacerdote.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
-
+			
 			if form_sacerdote.is_valid() and form_usuario.is_valid():
-				# if dni:
-				# 	usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-				# 	if usuario:
-				# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-				# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
-				# 		return render(request, template_name, ctx)
-
-				# if email:
-				# 	usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-				# 	if usuario:
-				# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-				# 		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
-				# 		return render(request, template_name, ctx)
-
 				usuario = form_usuario.save() 
 				sacerdote = form_sacerdote.save()
-				# usuario.save()
-				# sacerdote.save()
 				LogEntry.objects.log_action(
             		user_id=request.user.id,
             		content_type_id=ContentType.objects.get_for_model(sacerdote).pk,
