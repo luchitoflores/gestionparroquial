@@ -18,13 +18,13 @@ Personas
 				<div style='text-align: center'>
 					<span class="icon-stack icon-4x" >
 						<i class="icon-circle icon-stack-base icon-muted "></i>
-						<i class="icon-sun"></i>
+						<i class="icon-group"></i>
 					</span>
 					<h3>Feligres</h3>
 					<div class="caption">
-						<p>Ud. puede agregar, editar u obtener un reporte de los bautismos realizados en cada parroquia
+						<p>Ud. puede agregar y editar la información de un feligrés
 						</p>
-						<p><a href="{%url 'bautismo_list'%}" class='btn btn-primary'>Ir</a></p>
+						<p><a href="{%url 'usuario_list'%}" class='btn btn-primary'>Ir</a></p>
 					</div>
 				</div>
 
@@ -36,14 +36,14 @@ Personas
 				<div style='text-align: center'>
 					<span class="icon-stack icon-4x" >
 						<i class="icon-circle icon-stack-base icon-muted "></i>
-						<i class="icon-circle"></i>
+						<i class="icon-user"></i>
 					</span>
 					<h3>Administrador</h3>
 
 					<div class='caption'>
-						<p>Ud. puede agregar, editar u obtener un reporte de las eucaristías realizadas en cada parroquia</p>
+						<p>Ud. puede agregar y editar la información de un administrador</p>
 						{%if perms.sacramentos.change_eucaristia and perms.sacramentos.add_eucaristia%}
-						<p><a href="{%url 'eucaristia_list'%}" class='btn btn-primary'>Ir</a></p>
+						<p><a href="{%url 'administrador_list'%}" class='btn btn-primary'>Ir</a></p>
 						{%endif%}
 					</div>
 
@@ -63,14 +63,14 @@ Personas
 				<div style='text-align: center'>
 					<span class="icon-stack icon-4x" >
 						<i class="icon-circle icon-stack-base icon-muted "></i>
-						<i class="icon-fire" style='color:red'></i>
+						<i class="icon-user"></i>
 					</span>
 					<h3>Sacerdote</h3>
 
 					<div class='caption'>
-						<p>Ud. puede agregar, editar u obtener un reporte de las confirmaciones realizados en cada parroquia</p>
+						<p>Ud. puede agregar y editar la información de un sacerdote</p>
 						{%if perms.sacramentos.change_confirmacion and perms.sacramentos.add_confirmacion %}
-						<p><a href="{%url 'confirmacion_list'%}" class='btn btn-primary'>Ir</a></p>
+						<p><a href="{%url 'sacerdote_list'%}" class='btn btn-primary'>Ir</a></p>
 						{%endif%}
 					</div>
 
@@ -83,16 +83,15 @@ Personas
 				<div style='text-align: center'>
 					<span class="icon-stack icon-4x" >
 						<i class="icon-circle icon-stack-base icon-muted "></i>
-						<i class='icon-bell icon-rotate-45' ></i>
-						<i class='icon-bell icon-rotate-135'></i>
+						<i class='icon-group'></i>
 					</span>
 					
-					<h3>Secretaria</h3>
+					<h3>Secretarios</h3>
 					
 					<div class='caption'>
-						<p>Ud. puede agregar, editar u obtener un reporte de los matrimonios realizados en cada parroquia</p>
+						<p>Ud. puede agregar y editar la información de los secretarios de la parroquia</p>
 						{%if perms.sacramentos.change_matrimonio and perms.sacramentos.add_matrimonio %}
-						<p><a href="{%url 'matrimonio_list'%}" class='btn btn-primary'>Ir</a></p>
+						<p><a href="{%url 'asignar_secretaria_list'%}" class='btn btn-primary'>Ir</a></p>
 						{%endif%}
 					</div>
 					
