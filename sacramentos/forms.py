@@ -412,17 +412,16 @@ class BautismoForm(ModelForm):
 		cleaned_data = super(BautismoForm, self).clean()
 		libro = self.cleaned_data.get("libro")
 		persona = self.cleaned_data.get("bautizado")
+		print "persona: %s " % type(persona)
+		print "Feligres: %s " % (persona)
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
 		if fecha_sacramento>date.today():
 			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
-		
+		# if persona.es_casado:
+		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
+
 		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
-			print '------------------------------aqui---------------------------------------'
-			print "%s"%persona.es_comunion
-			print "%s"%persona.es_confirmado
-			print "%s"%persona.es_novio
-			print "%s"%persona.es_novia
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 
@@ -478,10 +477,11 @@ class BautismoFormEditar(ModelForm):
 		cleaned_data = super(BautismoFormEditar, self).clean()
 		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		persona = self.cleaned_data.get("bautizado")
 		if fecha_sacramento>date.today():
 			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
+		# if persona.es_casado:
+		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
 		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data

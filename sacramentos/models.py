@@ -427,7 +427,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_novia(self):
         try:
-           self.novia
+            self.novia
         except ObjectDoesNotExist:
             return False
         else:
@@ -522,8 +522,8 @@ class Matrimonio(Sacramento):
     novia=models.ForeignKey(PerfilUsuario, related_name='novia',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(max_length=200,
-		help_text='Nombre de el testigo ej: Pablo Robles')
-    testigo_novia = models.CharField(max_length=200,help_text='Nombre de la testigo ej:María Pincay')
+		help_text='Nombre de testigo ej: Pablo Robles')
+    testigo_novia = models.CharField(max_length=200,help_text='Nombre de testiga ej:Fernanda Pincay')
     vigente=models.BooleanField()
     tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES)
 
