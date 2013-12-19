@@ -404,34 +404,34 @@ class PerfilUsuario(TimeStampedModel):
     def es_comunion(self):
         try:
             self.feligres
+            return True
         except ObjectDoesNotExist:
             return False
-        else:
-            return True
+        
 
     def es_confirmado(self):
         try:
             self.confirmado
+            return True
         except ObjectDoesNotExist:
             return False
-        else:
-            return True
+       
 
     def es_novio(self):
         try:
             self.novio
+            return True
         except ObjectDoesNotExist:
             return False
-        else:
-            return True
+        
 
     def es_novia(self):
         try:
             self.novia
+            return True
         except ObjectDoesNotExist:
             return False
-        else:
-            return True
+       
 
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
@@ -467,7 +467,7 @@ class Bautismo(Sacramento):
     abuelo_paterno = models.CharField(max_length=200,null=True,blank=True,
         help_text='Nombre de abuelo paterno ej: Jose Rivera')
     abuela_paterna = models.CharField(max_length=200,null=True,blank=True,
-	help_text='Nombre de abuela paterna ej: Maria Gonzalez')
+	help_text='Nombre de abuela paterna ej: Mary Gonzalez')
     abuelo_materno = models.CharField(max_length=200,null=True,blank=True,
 	help_text='Nombre de abuelo materno ej: Jose Gonzalez')
     abuela_materna = models.CharField(max_length=200,null=True,blank=True,
