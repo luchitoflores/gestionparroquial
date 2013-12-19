@@ -186,7 +186,18 @@ class PerfilUsuarioForm(ModelForm):
 				if usuario:
 					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
 					return cedula
-				
+		elif cedula:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			
 		return cedula
 
 	
