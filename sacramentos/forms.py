@@ -710,7 +710,7 @@ class ConfirmacionForm(ModelForm):
 		
 		# if persona.es_casado:
 		# 	self._errors['confirmado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novio=novia):
+		if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novio=persona):
 			self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		# if persona.es_novio or persona.es_novia:
 		# 	self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
