@@ -11,26 +11,39 @@ Parámetros
 		<ul class="thumbnails">
 			{%if perms.sacramentos.change_parametrizadiocesis or perms.sacramentos.add_parametrizadiocesis%}
 			<li class="span4">
-				<div class='thumbnail'>
-					<div style='text-align: center'>
-						<i class='icon-home icon-4x' style='color: #ddd'></i>
-						<h2>Diócesis</h2>
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class='icon-home'></i>
+					</span>
+					
+					<h3>Diócesis</h3>
+					<div class='caption'>
+						<p>Ud. puede configurar los parámetros de la Diócesis</p>
+						<p><a href="{%url 'parametriza_create'%}" class='btn btn-primary'>Ir</a></p>
 					</div>
-					<p>Ud. puede configurar los parámetros de la Diócesis</p>
-					<p><a href="{%url 'parametriza_create'%}" class='btn btn-primary'>Ir</a></p>
+					
 				</div>
 			</li>
 			{%endif%}
 			{%if perms.sacramentos.change_parametrizaparroquia or perms.sacramentos.add_parametrizaparroquia%}
 			<li class="span4">
-				<div class='thumbnail'>
-					<div style='text-align: center'>
-						<i class='icon-home icon-4x' ></i>
-						<h2>Parroquia</h2>
+				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class='icon-home' ></i>
+					</span>
+					
+					<h3>Parroquia</h3>
+					<div class="caption">
+						<p>Ud. puede configurar el numero de acta y de la paǵina de los sacramentos que se realizarán en cada parroquia</p>
+						<p><a href="{%url 'parametriza_parroquia_create'%}" class='btn btn-primary'>Ir</a></p>
 					</div>
-					<p>Ud. puede configurar el numero de acta y de la paǵina de los sacramentos que se realizarán en cada parroquia</p>
-					<p><a href="{%url 'parametriza_parroquia_create'%}" class='btn btn-primary'>Ir</a></p>
+					
+					
 				</div>
+				
 			</li>
 			{%endif%}
 		</ul>

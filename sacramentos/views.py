@@ -5,6 +5,7 @@ import csv
 from datetime import datetime
 from datetime import date
 from django import forms
+from django.db.models import Sum
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
@@ -2985,6 +2986,8 @@ def reporte_intenciones(request):
 			
 			intenciones=Intenciones.objects.filter(fecha=fecha,
 				parroquia=asignacion.parroquia).order_by('hora')
+			suma=Intenciones.objects.filter(fecha=fecha,
+				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
 				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
 			form = ReporteIntencionesForm(request.GET)
@@ -2992,8 +2995,8 @@ def reporte_intenciones(request):
 				
 				if form.is_valid():
 					html=render_to_string('reportes/reporte_intenciones.html',
-					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,'cura':cura,
-					'p':p},
+					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,
+					'cura':cura,'suma':suma,'p':p},
 					context_instance=RequestContext(request))
 					return generar_pdf(html)
 				
@@ -3016,6 +3019,8 @@ def reporte_intenciones(request):
 				raise PermissionDenied
 			intenciones=Intenciones.objects.filter(fecha=fecha,hora=hora,
 				parroquia=asignacion.parroquia).order_by('hora')
+			suma=Intenciones.objects.filter(fecha=fecha,hora=hora,
+				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
 				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
 			form = ReporteIntencionesForm(request.GET)
@@ -3023,8 +3028,8 @@ def reporte_intenciones(request):
 
 				if form.is_valid():
 					html=render_to_string('reportes/reporte_intenciones.html',
-					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,'cura':cura,
-					'p':p},
+					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,
+					'cura':cura,'suma':suma,'p':p},
 					context_instance=RequestContext(request))
 					return generar_pdf(html)
 				
@@ -3051,14 +3056,16 @@ def reporte_intenciones(request):
 				raise PermissionDenied
 			intenciones=Intenciones.objects.filter(fecha__year=anio,fecha__month=mes,
 				parroquia=asignacion.parroquia).order_by('hora')
+			suma=Intenciones.objects.filter(fecha__year=anio,fecha__month=mes,
+				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
 				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if(intenciones):
 				if form.is_valid():
 					html=render_to_string('reportes/reporte_intenciones.html',
-					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,'cura':cura,
-					'p':p},
+					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,
+					'cura':cura,'suma':suma,'p':p},
 					context_instance=RequestContext(request))
 					return generar_pdf(html)
 					
@@ -3083,14 +3090,16 @@ def reporte_intenciones(request):
 				raise PermissionDenied
 			intenciones=Intenciones.objects.filter(fecha__year=anio,
 				parroquia=asignacion.parroquia).order_by('hora')
+			suma=Intenciones.objects.filter(fecha__year=anio,
+				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
 				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if(intenciones):
 				if form.is_valid():
 					html=render_to_string('reportes/reporte_intenciones.html',
-					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,'cura':cura,
-					'p':p},
+					{'pagesize':'A4','intenciones':intenciones,'asignacion':asignacion,
+					'cura':cura,'suma':suma,'p':p},
 					context_instance=RequestContext(request))
 					return generar_pdf(html)
 				
