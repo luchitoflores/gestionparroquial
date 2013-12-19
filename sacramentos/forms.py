@@ -510,6 +510,7 @@ class BautismoFormEditar(ModelForm):
 		cleaned_data = super(BautismoFormEditar, self).clean()
 		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		persona = self.cleaned_data.get("bautizado")
 		if fecha_sacramento>date.today():
 			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
@@ -647,13 +648,16 @@ class EucaristiaFormEditar(ModelForm):
 		cleaned_data = super(EucaristiaFormEditar, self).clean()
 		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		persona = self.cleaned_data.get("feligres")
 		if fecha_sacramento>date.today():
 			msg=u'La fecha de la Eucaristia no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		# if persona.es_casado:
 		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_confirmado or persona.es_novio or persona.es_novia:
-			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
+		if Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
+		# if persona.es_confirmado or persona.es_novio or persona.es_novia:
+		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
 		return cleaned_data
 
 	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
@@ -773,14 +777,18 @@ class ConfirmacionFormEditar(ModelForm):
 		cleaned_data = super(ConfirmacionFormEditar, self).clean()
 		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		persona = self.cleaned_data.get("confirmado")
+
 		if fecha_sacramento>date.today():
 			msg=u'La fecha de Confirmacion no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
 
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_novio or persona.es_novia:
-			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
+		if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novio=novia):
+			self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
+		# if persona.es_novio or persona.es_novia:
+		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		return cleaned_data
 	
 	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
