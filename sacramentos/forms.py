@@ -56,6 +56,17 @@ class UsuarioForm(ModelForm):
 		else: 
 			self.fields['groups'].required=False
 
+	def email_clean(self):
+		email = self.cleaned_data.get('email')
+		if email:
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+			else:
+				usuario = PerfilUsuario.objects.filter(user__email=email)
+				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+		return email
+
 
 class UsuarioPadreForm(ModelForm):
 	first_name = forms.CharField(required=True, label='Nombres *',

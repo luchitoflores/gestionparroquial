@@ -66,16 +66,6 @@ def usuarioCreateView(request):
 		email = request.POST.get('email')
 		dni = request.POST.get('dni')
 
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		# if dni:
-		# 	usuario = PerfilUsuario.objects.filter(dni=dni)
-		# 	if usuario:
-		# 		form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
-		
 		if form_usuario.is_valid() and form_perfil.is_valid():
 			feligres, created = Group.objects.get_or_create(name='Feligres')
 			usuario = form_usuario.save(commit=False)
@@ -147,31 +137,7 @@ def edit_usuario_view(request,pk):
 		email = request.POST.get('email')
 		dni = request.POST.get('dni')
 
-		if email:
-			usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-			if usuario:
-				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		# if dni:
-		# 	usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-		# 	if usuario:
-		# 		form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
-
-
 		if form_usuario.is_valid() and form_perfil.is_valid():
-			
-		# 	if dni:
-		# 		usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-		# 		if usuario:
-		# 			messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-		# 			ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil, 'perfil':perfil}
-		# 			return render(request, 'usuario/usuario_form.html', ctx)
-		# 	if email:
-		# 		usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
-		# 		if usuario:
-		# 			messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-		# 			ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil, 'perfil':perfil}
-		# 			return render(request, 'usuario/usuario_form.html', ctx)
-
 			form_usuario.save()
 			form_perfil.save()
 			LogEntry.objects.log_action(
