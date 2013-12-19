@@ -418,6 +418,7 @@ class BautismoForm(ModelForm):
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		
 		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
+			print '------------------------------aqui---------------------------------------'
 			print persona.es_comunion
 			print persona.es_confirmado
 			print persona.es_novio
