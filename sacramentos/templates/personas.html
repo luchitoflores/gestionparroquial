@@ -1,0 +1,108 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Personas
+{%endblock%}
+
+{%block content_title%}
+Personas
+{%endblock%}
+
+{%block content%}
+
+<div class="row">
+	<div class="span10 offset1">
+		<ul class="thumbnails">
+			{%if perms.sacramentos.change_bautismo or perms.sacramentos.add_bautismo%}
+			<li class="span4">
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class="icon-sun"></i>
+					</span>
+					<h3>Feligres</h3>
+					<div class="caption">
+						<p>Ud. puede agregar, editar u obtener un reporte de los bautismos realizados en cada parroquia
+						</p>
+						<p><a href="{%url 'bautismo_list'%}" class='btn btn-primary'>Ir</a></p>
+					</div>
+				</div>
+
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_eucaristia or perms.sacramentos.add_eucaristia%}
+			<li class="span4">
+
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class="icon-circle"></i>
+					</span>
+					<h3>Administrador</h3>
+
+					<div class='caption'>
+						<p>Ud. puede agregar, editar u obtener un reporte de las eucaristías realizadas en cada parroquia</p>
+						{%if perms.sacramentos.change_eucaristia and perms.sacramentos.add_eucaristia%}
+						<p><a href="{%url 'eucaristia_list'%}" class='btn btn-primary'>Ir</a></p>
+						{%endif%}
+					</div>
+
+				</div>
+			</li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span10 offset1">
+		<ul class="thumbnails">
+			{%if perms.sacramentos.change_confirmacion or perms.sacramentos.add_confirmacion%}		
+			<li class="span4">
+				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class="icon-fire" style='color:red'></i>
+					</span>
+					<h3>Sacerdote</h3>
+
+					<div class='caption'>
+						<p>Ud. puede agregar, editar u obtener un reporte de las confirmaciones realizados en cada parroquia</p>
+						{%if perms.sacramentos.change_confirmacion and perms.sacramentos.add_confirmacion %}
+						<p><a href="{%url 'confirmacion_list'%}" class='btn btn-primary'>Ir</a></p>
+						{%endif%}
+					</div>
+
+				</div>
+			</li>
+			{%endif%}
+			{%if perms.sacramentos.change_matrimonio or perms.sacramentos.add_matrimonio%}
+			<li class="span4">
+				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class='icon-bell icon-rotate-45' ></i>
+						<i class='icon-bell icon-rotate-135'></i>
+					</span>
+					
+					<h3>Secretaria</h3>
+					
+					<div class='caption'>
+						<p>Ud. puede agregar, editar u obtener un reporte de los matrimonios realizados en cada parroquia</p>
+						{%if perms.sacramentos.change_matrimonio and perms.sacramentos.add_matrimonio %}
+						<p><a href="{%url 'matrimonio_list'%}" class='btn btn-primary'>Ir</a></p>
+						{%endif%}
+					</div>
+					
+				</div>
+
+			</li>
+			{%endif%}
+
+		</ul>
+	</div>
+</div>
+
+{%endblock%}
