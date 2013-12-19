@@ -419,7 +419,7 @@ class BautismoForm(ModelForm):
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
 
-		if not persona.es_comunion or not persona.es_confirmado or not persona.es_novio or not persona.es_novia:
+		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 
