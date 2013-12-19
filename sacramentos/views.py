@@ -70,10 +70,10 @@ def usuarioCreateView(request):
 			usuario = PerfilUsuario.objects.filter(user__email=email)
 			if usuario:
 				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni)
-			if usuario:
-				form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
+		# if dni:
+		# 	usuario = PerfilUsuario.objects.filter(dni=dni)
+		# 	if usuario:
+		# 		form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
 
 		
 		if form_usuario.is_valid() and form_perfil.is_valid():
@@ -165,10 +165,10 @@ def edit_usuario_view(request,pk):
 			usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=pk)
 			if usuario:
 				form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
-		if dni:
-			usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
-			if usuario:
-				form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
+		# if dni:
+		# 	usuario = PerfilUsuario.objects.filter(dni=dni).exclude(pk=pk)
+		# 	if usuario:
+		# 		form_perfil.errors['dni'] = ErrorList([u'Ya existe un usuario registrado con ese número de cédula'])
 
 
 		if form_usuario.is_valid() and form_perfil.is_valid():
