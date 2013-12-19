@@ -35,6 +35,9 @@ from sacramentos.views import (
 
 
 urlpatterns = patterns('', 
+	#url para el home de personas
+	url(r'^personas/$', TemplateView.as_view(template_name='personas.html'), 
+		name='personas'),
 	#urls de usuarios
 	url(r'^usuario/$', UsuarioListView.as_view(), name='usuario_list'),
 	url(r'^usuario/add/$', usuarioCreateView, name='usuario_create'),
