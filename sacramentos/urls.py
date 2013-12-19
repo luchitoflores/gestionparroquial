@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls import include, patterns, url
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 # from sacramentos.rest import api_usuario_list
 from sacramentos.views import (
@@ -36,7 +37,7 @@ from sacramentos.views import (
 
 urlpatterns = patterns('', 
 	#url para el home de personas
-	url(r'^personas/$', TemplateView.as_view(template_name='personas.html'), 
+	url(r'^personas/$', login_required(TemplateView.as_view(template_name='personas.html'),login_url='/login/'), 
 		name='personas'),
 	#urls de usuarios
 	url(r'^usuario/$', UsuarioListView.as_view(), name='usuario_list'),
@@ -78,11 +79,11 @@ urlpatterns = patterns('',
 	# url(r'^libro/(?P<pk>\d+)/$',libro_pdf, name='libro_update'),
 
 	#urls de sacramentos
-	url(r'^sacramentos/$', TemplateView.as_view(template_name='sacramentos.html'), 
+	url(r'^sacramentos/$', login_required(TemplateView.as_view(template_name='sacramentos.html'), login_url='/login/'), 
 		name='sacramentos'),
-	url(r'^reporte/$', TemplateView.as_view(template_name='reportes.html'), 
+	url(r'^reporte/$', login_required(TemplateView.as_view(template_name='reportes.html'), login_url='/login/'), 
 		name='reportes'),
-	url(r'^parametro/$', TemplateView.as_view(template_name='parametros.html'), 
+	url(r'^parametro/$', login_required(TemplateView.as_view(template_name='parametros.html'), login_url='/login/'), 
 		name='parametros'),
 
 	#urls de matrimonio y reporte
