@@ -7,25 +7,25 @@ Reportes
 {%block content%}
 
 <div class="row">
-	<div class="span10 offset1">
+	<div class="span10">
 		<ul class="thumbnails">
 			{%if perms.sacramentos.change_bautismo and perms.sacramentos.change_eucaristia and perms.sacramentos.change_confirmacion and perms.sacramentos.change_matrimonio%}
 			<li class="span3">
-				<div class='thumbnail'>
-					<div style='text-align: center'>
-						<span class="icon-stack icon-4x" >
-							<i class="icon-circle icon-stack-base icon-muted "></i>
-							<i class='icon-archive'></i>
-						</span>
-						
-						<h3>Anual Sacramentos</h3>
-						<div class="caption">
-							<p>Ud. puede obtener el reporte anual de sacramentos: Bautismos, Eucaristías, Confirmaciones y Matrimonios realizados en una parroquia</p>
-							<p><a href="{%url 'reporte_anual'%}" class='btn btn-primary'>Ir</a></p>
-						</div>
+				
+				<div style='text-align: center'>
+					<span class="icon-stack icon-4x" >
+						<i class="icon-circle icon-stack-base icon-muted "></i>
+						<i class='icon-archive'></i>
+					</span>
 
+					<h3>Anual Sacramentos</h3>
+					<div class="caption">
+						<p>Ud. puede obtener el reporte anual de sacramentos: Bautismos, Eucaristías, Confirmaciones y Matrimonios realizados en una parroquia</p>
+						<p><a href="{%url 'reporte_anual'%}" class='btn btn-primary'>Ir</a></p>
 					</div>
+
 				</div>
+
 			</li>
 			{%endif%}
 			{%if perms.sacramentos.change_intenciones%}
