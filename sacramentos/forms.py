@@ -554,7 +554,7 @@ class EucaristiaForm(ModelForm):
 		
 		# if persona.es_casado:
 		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_confirmado or persona.es_novio or persona.es_novia:
+		if not persona.es_confirmado or not persona.es_novio or not persona.es_novia:
 			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
 		
 		return cleaned_data
@@ -612,7 +612,7 @@ class EucaristiaFormEditar(ModelForm):
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		# if persona.es_casado:
 		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_confirmado or persona.es_novio or persona.es_novia:
+		if not persona.es_confirmado or not persona.es_novio or not persona.es_novia:
 			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
 		return cleaned_data
 
@@ -677,7 +677,7 @@ class ConfirmacionForm(ModelForm):
 		
 		# if persona.es_casado:
 		# 	self._errors['confirmado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_novio or persona.es_novia:
+		if not persona.es_novio or not persona.es_novia:
 			self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		
 		return cleaned_data
@@ -737,7 +737,7 @@ class ConfirmacionFormEditar(ModelForm):
 
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_novio or persona.es_novia:
+		if not persona.es_novio or not persona.es_novia:
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		return cleaned_data
 	
