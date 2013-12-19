@@ -503,8 +503,10 @@ class BautismoFormEditar(ModelForm):
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
+		if Eucaristia.objects.filter(feligres=persona) or Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
+		# if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
+		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 	
 	lugar_sacramento = forms.CharField(help_text='Ingrese el lugar del sacramento ej: Loja ', 
