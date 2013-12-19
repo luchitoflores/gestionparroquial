@@ -595,7 +595,7 @@ class Intenciones(TimeStampedModel):
         'Ingrese la hora de celebración de la intención Ej: 17:00')
     oferente = models.CharField(max_length=200, 
         help_text='Ingrese quien ofrece la intención. Ej: La Flia Flores')
-    ofrenda = models.PositiveIntegerField(
+    ofrenda = models.DecimalField(
         help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
     parroquia = models.ForeignKey('Parroquia')
     individual = models.BooleanField('Es única?', 
