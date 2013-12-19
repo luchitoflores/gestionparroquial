@@ -403,14 +403,14 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_comunion(self):
         try:
-            Eucaristia.objects.get(feligres= self.feligres)
+            Eucaristia.objects.get(feligres=self.feligres)
         except ObjectDoesNotExist:
             return False
         return True
 
     def es_confirmado(self):
         try:
-            Confirmacion.objects.get(confirmado= self.confirmado)
+            Confirmacion.objects.get(confirmado=self.confirmado)
         except ObjectDoesNotExist:
             return False
         return True
