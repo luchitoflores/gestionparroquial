@@ -404,34 +404,34 @@ class PerfilUsuario(TimeStampedModel):
     def es_comunion(self):
         try:
             self.feligres
-            return True
         except ObjectDoesNotExist:
             return False
-        
+        else:
+            return True
 
     def es_confirmado(self):
         try:
             self.confirmado
-            return True
         except ObjectDoesNotExist:
             return False
-       
+        else:
+            return True
 
     def es_novio(self):
         try:
             self.novio
-            return True
         except ObjectDoesNotExist:
             return False
-        
+        else:
+            return True
 
     def es_novia(self):
         try:
             self.novia
-            return True
         except ObjectDoesNotExist:
             return False
-       
+        else:
+            return True
 
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
