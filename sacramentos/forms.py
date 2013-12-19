@@ -157,6 +157,8 @@ class PerfilUsuarioForm(ModelForm):
 	def clean_dni(self):
 		cedula = self.cleaned_data['dni']
 		nacionalidad = self.cleaned_data['nacionalidad']
+		print '--------------------------validando cedulas---------------------------------'
+		print self.instance 
 		if nacionalidad == 'EC' and cedula:
 			if not cedula.isdigit():
 				raise forms.ValidationError('El número de cédula no debe contener letras')
@@ -175,8 +177,6 @@ class PerfilUsuarioForm(ModelForm):
 			# if usuario:
 			# 	form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
 			
-			print '--------------------------validando cedulas---------------------------------'
-			print self.instance 
 			if self.instance.id:
 				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
 				if usuario:
