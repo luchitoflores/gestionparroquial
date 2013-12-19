@@ -419,10 +419,10 @@ class BautismoForm(ModelForm):
 		
 		if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
 			print '------------------------------aqui---------------------------------------'
-			print persona.es_comunion
-			print persona.es_confirmado
-			print persona.es_novio
-			print persona.es_novia
+			print "%s"%persona.es_comunion
+			print "%s"%persona.es_confirmado
+			print "%s"%persona.es_novio
+			print "%s"%persona.es_novia
 			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 
