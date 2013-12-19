@@ -403,7 +403,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_comunion(self):
         try:
-            Eucaristia.objects.get(id=self.feligres.id)
+            Eucaristia.objects.get(feligres__id=self.feligres.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -411,7 +411,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_confirmado(self):
         try:
-            Confirmacion.objects.get(id=self.confirmado.id)
+            Confirmacion.objects.get(confirmado__id=self.confirmado.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -419,7 +419,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_novio(self):
         try:
-            Matrimonio.objects.get(id__novio=self.novio.id)
+            Matrimonio.objects.get(novio__id=self.novio.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -427,7 +427,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_novia(self):
         try:
-            Matrimonio.objects.get(id__novia=self.novia.id)
+            Matrimonio.objects.get(novia__id=self.novia.id)
         except ObjectDoesNotExist:
             return False
         else:
