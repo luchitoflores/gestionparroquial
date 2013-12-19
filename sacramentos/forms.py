@@ -186,18 +186,7 @@ class PerfilUsuarioForm(ModelForm):
 				if usuario:
 					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
 					return cedula
-		elif cedula:
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			else:
-				usuario = PerfilUsuario.objects.filter(dni=cedula)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			
+				
 		return cedula
 
 	
@@ -516,8 +505,8 @@ class BautismoFormEditar(ModelForm):
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Eucaristia.objects.filter(feligres=persona) or Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-			self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
+		# if Eucaristia.objects.filter(feligres=persona) or Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		# if persona.es_comunion or persona.es_confirmado or persona.es_novio or persona.es_novia:
 		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
@@ -654,8 +643,8 @@ class EucaristiaFormEditar(ModelForm):
 			self._errors['fecha_sacramento']=self.error_class([msg])
 		# if persona.es_casado:
 		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
+		# if Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
 		# if persona.es_confirmado or persona.es_novio or persona.es_novia:
 		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
 		return cleaned_data
@@ -785,8 +774,8 @@ class ConfirmacionFormEditar(ModelForm):
 
 		# if persona.es_casado:
 		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-			self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
+		# if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+		# 	self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		# if persona.es_novio or persona.es_novia:
 		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		return cleaned_data
