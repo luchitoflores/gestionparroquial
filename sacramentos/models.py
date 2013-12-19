@@ -403,7 +403,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_comunion(self):
         try:
-            self.feligres
+            Eucaristia.objects.get(id=self.feligres.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -411,7 +411,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_confirmado(self):
         try:
-            self.confirmado
+            Confirmacion.objects.get(id=self.confirmado.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -419,7 +419,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_novio(self):
         try:
-            self.novio
+            Matrimonio.objects.get(id__novio=self.novio.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -427,7 +427,7 @@ class PerfilUsuario(TimeStampedModel):
 
     def es_novia(self):
         try:
-            self.novia
+            Matrimonio.objects.get(id__novia=self.novia.id)
         except ObjectDoesNotExist:
             return False
         else:
@@ -522,8 +522,8 @@ class Matrimonio(Sacramento):
     novia=models.ForeignKey(PerfilUsuario, related_name='novia',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(max_length=200,
-		help_text='Nombre de testigo ej: Pablo Robles')
-    testigo_novia = models.CharField(max_length=200,help_text='Nombre de testiga ej:Fernanda Pincay')
+		help_text='Nombre de el testigo ej: Pablo Robles')
+    testigo_novia = models.CharField(max_length=200,help_text='Nombre de la testigo ej:María Pincay')
     vigente=models.BooleanField()
     tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES)
 
