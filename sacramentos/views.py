@@ -77,20 +77,6 @@ def usuarioCreateView(request):
 
 		
 		if form_usuario.is_valid() and form_perfil.is_valid():
-
-			# if dni:
-			# 	usuario = PerfilUsuario.objects.filter(dni=dni)
-			# 	if usuario:
-			# 		messages.error(request, 'Cédula incorrecta. Ya existe un usuario registrado con ese número de cédula')
-			# 		ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil}
-			# 		return render(request, 'usuario/usuario_form.html', ctx)
-			# if email:
-			# 	usuario = PerfilUsuario.objects.filter(user__email=email)
-			# 	if usuario:
-			# 		messages.error(request, 'Email incorrecto. Ya existe un usuario registrado con ese correo electrónico')
-			# 		ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil}
-			# 		return render(request, 'usuario/usuario_form.html', ctx)
-
 			feligres, created = Group.objects.get_or_create(name='Feligres')
 			usuario = form_usuario.save(commit=False)
 			perfil = form_perfil.save(commit=False)
