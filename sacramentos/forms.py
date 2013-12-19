@@ -448,7 +448,8 @@ class AdminForm(forms.Form):
 	# def __init__(self, *args, **kwargs):
 	# 	super(AdminForm, self).__init__(self, *args, **kwargs):
 
-	
+class EmailForm(forms.Form):
+	email = forms.EmailField() 
 
 
 # forms para sacramentos
