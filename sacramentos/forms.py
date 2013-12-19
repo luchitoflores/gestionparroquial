@@ -175,6 +175,8 @@ class PerfilUsuarioForm(ModelForm):
 			# if usuario:
 			# 	form_usuario.errors["email"] = ErrorList([u'Ya existe un usuario registrado con ese correo electrónico'])
 			
+			print '--------------------------validando cedulas---------------------------------'
+			print self.instance 
 			if self.instance.id:
 				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
 				if usuario:
