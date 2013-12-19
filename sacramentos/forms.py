@@ -766,7 +766,7 @@ class ConfirmacionFormEditar(ModelForm):
 		cleaned_data = super(ConfirmacionFormEditar, self).clean()
 		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-				persona = self.cleaned_data.get("confirmado")
+		persona = self.cleaned_data.get("confirmado")
 
 		if fecha_sacramento>date.today():
 			msg=u'La fecha de Confirmacion no debe ser mayor a la fecha actual'
