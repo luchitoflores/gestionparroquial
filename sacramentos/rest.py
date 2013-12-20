@@ -29,8 +29,8 @@ def agregar_email(request):
 	if request.method == 'POST':
 		form = EmailForm(request.POST)
 		if form.is_valid():
-			pk = request.POST.get('')
-			email = request.POST.get('')
+			pk = request.POST.get('pk')
+			email = request.POST.get('email')
 			persona = PerfilUsuario.objects.get(pk=pk)
 			persona.user.email = email
 			ctx = {'respuesta': True}
