@@ -25,9 +25,17 @@ logger = logging.getLogger(__name__)
 
 
 #Método para setear un email a un usuario administrador o secretaria
-def ponerEmail():
+def ponerEmail(request):
 	if request.is_ajax() and request.method == 'POST':
 		form = EmailForm
+		if form.is_valid():
+			ctx = {'respuesta': True}
+		else:
+			errores = form.errors
+			ctx = {'respuesta': False, 'errores':errores}
+		return HttpResponse(json.dumps(ctx), content_type='application/json')
+	else:
+		raise Http404
 
 
 

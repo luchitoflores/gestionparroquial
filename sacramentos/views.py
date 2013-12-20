@@ -214,7 +214,6 @@ def administrator_create_view(request):
 	template_name= 'usuario/admin_form.html'
 	success_url = '/administrador/'
 	if request.method == 'POST':
-		form_email = EmailForm()
 		form = AdminForm(request.POST)
 		form.fields['administrador'].queryset = PerfilUsuario.objects.all()
 		perfil = request.POST.get('administrador')
@@ -236,11 +235,12 @@ def administrator_create_view(request):
 				
 			return HttpResponseRedirect(success_url)
 		else:
-			ctx = {'form': form}
+			form_email = EmailForm()
+			ctx = {'form': form, 'form_email': form_email}
 			return render(request, template_name, ctx) 	
 	else:
 		form = AdminForm()
-		form_email = EmailForm()
+		# form_email = EmailForm()
 		ctx = {'form': form}
 		return render(request, template_name, ctx) 
 
