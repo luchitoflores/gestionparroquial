@@ -87,11 +87,35 @@ Agregar Administrador
 		<h3>Búsqueda de Feligreses</h3>
 	</div>
 	<div class="modal-body">
-	<form action="/cxzcxzcxz/" method="POST">
-		{%csrf_token%}
-		{{form_email}}
-		
-	</form>
+		<form action="/api/email/add/" method="POST" class='form-horizontal'>
+			{%csrf_token%}
+			
+			<input type="hidden" name='pk' value="{{administrador.id}}">
+
+			<div class="control-group">
+				<div class="control-label">
+					{{ form_email.email.label }}
+				</div>
+				<div class="controls">
+					{{ form_email.email }} 
+				</div>
+				<div class="controls">
+					<div class="help-text">
+						{{ form_email.email.help_text }}	
+					</div>
+				</div>
+				<div class="controls">
+					<div class="errors">
+						{{ form_email.email.errors }} 
+					</div>
+				</div>
+			</div>
+
+			<div class="form-actions">
+				<button class='btn btn-primary' type="submit">Guardar</button>
+			</div>
+
+		</form>
 	</div>
 	<div class="modal-footer">
 		<a id='id_aceptar' href="." class="btn btn-primary" data-dismiss="modal">Aceptar</a>

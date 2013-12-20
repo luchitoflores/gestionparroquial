@@ -236,7 +236,8 @@ def administrator_create_view(request):
 			return HttpResponseRedirect(success_url)
 		else:
 			form_email = EmailForm()
-			ctx = {'form': form, 'form_email': form_email}
+			administrador = perfil
+			ctx = {'form': form, 'form_email': form_email, 'administrador':administrator}
 			return render(request, template_name, ctx) 	
 	else:
 		form = AdminForm()
