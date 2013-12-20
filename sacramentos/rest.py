@@ -17,11 +17,17 @@ from datetime import datetime,date
 # from tastypie.resources import ModelResource
 
 # Librerías del proyecto
-from sacramentos.forms import PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm
+from sacramentos.forms import PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm, EmailForm
 from sacramentos.models import (PerfilUsuario,NotaMarginal,Bautismo,Matrimonio,
 	Parroquia)
 
 logger = logging.getLogger(__name__)
+
+
+#Método para setear un email a un usuario administrador o secretaria
+def ponerEmail():
+	if request.is_ajax() and request.method == 'POST':
+		form = EmailForm
 
 
 
