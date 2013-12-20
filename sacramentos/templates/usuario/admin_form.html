@@ -39,9 +39,11 @@ Agregar Administrador
 		<div class="controls">
 			<div class="errors">
 				{% if form.administrador.errors %}
-				{% for error in form.administrador.errors %}
-				<li>{{ error }}  Puede asignarle un correo mediante este <a href="#">formulario</a></li>
-				{% endfor %}
+				<ul class="errorlist">
+					{% for error in form.administrador.errors %}
+					<li>{{ error }}  Puede asignarle un correo mediante este <a href="#">formulario</a></li>
+					{% endfor %}
+				</ul>
 				
 				{% endif %}
 			</div>
