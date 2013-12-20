@@ -215,11 +215,12 @@ def administrator_create_view(request):
 	if request.method == 'POST':
 		form = AdminForm(request.POST)
 		form.fields['administrador'].queryset = PerfilUsuario.objects.all()
-		perfil = request.POST.get('administrador') 
+		perfil = request.POST.get('administrador')
+
 		if perfil:
 			usuario = PerfilUsuario.objects.get(pk=perfil).user
 			if not usuario.email:
-				form.errors["administrador"] = ErrorList([u"El usuario no tiene correo electrónico. "])
+				form.errors["administrador"] = ErrorList([u'El usuario no tiene correo electrónico. '])
 		
 		is_staff = request.POST.get('is_staff')
 		
@@ -237,6 +238,8 @@ def administrator_create_view(request):
 			return render(request, template_name, ctx) 	
 	else:
 		form = AdminForm()
+		from .forms import EmailForm
+		form_email = EmailForm()
 		ctx = {'form': form}
 		return render(request, template_name, ctx) 
 
