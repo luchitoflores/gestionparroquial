@@ -11,6 +11,7 @@ Lista de Administradores del Sistema
 			<th>Username</th>
 			<th>Nombres</th>
 			<th>Cédula</th>
+			<th>Es activo</th>
 			<th data-hide='phone, tablet'>Fecha de Nacimiento</th>
 		</tr>
 	</thead>
@@ -21,6 +22,7 @@ Lista de Administradores del Sistema
 		<td>{{o.user.get_full_name}}</td>
 		<td>{{o.dni}}</td>
 		<td>{{o.fecha_nacimiento}}</td>
+		<td>{% if o.user.is_staff%} Está Activo {% else %} No está activo {% endif %}</td>
 	</tr>
 		{%endfor%}
 	</tbody>

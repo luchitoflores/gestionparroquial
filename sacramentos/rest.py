@@ -34,7 +34,7 @@ def agregar_email(request):
 			persona = PerfilUsuario.objects.get(pk=pk)
 			usuario = persona.user
 			usuario.email = email
-			# persona.save()
+			usuario.save()
 			ctx = {'respuesta': True}
 		else:
 			errores = form.errors

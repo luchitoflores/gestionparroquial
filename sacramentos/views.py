@@ -232,7 +232,8 @@ def administrator_create_view(request):
 				usuario.is_staff=True
 			else:
 				usuario.is_staff=False
-				
+			
+			usuario.save()	
 			return HttpResponseRedirect(success_url)
 		else:
 			form_email = EmailForm()
