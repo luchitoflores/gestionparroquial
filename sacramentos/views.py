@@ -37,6 +37,7 @@ from sacramentos.models import (PerfilUsuario,
 from sacramentos.forms import (
 	UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
 	PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
+	EmailForm,
 	MatrimonioForm,MatrimonioFormEditar,
 	BautismoForm,BautismoFormEditar,
 	EucaristiaForm,EucaristiaFormEditar,
@@ -213,6 +214,7 @@ def administrator_create_view(request):
 	template_name= 'usuario/admin_form.html'
 	success_url = '/administrador/'
 	if request.method == 'POST':
+		form_email = EmailForm()
 		form = AdminForm(request.POST)
 		form.fields['administrador'].queryset = PerfilUsuario.objects.all()
 		perfil = request.POST.get('administrador')
@@ -238,7 +240,6 @@ def administrator_create_view(request):
 			return render(request, template_name, ctx) 	
 	else:
 		form = AdminForm()
-		from .forms import EmailForm
 		form_email = EmailForm()
 		ctx = {'form': form}
 		return render(request, template_name, ctx) 
