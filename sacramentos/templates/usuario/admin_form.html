@@ -93,7 +93,7 @@ Agregar Administrador
 		<form action="/api/email/add/" method="POST" class='form-horizontal'>
 			{%csrf_token%}
 			
-			<input type="hidden" name='pk' value="{{administrador}}">
+			<input type="hidden" name='pk' value="{{administrador.pk}}">
 
 			<div class="control-group">
 				<div class="control-label">
