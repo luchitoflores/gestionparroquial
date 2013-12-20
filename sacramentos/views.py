@@ -218,10 +218,10 @@ def administrator_create_view(request):
 		form.fields['administrador'].queryset = PerfilUsuario.objects.all()
 		perfil = request.POST.get('administrador')
 
-		if perfil:
-			usuario = PerfilUsuario.objects.get(pk=perfil).user
-			if not usuario.email:
-				form.errors["administrador"] = ErrorList([u'El usuario no tiene correo electrónico. '])
+		persona = PerfilUsuario.objects.get(pk=perfil)
+		usuario = persona.user
+		if not usuario.email:
+			form.errors["administrador"] = ErrorList([u'El usuario no tiene correo electrónico. '])
 		
 		is_staff = request.POST.get('is_staff')
 		
@@ -236,7 +236,7 @@ def administrator_create_view(request):
 			return HttpResponseRedirect(success_url)
 		else:
 			form_email = EmailForm()
-			administrador = perfil
+			administrador = persona
 			ctx = {'form': form, 'form_email': form_email, 'administrador':administrador}
 			return render(request, template_name, ctx) 	
 	else:
