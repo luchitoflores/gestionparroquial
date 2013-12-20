@@ -84,9 +84,12 @@ Agregar Administrador
 <div id="id_email" class="modal hide fade">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		<h3>Búsqueda de Feligreses</h3>
+		<h3>Ingreso de Email</h3>
 	</div>
 	<div class="modal-body">
+		
+		{{administrador}}
+
 		<form action="/api/email/add/" method="POST" class='form-horizontal'>
 			{%csrf_token%}
 			
