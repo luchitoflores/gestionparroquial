@@ -33,6 +33,7 @@ def agregar_email(request):
 			email = request.POST.get('email')
 			persona = PerfilUsuario.objects.get(pk=pk)
 			persona.user.email = email
+			persona.save()
 			ctx = {'respuesta': True}
 		else:
 			errores = form.errors
