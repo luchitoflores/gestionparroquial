@@ -1002,6 +1002,12 @@ function asignar_email(){
 				$('#id_modal_email').modal('hide');
 			} else {
 				console.log('hay errores')
+				var mensaje = '<div class="alert alert-error">' + 
+				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				'<img src="/static/img/error.png" alt=""> Uno o más datos son invalidos </div>';
+				$('.modal-header').append(mensaje);
+				var mensajes_error = '<span class="errors">' + data.errores+ '</span>';
+				$('#id_email').append(mensajes_error);
 			}
 		});
 	});
