@@ -41,7 +41,7 @@ Agregar Administrador
 				{% if form.administrador.errors %}
 				<ul class="errorlist">
 					{% for error in form.administrador.errors %}
-					<li>{{ error }}  Puede asignarle un correo mediante este <a href="#id_email" data-toggle='modal'>formulario</a></li>
+					<li>{{ error }}  Puede asignarle un correo mediante este <a href="#id_modal_email" data-toggle='modal'>formulario</a></li>
 					{% endfor %}
 				</ul>
 				
@@ -81,7 +81,7 @@ Agregar Administrador
 
 {%include 'usuario/buscar_feligreses.html'%}
 
-<div id="id_email" class="modal hide fade">
+<div id="id_modal_email" class="modal hide fade">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 		<h3>Ingreso de Email</h3>

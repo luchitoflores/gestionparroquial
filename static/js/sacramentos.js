@@ -995,7 +995,15 @@ function controles_provincias(){
 function asignar_email(){
 	$('#id_form_email').on('submit', function(e){
 		e.preventDefault();
-		alert('ejecutando');
+		var ctx = $(this).serialize()
+		var = url = 'api/email/add/'
+		$.ajax(url, ctx, function(data){
+			if (data.respuesta) {
+				$('#id_modal_email').modal('hide');
+			} else {
+				console.log('hay errores')
+			}
+		});
 	});
 
 
