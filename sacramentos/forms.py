@@ -442,7 +442,7 @@ class AdminForm(forms.Form):
 	administrador = forms.ModelChoiceField(help_text='Nombre del nuevo administrador', 
 		queryset=PerfilUsuario.objects.none(), required=True, empty_label='-- Buscar --',
 		widget=forms.Select(attrs={'required':''}))
-	is_staff = forms.BooleanField(label='Es activo?', required=True, 
+	is_staff = forms.BooleanField(label='Es activo?', required=False, 
 		help_text='Marque la casilla si quiere que el usuario pueda entrar al sistema')
 
 	# def __init__(self, *args, **kwargs):
