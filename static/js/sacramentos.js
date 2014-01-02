@@ -996,7 +996,7 @@ function asignar_email(){
 	$('#id_form_email').on('submit', function(e){
 		e.preventDefault();
 		var ctx = $(this).serialize()
-		var = url = 'api/email/add/'
+		var url = 'api/email/add/'
 		$.ajax(url, ctx, function(data){
 			if (data.respuesta) {
 				$('#id_modal_email').modal('hide');
