@@ -238,6 +238,7 @@ def administrator_create_view(request):
 		else:
 			form_email = EmailForm()
 			administrador = persona
+			form.fields['administrador'].queryset = PerfilUsuario.objects.filter(pk=administrador.id)
 			ctx = {'form': form, 'form_email': form_email, 'administrador':administrador}
 			return render(request, template_name, ctx) 	
 	else:
