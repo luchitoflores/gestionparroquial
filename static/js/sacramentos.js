@@ -1004,7 +1004,7 @@ function asignar_email(){
 				console.log('hay errores')
 				var mensaje = '<br/><div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Uno o más datos son invalidos </div>';
+				'<img src="/static/img/error.png" alt=""> El email ingresado no es válido </div>';
 				$('.modal-header').append(mensaje);
 
 				$.each(data.errores, function(index, element){
