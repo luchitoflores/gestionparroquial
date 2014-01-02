@@ -11,6 +11,7 @@ function inicio(){
 	// crear_nota($('#id_form_crear_nota'), '#id_fecha','#id_descripcion', '#id_crear_nota');
 	autocomplete('#id_padre');
 	asignar_padre();
+	asignar_email();
 	// usuarioCreate();
 	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/nota/add/');
 	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/nota_matrimonio/add/');
@@ -987,6 +988,17 @@ function controles_provincias(){
 	($('#id_obispo').alpha({allow:" "}));
 	($('#id_telefono').numeric());
 	($('#id_buscar_sacramentos').numeric());
+}
+
+
+
+function asignar_email(){
+	$('#id_form_email').on('submit', function(e){
+		e.preventDefault();
+		alert('ejecutando');
+	});
+
+
 }
 
 // function verificar_select_padre(id_etiqueta){
