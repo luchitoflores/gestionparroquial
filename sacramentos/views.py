@@ -3153,18 +3153,18 @@ def redireccionar(request):
 	
 	if request.user.has_perm('sacramentos.add_feligres'):
 		cont=cont+1
-		url='usuario_list'
+		url='/usuario/'
 
 	if request.user.has_perm('sacramentos.add_administrador'):
 		cont=cont+1
-		url='administrador_list'
+		url='/administrador/'
 	if request.user.has_perm('sacramentos.add_sacerdote'):
 		cont=cont+1
-		url='sacerdote_list'
+		url='/sacerdote/'
 
 	if request.user.has_perm('sacramentos.add_asignarsecretaria'):
 		cont=cont+1
-		url='asignar_secretaria_list'
+		url='/asignar/secretaria/'
 
 	if cont==1:
 		return HttpResponseRedirect(url)
