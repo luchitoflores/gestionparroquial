@@ -3169,7 +3169,27 @@ def redireccionar(request):
 	if cont==1:
 		return HttpResponseRedirect(url)
 	else:
-		return render(request,'personas.html')  
+		return render(request,'personas.html')
+
+
+@login_required(login_url='/login/')
+def redireccionar_parametros(request):
+	cont=0
+	url=''
+	
+	if request.user.has_perm('sacramentos.add_parametrizadiocesis'):
+		cont=cont+1
+		url='/parametriza/add/'
+
+	if request.user.has_perm('sacramentos.add_parametrizaparroquia'):
+		cont=cont+1
+		url='/parametriza/parroquia/add/'
+	
+
+	if cont==1:
+		return HttpResponseRedirect(url)
+	else:
+		return render(request,'parametros.html')  
 
 
 

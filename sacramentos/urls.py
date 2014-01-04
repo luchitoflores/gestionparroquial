@@ -28,7 +28,7 @@ from sacramentos.views import (
 	LogListView,exportar_csv_logs,
 	reporte_anual_sacramentos,reporte_intenciones,reporte_permisos,reporte_parroquias_sacerdotes,
 	reporte_sacerdotes_parroquias,
-	redireccionar,
+	redireccionar,redireccionar_parametros,
 	)
 # from sacramentos.rest import ParroquiaResource
 
@@ -85,8 +85,10 @@ urlpatterns = patterns('',
 		name='sacramentos'),
 	url(r'^reporte/$', login_required(TemplateView.as_view(template_name='reportes.html'), login_url='/login/'), 
 		name='reportes'),
-	url(r'^parametro/$', login_required(TemplateView.as_view(template_name='parametros.html'), login_url='/login/'), 
-		name='parametros'),
+	url(r'^parametro/$',redireccionar_parametros, name='redireccionar_parametros'),
+	# url(r'^parametro/$', login_required(TemplateView.as_view(template_name='parametros.html'), login_url='/login/'), 
+	# 	name='parametros'),
+
 
 	#urls de matrimonio y reporte
 	
