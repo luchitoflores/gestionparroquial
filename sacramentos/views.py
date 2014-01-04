@@ -3146,7 +3146,7 @@ def exportar_csv_logs(request):
 def encode(text):
 	return text.encode('utf-8')
 
-
+@login_required(login_url='/login/')
 def redireccionar(request):
 	cont=0
 	url=''

@@ -50,7 +50,8 @@
 					</span>
 					<h3>Libros</h3>
 					<div class="caption">
-						<p>Ud. puede agregar o editar un libro, elegir el tipo de libro de acuerdo a un sacramento 
+						<p>
+							Ud. puede agregar o editar un libro, elegir el tipo de libro de acuerdo a un sacramento 
 						</p>
 						<p>
 							{%if perms.sacramentos.change_libro and perms.sacramentos.add_libro %}
@@ -75,7 +76,7 @@
 					<h3>Asignar Secretaria</h3>
 					<div class="caption">
 						<p>
-							Ud. puede asignar secretari@s a su parroquia donde está asignado
+							Puede asignar y dar acceso a uno o más secretari@s en la parroquia que usted administra.
 						</p>
 						<p><a class="btn btn-primary" href="{%url 'asignar_secretaria_list'%}">Ir</a>
 						</p>
