@@ -1163,7 +1163,7 @@ class AsignarSecretariaForm(ModelForm):
 		esta_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__persona=persona, estado=True).exclude(asignacion__parroquia=parroquia)
 
 		if not persona.user.email:
-			mensaje = u"La persona elegida ya tiene una asignación activa en otra parroquia"
+			mensaje = u"La persona etttccccc"
 			msg = mark_safe(u"%s %s" % ('<a href="">Prueba</a>', mensaje))
 			self._errors["persona"] = self.error_class([msg])
 
