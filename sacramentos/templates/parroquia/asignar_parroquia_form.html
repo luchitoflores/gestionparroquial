@@ -30,6 +30,10 @@ Agregar Asignación - {{object}}
 		</div>
 		<div class="controls">
 			{{f}}
+			{%if f.label = 'Sacerdote'%}
+			<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+			{%endif%}
+
 		</div>
 
 		<div class="controls">
@@ -80,5 +84,7 @@ Agregar Asignación - {{object}}
 	</div>
 
 </form>
+
+{%include 'usuario/buscar_sacerdotes.html'%}
 
 {%endblock%}
