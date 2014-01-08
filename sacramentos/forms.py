@@ -163,7 +163,7 @@ class UsuarioAdministradorForm(ModelForm):
 	last_name = forms.CharField(required=True, label='Apellidos *', 
 		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
-	groups = forms.ModelMultipleChoiceField(required=False, label='Grupos *', queryset= Group.objects.all(),
+	groups = forms.ModelMultipleChoiceField(required=False, label='Grupos *', queryset= Group.objects.all().order_by('name'),
 		help_text = 'Los grupos a los que este usuario pertenece. '+
 		'Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos.'+
 		' Ud. puede seleccionar más de una opción.', widget=forms.CheckboxSelectMultiple())
