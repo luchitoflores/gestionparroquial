@@ -1163,7 +1163,7 @@ class AsignarSecretariaForm(ModelForm):
 		esta_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__persona=persona, estado=True).exclude(asignacion__parroquia=parroquia)
 
 		if not persona.user.email:
-			mensaje = u"La persona etttccccc"
+			mensaje = u"El usuario no tiene correo electrónico. "
 			msg = mark_safe(u"%s %s" % (mensaje, '<a href="#id_modal_email" data-toggle="modal">formulario</a>'))
 			self._errors["persona"] = self.error_class([msg])
 
