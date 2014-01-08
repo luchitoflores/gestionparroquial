@@ -1164,7 +1164,7 @@ class AsignarSecretariaForm(ModelForm):
 
 		if not persona.user.email:
 			mensaje = u"La persona etttccccc"
-			msg = mark_safe(u"%s %s" % ('<a href="">Prueba</a>', mensaje))
+			msg = mark_safe(u"%s %s" % (mensaje, '<a href="#id_modal_email" data-toggle="modal">formulario</a>'))
 			self._errors["persona"] = self.error_class([msg])
 
 		elif esta_activo_otra_parroquia:
