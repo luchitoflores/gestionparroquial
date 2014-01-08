@@ -2077,7 +2077,7 @@ def asignar_parroco_a_parroquia(request, pk):
 		else:
 			messages.error(request, 'Los datos del formulario son incorrectos')
 			form = AsignarParroquiaForm(parroquias, request.POST)
-			form.fields['persona'].queryset = PerfilUsuario.objects.filter(persona=persona)
+			form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=persona)
 			ctx = {'form': form, 'form_periodo': form_periodo, 'object': parroquia}
 			return render(request, template_name, ctx)
 	else:
