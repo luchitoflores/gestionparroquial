@@ -2318,8 +2318,8 @@ def asignar_secretaria_create(request):
 					form_email = EmailForm()
 					personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
 					form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
-					if not perfil.user.email:
-						form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
+					# if not perfil.user.email:
+					# 	form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
 					ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': perfil}
 				else: 
 					messages.error(request, 'Los datos del formulario son incorrectos')
