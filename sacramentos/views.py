@@ -2266,10 +2266,6 @@ def asignar_secretaria_create(request):
 			form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
 			form_periodo = PeriodoAsignacionParroquiaForm(request.POST)
 			
-			if not perfil.user.email:
-				form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
-		
-
 			if form.is_valid() and form_periodo.is_valid():
 				try:
 					periodo_asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = True)
@@ -2311,12 +2307,13 @@ def asignar_secretaria_create(request):
 						return HttpResponseRedirect(success_url)
 			else:
 				if request.POST.get('persona'):
-					form_email = EmailForm()
 					messages.error(request, 'Los datos del formulario son incorrectos')
+					form_email = EmailForm()
 					personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
 					form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
+					if not perfil.user.email:
+						form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
 					ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': perfil}
-					
 				else: 
 					messages.error(request, 'Uno o más cámpos son inválidos')
 					persona = PerfilUsuario.objects.none()
