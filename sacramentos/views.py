@@ -2273,7 +2273,7 @@ def asignar_secretaria_create(request):
 				try:
 					periodo_asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = True)
 					messages.error(request, 'El usuario %s ya cuenta con una asignación activa' % perfil)
-					form.fields['persona'].queryset = PerfilUsuario.objects.none()
+					form.fields['persona'].queryset = PerfilUsuario.objects.filter(id = perfil.id)
 					ctx = {'form': form, 'form_periodo':form_periodo}
 					return render(request, template_name, ctx)
 				except ObjectDoesNotExist:
