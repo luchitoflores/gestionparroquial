@@ -1115,7 +1115,7 @@ class ParroquiaForm(ModelForm):
 
 #Form para asignar parroquia
 class AsignarParroquiaForm(ModelForm):
-	persona = forms.ModelChoiceField(label = 'Sacerdote', queryset=PerfilUsuario.objects.sacerdote(), empty_label='-- Seleccione --', widget=forms.Select(attrs={'required':'', 'id':'id_celebrante'}))) 
+	persona = forms.ModelChoiceField(label = 'Sacerdote', queryset=PerfilUsuario.objects.sacerdote(), empty_label='-- Seleccione --', widget=forms.Select(attrs={'required':'', 'id':'id_celebrante'})) 
 	
 
 	def __init__(self, parroquia = Parroquia.objects.all(), *args, **kwargs):
