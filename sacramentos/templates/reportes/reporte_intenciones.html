@@ -73,12 +73,11 @@ body {
 				<th width='16%'>
 					{{"Iglesia"}}
 				</th>
-				<th width='10%' >
-					{{"Ofrenda ($)"}}
-				</th>
-
 				<th width='12%'>
 					{{"Hora"}}
+				</th>
+				<th width='10%' >
+					{{"Ofrenda ($)"}}
 				</th>
 				
 
@@ -98,10 +97,10 @@ body {
 					{{i.iglesia}}
 				</td>
 				<td align='center'>
-					{{i.ofrenda}}
+					{{i.hora|date:'H:i'}}
 				</td>
 				<td align='center'>
-					{{i.hora|date:'H:i'}}
+					{{i.ofrenda}}
 				</td>
 			</tr>
 			{%endfor%}
@@ -111,20 +110,20 @@ body {
 				</td>
 				<td></td>
 				<td></td>
-				<td align='center'>{{suma|floatformat:'2'}}</td>
 				<td></td>
+				<td align='center'>{{suma|floatformat:'2'}}</td>
 
 			</tr>
 		</tbody>
 	</table>
 	{%endif%}
-		<div id="footer">
-			<hr style="margin-bottom: 6px;"/>
-			<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
-				{{asignacion.persona.user.get_full_name}}
-			</p>
+	<div id="footer">
+		<hr style="margin-bottom: 6px;"/>
+		<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
+			{{asignacion.persona.user.get_full_name}}
+		</p>
 
-		</div>
+	</div>
 
 
 	
