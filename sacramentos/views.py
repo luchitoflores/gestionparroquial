@@ -2307,10 +2307,12 @@ def asignar_secretaria_create(request):
 						return HttpResponseRedirect(success_url)
 			else:
 				if request.POST.get('persona'):
+					form_email = EmailForm()
 					messages.error(request, 'Los datos del formulario son incorrectos')
+					persona = PerfilUsuario.objects.get(id=request.POST.get('persona'))
 					personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
 					form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
-					ctx = {'form': form, 'form_periodo': form_periodo}
+					ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': }
 					
 				else: 
 					messages.error(request, 'Uno o más cámpos son inválidos')
