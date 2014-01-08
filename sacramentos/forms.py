@@ -286,9 +286,15 @@ class PadreForm(ModelForm):
 					return cedula
 				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
 				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-					raise forms.ValidationError('El número de cédula no es válido')
-					return cedula
+				ultimo_digito = int(str(suma)[-1:])
+				if ultimo_digito != 0: 
+					if int(cedula[9]) != 10 - ultimo_digito :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
+				else: 
+					if int(cedula[9]) != 0 :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
 
 
 			if self.instance.id:
@@ -349,9 +355,15 @@ class SecretariaForm(ModelForm):
 					return cedula
 				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
 				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-					raise forms.ValidationError('El número de cédula no es válido')
-					return cedula
+				ultimo_digito = int(str(suma)[-1:])
+				if ultimo_digito != 0: 
+					if int(cedula[9]) != 10 - ultimo_digito :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
+				else: 
+					if int(cedula[9]) != 0 :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
 
 
 			if self.instance.id:
@@ -402,9 +414,15 @@ class SacerdoteForm(ModelForm):
 					return cedula
 				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
 				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				if int(cedula[9]) != 10 - int(str(suma)[-1:]):
-					raise forms.ValidationError('El número de cédula no es válido')
-					return cedula
+				ultimo_digito = int(str(suma)[-1:])
+				if ultimo_digito != 0: 
+					if int(cedula[9]) != 10 - ultimo_digito :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
+				else: 
+					if int(cedula[9]) != 0 :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
 
 
 			if self.instance.id:
@@ -488,6 +506,7 @@ class LibroForm(ModelForm):
         ('Matrimonio','Matrimonio'),
                  
     )
+    
 	ESTADO_CHOICES=(
 		('Abierto','Abierto'),
 		('Cerrado','Cerrado'),
