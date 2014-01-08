@@ -2269,6 +2269,10 @@ def asignar_secretaria_create(request):
 			form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
 			form_periodo = PeriodoAsignacionParroquiaForm(request.POST)
 			
+			if not perfil.user.email:
+				form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
+
+
 			if form.is_valid() and form_periodo.is_valid():
 				try:
 					periodo_asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = True)
