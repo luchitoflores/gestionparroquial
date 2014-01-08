@@ -489,7 +489,7 @@ function cargar_tabla_sacerdotes_en_modal(){
 		$.get(url, ctx, function(data){
 			tablas_busqueda_ajax("#id_table_busqueda_sacerdotes", columnas, data.perfiles);
 			map2 = almacenar_busqueda_en_map(data.perfiles);
-			devolver_campos_a_sacerdote(map2,'#id_celebrante, #id_sacerdote');
+			devolver_campos_a_sacerdote(map2,'#id_celebrante');
 
 		});
 	});
