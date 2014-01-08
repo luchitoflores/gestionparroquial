@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.forms.util import ErrorList
 from django.forms.widgets import RadioSelect
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 
 
 from .models import (PerfilUsuario, 
@@ -1160,11 +1160,18 @@ class AsignarSecretariaForm(ModelForm):
 		cleaned_data = super(AsignarSecretariaForm, self).clean()
 		persona = cleaned_data.get("persona")
 		parroquia = cleaned_data.get("parroquia")
-				
-		esta_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__persona=persona, estado=True).exclude(asignacion__parroquia=parroquia)
-		if esta_activo_otra_parroquia:
-			msg = u"La persona elegida ya tiene una asignación activa en otra parroquia"
+
+
+		if not persona.user.email:
+			mensaje = u"La persona elegida ya tiene una asignación activa en otra parroquia"
+			msg = mark_safe(u"%s %s" % ('<a href="">Prueba</a>', mensaje))
 			self._errors["persona"] = self.error_class([msg])
+
+		elif:
+			esta_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__persona=persona, estado=True).exclude(asignacion__parroquia=parroquia)
+			if esta_activo_otra_parroquia:
+				msg = u"La persona elegida ya tiene una asignación activa en otra parroquia"
+				self._errors["persona"] = self.error_class([msg])
 
 		return cleaned_data
 
