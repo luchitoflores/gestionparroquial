@@ -29,7 +29,7 @@ class PersonaManager(models.Manager):
 		return self.model.objects.filter(sexo='f')
 
 	def feligres(self):
-		return self.model.objects.all().exclude(user__groups__name='Sacerdote').exclude(user__groups__name='Administrador')
+		return self.model.objects.all().exclude(user__groups__name='Sacerdote')
 	
 	def administrador(self):
 		return self.model.objects.filter(user__groups__name='Administrador')
