@@ -10,6 +10,7 @@ from django.forms import ModelForm
 from django.forms.util import ErrorList
 from django.forms.widgets import RadioSelect
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
+from django.utils.html import format_html
 
 
 from .models import (PerfilUsuario, 
