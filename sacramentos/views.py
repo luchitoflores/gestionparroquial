@@ -108,7 +108,7 @@ def usuarioCreateView(request):
 				madre = PerfilUsuario.objects.none()
 				form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
 			
-			messages.error(request, 'Uno o más datos no son válidos')
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 	else:
@@ -167,7 +167,7 @@ def edit_usuario_view(request,pk):
 				madre = PerfilUsuario.objects.none()
 				form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
 			
-			messages.error(request, 'Uno o más campos no son válidos')
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_usuario': form_usuario,'form_perfil':form_perfil, 'perfil':perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 
@@ -277,7 +277,7 @@ def administrador_create_view(request):
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Uno o más datos son inválidos')
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
@@ -320,7 +320,7 @@ def administrador_update_view(request, pk):
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Uno o más datos no son válidos')
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
 			return render(request, template_name, ctx)
 
@@ -375,7 +375,7 @@ def secretaria_update_view(request, pk):
 			messages.success(request, 'Actualizado exitosamente')			
 			return HttpResponseRedirect(success_url)
 		else:
-			messages.error(request, 'Uno o más campos no son válidos %s %s' % (perfil_form.errors, usuario_form.errors))
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_usuario': usuario_form, 'form_perfil':perfil_form, 'object': secretaria}
 			return render(request,template_name, ctx)
 	else:
@@ -420,7 +420,7 @@ def sacerdote_create_view(request):
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Uno o más datos son inválidos')
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
@@ -459,7 +459,7 @@ def sacerdote_update_view(request, pk):
 				return HttpResponseRedirect(success_url)
 
 			else:
-				messages.error(request, 'Uno o más datos son inválidos')
+				messages.error(request, 'Los datos del formulario son incorrectos')
 				ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
 				return render(request, template_name, ctx)
 
@@ -2315,7 +2315,7 @@ def asignar_secretaria_create(request):
 						form.errors['persona'] = ErrorList([u'El usuario no tiene correo electrónico. '])
 					ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': perfil}
 				else: 
-					messages.error(request, 'Uno o más cámpos son inválidos')
+					messages.error(request, 'Los datos del formulario son incorrectos')
 					persona = PerfilUsuario.objects.none()
 					form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
 					ctx = {'form': form, 'form_periodo': form_periodo}
