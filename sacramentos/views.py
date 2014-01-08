@@ -2272,14 +2272,16 @@ def asignar_secretaria_create(request):
 			if form.is_valid() and form_periodo.is_valid():
 				try:
 					periodo_asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = True)
-					messages.error(request, 'El usuario %s ya cuenta con una asignación activa' % perfil)
+					form.errors["persona"] = ErrorList([u'El usuario elegido ya cuenta con una asignación activa.'])
+					# messages.error(request, 'El usuario elegido ya cuenta con una asignación activa')
 					form.fields['persona'].queryset = PerfilUsuario.objects.filter(id = perfil.id)
 					ctx = {'form': form, 'form_periodo':form_periodo}
 					return render(request, template_name, ctx)
 				except ObjectDoesNotExist:
 					try:
 						asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = False, asignacion__parroquia=parroquia)
-						messages.error(request, 'El usuario %s tiene un periodo desactivo, proceda a activarlo desde la lista de secretarios/as' % perfil)
+						form.errors["persona"] = ErrorList([u'El usuario elegido tiene un periodo desactivo, proceda a activarlo desde la lista de secretarios/as.'])
+						# messages.error(request, 'El usuario %s tiene un periodo desactivo, proceda a activarlo desde la lista de secretarios/as' % perfil)
 						ctx = {'form': form, 'form_periodo':form_periodo}
 						return render(request, template_name, ctx)
 					except ObjectDoesNotExist: 
