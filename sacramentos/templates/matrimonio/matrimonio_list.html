@@ -39,8 +39,6 @@ $(document).ready(function(){
 <table id='id_table_matrimonio' class='table table-bordered table-striped'>
 	<thead>
 		<tr class='alert alert-info'>
-			
-			<th>Acta</th>
 			<th>Novio</th>
 			<th>Novia</th>
 			<th>Fecha Sacramento</th>
@@ -53,8 +51,7 @@ $(document).ready(function(){
 	<tbody>
 		{% for o in object_list %}
 		<tr>
-			<td><a href="{%url 'matrimonio_update' pk=o.id%}"> {{o.numero_acta}}</a></td>
-			<td>{{o.novio.user.first_name}} {{o.novio.user.last_name}}</td>
+			<td><a href="{%url 'matrimonio_update' pk=o.id%}"> {{o.novio.user.first_name}} {{o.novio.user.last_name}}</a></td>
 			<td>{{o.novia.user.first_name}} {{o.novia.user.last_name}}</td>
 			<td id='id_fecha_sacramento'>{{o.fecha_sacramento}}</td>
 			<td>{{o.testigo_novio}}</td>
