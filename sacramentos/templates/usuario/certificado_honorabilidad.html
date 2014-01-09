@@ -41,7 +41,7 @@ h1{
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiastica {{cura.parroquia|upper}} <br/>
+			Parroquia Eclesiastica {{cura.parroquia|title}} <br/>
 			{{cura.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Dirección: "}}{{ cura.parroquia.direccion.domicilio }} {{"Tel: "}}{{cura.parroquia.direccion.telefono}}</small> <br /> <br /> <br />
@@ -50,7 +50,7 @@ h1{
 	</center><br/>
 	<p align='right'> <strong>{{cura.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
 	<p align="justify">
-		Rvdo <strong>{{cura.persona.user.get_full_name|upper}}</strong> Párroco de <strong>{{asignacion.parroquia.nombre|upper}}</strong> certifica conocer personalmente  
+		Rvdo <strong>{{cura.persona.user.get_full_name|title}}</strong> Párroco de <strong>{{asignacion.parroquia.nombre|upper}}</strong> certifica conocer personalmente  
 		{%if 's' in perfil.estado_civil and 'f' in perfil.sexo%}
 		a la Srta:<br/><br/>
 		{%endif%}
@@ -62,7 +62,7 @@ h1{
 		{%endif%}
 
 
-		<strong>{{perfil.user.get_full_name|upper}}</strong>, con numero de cédula: <strong>{{perfil.dni}}</strong>, quien ha demostrado honestidad, honradez, espíritu de servicio y gran responsabilidad en las tareas asignadas.<br/><br/>
+		<strong>{{perfil.user.get_full_name|title}}</strong>, con numero de cédula: <strong>{{perfil.dni}}</strong>, quien ha demostrado honestidad, honradez, espíritu de servicio y gran responsabilidad en las tareas asignadas.<br/><br/>
 
 		Es todo cuanto puedo certificar en honor a la verdad, autorizando al interesado hacer uso del presente  documento, para los fines legales pertinentes.</p><br/><br/>
 

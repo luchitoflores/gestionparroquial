@@ -1367,7 +1367,7 @@ class ReportePermisoForm(forms.Form):
 			if f:
 				msg=u'El feligres ya tiene Confirmacion'
 				self._errors['feligres']=self.error_class([msg])
-		if tipo=='Eucaristia':
+		if tipo=='Primera Comunion':
 			f=Eucaristia.objects.get(feligres=feligres)
 			if f:
 				msg=u'El feligres ya tiene Eucaristia'
@@ -1390,7 +1390,7 @@ class ReportePermisoForm(forms.Form):
 	TIPO_SACRAMENTO = (
 		('', '--- Seleccione ---'),
 		('Bautismo','Bautismo'),
-		('Eucaristia','Eucaristia'),
+		('Primera Comunion','Primera Comunion'),
 		('Confirmacion','Confirmacion'),
 		('Matrimonio','Matrimonio'),
 	)

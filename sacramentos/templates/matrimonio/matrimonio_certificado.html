@@ -33,14 +33,14 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiástica {{matrimonio.parroquia|upper}} <br/>
+			Parroquia Eclesiástica {{matrimonio.parroquia|title}} <br/>
 			{{matrimonio.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Dirección: "}}{{ matrimonio.parroquia.direccion }} {{"Tel: "}}{{matrimonio.parroquia.direccion.telefono}}		
 			</small>
 		</h2> <br />
 		<h1>{{"Partida de Matrimonio"|upper}}<p/></h4></center></h1>
-		<h2> <p>El suscrito Párroco de <strong>{{matrimonio.parroquia|upper}}</strong> CERTIFICA:</h2>
+		<h2> <p>El suscrito Párroco de <strong>{{matrimonio.parroquia|title}}</strong> CERTIFICA:</h2>
 		Que en el libro: <strong>{{ matrimonio.libro.numero_libro}}</strong>, pagina: <strong>{{ matrimonio.pagina}}</strong> y con el numero: <strong>{{ matrimonio.numero_acta }}</strong> </br>
 		se encuentra la Partida Matrimonial de: <strong>{{ matrimonio.novio}}</strong> <br/>
 		con: <strong>{{ matrimonio.novia}}</strong><br/>

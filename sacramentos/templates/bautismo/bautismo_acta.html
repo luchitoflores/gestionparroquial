@@ -41,7 +41,7 @@ body {
 					<p align="justify"> 
 
 						{{ "En la Iglesia Parroquial de "}} <strong>{{bautismo.iglesia|title}}</strong>, {%for d in p%}
-						<strong>{{d.diocesis|upper}}</strong><br/>
+						<strong>{{d.diocesis|title}}</strong><br/>
 						{%endfor%}
 						a <strong>{{bautismo.fecha_sacramento|date:'d'}}</strong> dias del mes de <strong>{{bautismo.fecha_sacramento|date:'F'}}</strong>, del año del Señor del <strong>{{bautismo.fecha_sacramento|date:'Y'}}</strong>.<br/>
 						Yo, <strong>{{bautismo.celebrante}}</strong>, Cura-Párroco de la misma,

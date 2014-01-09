@@ -33,7 +33,7 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiastica {{confirmacion.parroquia|upper}} <br/>
+			Parroquia Eclesiastica {{confirmacion.parroquia|title}} <br/>
 			{{confirmacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Direccion: "}}{{ confirmacion.parroquia.direccion }} {{"Tel: "}}{{confirmacion.parroquia.direccion.telefono}}
@@ -47,7 +47,7 @@ body {
 		<h1>{{"Partida de Confirmación"|upper}}</h1>
 
 	</center>
-	<h2> <p>El suscrito Párroco de <strong>{{confirmacion.parroquia|upper}}</strong> CERTIFICA:</h2>
+	<h2> <p>El suscrito Párroco de <strong>{{confirmacion.parroquia|title}}</strong> CERTIFICA:</h2>
 	Que en el libro: <strong>{{ confirmacion.libro.numero_libro}}</strong>, pagina: <strong>{{ confirmacion.pagina}}</strong> y con el numero: <strong>{{ confirmacion.numero_acta }}</strong> <br/>
 	se encuentra la partida de Confirmación de: <strong>{{ confirmacion.confirmado}}</strong> <br/>
 	{%if "m" in confirmacion.confirmado.sexo%}
