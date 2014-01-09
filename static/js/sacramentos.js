@@ -52,6 +52,7 @@ function inicio(){
 		console.log('no poseo esa propiedad time');
 		$('input[type=time]').timepicker({
 			defaultTime: false,
+			showMeridian: false,
 		}); 
 	} 
 }
