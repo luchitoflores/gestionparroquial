@@ -127,7 +127,10 @@ def edit_usuario_view(request,pk):
 	perfil= get_object_or_404(PerfilUsuario, pk=pk)
 	user= perfil.user
 
-	if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
+	# if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
+	# 	raise Http404
+
+	if perfil.user.groups.filter(name='Sacerdote').exists():
 		raise Http404
 
 	if request.method == 'POST':
@@ -1851,11 +1854,13 @@ def intencion_create_view(request):
 				intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
 				intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
 				if intencion_unica:
-					messages.error(request, u'No se puede puede crear una intención, porque ya existe una intención única para el dia y hora indicado')
+					messages.error(request, u'Los datos del formulario son incorrectos')
+					form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención, porque ya existe una intención única para el dia y hora indicado'])
 					ctx = {'form': form_intencion}
 					return render(request, template_name, ctx)
 				elif intenciones_colectivas and individual:
-					messages.error(request, u'No se puede puede crear una intención única, porque ya existen intenciones colectivas para el dia y hora indicado')
+					messages.error(request, u'Los datos del formulario son incorrectos')
+					form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención única, porque ya existen intenciones colectivas para el dia y hora indicado'])
 					ctx = {'form': form_intencion, 'object': intencion}
 					return render(request, template_name, ctx)
 				else:
@@ -1900,11 +1905,13 @@ def intencion_edit_view(request, pk):
 				intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia, individual=True).exclude(pk=pk)
 				intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia).exclude(pk=pk)
 				if intencion_unica:
-					messages.error(request, u'No se puede puede actualizar la intención a única, porque ya existe una intención única para el dia y hora indicado')
+					messages.error(request, u'Los datos del formulario son incorrectos')
+					form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención, porque ya existe una intención única para el dia y hora indicados'])
 					ctx = {'form': form_intencion, 'object': intencion}
 					return render(request, template_name, ctx)
 				elif intenciones_colectivas and individual:
-					messages.error(request, u'No se puede puede actualizar la intención, porque ya existen intenciones colectivas para el dia y hora indicado')
+					messages.error(request, u'Los datos del formulario son incorrectos')
+					form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención como única, porque ya existen intenciones colectivas para el dia y hora indicados'])
 					ctx = {'form': form_intencion, 'object': intencion}
 					return render(request, template_name, ctx)
 				else:
