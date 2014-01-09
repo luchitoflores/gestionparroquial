@@ -2281,8 +2281,8 @@ def asignar_secretaria_create(request):
 				except ObjectDoesNotExist:
 					try:
 						asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = False, asignacion__parroquia=parroquia)
-						mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el "
-						msg = mark_safe(u"%s %s" % (mensaje, '<a href="/asignar/secretaria/'+perfil.id+'/" >formulario</a>'))
+						mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
+						msg = mark_safe(u"%s %s" % (mensaje, '<a href="/asignar/secretaria/'+str(perfil.id)+'/" >formulario</a>'))
 						form.errors["persona"] = ErrorList([msg])
 						messages.error(request, 'Los datos del formulario son incorrectos')
 						ctx = {'form': form, 'form_periodo':form_periodo}
