@@ -102,7 +102,7 @@ function crear_nota_marginal(id_form,id_modal,url_rest){
 			} else{
 				var mensaje = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Uno o más datos son invalidos </div>';
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
 				$('#id_mensaje_nota').html(mensaje);
 				$.each(data.errores_nota, function(index, element){
 					var mensajes_error = '<span>' + element+ '</span>';
@@ -781,7 +781,7 @@ function crear_padre(identificador, idpadre, idmodal, sexo){
 			if(!data.respuesta){
 				var mensaje = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Uno o más datos son invalidos </div>';
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
 				$('.modal-header').append(mensaje);
 				$.each(data.errores_usuario, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
@@ -824,7 +824,7 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 			if(!data.respuesta){
 				var mensaje = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Uno o más datos son invalidos </div>';
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
 				$('.modal-header').append(mensaje);
 				$.each(data.errores_usuario, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
