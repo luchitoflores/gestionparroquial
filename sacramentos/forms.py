@@ -778,9 +778,18 @@ class EucaristiaFormEditar(ModelForm):
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
 		persona = self.cleaned_data.get("feligres")
 		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
-		if fecha_sacramento<fecha_nacimiento:
-			msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-			self._errors['fecha_sacramento']=self.error_class([msg])
+		
+		try:
+			fecha_bautismo=Bautismo.objects.get(bautizado=persona).fecha_sacramento
+			if fecha_sacramento<fecha_bautismo:
+				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
+				self._errors['fecha_sacramento']=self.error_class([msg])
+		except ObjectDoesNotExist:
+			if fecha_sacramento<fecha_nacimiento:
+				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
+				self._errors['fecha_sacramento']=self.error_class([msg])
+
+
 
 		if fecha_bautismo:
 			if fecha_sacramento<fecha_bautismo:
@@ -853,6 +862,22 @@ class ConfirmacionForm(ModelForm):
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
 		persona = self.cleaned_data.get("confirmado")
 		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
+		
+		try:
+			fecha_bautismo=Bautismo.objects.get(bautizado=persona).fecha_sacramento
+			fecha_eucaristia=Eucaristia.objects.get(bautizado=persona).fecha_sacramento
+			if fecha_sacramento<fecha_eucaristia:
+				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Primera Comunion del feligres'
+				self._errors['fecha_sacramento']=self.error_class([msg])
+			if fecha_sacramento<fecha_bautismo:
+				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
+				self._errors['fecha_sacramento']=self.error_class([msg])
+		except ObjectDoesNotExist:
+			if fecha_sacramento<fecha_nacimiento:
+				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
+				self._errors['fecha_sacramento']=self.error_class([msg])
+
+
 		if fecha_sacramento<fecha_nacimiento:
 			msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
 			self._errors['fecha_sacramento']=self.error_class([msg])
