@@ -43,7 +43,7 @@ body {
 		</h2>
 		
 		<h1>{{"Partida Bautismal"|upper}}</h1></center>
-		<h2> <p>El suscrito Párroco de <strong>{{bautismo.parroquia|upper}}</strong> CERTIFICA:</h2>
+		<h2> <p>El suscrito Párroco de <strong>{{bautismo.parroquia|title}}</strong> CERTIFICA:</h2>
 		Que en el libro: <strong>{{ bautismo.libro.numero_libro}}</strong>, pagina: <strong>{{ bautismo.pagina}}</strong> y con el numero: <strong>{{ bautismo.numero_acta }}</strong> </br>
 		se encuentra la Partida Bautismal de: <strong>{{ bautismo.bautizado}}</strong> <br/>
 		{%if "m" in bautismo.bautizado.sexo%}
