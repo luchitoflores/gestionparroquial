@@ -7,7 +7,7 @@ from .models import Provincia, Canton,Parroquia, Direccion
 	
 
 class ParroquiasAdmin(admin.ModelAdmin):
-	list_display = ('nombre', 'canton_nombre')
+	list_display = ('nombre', 'canton__nombre')
 
 admin.site.register(Provincia)
 admin.site.register(Canton)
