@@ -53,7 +53,8 @@ function inicio(){
 		$('input[type=time]').timepicker({
 			defaultTime: false,
 			showMeridian: false,
-			showSeconds: true,
+			format: 'HH:mm:ss'
+			//showSeconds: true,
 		}); 
 	} 
 }
