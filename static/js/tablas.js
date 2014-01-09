@@ -38,6 +38,7 @@ function tablas_estilo_bootstrap(){
 	$('th').each(function(){ 
 		if($(this).text() != ''){
 			$(this).addClass('dropdown-toggle');
+			$(this).attr('dropdown-toggle', 'dropdown');
 			$(this).append('<span><img class="sorted" src="/static/img/black-unsorted.gif"></img></span>');
 		}
 	});
