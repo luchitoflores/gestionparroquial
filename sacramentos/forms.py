@@ -550,9 +550,12 @@ class BautismoForm(ModelForm):
 		cleaned_data = super(BautismoForm, self).clean()
 		libro = self.cleaned_data.get("libro")
 		persona = self.cleaned_data.get("bautizado")
-		print "persona: %s " % type(persona)
-		print "Feligres: %s " % (persona)
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
+		if fecha_sacramento<fecha_nacimiento:
+			msg=u'La fech del Bautismo no puede ser menor a la fecha de nacimiento del feligres'
+			self._errors['fecha_sacramento']=self.error_class([msg])
+			
 		if fecha_sacramento>date.today():
 			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
