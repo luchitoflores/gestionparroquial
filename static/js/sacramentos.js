@@ -45,13 +45,15 @@ function inicio(){
 	if(!Modernizr.inputtypes.date){
 		console.log('no poseo esa propiedad');
 		$('input[type=date]').datepicker({
-			dateFormat: 'yy-mm-dd'
+			//dateFormat: 'yyyy-mm-dd'
 		}); 
 	} 
 	if(!Modernizr.inputtypes.time){
 		console.log('no poseo esa propiedad time');
 		$('input[type=time]').timepicker({
 			defaultTime: false,
+			showMeridian: false,
+			showSeconds: true,
 		}); 
 	} 
 }
