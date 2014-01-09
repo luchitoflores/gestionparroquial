@@ -49,16 +49,17 @@ body {
 		<h2>{{"CERTIFICADO"}}</h2>
 	</center>
 	{{"Yo, "}} <strong>{{cura.persona.user.get_full_name}}</strong> {{"parroco de "}} <strong>{{asignacion.parroquia|upper}}{{"."}}</strong> <br>
-	{{"Certifico que"}}
-	{%if 'm' in feligres.sexo%}
-	{{"el Sr. "}}
-	
-	{%elif 'f' in feligres.sexo and 's' in feligres.estado_civil%}
-	{{"la Srta. "}}
-	{%else%}
-	{{"la Sra. "}}
-	{%endif%}
 	<p align='justify'>
+		{{"Certifico que"}}
+		{%if 'm' in feligres.sexo%}
+		{{"el Sr. "}}
+		
+		{%elif 'f' in feligres.sexo and 's' in feligres.estado_civil%}
+		{{"la Srta. "}}
+		{%else%}
+		{{"la Sra. "}}
+		{%endif%}
+		
 		<strong>{{feligres}}</strong> {{"ha realizado satisfactoriamente el nivel de formacion cristiana y está adecuadamente preparado para que pueda recibir el sacramento de "}} <strong>{{tipo}}{{"."}}</strong><br>
 	</p>
 	<p align='right'> <strong>{{asignacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
