@@ -17,6 +17,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.shortcuts import render,get_object_or_404
 from django.utils.decorators import method_decorator
+from django.utils.html import format_html, mark_safe
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 # Para los logs
@@ -2280,7 +2281,9 @@ def asignar_secretaria_create(request):
 				except ObjectDoesNotExist:
 					try:
 						asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = False, asignacion__parroquia=parroquia)
-						form.errors["persona"] = ErrorList([u'El usuario elegido tiene un periodo desactivo, proceda a activarlo desde la lista de secretarios/as.'])
+						mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el "
+						msg = mark_safe(u"%s %s" % (mensaje, '<a href="/asignar/secretaria/'+perfil.id+'/" >formulario</a>'))
+						form.errors["persona"] = ErrorList([msg])
 						messages.error(request, 'Los datos del formulario son incorrectos')
 						ctx = {'form': form, 'form_periodo':form_periodo}
 						return render(request, template_name, ctx)
