@@ -127,7 +127,10 @@ def edit_usuario_view(request,pk):
 	perfil= get_object_or_404(PerfilUsuario, pk=pk)
 	user= perfil.user
 
-	if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
+	# if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
+	# 	raise Http404
+
+	if perfil.user.groups.filter(name='Sacerdote').exists():
 		raise Http404
 
 	if request.method == 'POST':
