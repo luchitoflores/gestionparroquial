@@ -1290,7 +1290,7 @@ class IntencionForm(ModelForm):
 		widgets = {
 			'intencion': forms.Textarea(attrs={'required':'', 'title':'intencion'}),
 			'oferente': forms.TextInput(attrs={'required':''}),
-			'ofrenda': forms.TextInput(attrs={'required':'',  'pattern':'[0-9]+'}),
+			'ofrenda': forms.TextInput(attrs={'required':''}),
 			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
 			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
 			'iglesia': forms.TextInput(attrs={'required':''}),		
