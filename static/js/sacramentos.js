@@ -45,7 +45,7 @@ function inicio(){
 	if(!Modernizr.inputtypes.date){
 		console.log('no poseo esa propiedad');
 		$('input[type=date]').datepicker({
-			dateFormat: 'yyyy-mm-dd'
+			//dateFormat: 'yyyy-mm-dd'
 		}); 
 	} 
 	if(!Modernizr.inputtypes.time){
