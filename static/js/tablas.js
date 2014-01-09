@@ -37,7 +37,7 @@ function tablas_estilo_bootstrap(){
 	// Agregar iconos para decir que una tabla se puede ordenar
 	$('th').each(function(){ 
 		if($(this).text() != ''){
-			$(this).append('  <span><img class="sorted" src="/static/img/black-unsorted.gif"></img></span>');
+			$(this).append('<span class="caret"></span>');
 		}
 	});
 
