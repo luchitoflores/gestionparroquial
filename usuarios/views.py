@@ -59,14 +59,10 @@ def login_view(request):
 						request.session["parroquia"] = parroquia
 				except ObjectDoesNotExist:
 					pass
-				
 				if redirect_to:
 					return HttpResponseRedirect(redirect_to)
 				else:
-					if request.path == 'home':
-						return HttpResponseRedirect('/home/')
-					else:
-						return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+					return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 			else:
 				messages.add_message(request, messages.ERROR, 'Ud. no tiene permisos para acceder al sistema')
 		else:
@@ -75,7 +71,6 @@ def login_view(request):
 		form = AuthenticationForm()
 		form.fields["username"].widget = forms.TextInput(attrs={'required':''})
 		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password'})
-	
 	ctx =  {'form':form}
 	return render(request, 'login.html',locals())
 
