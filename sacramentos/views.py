@@ -676,7 +676,7 @@ def libro_create_view(request):
 		else:
 			print('FORM INVALIDO ')
 			ctx={'form_libro':form_libro}
-			messages.error(request,ctx)
+			messages.error(request,"Datos del formularios son inválidos")
 			return render(request,'libro/libro_form.html',ctx)
 	else:
 		form_libro=LibroForm()
