@@ -33,14 +33,14 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiastica {{eucaristia.parroquia|upper}} <br/>
+			Parroquia Eclesiastica {{eucaristia.parroquia|title}} <br/>
 			{{eucaristia.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}} <br />
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Direccion: "}}{{ eucaristia.parroquia.direccion }} {{"Tel: "}}{{eucaristia.parroquia.direccion.telefono}}</small>
 		</h2><br />
 
 		<h1>{{"Certificado de Primera Comunión"|upper}}<p/></h1></center> <br />
-		<h2> <p>El suscrito Párroco de <strong>{{eucaristia.parroquia|upper}}</strong> CERTIFICA:</h2>
+		<h2> <p>El suscrito Párroco de <strong>{{eucaristia.parroquia|title}}</strong> CERTIFICA:</h2>
 		Que en el libro: <strong>{{ eucaristia.libro.numero_libro}}</strong>, pagina: <strong>{{ eucaristia.pagina}}</strong> y con el numero: <strong>{{ eucaristia.numero_acta }}</strong> </br>
 		se registra el nombre de: <strong>{{ eucaristia.feligres}}</strong> <br/>
 		Nombre del Padre: 

@@ -37,7 +37,7 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiástica {{asignacion.parroquia|upper}} <br/>
+			Parroquia Eclesiástica {{asignacion.parroquia|title}} <br/>
 			{{asignacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Direccion: "}}{{ asignacion.parroquia.direccion }} {{"Tel: "}}{{asignacion.parroquia.direccion.telefono}}</small><br/>

@@ -37,7 +37,7 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiastica {{asignacion.parroquia|upper}} <br/>
+			Parroquia Eclesiastica {{asignacion.parroquia|title}} <br/>
 			{{asignacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}  <br>
 			<hr style="margin-bottom: 1px;"/>
 			<small>{{"Direccion: "}}{{ asignacion.parroquia.direccion }} {{"Tel: "}}{{asignacion.parroquia.direccion.telefono}}</small><br/>
@@ -46,7 +46,7 @@ body {
 	</center>
 	<br/>
 	<p align='right'> <strong>{{asignacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
-	{{"El suscrito parroco de "}} <strong>{{asignacion.parroquia|upper}}</strong> {{"CERTIFICA:"}}<br/><br/>
+	{{"El suscrito parroco de "}} <strong>{{asignacion.parroquia|title}}</strong> {{"CERTIFICA:"}}<br/><br/>
 	{{"Que en el año "}} <strong>{{anio_actual}}</strong> {{"se realizaron los siguientes sacramentos:"}}<br/><br/>
 	<ol>
 		<li>{{"Bautizados durante el año: "}} <strong>{{num_bautizos}}</strong></li>

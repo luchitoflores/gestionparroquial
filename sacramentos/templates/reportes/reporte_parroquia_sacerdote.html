@@ -104,9 +104,15 @@ td {
 				<td align='center'>
 					{{p.inicio}}
 				</td>
+				{%if p.fin%}
 				<td align='center'>
 					{{p.fin}}
 				</td>
+				{%else%}
+				<td align='center'>
+					{{"Al presente"}}
+				</td>
+				{%endif%}
 				{%if p.estado%}
 				<td align='center'>
 					{{"Activo"}}
