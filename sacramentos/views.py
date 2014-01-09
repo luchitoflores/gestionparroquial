@@ -3001,7 +3001,7 @@ def reporte_permisos(request):
 				return generar_pdf(html)
 			
 			
-		elif (tipo =='Eucaristia' and feligres):
+		elif (tipo =='Primera Comunion' and feligres):
 			
 			feligres=PerfilUsuario.objects.get(id=feligres)
 			try:
