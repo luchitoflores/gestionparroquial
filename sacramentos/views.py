@@ -1275,8 +1275,6 @@ def bautismo_create_view(request):
 	else:
 		
 		formBautismo=BautismoForm(usuario)
-		parroco = request.session['parroco']
-		formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.filter(pk = parroco.id)
 		# form_nota=NotaMarginalForm()
 	ctx={'formBautismo':formBautismo}
 	return render (request,'bautismo/bautismo_form.html',ctx)
