@@ -382,6 +382,7 @@ function cargar_tabla_usuarios_en_modal(){
 		var columnas = [
 		{"sType": "html","mData" : "full_name", "bSortable": true},
 		{"mData" : "lugar_nacimiento", "bSortable": true},
+		{"mData" : "fecha_nacimiento", "bSortable": true},
 		{"mData" : "dni", "bSortable": true }];
 		$.get(url, ctx, function(data){
 			console.log(data.bandera);
