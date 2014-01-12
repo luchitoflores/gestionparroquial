@@ -57,6 +57,9 @@ def login_view(request):
 					parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
 					if parroquia:
 						request.session["parroquia"] = parroquia
+						parroco = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user__groups__name='Sacerdote', asignacion__parroquia=parroquia, estado=True).asignacion.persona
+						if parroco:
+							request.session["parroco"] = parroco
 				except ObjectDoesNotExist:
 					pass
 				if redirect_to:
