@@ -247,7 +247,7 @@ def buscar_usuarios(request):
 					for perfil in perfiles:
 						full_name = perfil.user.get_full_name()
 						# lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba('+"'"+full_name+"'"+')">%s</a>' % full_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id}) 
-						lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba2()">%s</a>' % full_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id, 'fecha_nacimiento': perfil.fecha_nacimiento}) 
+						lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba2()">%s</a>' % full_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id, 'fecha_nacimiento': str(perfil.fecha_nacimiento)}) 
 					ctx={'perfiles':lista, 'bandera': bandera}
 				else:
 					bandera = False
@@ -270,7 +270,7 @@ def buscar_usuarios(request):
 					for perfil in perfiles:
 						full_name = perfil.user.get_full_name()
 						# lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba('+"'"+full_name+"'"+')">%s</a>' % full_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id}) 
-						lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba2('"'%s'"')">%s</a>' % (perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id, 'fecha_nacimiento': perfil.fecha_nacimiento}) 
+						lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba2('"'%s'"')">%s</a>' % (perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id, 'fecha_nacimiento': str(perfil.fecha_nacimiento)}) 
 					ctx={'perfiles':lista, 'bandera': bandera}
 				else:
 					bandera = False
