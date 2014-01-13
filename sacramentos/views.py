@@ -2722,7 +2722,7 @@ def usuario_reporte_honorabilidad(request,pk):
 		return generar_pdf(html)
 	else:
 		messages.error(request,'Ingrese la cedula de la persona')
-		return HttpResponse(request)
+		return HttpResponse(request,'usuario/usuario_form.html')
 
 
 
