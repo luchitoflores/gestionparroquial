@@ -2721,7 +2721,8 @@ def usuario_reporte_honorabilidad(request,pk):
 			'cura':cura,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
 		return generar_pdf(html)
 	else:
-		return HttpResponse('Ingrese la cedula de la persona')
+		messages.error(request,'Ingrese la cedula de la persona')
+		return HttpResponse(request)
 
 
 
