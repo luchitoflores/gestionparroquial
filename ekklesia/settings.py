@@ -212,8 +212,8 @@ LOGIN_REDIRECT_URL = '/home/'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'floysinternacional@gmail.com'
-EMAIL_HOST_PASSWORD = '13cordova'
+EMAIL_HOST_USER = 'ekklesialoja@gmail.com'
+EMAIL_HOST_PASSWORD = 'ekklesia'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador

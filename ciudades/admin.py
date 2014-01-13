@@ -5,7 +5,12 @@ from django.contrib.auth.models import User
 from .models import Provincia, Canton,Parroquia, Direccion
 
 	
+
+class ParroquiasAdmin(admin.ModelAdmin):
+	list_filter = ('nombre',)
+	search_fields = ['nombre']
+
 admin.site.register(Provincia)
 admin.site.register(Canton)
-admin.site.register(Parroquia)
+admin.site.register(Parroquia, ParroquiasAdmin)
 admin.site.register(Direccion)

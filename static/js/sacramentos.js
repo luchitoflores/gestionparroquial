@@ -381,6 +381,7 @@ function cargar_tabla_usuarios_en_modal(){
 		var ctx = {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'id_perfil': id};
 		var columnas = [
 		{"sType": "html","mData" : "full_name", "bSortable": true},
+		{"mData" : "fecha_nacimiento", "bSortable": true},
 		{"mData" : "lugar_nacimiento", "bSortable": true},
 		{"mData" : "dni", "bSortable": true }];
 		$.get(url, ctx, function(data){
@@ -409,6 +410,7 @@ function cargar_tabla_hombres_en_modal(){
 		var ctx = {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'id_perfil': id};
 		var columnas = [
 		{"sType": "html","mData" : "full_name", "bSortable": true},
+		{"mData" : "fecha_nacimiento", "bSortable": true},
 		{"mData" : "lugar_nacimiento", "bSortable": true},
 		{"mData" : "dni", "bSortable": true }];
 		$.get(url, ctx, function(data){
@@ -434,6 +436,7 @@ function cargar_tabla_mujeres_en_modal(){
 		var ctx = {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'id_perfil': id};
 		var columnas = [
 		{"sType": "html","mData" : "full_name", "bSortable": true},
+		{"mData" : "fecha_nacimiento", "bSortable": true},
 		{"mData" : "lugar_nacimiento", "bSortable": true},
 		{"mData" : "dni", "bSortable": true }];
 		$.get(url, ctx, function(data){
@@ -487,6 +490,7 @@ function cargar_tabla_sacerdotes_en_modal(){
 		var ctx = {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula};
 		var columnas = [
 		{"sType": "html","mData" : "full_name", "bSortable": true},
+		{"mData" : "fecha_nacimiento", "bSortable": true},
 		{"mData": "lugar_nacimiento", "bSortable": true},
 		{"mData": "dni", "bSortable": true }];
 		$.get(url, ctx, function(data){
