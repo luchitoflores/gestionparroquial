@@ -2708,18 +2708,20 @@ def eucaristia_reporte(request, pk):
 	raise_exception=permission_required)
 def usuario_reporte_honorabilidad(request,pk):
 	perfil=get_object_or_404(PerfilUsuario,pk=pk)
-	# parroquia=AsignacionParroquia.objects.get(persona__user=request.user).parroquia
-	try:
-		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
-		p=ParametrizaDiocesis.objects.all()
-	except ObjectDoesNotExist:
-		raise PermissionDenied
-	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
-	html = render_to_string('usuario/certificado_honorabilidad.html', {'pagesize':'A4', 'perfil':perfil,
-		'cura':cura,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
-	return generar_pdf(html)
+	if perfil.dni:
+		try:
+			asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
+				periodoasignacionparroquia__estado=True)
+			p=ParametrizaDiocesis.objects.all()
+		except ObjectDoesNotExist:
+			raise PermissionDenied
+		cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+			parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		html = render_to_string('usuario/certificado_honorabilidad.html', {'pagesize':'A4', 'perfil':perfil,
+			'cura':cura,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
+		return generar_pdf(html)
+	else:
+		messages.error(request,'Ingrese el Dni de la persona')
 
 
 @login_required(login_url='/login/')
