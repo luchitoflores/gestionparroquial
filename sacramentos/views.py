@@ -2722,6 +2722,8 @@ def usuario_reporte_honorabilidad(request,pk):
 		return generar_pdf(html)
 	else:
 		messages.error(request,'Ingrese el Dni de la persona')
+		return render(request,'usuario/usuario_form.html')
+
 
 
 @login_required(login_url='/login/')
