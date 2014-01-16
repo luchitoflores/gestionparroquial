@@ -1096,7 +1096,7 @@ function prueba_localstore(){
 		if(!localStorage.nombre){
 			localStorage.nombre='grande';
 		} else {
-			localStorage.getItem('nombre', 'grande');
+			localStorage.setItem('nombre', 'grande');
 		}
 		$('body').css('font-size', '1.5em');
 	});
