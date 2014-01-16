@@ -1070,7 +1070,8 @@ function prueba_localstore(){
 		} else {
 			localStorage.setItem('nombre', 'pequenia');
 		}
-		alert(localStorage.setItem('nombre'));
+		alert(localStorage.getItem('nombre'));
+		$('body').css('font-size', '1em');
 
 	});
 	$('#mediana').on('click', function(e){
@@ -1080,16 +1081,18 @@ function prueba_localstore(){
 		} else {
 			localStorage.setItem('nombre', 'media');
 		}
-		alert(localStorage.setItem('nombre'));
+		alert(localStorage.getItem('nombre'));
+		$('body').css('font-size', '1.25em');
 	});
 	$('#grande').on('click', function(e){
 		e.preventDefault();
 		if(!localStorage.nombre){
 			localStorage.nombre='grande';
 		} else {
-			localStorage.setItem('nombre', 'grande');
+			localStorage.getItem('nombre', 'grande');
 		}
-		alert(localStorage.setItem('nombre'));
+		alert(localStorage.getItem('nombre'));
+		$('body').css('font-size', '1.5em');
 	});
 }
 
