@@ -1047,9 +1047,9 @@ function combinacionTeclas(){
 		document.location.href='/eucaristia/';
 	});
 
-	Mousetrap.bind(['mod+s', 'meta+s'], function(e){
-			document.location.href='/parroquia/';
-			  return false;
+	Mousetrap.bind(['mod+alt+s', 'meta+s'], function(e){
+		document.location.href='/parroquia/';
+		return false;
 	});
 
 }
