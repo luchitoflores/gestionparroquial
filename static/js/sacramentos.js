@@ -1032,6 +1032,8 @@ function combinacionTeclas(){
 	});*/
 
 Mousetrap.bind('ctrl+s', function(e) {
+	console.log('Ctrl+s');
+	alert('prueba');
 	document.location.href='/parroquia/';
 }
 );
