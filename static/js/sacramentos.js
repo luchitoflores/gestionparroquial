@@ -1021,8 +1021,13 @@ function asignar_email(){
 			}
 		});
 	});
+}
 
 
+function combinacionTeclas(){
+	shortcut.add("Ctrl+E", function() {
+		document.location.href='/parroquia/'
+	});
 }
 
 // function verificar_select_padre(id_etiqueta){
