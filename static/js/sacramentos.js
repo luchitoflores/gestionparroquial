@@ -1031,7 +1031,8 @@ function combinacionTeclas(){
 		alert('prueba');
 	});*/
 
-
+	$.Shortcuts.start();
+	
 	$.Shortcuts.add({
 		type: 'down',
 		mask: 'Ctrl+T',
