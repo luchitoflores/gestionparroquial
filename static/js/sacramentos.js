@@ -1042,16 +1042,23 @@ function combinacionTeclas(){
 		document.location.href='/matrimonio/';
 	});
 
-	Mousetrap.bind('ctrl+p', function(e){
-		var p = '';
+	Mousetrap.bind('ctrl+alt+p', function(e){
 		document.location.href='/eucaristia/';
 	});
 
 	Mousetrap.bind(['mod+alt+s', 'meta+s'], function(e){
 		document.location.href='/parroquia/';
-		return false;
 	});
 
+	Mousetrap.bind('ctrl+f', function(){
+		document.location.href='/usuario/';
+	});
+
+	Mousetrap.bind('ctrl+a', function(){
+		document.location.href='/administrador/';
+	});
+
+	
 }
 
 
