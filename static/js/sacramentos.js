@@ -1043,10 +1043,12 @@ function combinacionTeclas(){
 	});
 
 	Mousetrap.bind('ctrl+p', function(e){
+		var p = '';
 		document.location.href='/eucaristia/';
 	});
 
 	Mousetrap.bind('ctrl+s', function(){
+		var s = '';
 		document.location.href='/parroquia/';
 	});
 
