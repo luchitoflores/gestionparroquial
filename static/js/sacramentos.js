@@ -1026,29 +1026,11 @@ function asignar_email(){
 
 
 function combinacionTeclas(){
-/*	shortcut.add("Ctrl+t", function() {
+	Mousetrap.bind('ctrl+s', function(){
 		document.location.href='/parroquia/';
-		alert('prueba');
-	});*/
-
-Mousetrap.bind('ctrl+s', function(e) {
-	document.location.href='/parroquia/';
+	}
+	);
 }
-);
-}
-
-	/*$.Shortcuts.start();
-
-	$.Shortcuts.add({
-		type: 'down',
-		mask: 'Ctrl+T',
-		handler: function() {
-			debug('Ctrl+A');
-			alert('prueba');
-			document.location.href='/parroquia/';
-		}
-	});*/
-
 
 
 
