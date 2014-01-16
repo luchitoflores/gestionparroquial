@@ -1786,7 +1786,7 @@ def parroquia_update_view(request, pk):
 	success_url = '/parroquia/'
 	parroquia = get_object_or_404(Parroquia, pk = pk)
 	direccion = parroquia.direccion
-	print u'direccion.- %s' % direccion
+	
 
 	if request.method == 'POST':
 		form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
