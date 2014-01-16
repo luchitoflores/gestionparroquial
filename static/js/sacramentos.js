@@ -1029,6 +1029,10 @@ function combinacionTeclas(){
 	Mousetrap.bind('ctrl+s', function(){
 		document.location.href='/parroquia/';
 	});
+
+	Mousetrap.bind('ctrl+i', function(){
+		document.location.href='/intencion/';
+	});
 }
 
 
