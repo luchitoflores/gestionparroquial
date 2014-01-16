@@ -1026,13 +1026,30 @@ function asignar_email(){
 
 
 function combinacionTeclas(){
+	Mousetrap.bind('ctrl+i', function(){
+		document.location.href='/intencion/';
+	});
+
+	Mousetrap.bind('ctrl+b', function(){
+		document.location.href='/bautismo/';
+	});
+
+	Mousetrap.bind('ctrl+c', function(){
+		document.location.href='/confirmacion/';
+	});
+
+	Mousetrap.bind('ctrl+m', function(){
+		document.location.href='/matrimonio/';
+	});
+
+	Mousetrap.bind('ctrl+p', function(){
+		document.location.href='/eucaristia/';
+	});
+
 	Mousetrap.bind('ctrl+s', function(){
 		document.location.href='/parroquia/';
 	});
 
-	Mousetrap.bind('ctrl+i', function(){
-		document.location.href='/intencion/';
-	});
 }
 
 
