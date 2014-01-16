@@ -1057,8 +1057,38 @@ function combinacionTeclas(){
 	Mousetrap.bind('ctrl+a', function(){
 		document.location.href='/administrador/';
 	});
-
 	
+}
+
+function prueba_localstore(){
+	$('#pequenia').on('click', function(e){
+		e.preventDefault();
+		if(!localStorage.nombre){
+			localStorage.nombre='pequenia';
+		} else {
+			localStorage.setItem('nombre', 'pequenia');
+		}
+		alert(localStorage.setItem('nombre'));
+
+	});
+	$('#mediana').on('click', function(e){
+		e.preventDefault();
+		if(!localStorage.nombre){
+			localStorage.nombre='media';
+		} else {
+			localStorage.setItem('nombre', 'media');
+		}
+		alert(localStorage.setItem('nombre'));
+	});
+	$('#grande').on('click', function(e){
+		e.preventDefault();
+		if(!localStorage.nombre){
+			localStorage.nombre='grande';
+		} else {
+			localStorage.setItem('nombre', 'grande');
+		}
+		alert(localStorage.setItem('nombre'));
+	});
 }
 
 
