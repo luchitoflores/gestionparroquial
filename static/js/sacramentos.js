@@ -1026,9 +1026,20 @@ function asignar_email(){
 
 
 function combinacionTeclas(){
-	shortcut.add("Ctrl+t", function() {
+/*	shortcut.add("Ctrl+t", function() {
 		document.location.href='/parroquia/';
 		alert('prueba');
+	});*/
+
+
+	$.Shortcuts.add({
+		type: 'down',
+		mask: 'Ctrl+T',
+		handler: function() {
+			debug('Ctrl+A');
+			alert('prueba');
+			document.location.href='/parroquia/';
+		}
 	});
 }
 
