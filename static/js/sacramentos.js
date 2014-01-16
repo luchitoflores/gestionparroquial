@@ -5,13 +5,13 @@ function inicio(){
 	if(localStorage.nombre){
 		if(localStorage.getItem('nombre')=='pequenia'){
 			$('body').css('font-size', '1em');
-		}else if (localStorage.getItem('nombre')=='meidiana'){
+		}else if (localStorage.getItem('nombre')=='mediana'){
 			$('body').css('font-size', '1.25em');
 		} else {
 			$('body').css('font-size', '1.5em');
 		}
 	}
-	
+
 	prueba_localstore();
 	combinacionTeclas();
 	cancelar_modal();
