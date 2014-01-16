@@ -1042,7 +1042,7 @@ function combinacionTeclas(){
 		document.location.href='/matrimonio/';
 	});
 
-	Mousetrap.bind('ctrl+p', function(){
+	Mousetrap.bind('ctrl+p', function(e){
 		document.location.href='/eucaristia/';
 	});
 
