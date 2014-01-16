@@ -1062,6 +1062,16 @@ function combinacionTeclas(){
 }
 
 function prueba_localstore(){
+	if(localStorage.nombre){
+		if(localStorage.getItem('nombre')=='pequenia'){
+			$('body').css('font-size', '1em');
+		}else if (localStorage.getItem('nombre')=='meidiana'){
+			$('body').css('font-size', '1.25em');
+		} else {
+			$('body').css('font-size', '1.5em');
+		}
+	}
+
 
 	$('#pequenia').on('click', function(e){
 		e.preventDefault();
@@ -1095,6 +1105,11 @@ function prueba_localstore(){
 		$('body').css('font-size', '1.5em');
 	});
 }
+
+function fuente_default(){
+
+}
+
 
 
 
