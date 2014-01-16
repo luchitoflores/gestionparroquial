@@ -1032,7 +1032,7 @@ function combinacionTeclas(){
 	});*/
 
 Mousetrap.bind('ctrl+s', function(e) {
-	debug('Ctrl+A');
+	console.log('Ctrl+s');
 	alert('prueba');
 	document.location.href='/parroquia/';
 }
