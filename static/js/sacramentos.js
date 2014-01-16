@@ -2,6 +2,7 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
+	prueba_localstore();
 	combinacionTeclas();
 	cancelar_modal();
 	var map = '';
@@ -1061,6 +1062,7 @@ function combinacionTeclas(){
 }
 
 function prueba_localstore(){
+
 	$('#pequenia').on('click', function(e){
 		e.preventDefault();
 		if(!localStorage.nombre){
