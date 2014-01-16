@@ -1031,8 +1031,16 @@ function combinacionTeclas(){
 		alert('prueba');
 	});*/
 
-	$.Shortcuts.start();
-	
+Mousetrap.bind('ctrl+s', function(e) {
+	debug('Ctrl+A');
+	alert('prueba');
+	document.location.href='/parroquia/';
+}
+);
+}
+
+	/*$.Shortcuts.start();
+
 	$.Shortcuts.add({
 		type: 'down',
 		mask: 'Ctrl+T',
@@ -1041,16 +1049,9 @@ function combinacionTeclas(){
 			alert('prueba');
 			document.location.href='/parroquia/';
 		}
-	});
-}
+	});*/
 
-// function verificar_select_padre(id_etiqueta){
-// 	if($(id_etiqueta + " option:selected").text()!= '-- Seleccione --'){
-// 		$(id_etiqueta).prop('disabled', false);
-// 	} else {
-// 		$(id_etiqueta).prop('disabled', true);
-// 	}
-// }
+
 
 
 
