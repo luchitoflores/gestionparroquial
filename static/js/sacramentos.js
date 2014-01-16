@@ -1028,8 +1028,7 @@ function asignar_email(){
 function combinacionTeclas(){
 	Mousetrap.bind('ctrl+s', function(){
 		document.location.href='/parroquia/';
-	}
-	);
+	});
 }
 
 
