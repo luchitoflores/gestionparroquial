@@ -2,6 +2,16 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
+	if(localStorage.nombre){
+		if(localStorage.getItem('nombre')=='pequenia'){
+			$('body').css('font-size', '1em');
+		}else if (localStorage.getItem('nombre')=='meidiana'){
+			$('body').css('font-size', '1.25em');
+		} else {
+			$('body').css('font-size', '1.5em');
+		}
+	}
+	
 	prueba_localstore();
 	combinacionTeclas();
 	cancelar_modal();
@@ -1062,17 +1072,6 @@ function combinacionTeclas(){
 }
 
 function prueba_localstore(){
-	if(localStorage.nombre){
-		if(localStorage.getItem('nombre')=='pequenia'){
-			$('body').css('font-size', '1em');
-		}else if (localStorage.getItem('nombre')=='meidiana'){
-			$('body').css('font-size', '1.25em');
-		} else {
-			$('body').css('font-size', '1.5em');
-		}
-	}
-
-
 	$('#pequenia').on('click', function(e){
 		e.preventDefault();
 		if(!localStorage.nombre){
@@ -1080,7 +1079,6 @@ function prueba_localstore(){
 		} else {
 			localStorage.setItem('nombre', 'pequenia');
 		}
-		alert(localStorage.getItem('nombre'));
 		$('body').css('font-size', '1em');
 
 	});
@@ -1091,7 +1089,6 @@ function prueba_localstore(){
 		} else {
 			localStorage.setItem('nombre', 'media');
 		}
-		alert(localStorage.getItem('nombre'));
 		$('body').css('font-size', '1.25em');
 	});
 	$('#grande').on('click', function(e){
@@ -1101,14 +1098,10 @@ function prueba_localstore(){
 		} else {
 			localStorage.getItem('nombre', 'grande');
 		}
-		alert(localStorage.getItem('nombre'));
 		$('body').css('font-size', '1.5em');
 	});
 }
 
-function fuente_default(){
-
-}
 
 
 
