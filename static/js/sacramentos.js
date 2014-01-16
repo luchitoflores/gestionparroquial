@@ -2,6 +2,7 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
+	combinacionTeclas();
 	cancelar_modal();
 	var map = '';
 	var map2 = '';
