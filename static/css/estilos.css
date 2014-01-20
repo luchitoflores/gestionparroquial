@@ -1,9 +1,3 @@
-@import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
-
-@baseFontSize: 10px;
-@baseLineHeight: 18px;
-
 @font-face{
 	font-family: 'Open Sans';
 	src: url('../font/Open_Sans/OpenSans-Regular.ttf');
