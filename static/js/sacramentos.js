@@ -1041,35 +1041,36 @@ function combinacionTeclas(){
 		document.location.href='/home/';
 	});
 
-	Mousetrap.bind('ctrl+f3', function(){
-		document.location.href='/intencion/';
-	});
-
-	Mousetrap.bind('ctrl+b', function(){
-		document.location.href='/bautismo/';
-	});
-
-	Mousetrap.bind('ctrl+c', function(){
-		document.location.href='/confirmacion/';
-	});
-
-	Mousetrap.bind('ctrl+m', function(){
-		document.location.href='/matrimonio/';
-	});
-
-	Mousetrap.bind('ctrl+alt+p', function(e){
-		document.location.href='/eucaristia/';
-	});
-
-	Mousetrap.bind(['mod+alt+s', 'meta+s'], function(e){
-		document.location.href='/parroquia/';
-	});
-
-	Mousetrap.bind('ctrl+f', function(){
+	Mousetrap.bind('ctrl+f2', function(){
 		document.location.href='/usuario/';
 	});
 
-	Mousetrap.bind('ctrl+a', function(){
+
+	Mousetrap.bind('ctrl+f3', function(){
+		document.location.href='/bautismo/';
+	});
+
+	Mousetrap.bind('ctrl+f4', function(){
+		document.location.href='/confirmacion/';
+	});
+
+	Mousetrap.bind('ctrl+f5', function(){
+		document.location.href='/matrimonio/';
+	});
+
+	Mousetrap.bind('ctrl+f6', function(e){
+		document.location.href='/eucaristia/';
+	});
+
+	Mousetrap.bind('ctrl+f7', function(){
+		document.location.href='/intencion/';
+	});
+
+	Mousetrap.bind(['mod+alt+f8', 'meta+s'], function(e){
+		document.location.href='/parroquia/';
+	});
+
+	Mousetrap.bind('ctrl+f9', function(){
 		document.location.href='/administrador/';
 	});
 	
