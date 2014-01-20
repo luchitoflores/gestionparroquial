@@ -1037,7 +1037,7 @@ function asignar_email(){
 
 
 function combinacionTeclas(){
-	Mousetrap.bind('ctrl+i', function(){
+	Mousetrap.bind('F1', function(){
 		document.location.href='/intencion/';
 	});
 
