@@ -1038,6 +1038,10 @@ function asignar_email(){
 
 function combinacionTeclas(){
 	Mousetrap.bind('ctrl+f1', function(){
+		document.location.href='/home/';
+	});
+
+	Mousetrap.bind('ctrl+f3', function(){
 		document.location.href='/intencion/';
 	});
 
