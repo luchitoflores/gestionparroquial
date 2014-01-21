@@ -1050,16 +1050,16 @@ function combinacionTeclas(){
 		document.location.href='/bautismo/';
 	});
 
-	Mousetrap.bind('mod+f4', function(){
-		document.location.href='/confirmacion/';
+	Mousetrap.bind('mod+f4', function(e){
+		document.location.href='/eucaristia/';
 	});
 
 	Mousetrap.bind('mod+f5', function(){
-		document.location.href='/matrimonio/';
+		document.location.href='/confirmacion/';
 	});
 
-	Mousetrap.bind('mod+f6', function(e){
-		document.location.href='/eucaristia/';
+	Mousetrap.bind('mod+f6', function(){
+		document.location.href='/matrimonio/';
 	});
 
 	Mousetrap.bind('mod+f7', function(){
