@@ -52,7 +52,7 @@
 						{%endif%}
 						<ul class="dropdown-menu">
 							{% if perms.sacramentos.change_bautismo and perms.sacramentos.add_bautismo %}
-							<li><a href="{% url 'bautismo_list'%}">Bautismo <li class='disabled'>ctlr+f3</li></a></li>
+							<li class='inline'><a href="{% url 'bautismo_list'%}">Bautismo <li class='disabled'>ctlr+f3</li></a></li>
 							{%endif%}
 							{% if perms.sacramentos.change_eucaristia and perms.sacramentos.add_eucaristia%}
 							<li><a href="{% url 'eucaristia_list'%}">Primera Comunión</a></li>
