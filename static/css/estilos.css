@@ -190,3 +190,8 @@ img.sorted{
 	}
 
 }
+
+
+.navbar .nav>li>a.small {
+	padding: 10px 0px 10px;
+}
