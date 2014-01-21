@@ -1046,31 +1046,31 @@ function combinacionTeclas(){
 	});
 
 
-	Mousetrap.bind('ctrl+f3', function(){
+	Mousetrap.bind('mod+f3', function(){
 		document.location.href='/bautismo/';
 	});
 
-	Mousetrap.bind('ctrl+f4', function(){
+	Mousetrap.bind('mod+f4', function(){
 		document.location.href='/confirmacion/';
 	});
 
-	Mousetrap.bind('ctrl+f5', function(){
+	Mousetrap.bind('mod+f5', function(){
 		document.location.href='/matrimonio/';
 	});
 
-	Mousetrap.bind('ctrl+f6', function(e){
+	Mousetrap.bind('mod+f6', function(e){
 		document.location.href='/eucaristia/';
 	});
 
-	Mousetrap.bind('ctrl+f7', function(){
+	Mousetrap.bind('mod+f7', function(){
 		document.location.href='/intencion/';
 	});
 
-	Mousetrap.bind(['mod+alt+f8', 'meta+s'], function(e){
+	Mousetrap.bind('mod+f8', function(e){
 		document.location.href='/parroquia/';
 	});
 
-	Mousetrap.bind('ctrl+f9', function(){
+	Mousetrap.bind('mod+f9', function(){
 		document.location.href='/administrador/';
 	});
 	
