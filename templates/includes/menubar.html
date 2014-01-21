@@ -76,7 +76,7 @@
 						</ul>
 					</li>
 					{% if perms.sacramentos.change_intenciones%}
-					<li><a href="{%url 'intencion_list'%}">Intenciones <small class='muted'> Ctlr+F7</small></a></li>
+					<li><a href="{%url 'intencion_list'%}">Intenciones </a></li>
 					{%endif%}
 					<li class='dropdown'>
 						{% if perms.sacramentos.change_bautismo or  perms.sacramentos.add_bautismo or perms.sacramentos.change_eucaristia or  perms.sacramentos.add_eucaristia or perms.sacramentos.change_matrimonio or  perms.sacramentos.add_matrimonio or perms.sacramentos.change_confirmacion or  perms.sacramentos.add_confirmacion %}
