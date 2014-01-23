@@ -1110,6 +1110,9 @@ function prueba_localstore(){
 	});
 }
 
+
+
+// Script para detectar el navegador que está utilizando el usuario
 function detectar_navegador(){
 	var BrowserDetect = 
 	{
@@ -1155,7 +1158,7 @@ function detectar_navegador(){
 
 	if (BrowserDetect.browser == "Explorer"){ 
 		if (BrowserDetect.version<9){
-			alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
+			alert('Se recomienda utilizar Internet Explorer9+, Chrome, Firefox u Opera para el ingreso al sistema.');
 		}
 	} 
 
