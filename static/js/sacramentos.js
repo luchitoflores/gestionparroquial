@@ -1158,7 +1158,7 @@ function detectar_navegador(){
 
 	if (BrowserDetect.browser == "Explorer"){ 
 		if (BrowserDetect.version<9){
-			alert('Se recomienda utilizar Internet Explorer9+, Chrome, Firefox u Opera para el ingreso al sistema.');
+			alert('Se recomienda utilizar Internet Explorer 9 o superior, Chrome, Firefox u Opera para el ingreso al sistema.');
 		}
 	} 
 
