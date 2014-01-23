@@ -1163,10 +1163,6 @@ function detectar_navegador(){
 		alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
 	}
 
-	if (BrowserDetect.browser == "Firefox"){
-		alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
-	}
-
 }
 
 
