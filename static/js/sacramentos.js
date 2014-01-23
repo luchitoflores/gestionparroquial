@@ -2,6 +2,18 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
+
+	if (BrowserDetect.browser == "Explorer"){ 
+		if (BrowserDetect.version<9){
+			alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
+		}
+	} else if (BrowserDetect.browser == "Safari"){
+		alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
+	}
+
+
+
+
 	if(localStorage.nombre){
 		if(localStorage.getItem('nombre')=='pequenia'){
 			$('body').css('font-size', '1em');
