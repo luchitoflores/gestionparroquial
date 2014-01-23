@@ -1232,6 +1232,8 @@ function detectar_navegador(){
 
    }
 
+}
+
 
 
 
