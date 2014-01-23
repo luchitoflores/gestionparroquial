@@ -1220,10 +1220,16 @@ function detectar_navegador(){
    		if (BrowserDetect.version<9){
    			alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
    		}
-   	} else if (BrowserDetect.browser == "Safari"){
+   	} 
+
+   	if (BrowserDetect.browser == "Safari"){
    		alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
    	}
-   	
+
+   	if (BrowserDetect.browser == "Firefox"){
+   		alert('Se recomienda utilizar Chrome, Firefox u Opera para el ingreso al sistema');
+   	}
+
    }
 
 
