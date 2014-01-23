@@ -3,8 +3,11 @@ document.write('<script src="/static/js/tablas.js" type="text/javascript"></scri
 
 function inicio(){
 
-	var uno = $.browser;
-	alert(uno);
+	if ($.browser.webkit){
+		alert('chrome');
+	} else if ($.browser.safari){
+		alert('safari');
+	}
 
 	if(localStorage.nombre){
 		if(localStorage.getItem('nombre')=='pequenia'){
