@@ -1064,7 +1064,7 @@ function combinacionTeclas(){
 		document.location.href='/administrador/';
 	});
 
-	Mousetrap.bind(['ctrl+f7', 'meta+f6'], function(e){
+	Mousetrap.bind(['ctrl+f7', 'meta+f7'], function(e){
 		if (e.preventDefault) {
 			e.preventDefault();
 		} else {
@@ -1086,7 +1086,7 @@ function combinacionTeclas(){
 		document.location.href='/ciudades/provincia/';
 	});
 
-	Mousetrap.bind('mod+f11', function(e){
+	Mousetrap.bind('mod+f11', function(){
 		document.location.href='/ciudades/canton/';
 	});
 
