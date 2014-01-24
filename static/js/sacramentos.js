@@ -1108,11 +1108,11 @@ function combinacionTeclas(){
 		document.location.href='/bautismo/';
 	});
 
-	Mousetrap.bind('mod+c', function(e){
+	Mousetrap.bind('mod+alt+e', function(e){
 		document.location.href='/eucaristia/';
 	});
 
-	Mousetrap.bind('mod+e', function(){
+	Mousetrap.bind('mod+c', function(){
 		document.location.href='/confirmacion/';
 	});
 
