@@ -1044,38 +1044,72 @@ function combinacionTeclas(){
 		document.location.href='/home/';
 	});
 
-	Mousetrap.bind('ctrl+f2', function(){
+
+	Mousetrap.bind('mod+f2', function(){
+		document.location.href='/group/';
+	});
+
+	Mousetrap.bind('ctrl+f3', function(){
+		document.location.href='/log/';
+	});
+
+
+	Mousetrap.bind('mod+f6', function(){
+		document.location.href='/administrador/';
+	});
+
+	Mousetrap.bind('ctrl+f7', function(){
 		document.location.href='/usuario/';
 	});
 
-
-	Mousetrap.bind('mod+f3', function(){
-		document.location.href='/bautismo/';
-	});
-
-	Mousetrap.bind('mod+f4', function(e){
-		document.location.href='/eucaristia/';
-	});
-
-	Mousetrap.bind('mod+f5', function(){
-		document.location.href='/confirmacion/';
-	});
-
-	Mousetrap.bind('mod+f6', function(){
-		document.location.href='/matrimonio/';
-	});
-
-	Mousetrap.bind('mod+f7', function(){
-		document.location.href='/intencion/';
-	});
-
-	Mousetrap.bind('mod+f8', function(e){
-		document.location.href='/parroquia/';
+	Mousetrap.bind('mod+f8', function(){
+		document.location.href='/sacerdote/';
 	});
 
 	Mousetrap.bind('mod+f9', function(){
-		document.location.href='/administrador/';
+		document.location.href='/asignar/secretaria/';
 	});
+
+	Mousetrap.bind('mod+f10', function(){
+		document.location.href='/ciudades/provincia/';
+	});
+
+	Mousetrap.bind('mod+f11', function(e){
+		document.location.href='/ciudades/canton/';
+	});
+
+	Mousetrap.bind('mod+f12', function(e){
+		document.location.href='/ciudades/parroquia/';
+	});
+
+	Mousetrap.bind('mod+l', function(e){
+		document.location.href='/libro/';
+	});
+
+	Mousetrap.bind('mod+b', function(){
+		document.location.href='/bautismo/';
+	});
+
+	Mousetrap.bind('mod+c', function(e){
+		document.location.href='/eucaristia/';
+	});
+
+	Mousetrap.bind('mod+e', function(){
+		document.location.href='/confirmacion/';
+	});
+
+	Mousetrap.bind('mod+m', function(){
+		document.location.href='/matrimonio/';
+	});
+
+	Mousetrap.bind('mod+i', function(){
+		document.location.href='/intencion/';
+	});
+
+	Mousetrap.bind('mod+alt+p', function(e){
+		document.location.href='/parroquia/';
+	});
+
 	
 }
 
