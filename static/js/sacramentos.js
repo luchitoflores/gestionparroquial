@@ -1120,7 +1120,7 @@ function combinacionTeclas(){
 		document.location.href='/matrimonio/';
 	});
 
-	Mousetrap.bind('mod+i', function(){
+	Mousetrap.bind('mod+alt+i', function(){
 		document.location.href='/intencion/';
 	});
 
