@@ -1100,7 +1100,7 @@ function combinacionTeclas(){
 		document.location.href='/ciudades/parroquia/';
 	});
 
-	Mousetrap.bind('mod+l', function(e){
+	Mousetrap.bind('mod+alt+l', function(e){
 		document.location.href='/libro/';
 	});
 
