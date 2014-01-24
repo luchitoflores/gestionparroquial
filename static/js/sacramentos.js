@@ -1054,11 +1054,23 @@ function combinacionTeclas(){
 	});
 
 
-	Mousetrap.bind(['mod+f6', 'meta+f12'], function(){
+	Mousetrap.bind(['mod+f6', 'meta+f6'], function(e){
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+
 		document.location.href='/administrador/';
 	});
 
-	Mousetrap.bind(['ctrl+f7, 'meta+f12']', function(){
+	Mousetrap.bind(['ctrl+f7', 'meta+f6'], function(e){
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+
 		document.location.href='/usuario/';
 	});
 
@@ -1079,6 +1091,12 @@ function combinacionTeclas(){
 	});
 
 	Mousetrap.bind(['mod+f12', 'meta+f12'], function(e){
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+
 		document.location.href='/ciudades/parroquia/';
 	});
 
