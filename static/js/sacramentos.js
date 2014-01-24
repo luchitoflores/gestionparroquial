@@ -1100,15 +1100,15 @@ function combinacionTeclas(){
 		document.location.href='/ciudades/parroquia/';
 	});
 
-	Mousetrap.bind('mod+shift+l', function(e){
+	Mousetrap.bind('shift+alt+l', function(e){
 		document.location.href='/libro/';
 	});
 
 	Mousetrap.bind('mod+b', function(){
 		document.location.href='/bautismo/';
-	});
+	});																																																																								
 
-	Mousetrap.bind('mod+shift+e', function(e){
+	Mousetrap.bind('mod+alt+e', function(e){
 		document.location.href='/eucaristia/';
 	});
 
