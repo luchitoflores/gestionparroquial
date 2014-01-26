@@ -1,22 +1,23 @@
-function modelo_tablas(valor){
-	$(valor).dataTable({
-		"fnDrawCallback": function(){
-			$(valor).footable(
-			{
-				breakpoints: {
-					phone: 320,
-					tablet: 768
-				}
-			})
-		},
+define(['jquery'], function($){
+	function modelo_tablas(valor){
+		$(valor).dataTable({
+			"fnDrawCallback": function(){
+				$(valor).footable(
+				{
+					breakpoints: {
+						phone: 320,
+						tablet: 768
+					}
+				})
+			},
 
-		"sDom": "<'top' <'row-fluid' <'span5' l><'span5' f>>>t<'bottom' p>",
-		"aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
-		"sPaginationType": "bootstrap",
-		"iDisplayLength": 25,
-		'bsort': true,
-		"oLanguage": {
-			"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+			"sDom": "<'top' <'row-fluid' <'span5' l><'span5' f>>>t<'bottom' p>",
+			"aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
+			"sPaginationType": "bootstrap",
+			"iDisplayLength": 25,
+			'bsort': true,
+			"oLanguage": {
+				"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ elementos",
 		//"sInfo": "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
 		"sInfoEmpty":"Mostrando 0 to 0 de 0 Elementos",
 		"sLengthMenu": "Ver _MENU_ registros",
@@ -31,9 +32,9 @@ function modelo_tablas(valor){
 			"sPrevious": "Anterior"}
 		}
 	});
-}
+	}
 
-function tablas_estilo_bootstrap(){
+	function tablas_estilo_bootstrap(){
 	// Agregar iconos para decir que una tabla se puede ordenar
 	$('th').each(function(){ 
 		if($(this).text() != ''){
@@ -224,3 +225,5 @@ function tablas_busqueda_ajax_prueba(){
 		}); 
 }
 
+
+});

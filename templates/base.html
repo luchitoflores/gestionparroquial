@@ -90,27 +90,7 @@
 	</div>
 </div>
 
-
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src='/static/js/bootstrap-datepicker.js'></script>
-<script src='/static/js/bootstrap-timepicker.min.js'></script>
-<script src='/static/js/jquery.alphanumeric.js'></script>
-<script src='/static/js/jquery.dataTables.min.js'></script>
-<script src='/static/js/jquery.multi-select.js'></script>
-<script src='/static/js/sacramentos.js'></script>
-<script src="/static/js/footable.js"></script>
-<script src='/static/js/modernizr.js'></script>
-<script src='/static/js/mousetrap.min.js'></script>
-<script>
-	$.ajaxSetup({
-		beforeSend: function(xhr, settings) {
-			if(settings.type == "POST"){
-				xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
-			}
-		}
-	});
-</script>
+<script data-main='/static/js/main' src="/static/js/require.js"></script>
 {%block extrascript%}{%endblock%}
 </body>
 </html>
