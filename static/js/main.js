@@ -1,42 +1,30 @@
-require(["jquery", "bootstrap", "bootstrap-datepicker"], function($) {
-    //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
-    $(function() {
-        $('body').alpha().beta();
-    });
-});
+require.config({
+  baseUrl: '/static/js/',
+  paths: {
+    "jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min, jquery.min",
+    "bootstrap": "bootstrap.min",
+    "datepicker": "bootstrap-datepicker",
+    "timepicker": "bootstrap-timepicker.min",
+    "footable": "footable",
+    "alphanumeric": "jquery.alphanumeric",
+    "datatables": "jquery.dataTables.min",
+    "multiselect": "jquery.multi-select",
+    "mousetrap": "mousetrap.min",
+    "modernizr": "modernizr",
+  },
 
-
-requirejs.config({
-    baseUrl: 'static/js/',
-    paths: {
-        "jquery": "jquery.min",
-        "bootstrap": "bootstrap.min",
-        "bootstrap-datepicker" : "bootstrap-datepicker",
-        "bootstrap-timepicker" : "bootstrap-timepicker.min",
-        "footable" : "footable",
-        "jquery.alphanumeric" : "jquery.alphanumeric",
-        "jquery.dataTables" : "jquery.dataTables.min",
-        "jquery.multi-select" : "jquery.multi-select",
-        "modernizr" : "modernizr",
-        "prefixfree" : "prefixfree.min",
-        "sacramentos" : "sacramentos",
-        "tablas" : "tablas",
+  shim: {
+    "bootstrap": ["jquery"],
+    "datepicker": ["jquery"],
+    "timepicker": ["jquery"],
+    "footable": ["jquery"],
+    "alphanumeric": ["jquery"],
+    "datatables": ["jquery"],
+    "multiselect": ["jquery"],
+    "modernizr": {
+      exports: 'Modernizr'
     },
-
-    shim: {
-       "bootstrap": ["jquery"],
-       "bootstrap-datepicker" : ["jquery"],
-       "bootstrap-timepicker" : ["jquery"],
-       "footable" : ["jquery"],
-       "jquery.alphanumeric" : ["jquery"],
-       "jquery.dataTables" : ["jquery"],
-       "jquery.multi-select" : ["jquery"],
-       "modernizr" : ["jquery"],
-       "prefixfree" : ["jquery"],
-       "sacramentos" : ["jquery"],
-       "tablas" : ["jquery"],
-   }
+  }
 });
 
-
-requirejs(["static/js/main"]);
+requirejs(['sacramentos']);

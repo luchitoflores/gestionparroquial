@@ -1,28 +1,38 @@
-$(document).on('ready', inicio);
-document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
+define(['jquery', 'bootstrap'],function($){
+	
+	$(document).on('ready', inicio);
+	//document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
+	
+	function inicio(){
 
-function inicio(){
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+				if(settings.type == "POST"){
+					xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
+				}
+			}
+		});
 
-	detectar_navegador();
+		detectar_navegador();
 
-	if(localStorage.nombre){
-		if(localStorage.getItem('nombre')=='pequenia'){
-			$('body').css('font-size', '1em');
-		}else if (localStorage.getItem('nombre')=='mediana'){
-			$('body').css('font-size', '1.25em');
-		} else {
-			$('body').css('font-size', '1.5em');
+		if(localStorage.nombre){
+			if(localStorage.getItem('nombre')=='pequenia'){
+				$('body').css('font-size', '1em');
+			}else if (localStorage.getItem('nombre')=='mediana'){
+				$('body').css('font-size', '1.25em');
+			} else {
+				$('body').css('font-size', '1.5em');
+			}
 		}
-	}
 
-	prueba_localstore();
-	combinacionTeclas();
-	cancelar_modal();
-	var map = '';
-	var map2 = '';
-	crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
-	crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
-	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
+		prueba_localstore();
+		combinacionTeclas();
+		cancelar_modal();
+		var map = '';
+		var map2 = '';
+		crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
+		crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
+		crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
 	// crear_nota($('#id_form_crear_nota'), '#id_fecha','#id_descripcion', '#id_crear_nota');
 	autocomplete('#id_padre');
 	asignar_padre();
@@ -57,21 +67,6 @@ function inicio(){
 	controles_reportes();
 	controles_intenciones();
 	controles_provincias();
-	if(!Modernizr.inputtypes.date){
-		console.log('no poseo esa propiedad');
-		$('input[type=date]').datepicker({
-			format: 'yyyy-mm-dd'
-		}); 
-	} 
-	if(!Modernizr.inputtypes.time){
-		console.log('no poseo esa propiedad time');
-		$('input[type=time]').timepicker({
-			defaultTime: false,
-			showMeridian: false,
-			format: 'HH:mm:ss'
-			//showSeconds: true,
-		}); 
-	} 
 }
 
 
@@ -1220,15 +1215,5 @@ function detectar_navegador(){
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
+});
 

@@ -86,6 +86,12 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+STATICFILES_STORAGE = (
+    'require.storage.OptimizedStaticFilesStorage',
+    )
+
+REQUIRE_BUILD_PROFILE = 'app.build.js'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'z4216vitey^y6957)&wytdee!6w4dmc-=x!9r4uh-#l2ua@8p)'
 
@@ -133,6 +139,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'django_extensions',
+    'require',
 
     )
 
