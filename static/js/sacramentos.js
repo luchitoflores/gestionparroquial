@@ -3,14 +3,6 @@ $(document).on('ready', inicio);
 	
 	function inicio(){
 
-		$.ajaxSetup({
-			beforeSend: function(xhr, settings) {
-				if(settings.type == "POST"){
-					xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
-				}
-			}
-		});
-
 		detectar_navegador();
 
 		if(localStorage.nombre){
