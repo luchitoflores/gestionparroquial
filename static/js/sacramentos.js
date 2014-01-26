@@ -1,7 +1,5 @@
-define(['jquery', 'bootstrap'],function($){
-	
-	$(document).on('ready', inicio);
-	//document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
+$(document).on('ready', inicio);
+	document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 	
 	function inicio(){
 
@@ -1215,5 +1213,5 @@ function detectar_navegador(){
 
 }
 
-});
+
 
