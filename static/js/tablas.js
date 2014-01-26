@@ -13,7 +13,7 @@ function modelo_tablas(valor){
 		"sDom": "<'top' <'row-fluid' <'span5' l><'span5' f>>>t<'bottom' p>",
 		"aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
 		"sPaginationType": "bootstrap",
-		"iDisplayLength": 25,
+		"iDisplayLength": 10,
 		'bsort': true,
 		"oLanguage": {
 			"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ elementos",
