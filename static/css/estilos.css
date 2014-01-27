@@ -168,6 +168,9 @@ table{
 		max-width: 100%;
 		margin: auto;
 	}
+	.small{
+		display: none;
+	}
 
 }
 
