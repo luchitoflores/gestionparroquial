@@ -157,7 +157,7 @@ table{
 @media (max-width: 640px) {
 
 	#id_title{
-		background: lavender;
+		background: whitesmoke;
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
 		font-size: 1.5em;
 		max-height: 90%;
