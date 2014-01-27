@@ -124,7 +124,63 @@ table{
 	overflow: 'hidden';
 }
 
-@media (min-width:481px){ 
+/*@media (min-width:481px){ 
+	#id_title
+	{
+		background-image: url(../img/textura10.jpg);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:100%;
+		-webkit-background-size: 100%;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 2em;
+		max-height: 100%;
+		max-width: 100%;
+		padding-top: 1em;
+		padding-bottom: 1.5em; 
+	}
+
+}*/
+
+
+@media (max-width: 960px) {
+	.inicio {
+		font-size: 100%;
+	}
+
+}
+
+/*@media (max-width: 480px) {
+
+	#id_title{
+		background: whitesmoke;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 1.5em;
+		max-height: 90%;
+		max-width: 90%;
+		padding-top: .3em;
+		padding-left: 1em;
+		padding-bottom:.3em; 
+		max-width: 100%;
+		margin: auto;
+	}
+	
+	.navbar .nav>li.ocultar {
+		display: none;
+	}
+
+}*/
+
+
+.navbar .nav>li>a.small {
+	padding: 10px 0px 10px;
+}
+
+
+/* Large desktop */
+@media (min-width: 1200px) {
 	#id_title
 	{
 		background-image: url(../img/textura10.jpg);
@@ -144,38 +200,49 @@ table{
 
 }
 
-
-@media (max-width: 960px) {
-
-	.inicio {
-		font-size: 100%;
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+	#id_title
+	{
+		background-image: url(../img/textura10.jpg);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:100%;
+		-webkit-background-size: 100%;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 2em;
+		max-height: 100%;
+		max-width: 100%;
+		padding-top: 1em;
+		padding-bottom: 1.5em; 
 	}
-
 }
 
-
-@media (max-width: 480px) {
-
-	#id_title{
-		background: whitesmoke;
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	#id_title
+	{
+		background-image: url(../img/textura10.jpg);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:100%;
+		-webkit-background-size: 100%;
+		-moz-background-size: cover;
+		-o-background-size: cover;
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 1.5em;
-		max-height: 90%;
-		max-width: 90%;
-		padding-top: .3em;
-		padding-left: 1em;
-		padding-bottom:.3em; 
+		font-size: 2em;
+		max-height: 100%;
 		max-width: 100%;
-		margin: auto;
+		padding-top: 1em;
+		padding-bottom: 1.5em; 
 	}
-	
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
 	.navbar .nav>li.ocultar {
 		display: none;
 	}
-
-}
-
-
-.navbar .nav>li>a.small {
-	padding: 10px 0px 10px;
 }
