@@ -165,13 +165,7 @@ img.sorted{
 	}
 	}*/
 
-
-	@media (max-width: 960px) {
-
-		.inicio {
-			font-size: 100%;
-		}
-
+	@media screen and (min-width:960px){ 
 		#id_title
 		{
 			background-image: url(../img/textura10.jpg);
@@ -187,6 +181,15 @@ img.sorted{
 			max-width: 100%;
 			padding-top: 1em;
 			padding-bottom: 1.5em; 
+		}
+
+	}
+
+
+	@media (max-width: 960px) {
+
+		.inicio {
+			font-size: 100%;
 		}
 
 	}
