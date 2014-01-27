@@ -125,91 +125,52 @@ table{
 	overflow: 'hidden';
 }
 
-/*th{
-	position: absolute;
-	clear: both;
-}
-img.sorted{
-	float: right;
-	position: absolute;
-	padding-top: 6px;
-	padding-left: 3px;
-	}*/
-
-
-
-
-/*td, th {
-	display: table-cell;
-	vertical-align: inherit;
-}
-*/
-/*@media (max-width: 960px) {
-	h1{
-		font-size: 0.75em;	
-		font-family: 'Georgia',
+@media (min-width:960px){ 
+	#id_title
+	{
+		background-image: url(../img/textura10.jpg);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:100%;
+		-webkit-background-size: 100%;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 2em;
+		max-height: 100%;
+		max-width: 100%;
+		padding-top: 1em;
+		padding-bottom: 1.5em; 
 	}
+
 }
+
 
 @media (max-width: 960px) {
-	h2{
-		font-size: 0.85em;	
-		font-family: 'Georgia',
+
+	.inicio {
+		font-size: 100%;
 	}
+
 }
 
-@media (max-width: 960px) {
-	p, li{
-		font-size: 1em;	
-		font-family: 'Georgia',
-	}
-	}*/
 
-	@media (min-width:960px){ 
-		#id_title
-		{
-			background-image: url(../img/textura10.jpg);
-			background-position:center;
-			background-repeat:no-repeat;
-			background-size:100%;
-			-webkit-background-size: 100%;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-			font-size: 2em;
-			max-height: 100%;
-			max-width: 100%;
-			padding-top: 1em;
-			padding-bottom: 1.5em; 
-		}
+@media (max-width: 640px) {
 
+	#id_title{
+		background: #DDD;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 1.5em;
+		max-height: 90%;
+		max-width: 90%;
+		padding-top: 1em;
+		padding-bottom: 1.5em; 
+		max-width: 100%;
 	}
 
-
-	@media (max-width: 960px) {
-
-		.inicio {
-			font-size: 100%;
-		}
-
-	}
+}
 
 
-	@media (max-width: 640px) {
-
-		#id_title{
-			background: #DDD;
-			font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-			font-size: 1.5em;
-			max-height: 90%;
-			max-width: 90%;
-			padding-top: 1em;
-			padding-bottom: 1.5em; 
-		}
-
-	}
-
-
-	.navbar .nav>li>a.small {
-		padding: 10px 0px 10px;
-	}
+.navbar .nav>li>a.small {
+	padding: 10px 0px 10px;
+}
