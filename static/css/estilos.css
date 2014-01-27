@@ -124,7 +124,7 @@ table{
 	overflow: 'hidden';
 }
 
-@media (min-width:960px){ 
+@media (min-width:481px){ 
 	#id_title
 	{
 		background-image: url(../img/textura10.jpg);
