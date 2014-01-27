@@ -1,28 +1,28 @@
 $(document).on('ready', inicio);
-	document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
-	
-	function inicio(){
+document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
-		detectar_navegador();
+function inicio(){
 
-		if(localStorage.nombre){
-			if(localStorage.getItem('nombre')=='pequenia'){
-				$('body').css('font-size', '1em');
-			}else if (localStorage.getItem('nombre')=='mediana'){
-				$('body').css('font-size', '1.25em');
-			} else {
-				$('body').css('font-size', '1.5em');
-			}
+	detectar_navegador();
+
+	if(localStorage.nombre){
+		if(localStorage.getItem('nombre')=='pequenia'){
+			$('body').css('font-size', '1em');
+		}else if (localStorage.getItem('nombre')=='mediana'){
+			$('body').css('font-size', '1.25em');
+		} else {
+			$('body').css('font-size', '1.5em');
 		}
+	}
 
-		prueba_localstore();
-		combinacionTeclas();
-		cancelar_modal();
-		var map = '';
-		var map2 = '';
-		crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
-		crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
-		crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
+	prueba_localstore();
+	combinacionTeclas();
+	cancelar_modal();
+	var map = '';
+	var map2 = '';
+	crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
+	crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
+	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
 	// crear_nota($('#id_form_crear_nota'), '#id_fecha','#id_descripcion', '#id_crear_nota');
 	autocomplete('#id_padre');
 	asignar_padre();
@@ -508,17 +508,12 @@ function almacenar_busqueda_en_map(lista){
 	var map = {};
 	$.each(lista, function(index, element){
 		map[element.id] = element; 
-		//console.log('map[element.id]: '+map[element.id]);
-		//console.log('index: '+index);
-		//console.log('element: '+element.id);
-
 	}); 
 	return map;
 }
 
 
 // Funcion para buscar y asignar usuarios a Matrimonio 
-// todavia no vale para aignar padre y madre
 function devolver_campos_de_lista(map,id_male,id_female){
 	console.log('ejecutando: devolver campos de lista');
 	console.log(map);
@@ -659,7 +654,6 @@ function prueba(nombre){
 
 function devolver_campos_a_sacerdote(map, id_sacerdote){
 	$('tbody td a.id_click').on('click', function(e){
-		// alert('estoy aqui');
 		e.preventDefault();
 		$("#id_buscar_sacerdotes").modal('hide');
 		limpiar_campos('#id_query_nombres_s, #id_query_apellidos_s','#id_query_cedula_s');
