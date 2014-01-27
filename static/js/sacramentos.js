@@ -23,11 +23,9 @@ function inicio(){
 	crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
 	crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
 	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
-	// crear_nota($('#id_form_crear_nota'), '#id_fecha','#id_descripcion', '#id_crear_nota');
-	autocomplete('#id_padre');
+	//autocomplete('#id_padre');
 	asignar_padre();
 	asignar_email();
-	// usuarioCreate();
 	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/nota/add/');
 	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/nota_matrimonio/add/');
 	tablas_estilo_bootstrap();
@@ -116,15 +114,6 @@ function crear_nota_marginal(id_form,id_modal,url_rest){
 		});
 	})
 }
-
-
-
-$(document).ajaxStart(function(){
-	$('#spinner').show();
-}).ajaxStop(function(){
-	$('#spinner').hide();
-});
-
 
 
 function limpiar_campos(campos){
@@ -304,68 +293,6 @@ function ocultar_tablas_aceptar(id_modal){
 	});
 }
 
-// function crear_nota(identificador, idnota,idnota2, idmodal){
-// 	$(identificador).on('submit', function(e){
-// 		e.preventDefault();
-// 		var url = '/api/nota/add/';
-// 		var json = $(this).serialize();
-// 		$.post(url, json , function(data){
-// 			if(!data.respuesta){
-// 				console.log(data.errores_nota);
-// 			}else{
-// 				$(idnota).html('< value="'+ data.fecha+'">'+'>');
-// 				$(idnota2).html('< value="'+ data.descripcion+'">');
-// 				$(idmodal).modal('hide');
-// 			}
-
-// 		});
-// 	});
-// }
-
-
-
-// function usuarioCreate(){
-// 	$('#id_form_usuario_create').on('submit', function(e){
-// 		e.preventDefault();
-// 		json = $('#id_form_usuario_create').serialize();
-// 		url = '/usuario/add/';
-// 		$.post(url, json, function(data, status, jqXHR){
-// 			if(data.valido){
-// 				// $('#id_confirm_usuario_create').modal('show');
-// 				var mensaje = '<div class="alert alert-success">' + 
-// 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-// 				'<img src="/static/img/success.png" alt=""> Usuario Creado exitosamente </div>';
-// 				$('#id_mensaje').html(mensaje);
-// 			} else {
-// 				var mensaje = '<div class="alert alert-error">' + 
-// 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-// 				'<img src="/static/img/error.png" alt=""> Uno o más datos no son correctos </div>';
-// 				$('#id_mensaje').html(mensaje);
-// 				console.log(data.errores_usuario);
-// 				console.log(data.errores_perfil);
-// 				$.each(data.errores_usuario, function(index, element){
-// 					$("#id_"+index).addClass('invalid');
-// 					console.log("#id_"+index);
-// 					console.log("#id_"+element);
-// 					var mensajes_error = '<span>' + element+ '</span>';
-// 					console.log(mensajes_error);
-// 					$("#id_errors_"+index).append(mensajes_error);
-// 				});
-// 				console.log(data.errores_perfil);
-// 				$.each(data.errores_perfil, function(index, element){
-// 					$("#id_"+index).addClass('invalid');
-// 					console.log("#id_"+index);
-// 					console.log("#id_"+element);
-// 					var mensajes_error = '<span>' + element+ '</span>';
-// 					console.log(mensajes_error);
-// 					$("#id_errors_"+index).append(mensajes_error);
-// 				});
-// 			}
-// 		});
-// });
-// }
-
-
 
 //Muestra una tabla en un modal con los datos de feligreses después de una búsqueda
 function cargar_tabla_usuarios_en_modal(){
@@ -449,33 +376,7 @@ function cargar_tabla_mujeres_en_modal(){
 		});
 	});
 }
-/*//Muestra una tabla en un modal con los datos de feligreses después de una búsqueda
-function cargar_tabla_usuarios_en_modal(){
-	console.log('ejecutando: cargar tabla en modal');
-	var url= '/api/usuario/';
-	var nombres = $('#id_query_nombres').val();
-	var apellidos = $('#id_query_apellidos').val();
-	var cedula = $('#id_query_cedula').val();
-	var id= $('#id_hidden').val();
-	mostrar_html("#id_table_busqueda_usuarios");
-	var ctx = {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'id_perfil': id};
-	var columnas = [
-	{"sType": "html","mData" : "full_name", "bSortable": true},
-	{"mData" : "lugar_nacimiento", "bSortable": true},
-	{"mData" : "dni", "bSortable": true }];
-	$.get(url, ctx, function(data){
-		console.log(data.bandera);
-		tablas_busqueda_ajax("#id_table_busqueda_usuarios", columnas, data.perfiles);
-		map = almacenar_busqueda_en_map(data.perfiles);
-		devolver_campos_de_lista(map,'#id_padre','#id_madre');
-		devolver_campos_de_lista(map,'#id_novio','#id_novia');
-		devolver_campos_a_sacramento(map,'#id_bautizado');
-		devolver_campos_a_sacramento(map,'#id_feligres');
-		devolver_campos_a_sacramento(map,'#id_confirmado');
-		devolver_campos_a_secretaria(map, '#id_persona');
-	});
-	// return false;
-}*/
+
 
 function cargar_tabla_sacerdotes_en_modal(){
 	console.log('entre a cargar sacerdotes');
