@@ -242,6 +242,19 @@ table{
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+	#id_title{
+		background: whitesmoke;
+		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+		font-size: 1.5em;
+		max-height: 90%;
+		max-width: 90%;
+		padding-top: .3em;
+		padding-left: 1em;
+		padding-bottom:.3em; 
+		max-width: 100%;
+		margin: auto;
+	}
+
 	.navbar .nav>li.ocultar {
 		display: none;
 	}
