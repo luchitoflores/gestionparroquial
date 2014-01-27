@@ -169,7 +169,7 @@ table{
 		margin: auto;
 	}
 	
-	.small{
+	.navbar .nav>li>a.small {
 		display: none;
 	}
 
