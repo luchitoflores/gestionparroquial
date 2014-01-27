@@ -151,7 +151,7 @@ img.sorted{
 	position: absolute;
 	padding-top: 6px;
 	padding-left: 3px;
-}*/
+	}*/
 
 
 
@@ -180,18 +180,32 @@ img.sorted{
 		font-size: 1em;	
 		font-family: 'Georgia',
 	}
-}*/
+	}*/
 
 
-@media (max-width: 960px) {
-	
-	.inicio {
-		font-size: 100%;
+	@media (max-width: 960px) {
+
+		.inicio {
+			font-size: 100%;
+		}
+
 	}
 
-}
+
+	@media (max-width: 640px) {
+
+		#id_title{
+			font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
+			font-size: 1.5em;
+			max-height: 90%;
+			max-width: 90%;
+			padding-top: 1em;
+			padding-bottom: 1.5em; 
+		}
+
+	}
 
 
-.navbar .nav>li>a.small {
-	padding: 10px 0px 10px;
-}
+	.navbar .nav>li>a.small {
+		padding: 10px 0px 10px;
+	}
