@@ -19,10 +19,10 @@
 						{%endif%}
 						<ul class="dropdown-menu">
 							{% if perms.auth.change_group and perms.auth.change_permission%}
-							<li><a href="{%url 'group_list'%}">Grupos y Permisos</a></li>
+							<li><a href="{%url 'group_list'%}">Grupos y Permisos <small class='muted'> Ctlr+F2</small></a></li>
 							{%endif%}
 							{% if perms.admin.change_logentry%}
-							<li><a href="{%url 'log_list'%}">Logs</a></li>
+							<li><a href="{%url 'log_list'%}">Logs<small class='muted'> Ctlr+F3</small></a></li>
 							{%endif%}
 						</ul>
 					</li>
