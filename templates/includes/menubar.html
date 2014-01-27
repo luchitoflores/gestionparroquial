@@ -116,11 +116,11 @@
 					</li>
 					<li class="dropdown">
 						{% if perms.sacramentos.change_parroquia or perms.sacramentos.add_parroquia or perms.sacramentos.change_asignarsecretaria or perms.sacramentos.add_asignarsecretaria%}
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Parroquias Eclesiásticas<small class='muted'> Ctlr+alt+p</small><b class="caret"></b></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Parroquias Eclesiásticas<b class="caret"></b></a>
 						{%endif%}
 						<ul class="dropdown-menu">
 							{% if perms.sacramentos.change_parroquia%}
-							<li><a href="{%url 'parroquia_list'%}">Parroquias</a></li>
+							<li><a href="{%url 'parroquia_list'%}">Parroquias<small class='muted'> Ctlr+alt+p</small></a></li>
 							{%endif%}
 							{% if perms.sacramentos.change_asignarsecretaria%}
 							<li><a href="{%url 'asignar_secretaria_list'%}">Asignar Secretaria</a></li>
