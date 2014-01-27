@@ -165,7 +165,7 @@ img.sorted{
 	}
 	}*/
 
-	@media screen and (min-width:960px){ 
+	@media (min-width:960px){ 
 		#id_title
 		{
 			background-image: url(../img/textura10.jpg);
@@ -198,6 +198,7 @@ img.sorted{
 	@media (max-width: 640px) {
 
 		#id_title{
+			background: #DDD;
 			font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
 			font-size: 1.5em;
 			max-height: 90%;
