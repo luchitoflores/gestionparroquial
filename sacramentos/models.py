@@ -326,7 +326,7 @@ class PerfilUsuario(TimeStampedModel):
     sexo = models.CharField(max_length=10, choices=SEXO_CHOICES, default=SEXO_CHOICES[0][0],
 		help_text='Elija el sexo de la persona. Ej: Masculino')
     estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0], help_text='Elija el estado civil. Ej: Soltero/a')
-    profesion = models.CharField(max_length=50, null=True, blank=True, help_text='Ingrese la profesión de la persona')
+    profesion = models.CharField(max_length=25, null=True, blank=True, help_text='Ingrese la profesión de la persona')
     celular=models.CharField(max_length=10, blank=True, null=True, help_text='Ingrese su número celular. Ej: 0986522754')
     parroquias = models.ManyToManyField('Parroquia', null=True, blank=True, through='AsignacionParroquia') 
 
