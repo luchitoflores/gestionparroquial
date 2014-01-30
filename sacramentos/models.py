@@ -322,7 +322,7 @@ class PerfilUsuario(TimeStampedModel):
     madre = models.ForeignKey('PerfilUsuario', related_name='mama', null=True, blank=True, limit_choices_to={'sexo':'f'}, help_text='Presione buscar, si no está en la lista, presione crear')
     fecha_nacimiento = models.DateField(null=True, blank=True, 
         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
-    lugar_nacimiento = models.CharField(max_length=20, null=True, blank=True, help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
+    lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True, help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
     sexo = models.CharField(max_length=10, choices=SEXO_CHOICES, default=SEXO_CHOICES[0][0],
 		help_text='Elija el sexo de la persona. Ej: Masculino')
     estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0], help_text='Elija el estado civil. Ej: Soltero/a')
