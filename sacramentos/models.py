@@ -644,8 +644,8 @@ class ParametrizaDiocesis(TimeStampedModel):
     # 	return self.diocesis
 
 class ParametrizaParroquia(TimeStampedModel):
-    numero_acta=models.PositiveIntegerField(max_length=5 help_text='Ingrese el numero de acta Ej: 1 - 17')
-    pagina=models.PositiveIntegerField(max_length=5 help_text='Ingrese el numero de la página Ej: 1 - 17')
+    numero_acta=models.PositiveIntegerField(help_text='Ingrese el numero de acta Ej: 1 - 17')
+    pagina=models.PositiveIntegerField(help_text='Ingrese el numero de la página Ej: 1 - 17')
     parroquia=models.OneToOneField('Parroquia')
 
     def __unicode__(self):
