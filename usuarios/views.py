@@ -43,8 +43,8 @@ def login_view(request):
 		return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 	if request.method == 'POST':		
 		form = AuthenticationForm(data=request.POST)
-		form.fields["username"].widget = forms.TextInput(attrs={'required':'', 'maxlength':20})
-		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':20})
+		form.fields["username"].widget = forms.TextInput(attrs={'required':'', 'maxlength':25})
+		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':25})
 
 		if form.is_valid():
 			username = request.POST['username']
@@ -70,7 +70,7 @@ def login_view(request):
 	else:
 		form = AuthenticationForm()
 		form.fields["username"].widget = forms.TextInput(attrs={'required':'', 'maxlength':25})
-		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':20})
+		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':25})
 	ctx =  {'form':form}
 	return render(request, 'login.html',locals())
 

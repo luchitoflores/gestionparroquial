@@ -571,7 +571,7 @@ class BautismoForm(ModelForm):
 		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 
-	lugar_sacramento = forms.CharField(help_text='Ingrese el lugar del sacramento ej: Loja ', 
+	lugar_sacramento = forms.CharField(max_length=40, help_text='Ingrese el lugar del sacramento ej: Loja ', 
 		required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}))
 	iglesia = forms.CharField(help_text='Ingrese el nombre de la iglesia: San Jose',
