@@ -69,8 +69,8 @@ def login_view(request):
 			messages.add_message(request, messages.ERROR, 'El nombre de usuario o la contraseña están incorrectos')
 	else:
 		form = AuthenticationForm()
-		form.fields["username"].widget = forms.TextInput(attrs={'required':''})
-		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password'})
+		form.fields["username"].widget = forms.TextInput(attrs={'required':'', 'maxlength':25})
+		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':20}
 	ctx =  {'form':form}
 	return render(request, 'login.html',locals())
 
