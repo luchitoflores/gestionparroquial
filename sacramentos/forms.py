@@ -1165,10 +1165,10 @@ class MatrimonioFormEditar(ModelForm):
 	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
-	testigo_novio= forms.CharField(max_length=30, required=True,label='Testigo *',
+	testigo_novio= forms.CharField(max_length=60, required=True,label='Testigo *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testigo ej: Pablo Robles')
-	testigo_novia= forms.CharField(max_length=30, required=True,label='Testiga *',
+	testigo_novia= forms.CharField(max_length=60, required=True,label='Testiga *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testiga ej:Maria Pincay')
 	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
