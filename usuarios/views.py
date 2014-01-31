@@ -70,7 +70,7 @@ def login_view(request):
 	else:
 		form = AuthenticationForm()
 		form.fields["username"].widget = forms.TextInput(attrs={'required':'', 'maxlength':25})
-		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':20}
+		form.fields["password"].widget = forms.TextInput(attrs={'required':'','type':'password', 'maxlength':20})
 	ctx =  {'form':form}
 	return render(request, 'login.html',locals())
 
