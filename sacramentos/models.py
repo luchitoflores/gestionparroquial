@@ -326,7 +326,7 @@ class PerfilUsuario(TimeStampedModel):
     sexo = models.CharField(max_length=10, choices=SEXO_CHOICES, default=SEXO_CHOICES[0][0],
 		help_text='Elija el sexo de la persona. Ej: Masculino')
     estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0], help_text='Elija el estado civil. Ej: Soltero/a')
-    profesion = models.CharField(max_length=50, null=True, blank=True, help_text='Ingrese la profesión de la persona')
+    profesion = models.CharField(max_length=40, null=True, blank=True, help_text='Ingrese la profesión de la persona')
     celular=models.CharField(max_length=10, blank=True, null=True, help_text='Ingrese su número celular. Ej: 0986522754')
     parroquias = models.ManyToManyField('Parroquia', null=True, blank=True, through='AsignacionParroquia') 
 
@@ -447,13 +447,13 @@ class Sacramento(TimeStampedModel):
     fecha_sacramento = models.DateField(help_text='Elija una fecha ej:dd/mm/aaaa')
     celebrante = models.ForeignKey(PerfilUsuario, related_name='%(class)s_sacerdote',
         help_text='Nombre del Celebrante ej: Ob Julio Parrilla')
-    lugar_sacramento = models.CharField(max_length=50,
+    lugar_sacramento = models.CharField(max_length=30,
     	help_text='Ingrese el lugar ej: Loja,San Pedro')
-    padrino = models.CharField(max_length= 200,null=True,blank=True,
+    padrino = models.CharField(max_length= 50,null=True,blank=True,
     	help_text='Ingrese el nombre de padrino ej: Jose Rivera')
-    madrina = models.CharField(max_length= 200,null=True,blank=True,
+    madrina = models.CharField(max_length= 50,null=True,blank=True,
     	help_text='Ingrese el nombre de madrina ej: Luisa Mera')
-    iglesia = models.CharField(max_length=50,help_text='Nombre de iglesia ej: La Catedral')
+    iglesia = models.CharField(max_length=30,help_text='Nombre de iglesia ej: La Catedral')
     libro=models.ForeignKey(Libro, related_name='%(class)s_libro',
     	help_text='Seleccione un libro')
     parroquia = models.ForeignKey('Parroquia', related_name='%(class)s_parroquia')
@@ -464,17 +464,17 @@ class Sacramento(TimeStampedModel):
 class Bautismo(Sacramento):
     bautizado=models.OneToOneField(PerfilUsuario, related_name='bautizado',
         help_text='Seleccione un feligres')
-    abuelo_paterno = models.CharField(max_length=200,null=True,blank=True,
+    abuelo_paterno = models.CharField(max_length=70,null=True,blank=True,
         help_text='Nombre de abuelo paterno ej: Jose Rivera')
-    abuela_paterna = models.CharField(max_length=200,null=True,blank=True,
+    abuela_paterna = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Nombre de abuela paterna ej: Mary Gonzalez')
-    abuelo_materno = models.CharField(max_length=200,null=True,blank=True,
+    abuelo_materno = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Nombre de abuelo materno ej: Jose Gonzalez')
-    abuela_materna = models.CharField(max_length=200,null=True,blank=True,
+    abuela_materna = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Nombre de abuela materna ej: Gloria Correa')
-    vecinos_paternos = models.CharField(max_length=200,null=True,blank=True,
+    vecinos_paternos = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos paternos ej: Catacocha')
-    vecinos_maternos = models.CharField(max_length=200,null=True,blank=True,
+    vecinos_maternos = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos maternos ej: Malacatos')
     objects=BautismoManager()
     
@@ -521,9 +521,9 @@ class Matrimonio(Sacramento):
 		help_text='Seleccione un novio')
     novia=models.ForeignKey(PerfilUsuario, related_name='novia',
 		help_text='Seleccione una novia')
-    testigo_novio = models.CharField(max_length=200,
+    testigo_novio = models.CharField(max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
-    testigo_novia = models.CharField(max_length=200,help_text='Nombre de testiga ej:Fernanda Pincay')
+    testigo_novia = models.CharField(max_length=70,help_text='Nombre de testiga ej:Fernanda Pincay')
     vigente=models.BooleanField()
     tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES)
 
@@ -537,7 +537,7 @@ class Matrimonio(Sacramento):
 
 class NotaMarginal(TimeStampedModel):
     fecha = models.DateField(help_text='Ingrese una fecha Ej: 16/09/2013')
-    descripcion = models.TextField(max_length=100) 
+    descripcion = models.TextField(max_length=200) 
     bautismo= models.ForeignKey('Bautismo',related_name='bautismo',null=True,blank=True)
     matrimonio=models.ForeignKey('Matrimonio',related_name='matrimonio',null=True,
 	blank=True)
@@ -593,14 +593,14 @@ class Intenciones(TimeStampedModel):
         'Ingrese la fecha de la intención Ej: dd/mm/yyyy')
     hora = models.TimeField(help_text=
         'Ingrese la hora de celebración de la intención Ej: 17:00')
-    oferente = models.CharField(max_length=200, 
+    oferente = models.CharField(max_length=70, 
         help_text='Ingrese quien ofrece la intención. Ej: La Flia Flores')
     ofrenda = models.DecimalField(decimal_places=2, max_digits=5,
         help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
     parroquia = models.ForeignKey('Parroquia')
     individual = models.BooleanField('Es única?', 
         help_text='Marque para indicar que la intención será la única en la misa')
-    iglesia = models.CharField(max_length=200, help_text='Ingrese el nombre de la iglesia en donde se celebrará la intención')
+    iglesia = models.CharField(max_length=30, help_text='Ingrese el nombre de la iglesia en donde se celebrará la intención')
 
     class Meta:
         ordering = ['fecha','hora']
@@ -617,7 +617,7 @@ class Intenciones(TimeStampedModel):
 
 
 class Parroquia(TimeStampedModel):
-    nombre=models.CharField('Nombre de Parroquia',max_length=100)
+    nombre=models.CharField('Nombre de Parroquia',max_length=50)
     direccion=models.ForeignKey(Direccion, related_name='direccion_parroquia')
 
     def __unicode__(self):
@@ -644,8 +644,8 @@ class ParametrizaDiocesis(TimeStampedModel):
     # 	return self.diocesis
 
 class ParametrizaParroquia(TimeStampedModel):
-    numero_acta=models.PositiveIntegerField(help_text='Ingrese el numero de acta Ej: 1 - 17')
-    pagina=models.PositiveIntegerField(help_text='Ingrese el numero de la página Ej: 1 - 17')
+    numero_acta=models.PositiveIntegerField(max_length=5 help_text='Ingrese el numero de acta Ej: 1 - 17')
+    pagina=models.PositiveIntegerField(max_length=5 help_text='Ingrese el numero de la página Ej: 1 - 17')
     parroquia=models.OneToOneField('Parroquia')
 
     def __unicode__(self):
