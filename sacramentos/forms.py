@@ -33,17 +33,17 @@ class DivErrorList(ErrorList):
 
 #forms para manejo de usuarios
 class UsuarioForm(ModelForm):
-	first_name = forms.CharField(required=True, label='Nombres *', 
+	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
 		help_text='Ingrese los nombres completos. Ej: Juan José',
 		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(required=True, label='Apellidos *', 
+	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
 		help_text='Ingrese los apellidos completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
 	groups = forms.ModelMultipleChoiceField(label='Grupos', required=False, queryset= Group.objects.all(),
 		help_text = 'Los grupos a los que este usuario pertenece. Un usuario obtendrá'+
 		' todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.',
 		 widget=forms.CheckboxSelectMultiple())
-	email = forms.EmailField(label='Email', 
+	email = forms.EmailField(max_length=40, label='Email', 
 		help_text='Ingrese correo electrónico. Ej: diocesisloja@gmail.com', required=False)
 	class Meta():
 		model = User
@@ -70,13 +70,13 @@ class UsuarioForm(ModelForm):
 
 
 class UsuarioPadreForm(ModelForm):
-	first_name = forms.CharField(required=True, label='Nombres *',
+	first_name = forms.CharField(max_length=30, required=True, label='Nombres *',
 	 help_text='Ingrese los nombres completos. Ej: Juan José',
 		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(required=True, label='Apellidos *', 
+	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
 		help_text='Ingrese los apellidos completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
-	email = forms.EmailField(required=False, label='Email', 
+	email = forms.EmailField(max_length=40, required=False, label='Email', 
 		help_text='Ingrese su dirección de correo electrónico')
 
 	class Meta():
@@ -95,13 +95,13 @@ class UsuarioPadreForm(ModelForm):
 		return email
 
 class UsuarioSecretariaForm(ModelForm):
-	first_name = forms.CharField(required=True, label='Nombres *',
+	first_name = forms.CharField(max_length=30, required=True, label='Nombres *',
 	 help_text='Ingrese los nombres completos. Ej: Juan José',
 		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(required=True, label='Apellidos *', 
+	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
 		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
-	email = forms.EmailField(required=True, label='Email *', 
+	email = forms.EmailField(max_length=40, required=True, label='Email *', 
 		help_text='Ingrese su dirección de correo electrónico',
 		widget=forms.TextInput(attrs={'required': ''}))
 
@@ -122,17 +122,17 @@ class UsuarioSecretariaForm(ModelForm):
 		return email
 
 class UsuarioSacerdoteForm(ModelForm):
-	first_name = forms.CharField(required=True, label='Nombres *', 
+	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
 		help_text='Ingrese los nombres completos. Ej: Juan José',
 		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(required=True, label='Apellidos *', 
+	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
 		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
 	groups = forms.ModelMultipleChoiceField(label='Grupos *', queryset= Group.objects.all().exclude(name='Feligres'),
 		help_text = 'Los grupos a los que este usuario pertenece. '+
 		'Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos.'+
 		' Ud. puede seleccionar más de una opción.', widget=forms.CheckboxSelectMultiple(), required=False)
-	email = forms.EmailField(required=True, label='Email *', 
+	email = forms.EmailField(max_length=40, required=True, label='Email *', 
 		help_text='Ingrese el email. Ej: juan_salinas12@gmail.com',
 		widget=forms.TextInput(attrs={'required': ''}))
 	class Meta():
@@ -158,17 +158,17 @@ class UsuarioSacerdoteForm(ModelForm):
 		return email
 
 class UsuarioAdministradorForm(ModelForm):
-	first_name = forms.CharField(required=True, label='Nombres *', 
+	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
 		help_text='Ingrese los nombres completos. Ej: Juan José',
 		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(required=True, label='Apellidos *', 
+	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
 		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
 		widget=forms.TextInput(attrs={'required': ''}))
 	groups = forms.ModelMultipleChoiceField(required=False, label='Grupos *', queryset= Group.objects.all().order_by('name'),
 		help_text = 'Los grupos a los que este usuario pertenece. '+
 		'Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos.'+
 		' Ud. puede seleccionar más de una opción.', widget=forms.CheckboxSelectMultiple())
-	email = forms.EmailField(required=True, label='Email *', 
+	email = forms.EmailField(max_length=40, required=True, label='Email *', 
 		help_text='Ingrese el email. Ej: juan_salinas12@gmail.com',
 		widget=forms.TextInput(attrs={'required': ''}))
 	is_staff = forms.BooleanField(label='Es activo?', required=False,
@@ -574,7 +574,7 @@ class BautismoForm(ModelForm):
 	lugar_sacramento = forms.CharField(max_length=40, help_text='Ingrese el lugar del sacramento ej: Loja ', 
 		required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}))
-	iglesia = forms.CharField(help_text='Ingrese el nombre de la iglesia: San Jose',
+	iglesia = forms.CharField(max_length=30, help_text='Ingrese el nombre de la iglesia: San Jose',
 		required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}))
 	libro=forms.ModelChoiceField(help_text='Seleccione un libro para el Bautismo',
@@ -640,10 +640,10 @@ class BautismoFormEditar(ModelForm):
 		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		return cleaned_data
 	
-	lugar_sacramento = forms.CharField(help_text='Ingrese el lugar del sacramento ej: Loja ', 
+	lugar_sacramento = forms.CharField(max_length=40, help_text='Ingrese el lugar del sacramento ej: Loja ', 
 		required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}))
-	iglesia = forms.CharField(help_text='Ingrese el nombre de la iglesia: San Jose',
+	iglesia = forms.CharField(max_length=30, help_text='Ingrese el nombre de la iglesia: San Jose',
 		required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}))
 	libro=forms.ModelChoiceField(empty_label=None,queryset=Libro.objects.none(),
@@ -728,10 +728,10 @@ class EucaristiaForm(ModelForm):
 		
 		return cleaned_data
 	
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
 	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
@@ -800,10 +800,10 @@ class EucaristiaFormEditar(ModelForm):
 		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
 		return cleaned_data
 
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
 	# celebrante = forms.ModelChoiceField(help_text='Seleccione un celebrante',
@@ -889,10 +889,10 @@ class ConfirmacionForm(ModelForm):
 		
 		return cleaned_data
 	
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
 	
@@ -968,10 +968,10 @@ class ConfirmacionFormEditar(ModelForm):
 		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
 		return cleaned_data
 	
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
 	
@@ -1055,7 +1055,7 @@ class MatrimonioForm(ModelForm):
         ('Catolico','Catolico'),
         ('Mixto','Mixto'),
         )
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
 	tipo_matrimonio = forms.TypedChoiceField(label=u'Tipo Matrimonio *', 
@@ -1063,13 +1063,13 @@ class MatrimonioForm(ModelForm):
 		choices=TIPO_MATRIMONIO_CHOICES, required=True, 
 		widget=forms.Select(attrs={'required':''}))
 
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
-	testigo_novio= forms.CharField(required=True,label='Testigo *',
+	testigo_novio= forms.CharField(max_length=30, required=True,label='Testigo *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testigo ej: Pablo Robles')
-	testigo_novia= forms.CharField(required=True,label='Testiga *',
+	testigo_novia= forms.CharField(max_length=30, required=True,label='Testiga *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testiga ej:Maria Pincay')
 	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
@@ -1159,16 +1159,16 @@ class MatrimonioFormEditar(ModelForm):
 		help_text='Elija tipo de matrimonio Ej: Catolico o Mixto', 
 		choices=TIPO_MATRIMONIO_CHOICES, required=True, 
 		widget=forms.Select(attrs={'required':''}))
-	lugar_sacramento = forms.CharField(required=True,label='Lugar del Sacramento *',
+	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(required=True,label='Iglesia *',
+	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la iglesia: San Jose')
-	testigo_novio= forms.CharField(required=True,label='Testigo *',
+	testigo_novio= forms.CharField(max_length=30, required=True,label='Testigo *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testigo ej: Pablo Robles')
-	testigo_novia= forms.CharField(required=True,label='Testiga *',
+	testigo_novia= forms.CharField(max_length=30, required=True,label='Testiga *',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de testiga ej:Maria Pincay')
 	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
@@ -1215,7 +1215,7 @@ class MatrimonioFormEditar(ModelForm):
 # Forms para Notas Marginales
 class NotaMarginalForm(ModelForm):
 	
-	descripcion=forms.CharField(required=True,label='Descripción *',
+	descripcion=forms.CharField(max_length=200,required=True,label='Descripción *',
 		widget=forms.Textarea(attrs={'required':''}),
 		help_text='Ingrese una descripcion ej: di copia para matrimonio')
 	class Meta():
@@ -1226,7 +1226,7 @@ class NotaMarginalForm(ModelForm):
 
 #Forms para Parroquia - Funcionando
 class ParroquiaForm(ModelForm):
-	nombre=forms.CharField(required=True,label='Nombre de parroquia',
+	nombre=forms.CharField(max_length=30, required=True,label='Nombre de parroquia',
 		widget=forms.TextInput(attrs={'required':''}),
 		help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
 	class Meta:
@@ -1468,7 +1468,7 @@ class ReporteIntencionesForm(forms.Form):
    
 
 class ReporteSacramentosAnualForm(forms.Form):
-	anio=forms.CharField(help_text='Ingrese un año para generar el reporte',label='Año *',
+	anio=forms.CharField(max_length=4,help_text='Ingrese un año para generar el reporte',label='Año *',
 		widget=forms.TextInput(attrs={'required':''}))
 
 class ReportePermisoForm(forms.Form):
