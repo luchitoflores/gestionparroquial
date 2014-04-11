@@ -65,7 +65,7 @@ function tablas_estilo_bootstrap(){
 	});
 
 	/* Bootstrap style pagination control */
-	$.extend( $.fn.dataTableExt.oPagination, {
+	/*$.extend( $.fn.dataTableExt.oPagination, {
 		"bootstrap": {
 			"fnInit": function( oSettings, nPaging, fnDraw ) {
 				var oLang = oSettings.oLanguage.oPaginate;
@@ -86,6 +86,7 @@ function tablas_estilo_bootstrap(){
 				$(els[0]).bind( 'click.DT', { action: "previous" }, fnClickHandler );
 				$(els[1]).bind( 'click.DT', { action: "next" }, fnClickHandler );
 			},
+
 
 			"fnUpdate": function ( oSettings, fnDraw ) {
 				var iListLength = 5;
@@ -137,9 +138,9 @@ function tablas_estilo_bootstrap(){
                   	$('li:last', an[i]).removeClass('disabled');
                   }
               }
-          }
+          } 
       }
-  } 
+  } */
 
 
   );
