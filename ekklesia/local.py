@@ -64,7 +64,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATICFILES_STORAGE ='django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
+
+import os 
+#STATIC_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]+['static'])
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
