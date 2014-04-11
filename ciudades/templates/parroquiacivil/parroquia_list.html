@@ -6,13 +6,11 @@ Lista de Parroquias Civiles
 {%endblock%}
 {%block content%}
 
-<form >
-
-<label>Buscar</label>
-<input type='text' name='q' value="{{q}}" />
-<input type='submit' value='Enviar'/>
-	
+<form class="form-search">
+	<input type='text' class="input-medium search-query" name='q' value="{{q}}" />
+	<input type='submit' value='Buscar' class="btn btn-primary" />
 </form>
+
 
 <table id='id_table_parroquia_civil' class="table table-bordered table-striped">
 	<thead>
