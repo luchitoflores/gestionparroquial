@@ -17,12 +17,13 @@ from django.core.urlresolvers import reverse_lazy
 
 from .forms	import ProvinciaForm,CantonForm,ParroquiaForm
 from .models import Provincia,Canton,Parroquia
+from core.views import BusquedaMixin
 
 logger = logging.getLogger(__name__)
 
 #Vistas para la clase Parroquia
 
-class ProvinciaList(ListView):
+class ProvinciaList(BusquedaMixin, ListView):
 	model                 = Provincia 
 	template_name         = 'provincia/provincia_list.html'
 	#context_object_name = 'list_parroquia'
@@ -34,41 +35,7 @@ class ProvinciaList(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(ProvinciaList, self).dispatch(*args, **kwargs)
 
-	def get_context_data(self, **kwargs):
-		context = super(ProvinciaList, self).get_context_data(**kwargs)
-		numero_paginas = context['paginator'].num_pages
-		pagina_actual = context['page_obj'].number
-		
-		if numero_paginas > 5 :
-			resta = numero_paginas - pagina_actual
-
-			if pagina_actual <= 2:
-				context['rango'] = [x for x in range(1,6)]
-			else:				
-				if resta > 1:
-					context['rango'] = [pagina_actual-2, pagina_actual-1, pagina_actual, pagina_actual+1, pagina_actual+2]
-				elif resta <= 1:
-					context['rango'] = [x for x in range(numero_paginas-4,numero_paginas+1)]
-		elif numero_paginas <= 5:
-			context['rango'] = [x for x in range(1,numero_paginas+1)]
-
-		context['now'] = numero_paginas 
-		context['pagina_actual'] = pagina_actual
-		context['q'] = self.request.GET.get('q', '')
-		return context
-
-	def get_queryset(self):
-		print self.args
-		name = self.request.GET.get('q', '')
-		print "valor de name"
-		print name
-		
-		if (name != ''):
-			object_list = self.model.objects.filter(nombre__icontains = name)
-		else:
-			object_list = self.model.objects.all()
-		return object_list
-
+	
 class ProvinciaCreate(CreateView):
 	model               = Provincia
 	template_name       = 'provincia/provincia_form.html'
@@ -133,12 +100,11 @@ class ProvinciaDelete(DeleteView):
 		return super(ProvinciaDelete, self).dispatch(*args, **kwargs)
 
 
-class CantonList(ListView):
-	model                 = Canton 
-	template_name         = 'canton/canton_list.html'
+class CantonList(BusquedaMixin, ListView):
+	model = Canton 
+	template_name = 'canton/canton_list.html'
+	paginate_by = 10
 	
-	
-
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('ciudades.change_canton', login_url='/login/', 
 		raise_exception=permission_required))
@@ -209,7 +175,7 @@ class CantonDelete(DeleteView):
 		return super(CantonDelete, self).dispatch(*args, **kwargs)
 
 
-class ParroquiaList(ListView):
+class ParroquiaList(BusquedaMixin, ListView):
 	model                 = Parroquia 
 	template_name         = 'parroquiacivil/parroquia_list.html'
 	# context_object_name = 'list_parroquia'
@@ -220,42 +186,6 @@ class ParroquiaList(ListView):
 		raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(ParroquiaList, self).dispatch(*args, **kwargs)
-
-
-	def get_context_data(self, **kwargs):
-		context = super(ParroquiaList, self).get_context_data(**kwargs)
-		numero_paginas = context['paginator'].num_pages
-		pagina_actual = context['page_obj'].number
-		
-		if numero_paginas > 5 :
-			resta = numero_paginas - pagina_actual
-
-			if pagina_actual <= 2:
-				context['rango'] = [x for x in range(1,6)]
-			else:				
-				if resta > 1:
-					context['rango'] = [pagina_actual-2, pagina_actual-1, pagina_actual, pagina_actual+1, pagina_actual+2]
-				elif resta <= 1:
-					context['rango'] = [x for x in range(numero_paginas-4,numero_paginas+1)]
-		elif numero_paginas <= 5:
-			context['rango'] = [x for x in range(1,numero_paginas+1)]
-
-		context['now'] = numero_paginas 
-		context['pagina_actual'] = pagina_actual
-		context['q'] = self.request.GET.get('q', '')
-		return context
-
-	def get_queryset(self):
-		print self.args
-		name = self.request.GET.get('q', '')
-		print "valor de name"
-		print name
-		
-		if (name != ''):
-			object_list = self.model.objects.filter(nombre__icontains = name)
-		else:
-			object_list = self.model.objects.all()
-		return object_list
 
 
 class ParroquiaCreate(CreateView):

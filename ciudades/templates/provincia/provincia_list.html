@@ -6,10 +6,8 @@ Lista de Provincias
 {%block content%}
 
 
-<form class="form-search">
-<input type='text' class="input-medium search-query" name='q' placeholder='Ingrese el criterio de búsqueda' value="{{q}}" />
-	<input type='submit' value='Buscar' class="btn btn-primary" />
-</form>
+{% include 'busqueda_form.html' %} 
+<a href="{% url 'provincia_create' %}" class='btn btn-primary'>Nueva Provincia</a>
 
 <table id='id_table_provincia' class="table table-bordered">
 	<thead>
@@ -31,32 +29,6 @@ Lista de Provincias
 	</tbody>
 </table>
 
-{% if object_list %}
-{% if is_paginated %}
-<div class="pagination">
+{% include 'paginacion.html' %}
 
-	<ul>
-		{% if page_obj.has_previous %}
-		<li class="prev"><a href="?page={{ page_obj.previous_page_number }}&q={{q}}">← Anterior</a></li>
-		{% endif %}
-
-		{% for pagina in rango%}
-
-		{% if page_obj.number == pagina %}
-		<li class="active"><a href="?page={{pagina}}&q={{q}}">{{ pagina }}</a></li>
-		{% else %}
-		<li><a href="?page={{pagina}}&q={{q}}">{{ pagina }}</a></li>
-		{% endif%}
-		{% endfor %}
-
-		{% if page_obj.has_next %}
-		<li class="next"> <a href="?page={{ page_obj.next_page_number }}&q={{q}}">Siguiente →</a></li>
-		{% endif %}
-	</ul>
-
-</div>
-{% endif %}
-{% endif %}
-
-<a href="{% url 'provincia_create' %}" class='btn btn-primary'>Nueva Provincia</a>
 {%endblock%}

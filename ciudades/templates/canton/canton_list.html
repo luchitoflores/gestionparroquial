@@ -5,6 +5,10 @@ Lista de Cantones
 {%endblock%}
 {%block content%}
 
+
+{% include 'busqueda_form.html' %} 
+<a href="{% url 'canton_create' %}" class='btn btn-primary'>Nuevo Cantón</a>
+
 <table id='id_table_canton' class="table table-bordered table-striped">
 	<thead>
 		<tr class='alert alert-info'>
@@ -24,6 +28,6 @@ Lista de Cantones
 	</tbody>
 </table>
 
-<a href="{% url 'canton_create' %}" class='btn btn-primary'>Nuevo Cantón</a>
+{% include 'paginacion.html' %}
 
 {%endblock%}

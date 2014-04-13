@@ -112,6 +112,10 @@ li.item{
 	font-size:0.8em;
 }
 
+#id_form_buscar {
+	display: inline-block;
+}
+
 .nav {
 	margin-bottom: 0em;
 }
