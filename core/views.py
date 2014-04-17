@@ -21,9 +21,8 @@ class BusquedaMixin(object):
 		elif numero_paginas <= 5:
 			context['rango'] = [x for x in range(1,numero_paginas+1)]
 
-		context['now'] = numero_paginas 
-		context['pagina_actual'] = pagina_actual
 		context['q'] = self.request.GET.get('q', '')
+		#context['modelo'] = self.model._meta.object_name
 		return context
 
 	def get_queryset(self):
@@ -37,3 +36,8 @@ class BusquedaMixin(object):
 		else:
 			object_list = self.model.objects.all()
 		return object_list
+
+def quitar_tildes(palabra):
+	import unicodedata
+	palabra = ''.join((c for c in unicodedata.normalize('NFD', unicode(palabra)) if unicodedata.category(c) != 'Mn'))
+	return palabra
