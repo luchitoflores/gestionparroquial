@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
 from django.conf import settings
 
+# Para los logs
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
+from django.contrib.contenttypes.models import ContentType
 
 from ciudades.models import Direccion 
 from sacramentos.managers import PersonaManager,BautismoManager,LibroManager
@@ -26,6 +29,17 @@ Permission.__unicode__ = permissions_new_unicode
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        LogEntry.objects.log_action(
+                    user_id=1,
+                    content_type_id=ContentType.objects.get_for_model(self).pk,
+                    object_id=self.id,
+                    object_repr=unicode(self),
+                    action_flag= CHANGE if self.id else ADDITION,
+                    change_message='Se update exitosamente prueba' if self.id else 'Se create exitosamente prueba' )
+        super(TimeStampedModel, self).save(*args, **kwargs)
+
 
     class Meta:
 	    abstract = True
@@ -56,6 +70,8 @@ class Libro(TimeStampedModel):
 
     def __unicode__(self):
         return '%s - %s' %(self.get_tipo_libro_display(), self.fecha_apertura.year)
+
+
 
 
 

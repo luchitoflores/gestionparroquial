@@ -10,11 +10,9 @@ def label_with_classes(value, arg):
 
 @register.simple_tag
 def footer_tag():
-	objetos = ParametrizaDiocesis.objects.all()
-	objeto = ''
-	for o in objetos:
-		objeto = o
-	if objeto:
-		return u'<h5>%s</h5><p>%s | %s - Ecuador | Teléfono: %s </p>' % (objeto.diocesis, objeto.direccion, str(objeto.direccion.provincia).title(), objeto.direccion.telefono)
+	objeto = ParametrizaDiocesis.objects.all()
+		
+	if objeto[0]:
+		return u'<h5>%s</h5><p>%s | %s - Ecuador | Teléfono: %s </p>' % (objeto[0].diocesis, objeto[0].direccion, str(objeto[0].direccion.provincia).title(), objeto[0].direccion.telefono)
 	else:
 		return ""

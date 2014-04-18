@@ -62,14 +62,16 @@ $(document).ready(function(){
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Principales del Sacramento</legend>
 				<div class='row'>
-					<div class="span4">
+					<div class="span8">
 						<div class='control-group'>
 							<label for="id_libro" class='control-label'>
 								{{formBautismo.libro.label}}
 							</label>
 							<div class='controls'>
 								{{formBautismo.libro}}
-
+								<span>
+									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+								</span>
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.libro.help_text}}
@@ -84,8 +86,44 @@ $(document).ready(function(){
 
 						
 					</div>
-					<div class="span4">
-						
+					
+					<div class="span8">
+						<div class='control-group'>
+							<label for="id_bautizado" class='control-label'>{{formBautismo.bautizado.label}}</label>
+							<div class='controls'>
+								{{formBautismo.bautizado}}
+								<span>
+									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								</span>
+								<span>
+									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+								</span>
+							</div>
+							<div class="controls help-text">
+								{{formBautismo.bautizado.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{formBautismo.bautizado.errors}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="span8">
+						<div class='control-group'>
+							<label for="id_lugar_sacramento" class='control-label'>{{formBautismo.lugar_sacramento.label}}</label>
+							<div class='controls'>
+								{{formBautismo.lugar_sacramento}}
+							</div>
+							<div class="controls help-text">
+								{{formBautismo.lugar_sacramento.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{formBautismo.lugar_sacramento.errors}}
+								</div>
+							</div>
+						</div>
 
 						<div class='control-group'>
 							<label for="id_fecha_sacramento" class='control-label'>{{formBautismo.fecha_sacramento.label}} *
@@ -103,42 +141,6 @@ $(document).ready(function(){
 								</div>
 							</div>
 
-						</div>
-
-					</div>
-					<div class="span8">
-						<div class='control-group'>
-							<label for="id_bautizado" class='control-label'>{{formBautismo.bautizado.label}}</label>
-							<div class='controls'>
-								{{formBautismo.bautizado}}
-								<span>
-									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
-								</span>
-							</div>
-							<div class="controls help-text">
-								{{formBautismo.bautizado.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{formBautismo.bautizado.errors}}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="span4">
-						<div class='control-group'>
-							<label for="id_lugar_sacramento" class='control-label'>{{formBautismo.lugar_sacramento.label}}</label>
-							<div class='controls'>
-								{{formBautismo.lugar_sacramento}}
-							</div>
-							<div class="controls help-text">
-								{{formBautismo.lugar_sacramento.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{formBautismo.lugar_sacramento.errors}}
-								</div>
-							</div>
 						</div>
 						<div class='control-group'>
 							<label for="id_iglesia" class='control-label'>
@@ -164,7 +166,10 @@ $(document).ready(function(){
 							</label>
 							<div class='controls'>
 								{{formBautismo.celebrante}}
-								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								<span>
+									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+								</span>
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.celebrante.help_text}}

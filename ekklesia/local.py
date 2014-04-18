@@ -222,3 +222,13 @@ EMAIL_USE_TLS = True
 #     '%m/%d/%y %H:%M',        # '10/25/06 14:30'
 #     '%m/%d/%y',              # '10/25/06'
 #     )
+
+
+# El siguiente código permite añadir nuevos procesadores de contexto
+# a los que vienen por defecto en Django
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    "sacramentos.context_processors.parametros_diocesis",
+    )

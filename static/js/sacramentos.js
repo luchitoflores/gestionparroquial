@@ -2,7 +2,7 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
-
+	
 	detectar_navegador();
 
 	if(localStorage.nombre){
@@ -26,10 +26,10 @@ function inicio(){
 	//autocomplete('#id_padre');
 	asignar_padre();
 	asignar_email();
-	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/nota/add/');
-	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/nota_matrimonio/add/');
+	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/crear/api/nota/');
+	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/crear/api/nota_matrimonio/');
 	tablas_estilo_bootstrap();
-	modelo_tablas('#id_table_secretaria, #id_table_libro,#id_table_asignar_parroquia,#id_table_log, #id_table_feligres, #id_table_matrimonio,#id_table_bautismo,#id_table_eucaristia,#id_table_confirmacion, #id_table_group, #id_table_parroquia, #id_table_provincia, #id_table_canton, #id_table_parroquia_civil, #id_table_sacerdotes');
+	modelo_tablas('#id_table_secretaria,#id_table_asignar_parroquia,#id_table_log, #id_table_feligres, #id_table_matrimonio,#id_table_bautismo,#id_table_eucaristia,#id_table_confirmacion, #id_table_group, #id_table_sacerdotes');
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
 	ocultar_tablas_aceptar('#id_buscar_hombres');
 	ocultar_tablas_aceptar('#id_buscar_mujeres');
@@ -677,7 +677,7 @@ function crear_padre(identificador, idpadre, idmodal, sexo){
 		$('.alert').remove();
 
 		e.preventDefault();
-		var url = '/api/padre/add/';
+		var url = '/crear/api/padre/';
 		var json = $(this).serialize()+'&sexo='+sexo;
 		$.post(url, json , function(data){
 			if(!data.respuesta){
@@ -720,7 +720,7 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 		$('span').remove();
 		$('.alert').remove();
 		e.preventDefault();
-		var url = '/api/secretaria/add/';
+		var url = '/crear/api/secretaria/';
 		var json = $(this).serialize();
 		$.post(url, json , function(data){
 			if(!data.respuesta){
@@ -751,7 +751,7 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 function crear_direccion(identificador){
 	$(identificador).on('submit', function(e){
 		e.preventDefault();
-		var url = '/ciudades/direccion/add/'
+		var url = '/crear/ciudades/direccion/'
 		var json = $(this).serialize()
 		$.post(url, json, function(data){
 			if(data.respuesta){
@@ -767,13 +767,13 @@ function crear_direccion(identificador){
 // Permite elegir los cantones de acuerdo a sus respectivas provincias
 function seleccionar_cantones(identificador){
 	$(identificador).on('change', function(e){
+		e.preventDefault();
 		$('#id_canton option').remove();
 		$('#id_canton').prop('disabled', true);
 		$('#id_parroquia option').remove();
 		$('#id_parroquia').append('<option>-- Seleccione --</option>')
 		$('#id_parroquia').prop('disabled', true);
 
-		e.preventDefault();
 		var url = '/api/ciudades/select/';
 		var provincia = $(identificador + ' option:selected').text();
 		var ctx = {'provincia': provincia}
@@ -898,7 +898,7 @@ function asignar_email(){
 	$('#id_form_email').on('submit', function(e){
 		e.preventDefault();
 		var ctx = $(this).serialize()
-		var url = '/api/email/add/'
+		var url = '/crear/api/email/'
 		$.post(url, ctx, function(data){
 			if (data.respuesta) {
 				$('#id_modal_email').modal('hide');

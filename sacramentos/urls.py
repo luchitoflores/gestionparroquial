@@ -168,11 +168,11 @@ urlpatterns = patterns('',
 	url(r'^crear/api/email/$', 'sacramentos.rest.agregar_email', name='agregar_email'),
 	
 	# urls de parameetrizacion de la diocesis(general)
-	url(r'^crear/parametriza/$', parametriza_diocesis_create, name='parametriza_create'),
+	url(r'^crear/parametros/diocesis/$', parametriza_diocesis_create, name='parametriza_create'),
 	
 	# urls de parametrizacion de las parroquias
 
-	url(r'^crear/parametriza/parroquia/$', parametriza_parroquia_create, name='parametriza_parroquia_create'),
+	url(r'^crear/parametros/parroquia/$', parametriza_parroquia_create, name='parametriza_parroquia_create'),
 	
 
 	#urls del api rest parroquias

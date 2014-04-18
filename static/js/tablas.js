@@ -65,7 +65,7 @@ function tablas_estilo_bootstrap(){
 	});
 
 	/* Bootstrap style pagination control */
-	/*$.extend( $.fn.dataTableExt.oPagination, {
+	$.extend( $.fn.dataTableExt.oPagination, {
 		"bootstrap": {
 			"fnInit": function( oSettings, nPaging, fnDraw ) {
 				var oLang = oSettings.oLanguage.oPaginate;
@@ -140,7 +140,7 @@ function tablas_estilo_bootstrap(){
               }
           } 
       }
-  } */
+  } 
 
 
   );

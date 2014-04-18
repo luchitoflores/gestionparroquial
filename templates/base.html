@@ -75,10 +75,18 @@
 		<div id='id_footer'>
 			<footer>
 				{%block footer%}
-				<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es"><img alt="Licencia Apache 2.0" style="border-width:0" src="/static/img/apache.png" /></a>				
+				
+
+				<!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es"><img alt="Licencia Apache 2.0" style="border-width:0" src="/static/img/apache.png" /></a>				
 
 				{%footer_tag%}
-				<p><a href="{% url 'accesibilidad'%}">Accesibilidad</a></p>
+				<p><a href="{% url 'accesibilidad'%}">Accesibilidad</a></p> -->
+
+				{% if parametros %}
+				<h5>{{parametros.diocesis}}</h5>
+				<p> {{parametros.direccion.domicilio}} | {{parametros.direccion.parroquia.nombre}} - ECUADOR | Teléfono: {{parametros.direccion.telefono}}</p>
+				{% endif %}
+
 			<!--<div style='text-align: right'>
 				<i class='icon-facebook-sign icon-2x' style='color: #ddd'></i>
 				<i class='icon-twitter-sign icon-2x' style='color: #ddd'></i>

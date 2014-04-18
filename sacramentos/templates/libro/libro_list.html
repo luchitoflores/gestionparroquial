@@ -11,6 +11,15 @@ Lista de Libros
 
 {%block content%}
 
+
+
+{% include 'busqueda_form.html' %} 
+
+{%if perms.sacramentos.add_libro %}
+<a href="{% url 'libro_create' %}" class='btn btn-primary'>Nuevo Libro</a>
+{%endif%}
+
+
 <table id='id_table_libro' class='table table-bordered table-striped'>
 	<thead>
 		<tr >
@@ -23,6 +32,11 @@ Lista de Libros
 		
 	</thead>
 	<tbody>
+		{%if not object_list%}
+		<tr >
+			<td colspan="4">No existe ningún registro</td>
+		</tr>
+		{%endif%}
 		{% for o in object_list %}
 		<tr >
 			<td ><a href="{%url 'libro_update' pk=o.id%}">{{o}} </a> </td>
@@ -39,11 +53,8 @@ Lista de Libros
 	</tbody>
 
 </table>
-{%if perms.sacramentos.add_libro %}
-<a href="{% url 'libro_create' %}" class='btn btn-primary'>Nuevo Libro</a>
-{%endif%}
 
-
+{% include 'paginacion.html' %}
 
 
 {%endblock%}

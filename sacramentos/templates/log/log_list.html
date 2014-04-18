@@ -12,6 +12,7 @@ Lista de Logs
 			<th>Objeto</th>
 			<th>Transaccion</th>
 			<th data-hide='phone'>Mensaje</th>
+			<th data-hide='phone'>Fecha</th>
 			
 		</tr>
 	</thead>
@@ -35,6 +36,7 @@ Lista de Logs
 			{%endif%}
 			
 			<td>{{o.change_message}}</td>
+			<td>{{o.action_time}}</td>
 			
 		</tr>
 		{%endfor%}
