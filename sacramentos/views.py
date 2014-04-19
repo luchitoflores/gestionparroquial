@@ -50,7 +50,7 @@ from sacramentos.forms import (
 	IntencionForm,
 	ParroquiaForm, 
 	IglesiaForm,
-	AsignarParroquiaForm, PeriodoAsignacionParroquiaForm, PeriodoAsignacionParroquiaUpdateForm,
+	AsignarParroquiaForm, PeriodoAsignacionParroquiaForm,
 	AsignarSecretariaForm,
 	ParametrizaDiocesisForm,ParametrizaParroquiaForm,
 	ReporteIntencionesForm,ReporteSacramentosAnualForm,ReportePermisoForm,
@@ -2106,12 +2106,14 @@ def nuevo_periodo_asignacion(request, pk):
 			periodo_activo= PeriodoAsignacionParroquia.objects.filter(asignacion=asignacion, estado=True)
 			periodo_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(asignacion__persona=asignacion.persona, estado=True).exclude(asignacion__parroquia=asignacion.parroquia)
 			if periodo_activo:
-				messages.error(request, 'El sacerdote ya posee un periodo activo')
+				messages.error(request, 'Los datos del formulario son incorrectos')
+				form.errors['estado'] = ErrorList(["El sacerdote ya está asignado a la parroquia"])
 				ctx = {'form': form, 'object':asignacion}
 				return render(request, template_name, ctx)
 				
 			elif periodo_activo_otra_parroquia:
-				messages.error(request, 'El sacerdote tiene un periodo activo en otra parroquia')
+				messages.error(request, 'Los datos del formulario son incorrectos')
+				form.errors['estado'] = ErrorList(["El sacerdote tiene un periodo activo en otra parroquia"])
 				ctx = {'form': form, 'object':asignacion}
 				return render(request, template_name, ctx)
 
@@ -2137,6 +2139,7 @@ def nuevo_periodo_asignacion(request, pk):
 				return HttpResponseRedirect(success_url)
 
 		else:
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form': form, 'object':asignacion}
 			return render(request, template_name, ctx)
 
@@ -2156,17 +2159,21 @@ def parroco_periodos_asignacion_update(request, pk):
 
 	if request.method == 'POST':
 		estado = request.POST.get('estado')
-		form = PeriodoAsignacionParroquiaUpdateForm(request.POST, instance=periodo)
+		form = PeriodoAsignacionParroquiaForm(request.POST, instance=periodo)
 		if form.is_valid():
 			
 			periodo_activo= PeriodoAsignacionParroquia.objects.filter(asignacion=periodo.asignacion, estado=True).exclude(id=periodo.id)
 			periodo_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(asignacion__persona=periodo.asignacion.persona, estado=True).exclude(asignacion__parroquia=periodo.asignacion.parroquia)
+			
 			if periodo_activo:
-				messages.error(request, 'Existen periodos activos')
+				messages.error(request, 'Los datos del formulario son incorrectos')
+				form.errors['estado'] = ErrorList(["El sacerdote ya está asignado a la parroquia"])
 				ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 				return render(request, template_name, ctx)
+			
 			elif  periodo_activo_otra_parroquia:
-				messages.error(request, 'El sacerdote tiene un periodo activo en otra parroquia')
+				messages.error(request, 'Los datos del formulario son incorrectos')
+				form.errors['estado'] = ErrorList(["El sacerdote tiene un periodo activo en otra parroquia"])
 				ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 				return render(request, template_name, ctx)
 
@@ -2189,11 +2196,12 @@ def parroco_periodos_asignacion_update(request, pk):
             	change_message="Periodo asignacion actualizado") 
 				return HttpResponseRedirect(success_url)
 		else:
+			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 			return render(request, template_name, ctx)
 
 	else:
-		form = PeriodoAsignacionParroquiaUpdateForm(instance=periodo)
+		form = PeriodoAsignacionParroquiaForm(instance=periodo)
 		ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 		return render(request, template_name, ctx)
 
@@ -2322,7 +2330,7 @@ def asignar_secretaria_update(request, pk):
 			if request.method == 'POST':
 				persona = PerfilUsuario.objects.feligres()
 				form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff, request.POST, instance=periodo.asignacion)
-				form_periodo = PeriodoAsignacionParroquiaUpdateForm(request.POST, instance=periodo)
+				form_periodo = PeriodoAsignacionParroquiaForm(request.POST, instance=periodo)
 				if form.is_valid() and form_periodo.is_valid():
 					persona_id = request.POST['persona']
 					estado = request.POST.get('estado')
@@ -2366,7 +2374,7 @@ def asignar_secretaria_update(request, pk):
 					persona = PerfilUsuario.objects.none()
 					form = AsignarSecretariaForm(usuario, persona, asignacion.persona.user.is_staff, instance=periodo.asignacion)
 				
-				form_periodo = PeriodoAsignacionParroquiaUpdateForm(instance=periodo)
+				form_periodo = PeriodoAsignacionParroquiaForm(instance=periodo)
 				ctx = {'form': form, 'form_periodo':form_periodo, 'object':periodo}
 				return render(request, template_name, ctx)
 		else:

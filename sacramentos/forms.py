@@ -1246,9 +1246,10 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 		# print presente
 		estado = self.cleaned_data.get('estado')
 
-		if inicio < date.today():
+		if not self.instance.id and inicio < date.today():
 			msg = u"La fecha inicial no puede ser menor a la fecha actual"
 			self._errors["inicio"] = self.error_class([msg])
+		
 		if fin:
 			if fin < inicio:
 				msg = u"La fecha final no puede ser menor que la fecha inicial"
@@ -1263,32 +1264,6 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 		'inicio': forms.TextInput(attrs={'required':'', 'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
 		'fin': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
 		}
-
-class PeriodoAsignacionParroquiaUpdateForm(ModelForm):
-	
-	def clean(self):
-		cleaned_data = super(PeriodoAsignacionParroquiaUpdateForm, self).clean()
-		inicio = self.cleaned_data.get('inicio')
-		fin = self.cleaned_data.get('fin')
-		# presente = self.cleaned_data.get('presente')
-		estado = self.cleaned_data.get('estado')
-		# print presente
-
-		if fin:
-			if fin < inicio:
-				msg = u"La fecha final no puede ser menor que la fecha inicial"
-				self._errors["fin"] = self.error_class([msg])
-
-		return cleaned_data	
-
-	class Meta:
-		model = PeriodoAsignacionParroquia
-		fields = ('inicio', 'fin', 'estado')
-		widgets = {
-		'inicio': forms.TextInput(attrs={'required':'', 'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
-		'fin': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
-		}
-
 
 #Form para Intenciones de Misa - Funcionando
 class IntencionForm(ModelForm):
