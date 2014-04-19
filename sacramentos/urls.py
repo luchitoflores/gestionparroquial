@@ -19,6 +19,7 @@ from sacramentos.views import (
 	eucaristia_create_view,eucaristia_update_view,EucaristiaListView,eucaristia_reporte,
 	confirmacion_create_view,confirmacion_update_view,ConfirmacionListView,confirmacion_reporte,
 	parroquia_create_view, parroquia_update_view, ParroquiaListView,
+	IglesiaListView, IglesiaCreateView, IglesiaUpdateView,
 	# AsignarParroquiaCreate, AsignarParroquiaUpdate, AsignarParroquiaList,
 	asignar_parroquia_create, asignar_parroco_a_parroquia, asignar_parroquia_update, asignar_parroco_list, parroco_periodos_asignacion_list, parroco_periodos_asignacion_update, nuevo_periodo_asignacion,
 	asignar_secretaria_create, asignar_secretaria_update, asignar_secretaria_list,
@@ -138,6 +139,12 @@ urlpatterns = patterns('',
 	url(r'^parroquia/(?P<pk>\d+)/$', parroquia_update_view, name='parroquia_update'),
 	url(r'^reporte/parroquia/(?P<pk>\d+)/$', reporte_parroquias_sacerdotes, 
 		name='reporte_parroquias_sacerdotes'),
+
+	#urls para Iglesias
+	url(r'^iglesia/$', IglesiaListView.as_view(), name='iglesia_list'),
+	url(r'^crear/iglesia/$', IglesiaCreateView.as_view(), name='iglesia_create'),
+	url(r'^iglesia/(?P<pk>\d+)/$',IglesiaUpdateView.as_view(), name='iglesia_update'),
+	
 	
 	#urls para asignación de parroquias a los párrocos
 	# Permite agregar un nuevo párroco a una nueva parroquia

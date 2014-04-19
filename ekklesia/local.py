@@ -145,6 +145,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_extensions',
     'require',
+    'mockups',
+    'south',
 
     )
 

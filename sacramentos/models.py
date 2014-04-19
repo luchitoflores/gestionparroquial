@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 # Para los logs
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
@@ -45,38 +46,12 @@ class TimeStampedModel(models.Model):
 	    abstract = True
 
 
-class Libro(TimeStampedModel):
-    
-    TIPO_LIBRO_CHOICES = (
-        ('Bautismo','Bautismo'),
-        ('Eucaristia','Primera Comunión'), 
-        ('Confirmacion','Confirmación'),
-        ('Matrimonio','Matrimonio'),
-    )
-
-    ESTADO_CHOICES=(
-		('Abierto','Abierto'),
-		('Cerrado','Cerrado'),
-	)
-
-    numero_libro=models.PositiveIntegerField()
-    tipo_libro=models.CharField(max_length=200, choices=TIPO_LIBRO_CHOICES)
-    fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
-    fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
-    estado=models.CharField(max_length=20,choices=ESTADO_CHOICES)
-    parroquia = models.ForeignKey('Parroquia', related_name='parroquia', help_text='Seleccione una parroquia')
-
-    objects=LibroManager()
-
-    def __unicode__(self):
-        return '%s - %s' %(self.get_tipo_libro_display(), self.fecha_apertura.year)
-
 
 
 
 
     # def natural_key(self):
-    # 	return (self.numero_libro, self.tipo_libro)
+    #   return (self.numero_libro, self.tipo_libro)
 
 
     # class Meta:
@@ -96,8 +71,8 @@ class PerfilUsuario(TimeStampedModel):
 
     SEXO_CHOICES = (
         ('', '-- Seleccione --'),
-		('m', 'Masculino'), 
-		('f','Femenino')
+        ('m', 'Masculino'), 
+        ('f','Femenino')
         )
         
     NACIONALIDAD_CHOICES = (
@@ -340,7 +315,7 @@ class PerfilUsuario(TimeStampedModel):
         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
     lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True, help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
     sexo = models.CharField(max_length=10, choices=SEXO_CHOICES, default=SEXO_CHOICES[0][0],
-		help_text='Elija el sexo de la persona. Ej: Masculino')
+        help_text='Elija el sexo de la persona. Ej: Masculino')
     estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0], help_text='Elija el estado civil. Ej: Soltero/a')
     profesion = models.CharField(max_length=40, null=True, blank=True, help_text='Ingrese la profesión de la persona')
     celular=models.CharField(max_length=10, blank=True, null=True, help_text='Ingrese su número celular. Ej: 0986522754')
@@ -448,6 +423,36 @@ class PerfilUsuario(TimeStampedModel):
             return False
         else:
             return True
+
+
+class Libro(TimeStampedModel):
+    
+    TIPO_LIBRO_CHOICES = (
+        ('Bautismo','Bautismo'),
+        ('Eucaristia','Primera Comunión'), 
+        ('Confirmacion','Confirmación'),
+        ('Matrimonio','Matrimonio'),
+    )
+
+    ESTADO_CHOICES=(
+		('Abierto','Abierto'),
+		('Cerrado','Cerrado'),
+	)
+
+    numero_libro=models.PositiveIntegerField()
+    tipo_libro=models.CharField(max_length=200, choices=TIPO_LIBRO_CHOICES)
+    fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
+    fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
+    estado=models.CharField(max_length=20,choices=ESTADO_CHOICES)
+    parroquia = models.ForeignKey('Parroquia', related_name='parroquia', help_text='Seleccione una parroquia')
+    primera_pagina = models.PositiveIntegerField(blank= True, null=True, default=1)
+    primera_acta = models.PositiveIntegerField(blank= True, null=True, default=1)
+
+    objects=LibroManager()
+
+    def __unicode__(self):
+        return '%s - %s' %(self.get_tipo_libro_display(), self.fecha_apertura.year)
+
 
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
@@ -645,6 +650,23 @@ class Parroquia(TimeStampedModel):
  #    def natural_key(self):
 	# return self.nombre
 
+
+class Iglesia(models.Model):
+    nombre = models.CharField(max_length=100)
+    parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
+    principal = models.BooleanField()
+
+    class Meta:
+        verbose_name_plural=u'Iglesias'
+        ordering = ('nombre',)
+
+    def __unicode__(self):
+        return self.nombre
+
+    def get_absolute_url(self):
+        return reverse('iglesia_update', kwargs={'pk':str(self.id)})
+        # return '/iglesia/%s' %(self.id)
+
  
 class ParametrizaDiocesis(TimeStampedModel):
     diocesis=models.CharField('Nombre Diócesis',max_length=50,
@@ -663,6 +685,7 @@ class ParametrizaParroquia(TimeStampedModel):
     numero_acta=models.PositiveIntegerField(help_text='Ingrese el numero de acta Ej: 1 - 17')
     pagina=models.PositiveIntegerField(help_text='Ingrese el numero de la página Ej: 1 - 17')
     parroquia=models.OneToOneField('Parroquia')
+    libro = models.OneToOneField(Libro, null=True, blank=True)
 
     def __unicode__(self):
         return 'Parametros-Parroquia: %s' %(self.parroquia.nombre)

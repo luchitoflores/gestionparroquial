@@ -7,6 +7,7 @@ from datetime import date
 from django import forms
 from django.db.models import Sum
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
@@ -33,6 +34,7 @@ from sacramentos.models import (PerfilUsuario,
 	Parroquia, Intenciones,
 	AsignacionParroquia, PeriodoAsignacionParroquia,
 	ParametrizaDiocesis,ParametrizaParroquia,
+	Iglesia
 	)
 
 from sacramentos.forms import (
@@ -47,6 +49,7 @@ from sacramentos.forms import (
 	DivErrorList,
 	IntencionForm,
 	ParroquiaForm, 
+	IglesiaForm,
 	AsignarParroquiaForm, PeriodoAsignacionParroquiaForm, PeriodoAsignacionParroquiaUpdateForm,
 	AsignarSecretariaForm,
 	ParametrizaDiocesisForm,ParametrizaParroquiaForm,
@@ -3164,6 +3167,42 @@ def redireccionar_parametros(request):
 		return HttpResponseRedirect(url)
 	else:
 		return render(request,'parametros.html')  
+
+
+class IglesiaListView(BusquedaMixin, ListView):
+	model = Iglesia
+	template_name = 'iglesia/iglesia_list.html'
+	paginate_by = 10
+
+	def get_queryset(self):
+		return Iglesia.objects.filter(parroquia=self.request.session.get('parroquia')).extra(
+									select={'nombre': 'lower(nombre)'}).order_by('nombre')
+		# order_by('nombre')
+
+
+class IglesiaCreateView(CreateView):
+	model = Iglesia
+	template_name = 'iglesia/iglesia_form.html'
+	success_url = reverse_lazy('iglesia_list')
+	form_class = IglesiaForm
+
+	def get_form_kwargs(self):
+	    kwargs = super(IglesiaCreateView, self).get_form_kwargs()
+	    kwargs['request'] = self.request
+	    return kwargs
+
+class IglesiaUpdateView(UpdateView):
+	model = Iglesia
+	template_name = 'iglesia/iglesia_form.html'
+	success_url = reverse_lazy('iglesia_list')
+	form_class = IglesiaForm
+
+	def get_form_kwargs(self):
+	    kwargs = super(IglesiaUpdateView, self).get_form_kwargs()
+	    kwargs['request'] = self.request
+	    return kwargs
+
+
 
 
 

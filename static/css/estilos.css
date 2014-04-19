@@ -30,8 +30,8 @@ body
 
 
 h1{
-	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-	/*color: #171717;*/
+	font-family: 'Open Sans',Helvetica,Arial,sans-serif;
+	/*color: #666666;*/
 }
 
 h2{
@@ -156,28 +156,6 @@ table{
 
 }
 
-/*@media (max-width: 480px) {
-
-	#id_title{
-		background: whitesmoke;
-		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 1.5em;
-		max-height: 90%;
-		max-width: 90%;
-		padding-top: .3em;
-		padding-left: 1em;
-		padding-bottom:.3em; 
-		max-width: 100%;
-		margin: auto;
-	}
-	
-	.navbar .nav>li.ocultar {
-		display: none;
-	}
-
-}*/
-
-
 .navbar .nav>li>a.small {
 	padding: 10px 0px 10px;
 }
@@ -187,28 +165,31 @@ table{
 @media (min-width: 1200px) {
 	#id_title
 	{
-		background-image: url(../img/textura10.jpg);
+		/*background-image: url(../img/textura10.jpg);*/
+		background-color: #f0f0f0;
 		background-position:center;
 		background-repeat:no-repeat;
 		background-size:100%;
 		-webkit-background-size: 100%;
 		-moz-background-size: cover;
 		-o-background-size: cover;
-		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 2em;
+		font-size: 1em;
 		max-height: 100%;
 		max-width: 100%;
-		padding-top: 1em;
-		padding-bottom: 1.5em; 
+		padding-top: 2em;
+		padding-bottom: 2em; 
+		text-transform: uppercase;
+		text-rendering: optimizelegibility;
+		/*border-style: none none solid none;*/
 	}
-
 }
 
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
 	#id_title
 	{
-		background-image: url(../img/textura10.jpg);
+		/*background-image: url(../img/textura10.jpg);*/
+		background-color: #f0f0f0;
 		background-position:center;
 		background-repeat:no-repeat;
 		background-size:100%;
@@ -232,7 +213,8 @@ table{
 @media (max-width: 767px) {
 	#id_title
 	{
-		background-image: url(../img/textura10.jpg);
+		/*background-image: url(../img/textura10.jpg);*/
+		background-color: #f0f0f0;
 		background-position:center;
 		background-repeat:no-repeat;
 		background-size:100%;
@@ -255,7 +237,7 @@ table{
 /* Landscape phones and down */
 @media (max-width: 480px) {
 	#id_title{
-		background: whitesmoke;
+		background-color: #f0f0f0;
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
 		font-size: 1.5em;
 		max-height: 90%;

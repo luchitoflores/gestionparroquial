@@ -28,13 +28,11 @@ class BusquedaMixin(object):
 	def get_queryset(self):
 		print self.args
 		name = self.request.GET.get('q', '')
-		print "valor de name"
-		print name
-		
+			
 		if (name != ''):
-			object_list = self.model.objects.filter(nombre__icontains = name)
+			object_list = self.model.objects.filter(nombre__icontains = name).order_by('nombre')
 		else:
-			object_list = self.model.objects.all()
+			object_list = self.model.objects.all().order_by('nombre')
 		return object_list
 
 def quitar_tildes(palabra):

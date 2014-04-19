@@ -15,7 +15,7 @@ from django.utils.html import format_html, mark_safe
 
 from .models import (PerfilUsuario, 
 					Libro,Matrimonio,Bautismo,Eucaristia,Confirmacion,Bautismo,
-					Direccion, Intenciones,NotaMarginal,Parroquia,AsignacionParroquia, PeriodoAsignacionParroquia,
+					Direccion, Intenciones,NotaMarginal,Parroquia, Iglesia, AsignacionParroquia, PeriodoAsignacionParroquia,
 					ParametrizaDiocesis,ParametrizaParroquia, )
 from .validators import validate_cedula
 
@@ -533,7 +533,7 @@ class LibroForm(ModelForm):
 	class Meta():
 		model=Libro
 		fields = ('numero_libro', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
-			'estado')
+			'estado', 'primera_pagina', 'primera_acta')
 		widgets = {
 			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
 				'dd/mm/yyyy', 'type':'date'}),
@@ -1313,24 +1313,6 @@ class IntencionForm(ModelForm):
 		return cleaned_data
 
 
-	# def clean_fecha(self):
-	# 	data = self.cleaned_data['fecha']
-	# 	if date.today() > data:
-	#   		raise forms.ValidationError('Lo siento, no puede usar fechas en el pasado')
-	#  	return data
-	
-	# def clean_hora(self):
-	#  	data = self.cleaned_data['hora']
-	#  	data_fecha = self.cleaned_data['fecha']
-	#  	print data
-	#  	# print datetime.time() 
-	#   	if data < datetime.time(datetime.now()) and date.today() > data_fecha:
-	#  		raise forms.ValidationError('Lo siento, no puede usar fechas en el pasado')
-	#  	return data
-
-
-
-
 	class Meta:
 		model = Intenciones
 		fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
@@ -1453,3 +1435,36 @@ class ReportePermisoForm(forms.Form):
 			widget=forms.Select(attrs={'required':''}))
 		
 		
+class IglesiaForm(forms.ModelForm):
+	class Meta:
+		model = Iglesia
+		fields = ('nombre', 'principal', 'parroquia')
+
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(IglesiaForm, self).__init__(*args, **kwargs)
+		parroquia = self.request.session.get('parroquia')
+		self.fields['parroquia'].queryset = Parroquia.objects.filter(pk=parroquia.pk)
+		self.fields['parroquia'].empty_label = None
+
+	def clean_principal(self):
+		principal = self.cleaned_data.get('principal')
+		parroquia = self.request.session.get('parroquia')
+		
+		if principal:
+			
+			if self.instance.id:
+				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia).exclude(pk=self.instance.id)
+				
+				if iglesia:
+					print iglesia
+					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
+			else:
+				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia)
+
+				if iglesia:
+					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
+		
+			
+		return principal
+

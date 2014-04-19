@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+{%load tags_html%}
+
+{%block title%}{%if object.id%}Editar Iglesia{%else%}Agregar Iglesia{%endif%}{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Editar Iglesia
+{%else%}
+Agregar Iglesia
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<form action="." method='POST' class="form-horizontal">
+	{%csrf_token%}
+	<div class='row'>
+		<div class='span10'>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos de la Parroquia</legend>
+				<div class='row'>
+					<div class="span8">
+						<div class="control-group">
+							<div class='control-label'>
+								{{form.nombre.label}} *
+							</div>
+							<div class="controls">
+								{{form.nombre}}
+							</div>
+							<div class="controls help-text">
+								{{form.nombre.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">
+									{{form.nombre.errors}}
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class='control-group'>
+							<div class='control-label'>
+								{{form.principal.label}} * 
+							</div>
+
+							<div class='controls'>
+								{{form.principal}}
+							</div>
+							<div class="controls help-text">
+								{{form.principal.help_text}}
+							</div>
+							<div class='controls'>
+								<div class="errors">
+									{{form.principal.errors}}
+								</div>
+							</div>
+						</div>
+
+
+						<div class='control-group'>
+							<div class='control-label'>
+								{{form.parroquia.label}} * 
+							</div>
+							<div class='controls'>
+								{{form.parroquia}}
+							</div>
+							<div class="controls help-text">
+								{{form.parroquia.help_text}}
+							</div>
+							<div class='controls'>
+								<div class='errors'>
+									{{form.parroquia.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button type="submit" class='btn btn-primary'> Guardar </button>
+		<a href="{%url 'iglesia_list'%}" class='btn btn-danger'>Cancelar</a>
+	</div>
+</form>
+
+{%endblock%}

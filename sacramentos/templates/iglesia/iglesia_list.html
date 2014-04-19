@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%block title%}Lista de Iglesias{%endblock%}
+{%block content_title%}
+Lista de Iglesias
+{%endblock%}
+
+{%block content%}
+
+{% include 'busqueda_form.html' %} 
+
+<a href="{%url 'iglesia_create'%}" class='btn btn-primary'>Nueva Iglesia</a>
+
+
+<table id='id_table_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Principal</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		{%if not object_list%}
+		<tr >
+			<td colspan="2">No existe ningún registro</td>
+		</tr>
+		{%endif%}
+
+		{%for o in object_list%}
+		<tr>
+			<td>
+				<a href="{{o.get_absolute_url}}">{{o}}</a>
+			</td>
+			<td>{% if o.principal %} Parroquia Principal {% else %} Parroquias Aledañas {% endif%}</td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+
+{% include 'paginacion.html' %}
+
+{%endblock%}
