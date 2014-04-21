@@ -35,7 +35,7 @@ class PersonaManager(models.Manager):
 		return self.model.objects.filter(user__groups__name='Administrador')
 
 	def male(self):
-		return self.model.objects.filter(sexo='m')
+		return self.model.objects.filter(sexo='m').exclude(user__groups__name='Sacerdote')
 
 	def female(self):
 		return self.model.objects.filter(sexo='f')

@@ -41,10 +41,10 @@ from sacramentos.forms import (
 	UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
 	PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
 	EmailForm,
-	MatrimonioForm,MatrimonioFormEditar,
+	MatrimonioForm,MatrimonioForm,
 	BautismoForm,
-	EucaristiaForm,EucaristiaFormEditar,
-	ConfirmacionForm,ConfirmacionFormEditar,
+	EucaristiaForm,EucaristiaForm,
+	ConfirmacionForm,ConfirmacionForm,
 	LibroForm,NotaMarginalForm,
 	DivErrorList,
 	IntencionForm,
@@ -488,107 +488,6 @@ class SacerdoteListView(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(SacerdoteListView, self).dispatch(*args, **kwargs)
 
-
-
-
-
-
-# Vistas para admin libros
-
-# @login_required(login_url='/login/')
-# @permission_required('sacramentos.add_libro', login_url='/login/', 
-# 	raise_exception=permission_required)
-# def libro_create_view(request):
-# 	if(request.method=='POST'):
-# 		form_libro=LibroForm(request.POST)
-# 		if form_libro.is_valid():
-# 			libro=form_libro.save(commit=False)
-# 			estado=libro.estado
-# 			tipo=libro.tipo_libro
-# 			numero=libro.numero_libro
-# 			asignacion = AsignacionParroquia.objects.get(
-# 				persona__user=request.user)
-# 			libro.parroquia = asignacion.parroquia
-
-# 			try:
-# 				consulta=Libro.objects.get(estado='Abierto',tipo_libro=tipo,
-# 					parroquia=asignacion.parroquia)
-# 				if(estado != consulta.estado and tipo!=consulta.tipo_libro):
-# 					libro_numero=Libro.objects.get(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia)
-# 					if numero!=libro_numero.numero_libro:
-# 						libro.save()
-# 						LogEntry.objects.log_action(
-# 							user_id=request.user.id,
-# 							content_type_id=ContentType.objects.get_for_model(libro).pk,
-# 							object_id=libro.id,
-# 							object_repr=unicode(libro),
-# 							action_flag=ADDITION,
-# 							change_message="Creo un libro")
-# 						messages.success(request, 'Creado exitosamente')
-# 						return HttpResponseRedirect('/libro')
-# 					else:
-# 						messages.error(request,'Ya existe un libro con ese numero')
-					
-
-# 				elif(estado != consulta.estado and tipo==consulta.tipo_libro):
-# 					libro_numero=Libro.objects.get(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia)
-# 					if numero!=libro_numero.numero_libro:
-# 						libro.save()
-# 						LogEntry.objects.log_action(
-# 							user_id=request.user.id,
-# 							content_type_id=ContentType.objects.get_for_model(libro).pk,
-# 							object_id=libro.id,
-# 							object_repr=unicode(libro.tipo_libro),
-# 							action_flag=ADDITION,
-# 							change_message="Creo un libro")
-# 						messages.success(request, 'Creado exitosamente')
-# 						return HttpResponseRedirect('/libro')
-# 					else:
-# 						messages.error(request,'Ya existe un libro con ese numero')
-
-# 				elif(estado == consulta.estado and tipo!=consulta.tipo_libro):
-# 					libro_numero=Libro.objects.get(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia)
-# 					if numero!=libro_numero.numero_libro:
-# 						libro.save()
-# 						LogEntry.objects.log_action(
-# 							user_id=request.user.id,
-# 							content_type_id=ContentType.objects.get_for_model(libro).pk,
-# 							object_id=libro.id,
-# 							object_repr=unicode(libro.tipo_libro),
-# 							action_flag=ADDITION,
-# 							change_message="Creo un libro")
-# 						messages.success(request, 'Creado exitosamente')
-# 						return HttpResponseRedirect('/libro')
-# 					else:
-# 						messages.error(request,'Ya existe un libro con ese numero')	
-# 				else:
-
-# 					messages.error(request,'Ya existe un libro abierto, cierrelo '+
-# 						'y vuela a crear')
-# 					# messages.add_message(request,messages.WARNING,
-# 					# 	{'Libro':'Ya existe un libro abierto, cierrelo y vuela a crear'})
-
-# 			except ObjectDoesNotExist:
-# 				libro.save()
-# 				LogEntry.objects.log_action(
-#             			user_id=request.user.id,
-#             			content_type_id=ContentType.objects.get_for_model(libro).pk,
-#             			object_id=libro.id,
-#             			object_repr=unicode(libro),
-#             			action_flag=ADDITION,
-#             			change_message="Creo un libro")
-# 				messages.success(request, 'Creado exitosamente')
-# 				return HttpResponseRedirect('/libro')
-# 		else:
-# 			messages.error(request,'Uno o mas datos son invalidos')
-# 			# messages.add_message(request,messages.WARNING,{'libro':form_libro.errors})
-# 	else:
-# 		form_libro=LibroForm()
-# 	ctx={'form_libro':form_libro}
-# 	return render(request,'libro/libro_form.html',ctx)
-
-
-
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_libro', login_url='/login/', 
 	raise_exception=permission_required)
@@ -688,12 +587,6 @@ def libro_create_view(request):
 		form_libro=LibroForm()
 	ctx={'form_libro':form_libro}
 	return render(request,'libro/libro_form.html',ctx)
-
-# class LibroUpdateView(UpdateView):
-# 	model = Libro
-# 	form_class=LibroForm
-# 	template_name = 'libro/libro_form.html'
-# 	success_url = '/libro/'
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_libro', login_url='/login/', 
@@ -845,146 +738,473 @@ class LibroListView(BusquedaMixin, ListView):
 		return super(LibroListView, self).dispatch(*args, **kwargs)
 	
 
+
+
+
+# VISTAS PARA ADMIN DE BAUTISMO
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_bautismo', login_url='/login/', 
+	raise_exception=permission_required)
+def bautismo_create_view(request):
+	usuario=request.user
+	if(request.method == 'POST' ):
+		
+		parroquia = request.session.get('parroquia')
+		
+		formBautismo=BautismoForm(request, request.POST)
+		formBautismo.fields['bautizado'].queryset= PerfilUsuario.objects.feligres()
+	
+		if formBautismo.is_valid():
+			bautismo=formBautismo.save(commit=False)
+			bautismo.tipo_sacramento =  u'Bautismo'
+			libro=bautismo.libro
+			b=Bautismo.objects.filter(libro=libro, parroquia=parroquia).count()
+			
+			try:
+				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
+			except ObjectDoesNotExist:
+				messages.error(request,'No se han configurado aún los parámetros parroquiales')
+				ctx={'formBautismo':formBautismo}
+				return render (request,'bautismo/bautismo_form.html',ctx)
+
+			if b==0:
+				bautismo.pagina=p.pagina
+				bautismo.numero_acta=p.numero_acta
+				bautismo.parroquia = parroquia
+				bautismo.save()
+				
+			else:
+				ultimo_bautismo=Bautismo.objects.filter(libro=libro,parroquia=parroquia).latest('created')
+				num=ultimo_bautismo.numero_acta
+				pagina=ultimo_bautismo.pagina
+
+				bautismo.numero_acta=num+1
+				
+				if bautismo.numero_acta%2 == 0:
+					bautismo.pagina=pagina
+				else:
+					bautismo.pagina=pagina+1
+				
+				bautismo.parroquia = parroquia
+				bautismo.save()
+			
+			LogEntry.objects.log_action(
+					user_id=request.user.id,
+					content_type_id=ContentType.objects.get_for_model(bautismo).pk,
+					object_id=bautismo.id,
+					object_repr=unicode(bautismo),
+					action_flag=ADDITION,
+					change_message='Se creo bautismo')
+			messages.success(request,'Creado exitosamente')
+			return HttpResponseRedirect('/bautismo')
+		
+		else:
+			bautizado = request.POST.get('bautizado')
+			celebrante =  request.POST.get('celebrante')
+			formBautismo = BautismoForm(request, request.POST)
+			formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautizado)
+			formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=celebrante)
+			messages.error(request,'Los datos del formulario son incorrectos')
+			ctx={'formBautismo':formBautismo}
+			return render (request,'bautismo/bautismo_form.html',ctx)
+	else:		
+		formBautismo=BautismoForm(request)
+	ctx={'formBautismo':formBautismo}
+	return render (request,'bautismo/bautismo_form.html',ctx)
+
+
+
+def mostrar():
+	return self.model.objects.filter()
+
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.change_bautismo', login_url='/login/', 
+	raise_exception=permission_required)
+def bautismo_update_view(request,pk):
+	usuario=request.user
+	bautismo= get_object_or_404(Bautismo, pk=pk)
+	notas=NotaMarginal.objects.filter(bautismo=bautismo)
+	try:
+
+		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
+			asignacion__parroquia=bautismo.parroquia, estado=True).asignacion.parroquia
+			
+		if request.method == 'POST':
+			bautismo_form = BautismoForm(request,request.POST,instance=bautismo)
+			bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
+			bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.feligres()
+			# form_nota=NotaMarginalForm(request.POST,instance=nota)
+			if bautismo_form.is_valid():
+				bautismo_form.save()
+				LogEntry.objects.log_action(
+					user_id=request.user.id,
+		           	content_type_id=ContentType.objects.get_for_model(bautismo).pk,
+		           	object_id=bautismo.id,
+		           	object_repr=unicode(bautismo),
+		           	action_flag=CHANGE,
+		           	change_message='Bautismo actualizado')
+				messages.success(request,'Actualizado exitosamente')
+				return HttpResponseRedirect('/bautismo')
+			else:
+				bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
+				bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
+				messages.error(request, "Los datos del formulario son incorrectos")
+				ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
+				return render(request, 'bautismo/bautismo_form.html', ctx)
+		else:
+			bautismo_form = BautismoForm(request, instance=bautismo)
+			ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
+			return render(request, 'bautismo/bautismo_form.html', ctx)
+		
+	except ObjectDoesNotExist:
+		raise PermissionDenied
+
+
+class BautismoListView(ListView):
+	model=Bautismo
+	template_name='bautismo/bautismo_list.html'
+	def get_queryset(self):
+		try:
+			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
+				periodoasignacionparroquia__estado=True)
+			queryset = Bautismo.objects.filter(parroquia=asignacion.parroquia)
+			return queryset
+		except: 
+			return [];
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_bautismo', login_url='/login/',
+		raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(BautismoListView, self).dispatch(*args, **kwargs)
+
+# VISTAS PARA ADMIN DE EUCARISTIA
+
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_eucaristia', login_url='/login/', 
+	raise_exception=permission_required)
+def eucaristia_create_view(request):
+	usuario=request.user
+	parroquia = request.session.get('parroquia')
+	if request.method == 'POST':
+		form_eucaristia=EucaristiaForm(request,request.POST)
+		form_eucaristia.fields['feligres'].queryset =PerfilUsuario.objects.feligres()
+		form_eucaristia.fields['celebrante'].queryset =PerfilUsuario.objects.sacerdote()
+		if form_eucaristia.is_valid():
+			eucaristia=form_eucaristia.save(commit=False)
+			tipo_sacramento=u'Eucaristia'
+			eucaristia.tipo_sacramento=tipo_sacramento
+			libro=eucaristia.libro			
+			e=Eucaristia.objects.filter(libro=libro,parroquia=parroquia).count()
+
+			try:
+				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
+				
+			except ObjectDoesNotExist:
+				raise PermissionDenied
+			if e==0:
+				eucaristia.pagina=p.pagina
+				eucaristia.numero_acta=p.numero_acta
+			else:
+				ultimo_eucaristia=Eucaristia.objects.filter(libro=libro,parroquia=parroquia).latest('created')
+				num=ultimo_eucaristia.numero_acta
+				pagina=ultimo_eucaristia.pagina
+
+				eucaristia.numero_acta=num+1
+				if eucaristia.numero_acta%2 == 0:
+					eucaristia.pagina=pagina
+				else:
+					eucaristia.pagina=pagina+1
+			
+			eucaristia.parroquia = parroquia
+			eucaristia.save()		
+			LogEntry.objects.log_action(
+					user_id=request.user.id,
+					content_type_id=ContentType.objects.get_for_model(eucaristia).pk,
+					object_id=eucaristia.id,
+					object_repr=unicode(eucaristia),
+					action_flag=ADDITION,
+					change_message='Se creo eucaristia')
+			messages.success(request,'Creado exitosamente')
+			return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
+		
+		else:
+			id_feligres = request.POST.get('feligres')
+			id_celebrante = request.POST.get('celebrante')
+			form_eucaristia = EucaristiaForm(request, request.POST)
+			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=id_feligres)
+			form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
+			messages.error(request,"Los datos del formulario son incorrectos")
+			ctx={'form_eucaristia':form_eucaristia}
+			return render(request,'eucaristia/eucaristia_form.html',ctx)
+	else:
+		form_eucaristia=EucaristiaForm(request)
+		ctx={'form_eucaristia':form_eucaristia}
+		return render(request,'eucaristia/eucaristia_form.html',ctx)
+
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.change_eucaristia', login_url='/login/', 
+	raise_exception=permission_required)
+def eucaristia_update_view(request,pk):
+	usuario=request.user
+	eucaristia=get_object_or_404(Eucaristia,pk=pk)
+	try:
+		parroquia = request.session.get('parroquia')
+		if(request.method == 'POST'):
+			form_eucaristia=EucaristiaForm(request,request.POST,instance=eucaristia)
+			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.feligres()
+			if form_eucaristia.is_valid():
+				form_eucaristia.save()
+				LogEntry.objects.log_action(
+					user_id=request.user.id,
+            		content_type_id=ContentType.objects.get_for_model(eucaristia).pk,
+            		object_id=eucaristia.id,
+            		object_repr=unicode(eucaristia),
+            		action_flag=CHANGE,
+            		change_message='Primera Comunión actualizada')
+				messages.success(request,'Actualizado exitosamente')
+				return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
+			else:
+				id_feligres = request.POST.get('feligres')
+				id_celebrante = request.POST.get('celebrante')
+				form_eucaristia = EucaristiaForm(request, request.POST, instance=eucaristia)
+				form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=id_feligres)
+				form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
+				messages.error(request,"Los datos del formulario son incorrectos")
+
+		else:
+			form_eucaristia = EucaristiaForm(request, instance=eucaristia)
+			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=eucaristia.feligres.id) 
+			form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=eucaristia.celebrante.id) 
+		ctx={'form_eucaristia':form_eucaristia, 'object':eucaristia}
+		return render(request,'eucaristia/eucaristia_form.html',ctx)
+	except ObjectDoesNotExist:
+		raise PermissionDenied
+
+
+
+class EucaristiaListView(ListView):
+	model=Eucaristia
+	template_name='eucaristia/eucaristia_list.html'
+	def get_queryset(self):
+		try:
+			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
+				periodoasignacionparroquia__estado=True)
+			queryset = Eucaristia.objects.filter(parroquia=asignacion.parroquia)
+			return queryset
+		except: 
+			return [];
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_eucaristia', login_url='/login/',
+		raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(EucaristiaListView, self).dispatch(*args, **kwargs)
+
+# VISTAS PARA ADMIN DE CONFIRMACION
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_confirmacion', login_url='/login/', 
+	raise_exception=permission_required)
+def confirmacion_create_view(request):
+	usuario=request.user
+	parroquia = request.session.get('parroquia')
+	confirmado=PerfilUsuario.objects.feligres()
+	celebrante=PerfilUsuario.objects.sacerdote()
+	if(request.method == 'POST'):
+		form_confirmacion=ConfirmacionForm(request,request.POST)
+		form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.feligres()
+		form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
+			
+		if form_confirmacion.is_valid():
+			confirmacion=form_confirmacion.save(commit=False)
+			confirmacion.tipo_sacramento='Confirmacion'
+			libro=confirmacion.libro
+			
+			c=Confirmacion.objects.filter(libro=libro,parroquia=parroquia).count()
+			try:
+				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
+				
+			except ObjectDoesNotExist:
+				raise PermissionDenied
+
+			if c==0:
+				confirmacion.pagina=p.pagina
+				confirmacion.numero_acta=p.numero_acta
+								
+			else:
+				ultima_confirmacion=Confirmacion.objects.filter(libro=libro,parroquia=parroquia).latest('created')
+				num=ultima_confirmacion.numero_acta
+				pagina=ultima_confirmacion.pagina
+				confirmacion.numero_acta=num+1
+
+				if confirmacion.numero_acta%2 == 0:
+					confirmacion.pagina=pagina
+				else:
+					confirmacion.pagina=pagina+1
+			
+			confirmacion.parroquia = parroquia
+			confirmacion.save()
+			LogEntry.objects.log_action(
+				user_id=request.user.id,
+				content_type_id=ContentType.objects.get_for_model(confirmacion).pk,
+				object_id=confirmacion.id,
+				object_repr=unicode(confirmacion),
+				action_flag=ADDITION,
+				change_message='Se creo bautismo')
+			messages.success(request,'Creado exitosamente')
+			return HttpResponseRedirect('/confirmacion')
+
+		else:
+			id_confirmado = request.POST.get('confirmado')
+			id_celebrante =  request.POST.get('celebrante')
+			form_confirmacion = ConfirmacionForm(request, request.POST)
+			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=id_confirmado)
+			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
+			
+			messages.error(request,"Los datos del formulario son incorrectos")
+			ctx={'form_confirmacion':form_confirmacion}
+			return render(request,'confirmacion/confirmacion_form.html',ctx)
+			
+	else:
+		form_confirmacion=ConfirmacionForm(request)
+	ctx={'form_confirmacion':form_confirmacion}
+	return render(request,'confirmacion/confirmacion_form.html',ctx)
+
+
+
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.change_confirmacion', login_url='/login/', 
+	raise_exception=permission_required)
+def confirmacion_update_view(request,pk):
+	confirmacion=get_object_or_404(Confirmacion,pk=pk)
+	try:
+		parroquia = request.session.get('parroquia')
+		if request.method == 'POST' :
+			form_confirmacion=ConfirmacionForm(request, request.POST, instance=confirmacion)
+			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.feligres()
+			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
+			
+			if form_confirmacion.is_valid() :
+				form_confirmacion.save()
+				LogEntry.objects.log_action(
+					user_id=request.user.id,
+           			content_type_id=ContentType.objects.get_for_model(confirmacion).pk,
+            		object_id=confirmacion.id,
+            		object_repr=unicode(confirmacion),
+            		action_flag=CHANGE,
+            		change_message='Confirmacion actualizado')
+				messages.success(request,'Actualizado exitosamente')
+				return HttpResponseRedirect(reverse_lazy('confirmacion_list'))
+			else:
+				id_confirmado = request.POST.get('confirmado')
+				id_celebrante = request.POST.get('celebrante')
+				form_confirmacion = ConfirmacionForm(request, request.POST, instance=confirmacion)
+				form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=id_confirmado)
+				form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
+				messages.error(request,"Los datos del formulario son incorrectos")
+				ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
+				return render(request,'confirmacion/confirmacion_form.html',ctx)
+		else:
+			form_confirmacion = ConfirmacionForm(request, instance=confirmacion)
+			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=confirmacion.confirmado.id) 
+			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=confirmacion.celebrante.id) 
+		ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
+		return render(request,'confirmacion/confirmacion_form.html',ctx)
+	
+	except ObjectDoesNotExist:
+		raise PermissionDenied
+
+
+class ConfirmacionListView(ListView):
+	model=Confirmacion
+	template_name='confirmacion/confirmacion_list.html'
+
+	def get_queryset(self):
+		try:
+			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
+				periodoasignacionparroquia__estado=True)
+			queryset = Confirmacion.objects.filter(parroquia=asignacion.parroquia)
+			return queryset
+		except: 
+			return [];
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_confirmacion', login_url='/login/',
+		raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(ConfirmacionListView, self).dispatch(*args, **kwargs)
+
+
 # VISTAS PARA ADMIN MATRIMONIO
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_matrimonio', login_url='/login/', 
 	raise_exception=permission_required)
 def matrimonio_create_view(request):
-	usuario=request.user
-	
+	parroquia = request.session.get('parroquia')
 	if(request.method=='POST'):
-		novio = PerfilUsuario.objects.padre()
-		novia = PerfilUsuario.objects.madre()
-		celebrante=PerfilUsuario.objects.sacerdote()
-		form_matrimonio=MatrimonioForm(usuario,novio,novia,celebrante,request.POST)
+		form_matrimonio=MatrimonioForm(request, request.POST)
+		form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.male()
+		form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.female()
+		form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
 
-		novio_post =  get_object_or_404(PerfilUsuario, pk= request.POST.get('novio'))
-		novia_post =  get_object_or_404(PerfilUsuario, pk= request.POST.get('novia'))
-
-		if novio_post.estado_civil=='c':
-			form_matrimonio.errors["novio"] = ErrorList([u'El feligrés seleccionado ya está casado'])
-		
-		if novia_post.estado_civil=='c':
-			form_matrimonio.errors["novia"] = ErrorList([u'El feligrés seleccionado ya está casada'])
-		
 		if form_matrimonio.is_valid():
 			matrimonio=form_matrimonio.save(commit=False)
 			matrimonio.tipo_sacramento='Matrimonio'
 			novio=matrimonio.novio
 			novia=matrimonio.novia
 			libro=matrimonio.libro
-			asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-				periodoasignacionparroquia__estado=True)
-			m=Matrimonio.objects.filter(libro=libro,parroquia=asignacion.parroquia).count()
-			if  (novio.estado_civil!='c') and (novia.estado_civil!='c'):
-							
-				if (novio.sexo=='m' and novia.sexo=='f'):
-					try:
-						p=ParametrizaParroquia.objects.get(parroquia=asignacion.parroquia)
-											
-					except ObjectDoesNotExist:
-						raise PermissionDenied
-					if m==0:
-						matrimonio.pagina=p.pagina
-						matrimonio.numero_acta=p.numero_acta
-						novio.estado_civil='c'
-						novia.estado_civil='c'
-						novio.save()
-						novia.save()
-						matrimonio.novio=novio
-						matrimonio.novia=novia
-						matrimonio.parroquia = asignacion.parroquia
-						matrimonio.vigente=True
-						matrimonio.save()
-						LogEntry.objects.log_action(
-							user_id=request.user.id,
-							content_type_id=ContentType.objects.get_for_model(matrimonio).pk,
-							object_id=matrimonio.id,
-							object_repr=unicode(matrimonio),
-							action_flag=ADDITION,
-							change_message='Se creo matrimonio')
-						messages.success(request,'Creado exitosamente')
-						return HttpResponseRedirect('/matrimonio')
-					else:
-						ultimo_matrimonio=Matrimonio.objects.filter(parroquia=asignacion.parroquia).latest('created')
-						num=ultimo_matrimonio.numero_acta
-						pagina=ultimo_matrimonio.pagina
-						matrimonio.numero_acta=num+1
-						matrimonio.pagina=pagina+1
-						novio.estado_civil='c'
-						novia.estado_civil='c'
-						novio.save()
-						novia.save()
-						matrimonio.novio=novio
-						matrimonio.novia=novia
-						matrimonio.parroquia = asignacion.parroquia
-						matrimonio.vigente=True
-						matrimonio.save()
-						LogEntry.objects.log_action(
-							user_id=request.user.id,
-							content_type_id=ContentType.objects.get_for_model(matrimonio).pk,
-							object_id=matrimonio.id,
-							object_repr=unicode(matrimonio),
-							action_flag=ADDITION,
-							change_message='Se creo matrimonio')
-						messages.success(request,'Creado exitosamente')
-						return HttpResponseRedirect('/matrimonio')
-				else:
-					messages.error(request,'No se puen casar novios con el mismo sexo')
-			else:
-				messages.error(request,'Uno de los novios ya esta casado')
-				
-		else:
-			novio = request.POST.get('novio')
-			novia = request.POST.get('novia')
-			celebrante =  request.POST.get('celebrante')
-			if novio and novia and celebrante:
-			    novio = PerfilUsuario.objects.filter(id=novio)
-			    novia = PerfilUsuario.objects.filter(id=novia)
-			    celebrante = PerfilUsuario.objects.filter(id=celebrante)
-			    form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			elif novio and novia and not celebrante:
-				novio = PerfilUsuario.objects.filter(id=novio)
-				novia = PerfilUsuario.objects.filter(id=novia)
-				celebrante = PerfilUsuario.objects.none()
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			elif not novio and novia and celebrante:
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				novio= PerfilUsuario.objects.none()
-				novia = PerfilUsuario.objects.filter(id=novia)
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			elif novio and not novia and celebrante:
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				novia= PerfilUsuario.objects.none()
-				novio = PerfilUsuario.objects.filter(id=novio)
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			elif novio and not novia and not celebrante:
-				celebrante = PerfilUsuario.objects.none()
-				novia= PerfilUsuario.objects.none()
-				novio = PerfilUsuario.objects.filter(id=novio)
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			elif not novio and novia and not celebrante:
-				celebrante = PerfilUsuario.objects.none()
-				novia= PerfilUsuario.objects.filter(id=novia)
-				novio = PerfilUsuario.objects.none()
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)	
-			elif not novio and not novia and celebrante:
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				novia= PerfilUsuario.objects.none()
-				novio = PerfilUsuario.objects.none()
-				form_matrimonio = MatrimonioForm(usuario,novio, novia,celebrante, request.POST)
-			else:
-				novio = PerfilUsuario.objects.none()
-				novia = PerfilUsuario.objects.none()
-				celebrante = PerfilUsuario.objects.none()
-				form_matrimonio = MatrimonioForm(usuario,novio,novia, celebrante, request.POST)
-
-			if novio_post.estado_civil=='c':
-				form_matrimonio.errors["novio"] = ErrorList([u'El feligrés elegido ya está casado'])
 			
-			if novia_post.estado_civil=='c':
-				form_matrimonio.errors["novia"] = ErrorList([u'La feligrés elegida ya está casada'])
+			m=Matrimonio.objects.filter(libro=libro,parroquia=parroquia).count()
+			
+			try:
+				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
+									
+			except ObjectDoesNotExist:
+				raise PermissionDenied
+			if m==0:
+				matrimonio.pagina=p.pagina
+				matrimonio.numero_acta=p.numero_acta
+			else:
+				ultimo_matrimonio=Matrimonio.objects.filter(parroquia=parroquia).latest('created')
+				num=ultimo_matrimonio.numero_acta
+				pagina=ultimo_matrimonio.pagina
+				matrimonio.pagina=pagina+1
+				matrimonio.numero_acta=num+1
+			
+			novio.estado_civil='c'
+			novia.estado_civil='c'
+			novio.save()
+			novia.save()
+			matrimonio.novio=novio
+			matrimonio.novia=novia
+			matrimonio.parroquia = parroquia
+			matrimonio.vigente=True
+			matrimonio.save()
+			LogEntry.objects.log_action(
+				user_id=request.user.id,
+				content_type_id=ContentType.objects.get_for_model(matrimonio).pk,
+				object_id=matrimonio.id,
+				object_repr=unicode(matrimonio),
+				action_flag=ADDITION,
+				change_message='Se creo matrimonio')
+			messages.success(request,'Creado exitosamente')
+			return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
+								
+		else:
+			id_novio = request.POST.get('novio')
+			id_novia = request.POST.get('novia')
+			id_celebrante =  request.POST.get('celebrante')
+			form_matrimonio = MatrimonioForm(request, request.POST)
+			form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.filter(id=id_novio)
+			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(id=id_novia)
+			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			
 			messages.error(request,'Los datos del formulario son incorrectos')
 			ctx={'form_matrimonio':form_matrimonio}
@@ -992,7 +1212,7 @@ def matrimonio_create_view(request):
 		
 	else:
 
-		form_matrimonio=MatrimonioForm(usuario)
+		form_matrimonio=MatrimonioForm(request)
 		
 	ctx={'form_matrimonio':form_matrimonio}
 	return render(request,'matrimonio/matrimonio_form.html',ctx)
@@ -1002,98 +1222,55 @@ def matrimonio_create_view(request):
 @permission_required('sacramentos.change_matrimonio', login_url='/login/', 
 	raise_exception=permission_required)
 def matrimonio_update_view(request,pk):
-	usuario=request.user
 	matrimonio=get_object_or_404(Matrimonio,pk=pk)
 	notas=NotaMarginal.objects.filter(matrimonio=matrimonio)
 	try:
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=matrimonio.parroquia, estado=True).asignacion.parroquia
+		parroquia = request.session.get('parroquia')
 	
 		if request.method == 'POST':
-			novio = PerfilUsuario.objects.padre()
-			novia = PerfilUsuario.objects.madre()
-			celebrante=PerfilUsuario.objects.sacerdote()
-			form_matrimonio = MatrimonioFormEditar(usuario,novio,novia,celebrante,request.POST,
-				instance=matrimonio)
+			form_matrimonio = MatrimonioForm(request, request.POST, instance=matrimonio)
+			form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.male()
+			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.female()
+			form_matrimonio.fields['celebrante'].queryset=PerfilUsuario.objects.sacerdote()
+			
 			if form_matrimonio.is_valid():
 				matrimonio=form_matrimonio.save(commit=False)
 				novio=matrimonio.novio
 				novia=matrimonio.novia
-				if (novio.sexo=='m' and novia.sexo=='f'):
-					novio.estado_civil='c'
-					novia.estado_civil='c'
-					novio.save()
-					novia.save()
-					matrimonio.novio=novio
-					matrimonio.novia=novia
-					asignacion = AsignacionParroquia.objects.get(persona__user=request.user)
-					matrimonio.parroquia = asignacion.parroquia
-					matrimonio.vigente=True
-					matrimonio.save()
-					LogEntry.objects.log_action(
-						user_id=request.user.id,
-	            		content_type_id=ContentType.objects.get_for_model(matrimonio).pk,
-	            		object_id=matrimonio.id,
-	            		object_repr=unicode(matrimonio),
-	            		action_flag=CHANGE,
-	            		change_message='Matrimonio actualizado')
-					messages.success(request,'Actualizado exitosamente')
-					return HttpResponseRedirect('/matrimonio')
-				else:
-					messages.info(request,'No se puen casar novios con el mismo sexo')
-			
+				novio.estado_civil='c'
+				novia.estado_civil='c'
+				novio.save()
+				novia.save()
+				matrimonio.novio=novio
+				matrimonio.novia=novia
+				matrimonio.parroquia = parroquia
+				matrimonio.vigente=True
+				matrimonio.save()
+				LogEntry.objects.log_action(
+					user_id=request.user.id,
+            		content_type_id=ContentType.objects.get_for_model(matrimonio).pk,
+            		object_id=matrimonio.id,
+            		object_repr=unicode(matrimonio),
+            		action_flag=CHANGE,
+            		change_message='Matrimonio actualizado')
+				messages.success(request,'Actualizado exitosamente')
+				return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
 			else:
-				novio = request.POST.get('novio')
-				novia = request.POST.get('novia')
-				celebrante =  request.POST.get('celebrante')
-
-				if novio and novia and celebrante:
-					novio = PerfilUsuario.objects.filter(id=novio)
-					novia = PerfilUsuario.objects.filter(id=novia)
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, request.POST,
-						instance=matrimonio)
-				elif novio and novia and not celebrante:
-					novio = PerfilUsuario.objects.filter(id=novio)
-					novia = PerfilUsuario.objects.filter(id=novia)
-					celebrante = PerfilUsuario.objects.none()
-					form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, request.POST,
-						instance=matrimonio)
-				elif not novio and novia and celebrante:
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					novio= PerfilUsuario.objects.none()
-					novia = PerfilUsuario.objects.filter(id=novia)
-					form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, request.POST,
-						instance=matrimonio)
-				elif novio and not novia and celebrante:
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					novia= PerfilUsuario.objects.none()
-					novio = PerfilUsuario.objects.filter(id=novio)
-					form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, request.POST,
-						instance=matrimonio)
-				elif novio and not novia and not celebrante:
-					celebrante = PerfilUsuario.objects.none()
-					novia= PerfilUsuario.objects.none()
-					novio = PerfilUsuario.objects.filter(id=novio)
-					form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, request.POST,
-						instance=matrimonio)
-
-				else:
-					novio = PerfilUsuario.objects.none()
-					novio = PerfilUsuario.objects.none()
-					celebrante = PerfilUsuario.objects.none()
-					form_matrimonio = MatrimonioFormEditar(usuario,novio,novia, celebrante, request.POST,
-						instance=matrimonio)
+				id_novio = request.POST.get('novio')
+				id_novia = request.POST.get('novia')
+				id_celebrante =  request.POST.get('celebrante')
+				form_matrimonio = MatrimonioForm(request, request.POST,instance=matrimonio)
+				form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.filter(id=id_novio)
+				form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(id=id_novia)
+				form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 				messages.error(request, 'Los datos del formulario son incorrectos')
 				ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio}
 				return render(request,'matrimonio/matrimonio_form.html', ctx)
-			
 		else:
-			if matrimonio.novio and matrimonio.novia and matrimonio.celebrante:
-				novio = PerfilUsuario.objects.filter(user__id=matrimonio.novio.user.id)
-				novia = PerfilUsuario.objects.filter(user__id=matrimonio.novia.user.id)
-				celebrante = PerfilUsuario.objects.filter(user__id=matrimonio.celebrante.user.id)
-				form_matrimonio = MatrimonioFormEditar(usuario,novio, novia,celebrante, instance=matrimonio)
+			form_matrimonio = MatrimonioForm(request, instance=matrimonio)
+			form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.filter(user__id=matrimonio.novio.user.id)
+			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(user__id=matrimonio.novia.user.id)
+			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(user__id=matrimonio.celebrante.user.id)
 										
 		ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio}
 		return render(request, 'matrimonio/matrimonio_form.html', ctx)
@@ -1186,516 +1363,7 @@ class MatrimonioListView(ListView):
 		raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(MatrimonioListView, self).dispatch(*args, **kwargs)
-
-
-
-# VISTAS PARA ADMIN DE BAUTISMO
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.add_bautismo', login_url='/login/', 
-	raise_exception=permission_required)
-def bautismo_create_view(request):
-	usuario=request.user
-	if(request.method == 'POST' ):
 		
-		parroquia = request.session.get('parroquia')
-		
-		formBautismo=BautismoForm(request, request.POST)
-		formBautismo.fields['bautizado'].queryset= PerfilUsuario.objects.feligres()
-	
-		if formBautismo.is_valid():
-			bautismo=formBautismo.save(commit=False)
-			bautismo.tipo_sacramento =  u'Bautismo'
-			libro=bautismo.libro
-			asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-				periodoasignacionparroquia__estado=True)
-			b=Bautismo.objects.filter(libro=libro, parroquia=asignacion.parroquia).count()
-			
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=asignacion.parroquia)
-			except ObjectDoesNotExist:
-				messages.error(request,'No se han configurado aún los parámetros parroquiales')
-				ctx={'formBautismo':formBautismo}
-				return render (request,'bautismo/bautismo_form.html',ctx)
-
-			if b==0:
-				bautismo.pagina=p.pagina
-				bautismo.numero_acta=p.numero_acta
-				bautismo.parroquia = asignacion.parroquia
-				bautismo.save()
-				
-			else:
-				ultimo_bautismo=Bautismo.objects.filter(libro=libro,parroquia=asignacion.parroquia).latest('created')
-				num=ultimo_bautismo.numero_acta
-				pagina=ultimo_bautismo.pagina
-
-				bautismo.numero_acta=num+1
-				
-				if bautismo.numero_acta%2 == 0:
-					bautismo.pagina=pagina
-				else:
-					bautismo.pagina=pagina+1
-				
-				bautismo.parroquia = asignacion.parroquia
-				bautismo.save()
-			
-			LogEntry.objects.log_action(
-					user_id=request.user.id,
-					content_type_id=ContentType.objects.get_for_model(bautismo).pk,
-					object_id=bautismo.id,
-					object_repr=unicode(bautismo),
-					action_flag=ADDITION,
-					change_message='Se creo bautismo')
-			messages.success(request,'Creado exitosamente')
-			return HttpResponseRedirect('/bautismo')
-		
-		else:
-			bautizado = request.POST.get('bautizado')
-			celebrante =  request.POST.get('celebrante')
-			formBautismo = BautismoForm(request, request.POST)
-			formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautizado)
-			formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=celebrante)
-			messages.error(request,'Los datos del formulario son incorrectos')
-			ctx={'formBautismo':formBautismo}
-			return render (request,'bautismo/bautismo_form.html',ctx)
-	else:		
-		formBautismo=BautismoForm(request)
-		# form_nota=NotaMarginalForm()
-	ctx={'formBautismo':formBautismo}
-	return render (request,'bautismo/bautismo_form.html',ctx)
-
-
-
-def mostrar():
-	return self.model.objects.filter()
-
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.change_bautismo', login_url='/login/', 
-	raise_exception=permission_required)
-def bautismo_update_view(request,pk):
-	usuario=request.user
-	bautismo= get_object_or_404(Bautismo, pk=pk)
-	notas=NotaMarginal.objects.filter(bautismo=bautismo)
-	try:
-
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=bautismo.parroquia, estado=True).asignacion.parroquia
-			
-		if request.method == 'POST':
-			bautismo_form = BautismoForm(request,request.POST,instance=bautismo)
-			bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
-			bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.feligres()
-			# form_nota=NotaMarginalForm(request.POST,instance=nota)
-			if bautismo_form.is_valid():
-				bautismo_form.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-		           	content_type_id=ContentType.objects.get_for_model(bautismo).pk,
-		           	object_id=bautismo.id,
-		           	object_repr=unicode(bautismo),
-		           	action_flag=CHANGE,
-		           	change_message='Bautismo actualizado')
-				messages.success(request,'Actualizado exitosamente')
-				return HttpResponseRedirect('/bautismo')
-			else:
-				bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
-				bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
-				messages.error(request, "Los datos del formulario son incorrectos")
-				ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
-				return render(request, 'bautismo/bautismo_form.html', ctx)
-				
-		else:
-			
-			bautismo_form = BautismoForm(request, instance=bautismo)
-			bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
-			bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
-			ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
-			return render(request, 'bautismo/bautismo_form.html', ctx)
-		
-	except ObjectDoesNotExist:
-		raise PermissionDenied
-
-
-class BautismoListView(ListView):
-	model=Bautismo
-	template_name='bautismo/bautismo_list.html'
-	def get_queryset(self):
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Bautismo.objects.filter(parroquia=asignacion.parroquia)
-			return queryset
-		except: 
-			return [];
-
-	@method_decorator(login_required(login_url='/login/'))
-	@method_decorator(permission_required('sacramentos.change_bautismo', login_url='/login/',
-		raise_exception=permission_required))
-	def dispatch(self, *args, **kwargs):
-		return super(BautismoListView, self).dispatch(*args, **kwargs)
-
-# VISTAS PARA ADMIN DE EUCARISTIA
-
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.add_eucaristia', login_url='/login/', 
-	raise_exception=permission_required)
-def eucaristia_create_view(request):
-	usuario=request.user
-	if request.method == 'POST':
-		feligres=PerfilUsuario.objects.feligres()
-		celebrante=PerfilUsuario.objects.sacerdote()
-		form_eucaristia=EucaristiaForm(usuario,feligres,celebrante,request.POST)
-		if form_eucaristia.is_valid():
-			eucaristia=form_eucaristia.save(commit=False)
-			tipo_sacramento=u'Eucaristia'
-			eucaristia.tipo_sacramento=tipo_sacramento
-			libro=eucaristia.libro
-			asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-				periodoasignacionparroquia__estado=True)
-			e=Eucaristia.objects.filter(libro=libro,parroquia=asignacion.parroquia).count()
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=asignacion.parroquia)
-				
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-			if e==0:
-				eucaristia.pagina=p.pagina
-				eucaristia.numero_acta=p.numero_acta
-				eucaristia.parroquia = asignacion.parroquia
-				eucaristia.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-					content_type_id=ContentType.objects.get_for_model(eucaristia).pk,
-					object_id=eucaristia.id,
-					object_repr=unicode(eucaristia),
-					action_flag=ADDITION,
-					change_message='Se creo eucaristia')
-				messages.success(request,'Creado exitosamente')
-				return HttpResponseRedirect('/eucaristia')
-
-			else:
-				ultimo_eucaristia=Eucaristia.objects.filter(libro=libro,parroquia=asignacion.parroquia).latest('created')
-				num=ultimo_eucaristia.numero_acta
-				pagina=ultimo_eucaristia.pagina
-
-				eucaristia.numero_acta=num+1
-				if eucaristia.numero_acta%2 == 0:
-					eucaristia.pagina=pagina
-				else:
-					eucaristia.pagina=pagina+1
-				eucaristia.parroquia = asignacion.parroquia
-				eucaristia.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-					content_type_id=ContentType.objects.get_for_model(eucaristia).pk,
-					object_id=eucaristia.id,
-					object_repr=unicode(eucaristia),
-					action_flag=ADDITION,
-					change_message='Se creo eucaristia')
-				messages.success(request,'Creado exitosamente')
-				return HttpResponseRedirect('/eucaristia')
-		else:
-			feligres = request.POST.get('feligres')
-			celebrante =  request.POST.get('celebrante')
-
-			if feligres and celebrante:
-				feligres = PerfilUsuario.objects.filter(id=feligres)
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				form_eucaristia = EucaristiaForm(usuario,feligres, celebrante, request.POST)
-			elif feligres and not celebrante:
-				feligres = PerfilUsuario.objects.filter(id=feligres)
-				celebrante = PerfilUsuario.objects.none()
-				form_eucaristia = EucaristiaForm(usuario,feligres, celebrante, request.POST)
-			elif not feligres and celebrante:
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				feligres= PerfilUsuario.objects.none()
-				form_eucaristia = EucaristiaForm(usuario,feligres, celebrante, request.POST)
-
-			else:
-				feligres = PerfilUsuario.objects.none()
-				celebrante = PerfilUsuario.objects.none()
-				form_eucaristia = EucaristiaForm(usuario,feligres, celebrante, request.POST)
-			messages.error(request,"Los datos del formulario son incorrectos")
-			ctx={'form_eucaristia':form_eucaristia}
-			return render(request,'eucaristia/eucaristia_form.html',ctx)
-	else:
-		form_eucaristia=EucaristiaForm(usuario)
-
-	ctx={'form_eucaristia':form_eucaristia}
-	return render(request,'eucaristia/eucaristia_form.html',ctx)
-
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.change_eucaristia', login_url='/login/', 
-	raise_exception=permission_required)
-def eucaristia_update_view(request,pk):
-	usuario=request.user
-	eucaristia=get_object_or_404(Eucaristia,pk=pk)
-	try:
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=eucaristia.parroquia, estado=True).asignacion.parroquia
-		if(request.method == 'POST'):
-			feligres= PerfilUsuario.objects.feligres()
-			celebrante=PerfilUsuario.objects.sacerdote()
-			form_eucaristia=EucaristiaFormEditar(usuario,feligres,celebrante,request.POST,instance=eucaristia)
-			if(form_eucaristia.is_valid()):
-				form_eucaristia.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-            		content_type_id=ContentType.objects.get_for_model(eucaristia).pk,
-            		object_id=eucaristia.id,
-            		object_repr=unicode(eucaristia),
-            		action_flag=CHANGE,
-            		change_message='Eucaristia actualizada')
-				messages.success(request,'Actualizado exitosamente')
-				return HttpResponseRedirect('/eucaristia')
-			else:
-
-				feligres = request.POST.get('feligres')
-				celebrante = request.POST.get('celebrante')
-				if feligres and celebrante:
-					feligres = PerfilUsuario.objects.filter(id=feligres)
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					form_eucaristia = EucaristiaFormEditar(usuario,feligres,celebrante, request.POST,
-						instance=eucaristia)
-				elif(feligres and not celebrante):
-					feligres = PerfilUsuario.objects.filter(id=feligres)
-					celebrante=PerfilUsuario.objects.none()
-					form_eucaristia = EucaristiaFormEditar(usuario,feligres, celebrante,request.POST,
-						instance=eucaristia)
-				elif(celebrante and not feligres):
-					feligres=PerfilUsuario.objects.none()
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					form_eucaristia = EucaristiaFormEditar(usuario,feligres,celebrante, request.POST,
-						instance=eucaristia)
-			
-				else:
-					celebrante = PerfilUsuario.objects.none()
-					feligres = PerfilUsuario.objects.none()
-					form_eucaristia = EucaristiaFormEditar(usuario, feligres,celebrante,request.POST, 
-						instance=eucaristia)
-
-				messages.error(request,"Los datos del formulario son incorrectos")
-				ctx={'form_eucaristia':form_eucaristia, 'object':eucaristia}
-				return render(request,'eucaristia/eucaristia_form.html',ctx)
-		
-		else:
-			if eucaristia.feligres and eucaristia.celebrante:
-				feligres = PerfilUsuario.objects.filter(user__id=eucaristia.feligres.user.id)
-				celebrante=PerfilUsuario.objects.filter(user__id=eucaristia.celebrante.user.id)
-				form_eucaristia = EucaristiaFormEditar(usuario,feligres,celebrante, instance=eucaristia)
-		
-		
-		ctx={'form_eucaristia':form_eucaristia, 'object':eucaristia}
-		return render(request,'eucaristia/eucaristia_form.html',ctx)
-	except ObjectDoesNotExist:
-		raise PermissionDenied
-
-
-
-class EucaristiaListView(ListView):
-	model=Eucaristia
-	template_name='eucaristia/eucaristia_list.html'
-	def get_queryset(self):
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Eucaristia.objects.filter(parroquia=asignacion.parroquia)
-			return queryset
-		except: 
-			return [];
-
-	@method_decorator(login_required(login_url='/login/'))
-	@method_decorator(permission_required('sacramentos.change_eucaristia', login_url='/login/',
-		raise_exception=permission_required))
-	def dispatch(self, *args, **kwargs):
-		return super(EucaristiaListView, self).dispatch(*args, **kwargs)
-
-# VISTAS PARA ADMIN DE CONFIRMACION
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.add_confirmacion', login_url='/login/', 
-	raise_exception=permission_required)
-def confirmacion_create_view(request):
-	usuario=request.user
-	confirmado=PerfilUsuario.objects.feligres()
-	celebrante=PerfilUsuario.objects.sacerdote()
-	if(request.method == 'POST'):
-		form_confirmacion=ConfirmacionForm(usuario,confirmado,celebrante,request.POST)
-		if(form_confirmacion.is_valid()):
-			confirmacion=form_confirmacion.save(commit=False)
-			confirmacion.tipo_sacramento='Confirmacion'
-			libro=confirmacion.libro
-			asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-				periodoasignacionparroquia__estado=True)
-			c=Confirmacion.objects.filter(libro=libro,parroquia=asignacion.parroquia).count()
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=asignacion.parroquia)
-				
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-
-			if c==0:
-				confirmacion.pagina=p.pagina
-				confirmacion.numero_acta=p.numero_acta
-				confirmacion.parroquia = asignacion.parroquia
-				confirmacion.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-					content_type_id=ContentType.objects.get_for_model(confirmacion).pk,
-					object_id=confirmacion.id,
-					object_repr=unicode(confirmacion),
-					action_flag=ADDITION,
-					change_message='Se creo confirmacion')
-				messages.success(request,'Creado exitosamente')
-				return HttpResponseRedirect('/confirmacion')
-				
-			else:
-				ultima_confirmacion=Confirmacion.objects.filter(libro=libro,parroquia=asignacion.parroquia).latest('created')
-				num=ultima_confirmacion.numero_acta
-				pagina=ultima_confirmacion.pagina
-
-				confirmacion.numero_acta=num+1
-				if confirmacion.numero_acta%2 == 0:
-					confirmacion.pagina=pagina
-				else:
-					confirmacion.pagina=pagina+1
-				confirmacion.parroquia = asignacion.parroquia
-				confirmacion.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-					content_type_id=ContentType.objects.get_for_model(confirmacion).pk,
-					object_id=confirmacion.id,
-					object_repr=unicode(confirmacion),
-					action_flag=ADDITION,
-					change_message='Se creo bautismo')
-				messages.success(request,'Creado exitosamente')
-				return HttpResponseRedirect('/confirmacion')
-		else:
-			confirmado = request.POST.get('confirmado')
-			celebrante =  request.POST.get('celebrante')
-
-			if confirmado and celebrante:
-				confirmado = PerfilUsuario.objects.filter(id=confirmado)
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				form_confirmacion = ConfirmacionForm(usuario,confirmado, celebrante, request.POST)
-			elif confirmado and not celebrante:
-				confirmado = PerfilUsuario.objects.filter(id=confirmado)
-				celebrante = PerfilUsuario.objects.none()
-				form_confirmacion = EucaristiaForm(usuario,confirmado, celebrante, request.POST)
-			elif not confirmado and celebrante:
-				celebrante = PerfilUsuario.objects.filter(id=celebrante)
-				confirmado= PerfilUsuario.objects.none()
-				form_confirmacion = EucaristiaForm(usuario,confirmado, celebrante, request.POST)
-
-			else:
-				confirmado = PerfilUsuario.objects.none()
-				celebrante = PerfilUsuario.objects.none()
-				form_confirmacion = EucaristiaForm(usuario,confirmado, celebrante, request.POST)
-
-			messages.error(request,"Los datos del formulario son incorrectos")
-			ctx={'form_confirmacion':form_confirmacion}
-			return render(request,'confirmacion/confirmacion_form.html',ctx)
-			
-	else:
-		form_confirmacion=ConfirmacionForm(usuario)
-	ctx={'form_confirmacion':form_confirmacion}
-	return render(request,'confirmacion/confirmacion_form.html',ctx)
-
-
-
-
-@login_required(login_url='/login/')
-@permission_required('sacramentos.change_confirmacion', login_url='/login/', 
-	raise_exception=permission_required)
-def confirmacion_update_view(request,pk):
-	usuario=request.user
-	confirmacion=get_object_or_404(Confirmacion,pk=pk)
-	try:
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=confirmacion.parroquia, estado=True).asignacion.parroquia
-		if(request.method == 'POST'):
-			confirmado=PerfilUsuario.objects.feligres()
-			celebrante=PerfilUsuario.objects.sacerdote()
-			form_confirmacion=ConfirmacionFormEditar(usuario,confirmado,celebrante,request.POST,
-				instance=confirmacion)
-			if(form_confirmacion.is_valid()):
-				form_confirmacion.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-           			content_type_id=ContentType.objects.get_for_model(confirmacion).pk,
-            		object_id=confirmacion.id,
-            		object_repr=unicode(confirmacion),
-            		action_flag=CHANGE,
-            		change_message='Confirmacion actualizado')
-				messages.success(request,'Actualizado exitosamente')
-				return HttpResponseRedirect('/confirmacion')
-			else:
-				confirmado = request.POST.get('confirmado')
-				celebrante = request.POST.get('celebrante')
-				if confirmado and celebrante:
-					confirmado = PerfilUsuario.objects.filter(id=confirmado)
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					form_confirmacion = ConfirmacionFormEditar(usuario,confirmado,celebrante, request.POST,
-						instance=confirmacion)
-				elif(confirmado and not celebrante):
-					confirmado = PerfilUsuario.objects.filter(id=confirmado)
-					celebrante=PerfilUsuario.objects.none()
-					form_confirmacion = ConfirmacionFormEditar(usuario,confirmado,celebrante, request.POST,
-						instance=confirmacion)
-				elif(celebrante and not confirmado):
-					confirmado=PerfilUsuario.objects.none()
-					celebrante = PerfilUsuario.objects.filter(id=celebrante)
-					form_confirmacion = ConfirmacionFormEditar(usuario,confirmado,celebrante, request.POST,
-						instance=confirmacion)
-		
-				else:
-					celebrante = PerfilUsuario.objects.none()
-					confirmado = PerfilUsuario.objects.none()
-					form_confirmacion = ConfirmacionFormEditar(usuario, confirmado,celebrante,request.POST, 
-						instance=confirmacion)
-			
-
-				messages.error(request,"Los datos del formulario son incorrectos")
-				ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
-				return render(request,'confirmacion/confirmacion_form.html',ctx)
-		else:
-			if confirmacion.confirmado and confirmacion.celebrante:
-				confirmado = PerfilUsuario.objects.filter(user__id=confirmacion.confirmado.user.id)
-				celebrante = PerfilUsuario.objects.filter(user__id=confirmacion.celebrante.user.id)
-				form_confirmacion = ConfirmacionFormEditar(usuario,confirmado,celebrante, instance=confirmacion)
-			else:
-				form_confirmacion = EucaristiaFormEditar(instance=confirmacion)
-
-		
-		ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
-		return render(request,'confirmacion/confirmacion_form.html',ctx)
-	except ObjectDoesNotExist:
-		raise PermissionDenied
-
-
-class ConfirmacionListView(ListView):
-	model=Confirmacion
-	template_name='confirmacion/confirmacion_list.html'
-
-	def get_queryset(self):
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Confirmacion.objects.filter(parroquia=asignacion.parroquia)
-			return queryset
-		except: 
-			return [];
-
-	@method_decorator(login_required(login_url='/login/'))
-	@method_decorator(permission_required('sacramentos.change_confirmacion', login_url='/login/',
-		raise_exception=permission_required))
-	def dispatch(self, *args, **kwargs):
-		return super(ConfirmacionListView, self).dispatch(*args, **kwargs)
-
-
 
 #Vistas para crear una parroquia
 @login_required(login_url='/login/')

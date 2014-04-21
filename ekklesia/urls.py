@@ -14,13 +14,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'ekklesia.views.home', name='home'),s
-    # url(r'^ekklesia/', include('ekklesia.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(sacramentos_urls)),
     url(r'^', include(home_urls)),

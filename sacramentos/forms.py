@@ -14,7 +14,7 @@ from django.utils.html import format_html, mark_safe
 
 
 from .models import (PerfilUsuario, 
-					Libro,Matrimonio,Bautismo,Eucaristia,Confirmacion,Bautismo,
+					Libro,Sacramento, Matrimonio,Bautismo,Eucaristia,Confirmacion,Bautismo,
 					Direccion, Intenciones,NotaMarginal,Parroquia, Iglesia, AsignacionParroquia, PeriodoAsignacionParroquia,
 					ParametrizaDiocesis,ParametrizaParroquia, )
 from .validators import validate_cedula
@@ -439,7 +439,7 @@ class SacerdoteForm(ModelForm):
 		
 		return cedula
 
-	class Meta(): 
+	class Meta: 
 		model = PerfilUsuario
 		fields = ('nacionalidad','dni', 'fecha_nacimiento', 'lugar_nacimiento', 'celular');
 		widgets = {
@@ -481,11 +481,22 @@ class EmailForm(forms.Form):
 
 class LibroForm(ModelForm):
 	
+	class Meta():
+		model=Libro
+		fields = ('numero_libro', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
+			'estado', 'primera_pagina', 'primera_acta')
+		widgets = {
+			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
+				'dd/mm/yyyy', 'type':'date'}),
+			'fecha_cierre': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date',
+				'label':'Fecha Cierre *'}),
+			'tipo_libro': forms.Select(attrs={'required':''}),
+			'estado': RadioSelect(attrs={'required':''}),
+			'numero_libro': forms.TextInput(attrs={'required':''}),
+			}
 
 	def clean(self):
 		cleaned_data = super(LibroForm, self).clean()
-		# numero = self.cleaned_data.get("numero_libro")
-		# tipo = self.cleaned_data.get("tipo_libro")
 		fecha_apertura=self.cleaned_data.get("fecha_apertura")
 		fecha_cierre=self.cleaned_data.get("fecha_cierre")
 		if fecha_apertura > date.today():
@@ -499,139 +510,114 @@ class LibroForm(ModelForm):
 		return cleaned_data
 	
 
-	TIPO_LIBRO_CHOICES = (
-		('', '--- Seleccione ---'),
-		('Bautismo','Bautismo'),
-        ('Eucaristia','Primera Comunión'), 
-        ('Confirmacion','Confirmación'),
-        ('Matrimonio','Matrimonio'),
-                 
-    )
 
-	ESTADO_CHOICES=(
-		('Abierto','Abierto'),
-		('Cerrado','Cerrado'),
-		)
-	numero_libro=forms.IntegerField(required=True, label='Numero Libro *', 
-		widget=forms.TextInput(attrs={'required': ''}),
-		help_text='Ingrese un numero para libro ej:1 - 35')
-
-	tipo_libro= forms.TypedChoiceField(label=u'Tipo de Libro *', choices=TIPO_LIBRO_CHOICES, 
-		required=True, widget=forms.Select(attrs={'required':''}),
-		help_text='Seleccione un tipo de libro Ej: Bautismo')
-
-	estado=forms.ChoiceField(required=True,choices=ESTADO_CHOICES,label='Estado *', 
-		widget=RadioSelect(attrs={'required':''}))
-	# fecha_apertura = forms.CharField(label=u'Fecha de Apertura', initial=date.today(),
-	# 	widget=forms.TextInput(attrs={'required':'', 'data-date-format': 'dd/mm/yyyy', 
-	# 		'type':'date'}),help_text='Seleccione una fecha ej:17/12/2010')
-	# fecha_cierre = forms.CharField(required=False,label=u'Fecha de Cierre', 
-	# 	widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'
-	# 		}),help_text='Seleccione una fecha ej:17/12/2010')
-	
-	
-	class Meta():
-		model=Libro
-		fields = ('numero_libro', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
-			'estado', 'primera_pagina', 'primera_acta')
+class SacramentosForm(ModelForm):
+	class Meta:
+		model = Sacramento
+		fields=('libro','fecha_sacramento', 'celebrante', 
+			'lugar_sacramento','padrino','madrina',	'iglesia')
+		
 		widgets = {
-			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'fecha_cierre': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date',
-				'label':'Fecha Cierre *'}),
-			
+			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
+			'dd/mm/yyyy', 'type':'date'}),
+			'lugar_sacramento': forms.TextInput(attrs={'required':''}),
+			'iglesia': forms.TextInput(attrs={'required':''}),
+			'celebrante': forms.Select(attrs={'required':''})
+
 			}
 
+	def __init__(self, request, *args, **kwargs):
+		super(SacramentosForm, self).__init__(*args, **kwargs)	
 
-class BautismoForm(ModelForm):
-	
+		parroquia=request.session.get('parroquia')
+		self.fields['celebrante'].empty_label = None
+		self.fields['libro'].queryset=Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
+		self.fields['libro'].empty_label=None
+		
+		if not self.instance.id:
+			self.fields['celebrante'].queryset=PerfilUsuario.objects.parroco(parroquia)
+		
 
 	def clean(self):
-		cleaned_data = super(BautismoForm, self).clean()
-		libro = self.cleaned_data.get("libro")
-		persona = self.cleaned_data.get("bautizado")
+		cleaned_data = super(SacramentosForm, self).clean()
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		fecha_nacimiento = persona.fecha_nacimiento
-		print fecha_nacimiento
-		
-		if fecha_sacramento < fecha_nacimiento:
-			msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-			self._errors['fecha_sacramento'] = self.error_class([msg])
-
+				
 		if fecha_sacramento > date.today():
-			msg=u'La fecha del Bautismo no debe ser mayor a la fecha actual'
+			msg=u'La fecha del Sacramento no debe ser mayor a la fecha actual'
 			self._errors['fecha_sacramento']=self.error_class([msg])
-		
-		if self.instance.id:
-			if Eucaristia.objects.filter(feligres=persona) or Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-				self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		
 		return cleaned_data
 
-	lugar_sacramento = forms.CharField(max_length=40, help_text='Ingrese el lugar del sacramento ej: Loja ', 
-		required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}))
-	iglesia = forms.CharField(max_length=30, help_text='Ingrese el nombre de la iglesia: San Jose',
-		required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}))
+
+
+
+class BautismoForm(SacramentosForm):
+	class Meta(SacramentosForm.Meta):
+		model = Bautismo
+		fields = SacramentosForm.Meta.fields + ('bautizado', 'abuelo_paterno', 'abuela_paterna', 'abuelo_materno',
+			'abuela_materna','vecinos_paternos','vecinos_maternos')
 	
-
 	def __init__(self, request, *args, **kwargs):
-
-		super(BautismoForm, self).__init__(*args, **kwargs)
-		# try:
-		# 	asignacion = AsignacionParroquia.objects.get(persona__user=user,
-		# 		periodoasignacionparroquia__estado=True)
-		# except ObjectDoesNotExist:
-		# 	raise PermissionDenied
-		
 		parroquia=request.session.get('parroquia')
+		super(BautismoForm, self).__init__(request, *args, **kwargs)
+		self.fields['libro'].queryset = Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
 		
-		self.fields['libro'] = forms.ModelChoiceField(
-			help_text='Seleccione un libro para el Bautismo',
-			queryset=Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia),
-			empty_label=None) # en la consulta falta filtrar por parroquia
-
 		if not self.instance.id:
 			self.fields['bautizado']=forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
 				 empty_label='-- Buscar o Crear --', label='Feligrés *',
 				 help_text='Presione buscar para encontrar un feligres',
-				 widget=forms.Select(attrs={'required':''}))
+				 widget=forms.Select(attrs={'required':''}),
+				 error_messages={'invalid': 'El feligrés ya se encuentra bautizado, soy yo'})
+		else:
+			self.fields['bautizado'].empty_label = None 
+
+
+	def clean(self):
+		cleaned_data = super(BautismoForm, self).clean()
+		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		persona = self.cleaned_data.get("bautizado")
+		fecha_nacimiento = persona.fecha_nacimiento
+	
+		if fecha_sacramento < fecha_nacimiento:
+			msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
+			self._errors['fecha_sacramento'] = self.error_class([msg])
+
+		if not self.instance.id:
+			if Bautismo.objects.filter(bautizado=persona).exists():
+				self._errors['bautizado']=self.error_class(["El feligres ya se encuentra bautizado"])
+			elif Eucaristia.objects.filter(feligres=persona) or Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+				self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior al Bautismo"])
 		
-			self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=PerfilUsuario.objects.parroco(parroquia),
-				empty_label=None,label='Celebrante *',
-				 help_text='Presione buscar para encontrar un sacerdote',
-				widget=forms.Select(attrs={'required':''}))
-
-		self.fields['vecinos_paternos'].label='Residencia Abuelos Paternos'
-		self.fields['vecinos_maternos'].label='Residencia Abuelos Maternos'
-
+		return cleaned_data
 	      	
-	class Meta():
-		model=Bautismo
-		fields=('bautizado','libro','fecha_sacramento',
-			'lugar_sacramento','padrino','madrina','celebrante',
-			'iglesia', 'abuelo_paterno', 'abuela_paterna', 'abuelo_materno',
-			'abuela_materna','vecinos_paternos','vecinos_maternos')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-			'dd/mm/yyyy', 'type':'date'}),
-			}
 
-class EucaristiaForm(ModelForm):
-	# def clean_fecha_sacramento(self):
-	# 	data = self.cleaned_data['fecha_sacramento']
-	# 	if data > date.today():
-	# 		raise forms.ValidationError('La fecha de la Eucaristia no puede ser mayor a la fecha actual')
-	# 	return data
+
+class EucaristiaForm(SacramentosForm):
+	class Meta(SacramentosForm.Meta):
+		model = Eucaristia
+		fields = SacramentosForm.Meta.fields + ('feligres',)
+
+
+	def __init__(self, request, *args, **kwargs):		
+		super(EucaristiaForm, self).__init__(request, *args, **kwargs)
+		parroquia=request.session.get('parroquia')
+		self.fields['libro'].queryset = Libro.objects.filter(
+			estado='Abierto',tipo_libro='Eucaristia', parroquia=parroquia)
+
+		if not self.instance.id:
+			self.fields['feligres']=forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
+				 empty_label='-- Buscar o Crear --', label='Feligrés *',
+				 help_text='Presione buscar para encontrar un feligres',
+				 widget=forms.Select(attrs={'required':''}))
+		else:      
+			self.fields['feligres'].empty_label = None 
+		
+
 	def clean(self):
 		cleaned_data = super(EucaristiaForm, self).clean()
-		libro = self.cleaned_data.get("libro")
-		numero = self.cleaned_data.get("numero_acta")
-		pagina=self.cleaned_data.get("pagina")
 		persona = self.cleaned_data.get("feligres")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
+		fecha_nacimiento=persona.fecha_nacimiento
 		
 		try:
 			fecha_bautismo=Bautismo.objects.get(bautizado=persona).fecha_sacramento
@@ -642,147 +628,37 @@ class EucaristiaForm(ModelForm):
 			if fecha_sacramento<fecha_nacimiento:
 				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
 				self._errors['fecha_sacramento']=self.error_class([msg])
-			
-		if fecha_sacramento>date.today():
-			msg=u'La fecha de la Eucaristia no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-		
-		# if persona.es_casado:
-		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-			self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
-		# if persona.es_confirmado or persona.es_novio or persona.es_novia:
-		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
-		
+
+		if not self.instance.id:
+			if Eucaristia.objects.filter(feligres=persona).exists():
+				self._errors['feligres']=self.error_class(["El feligres ya realizó la primera comunión"])
+			elif Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+				self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
+				
 		return cleaned_data
 	
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),
-		help_text='Seleccione un libro para la Eucaristia')
+class ConfirmacionForm(SacramentosForm):
+	class Meta(SacramentosForm.Meta):
+		model = Confirmacion
+		fields = SacramentosForm.Meta.fields + ('confirmado', )
 
-	def __init__(self,user, feligres=PerfilUsuario.objects.none(),celebrante=PerfilUsuario.objects.none(),
-		*args, **kwargs):
-		
-		super(EucaristiaForm, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		
-		self.fields['libro'].queryset = Libro.objects.filter(
-			estado='Abierto',tipo_libro='Eucaristia',parroquia=asignacion.parroquia)
-		self.fields['feligres']=forms.ModelChoiceField(required=True, queryset=feligres,
-			 empty_label='-- Buscar --',label='Feligrés *',
-			 help_text='Presione buscar para encontrar un feligres',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label='-- Buscar --',label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
-
-
-	class Meta():
-		model=Eucaristia
-		fields=('feligres','libro','fecha_sacramento',
-			'lugar_sacramento','padrino','madrina','celebrante','iglesia')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
-
-
-class EucaristiaFormEditar(ModelForm):
-	def clean(self):
-		cleaned_data = super(EucaristiaFormEditar, self).clean()
-		libro = self.cleaned_data.get("libro")
-		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		persona = self.cleaned_data.get("feligres")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
-		try:
-			fecha_bautismo=Bautismo.objects.get(bautizado=persona).fecha_sacramento
-			if fecha_sacramento<fecha_bautismo:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-		except ObjectDoesNotExist:
-			if fecha_sacramento<fecha_nacimiento:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-
-		
-		if fecha_sacramento>date.today():
-			msg=u'La fecha de la Eucaristia no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-		# if persona.es_casado:
-		# 	self._errors['feligres']=self.error_class(["El feligres seleccionado ya está casado"])
-		# if Confirmacion.objects.filter(confirmado=persona) or Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunión"])
-		# if persona.es_confirmado or persona.es_novio or persona.es_novia:
-		# 	self._errors['feligres']=self.error_class(["El feligres ya tiene un sacramento posterior a la Primera Comunion"])
-		return cleaned_data
-
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	# celebrante = forms.ModelChoiceField(help_text='Seleccione un celebrante',
-	# 	queryset=PerfilUsuario.objects.filter(profesion='Sacerdote'),
-	# 	empty_label='-- Seleccione --')
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),
-		help_text='Seleccione un libro para la Eucaristia')
-
-	def __init__(self,user,feligres=PerfilUsuario.objects.none(),celebrante=PerfilUsuario.objects.none(),
-	 *args, **kwargs):
-		
-		super(EucaristiaFormEditar, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		# asignacion = AsignacionParroquia.objects.get(persona__user=user)
-		self.fields['libro'].queryset = Libro.objects.filter(
-			tipo_libro='Eucaristia',parroquia=asignacion.parroquia)
-		self.fields['feligres']=forms.ModelChoiceField(required=True, queryset=feligres,
-			 empty_label=None,label='Feligrés *',
-			 help_text='Presione buscar para encontrar un feligres',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label=None,label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
-
-
-	class Meta():
-		model=Eucaristia
-		fields=('feligres','libro','fecha_sacramento',
-			'lugar_sacramento','padrino','madrina','celebrante','iglesia')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
-
-
-
-class ConfirmacionForm(ModelForm):
+	def __init__(self, request, *args, **kwargs):
+		super(ConfirmacionForm, self).__init__(request, *args, **kwargs)
+		parroquia=request.session.get('parroquia')
+		self.fields['libro'].queryset = Libro.objects.filter(estado='Abierto',tipo_libro='Confirmacion',parroquia=parroquia)
+		if not self.instance.id:
+			self.fields['confirmado']=forms.ModelChoiceField(required=True, queryset=Confirmacion.objects.none(),
+				 empty_label='-- Buscar o Crear --', label='Confirmado *',
+				 help_text='Presione buscar para encontrar un feligres',
+				 widget=forms.Select(attrs={'required':''}))
+		else:      
+			self.fields['confirmado'].empty_label = None
 
 	def clean(self):
 		cleaned_data = super(ConfirmacionForm, self).clean()
-		libro = self.cleaned_data.get("libro")
-		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
 		persona = self.cleaned_data.get("confirmado")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
+		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
+		fecha_nacimiento=persona.fecha_nacimiento
 		
 		if Eucaristia.objects.filter(feligres=persona):
 			fecha_eucaristia=Eucaristia.objects.get(feligres=persona).fecha_sacramento
@@ -794,351 +670,138 @@ class ConfirmacionForm(ModelForm):
 			if fecha_sacramento<fecha_bautismo:
 				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
 				self._errors['fecha_sacramento']=self.error_class([msg])
-		
 		elif fecha_sacramento<fecha_nacimiento:
 				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
 				self._errors['fecha_sacramento']=self.error_class([msg])
 
-
-		if fecha_sacramento<fecha_nacimiento:
-			msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-
-		if fecha_sacramento>date.today():
-			msg=u'La fecha de Confirmacion no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-		
-		# if persona.es_casado:
-		# 	self._errors['confirmado']=self.error_class(["El feligres seleccionado ya está casado"])
-		if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-			self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
-		# if persona.es_novio or persona.es_novia:
-		# 	self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
-		
+		if not self.instance.id:
+			if Confirmacion.objects.filter(confirmado=persona).exists():
+				self._errors['confirmado']=self.error_class(["El feligres ya realizó la Confirmación"])
+			elif Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
+				self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
+				
 		return cleaned_data
+
+
+class MatrimonioForm(SacramentosForm):
 	
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),
-		help_text='Seleccione un libro para la Confirmacion')
+	class Meta(SacramentosForm.Meta):
+		model=Matrimonio
+		fields= SacramentosForm.Meta.fields + ('novio','novia','testigo_novio','testigo_novia',
+			'tipo_matrimonio')
 
-	def __init__(self,user, confirmado=PerfilUsuario.objects.none(),celebrante=PerfilUsuario.objects.none(),
-		*args, **kwargs):
-		
-		super(ConfirmacionForm, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		
-		self.fields['libro'].queryset = Libro.objects.filter(
-			estado='Abierto',tipo_libro='Confirmacion',parroquia=asignacion.parroquia)
-		self.fields['confirmado']=forms.ModelChoiceField(required=True, queryset=confirmado,
-			 empty_label='-- Buscar --',label='Feligrés *',
-			 help_text='Presione buscar para encontrar un feligres',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label='-- Buscar --',label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
-
-
-
-	class Meta():
-		model=Confirmacion
-		fields=('confirmado','celebrante','libro','fecha_sacramento',
-			'lugar_sacramento','padrino','madrina','iglesia')
 		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
+		'tipo_matrimonio': forms.Select(attrs={'required':''}),
+		'testigo_novio': forms.TextInput(attrs={'required':''}),
+		'testigo_novia': forms.TextInput(attrs={'required':''}),
+		'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
+		'dd/mm/yyyy', 'type':'date'}),
+		'lugar_sacramento': forms.TextInput(attrs={'required':''}),
+		'iglesia': forms.TextInput(attrs={'required':''}),
+		'celebrante': forms.Select(attrs={'required':''})
+		}
 
-class ConfirmacionFormEditar(ModelForm):
-	def clean(self):
-		cleaned_data = super(ConfirmacionFormEditar, self).clean()
-		libro = self.cleaned_data.get("libro")
-		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		persona = self.cleaned_data.get("confirmado")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=persona.id).fecha_nacimiento
+		# widgets = SacramentosForm.Meta.widgets.update({
+		# 'tipo_matrimonio': forms.Select(attrs={'required':''}),
+		# 'testigo_novio': forms.TextInput(attrs={'required':''}),
+		# 'testigo_novia': forms.TextInput(attrs={'required':''}),
+		# })
 		
-		if Eucaristia.objects.filter(feligres=persona):
-			fecha_eucaristia=Eucaristia.objects.get(feligres=persona).fecha_sacramento
-			if fecha_sacramento<fecha_eucaristia:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Primera Comunion del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-		elif Bautismo.objects.filter(bautizado=persona):
-			fecha_bautismo=Bautismo.objects.get(bautizado=persona).fecha_sacramento
-			if fecha_sacramento<fecha_bautismo:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
+	def __init__(self, request, *args, **kwargs):
 		
-		elif fecha_sacramento<fecha_nacimiento:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-
-		if fecha_sacramento>date.today():
-			msg=u'La fecha de Confirmacion no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-
-		# if persona.es_casado:
-		# 	self._errors['bautizado']=self.error_class(["El feligres seleccionado ya está casado"])
-		# if Matrimonio.objects.filter(novio=persona) or Matrimonio.objects.filter(novia=persona):
-		# 	self._errors['confirmado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
-		# if persona.es_novio or persona.es_novia:
-		# 	self._errors['bautizado']=self.error_class(["El feligres ya tiene un sacramento posterior a la Confirmación"])
-		return cleaned_data
-	
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),
-		help_text='Seleccione un libro para la Confirmacion')
-
-	def __init__(self,user, confirmado=PerfilUsuario.objects.none(),
-		celebrante=PerfilUsuario.objects.none(),*args, **kwargs):
-		
-		super(ConfirmacionFormEditar, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		# asignacion = AsignacionParroquia.objects.get(persona__user=user)
+		super(MatrimonioForm, self).__init__(request, *args, **kwargs)
+		parroquia = request.session.get('parroquia')
+		self.fields['tipo_matrimonio'].empty_label="-- Seleccione --"
 		self.fields['libro'].queryset = Libro.objects.filter(
-			tipo_libro='Confirmacion',parroquia=asignacion.parroquia)
-		self.fields['confirmado']=forms.ModelChoiceField(required=True, queryset=confirmado,
-			 empty_label=None,label='Feligrés *',
-			 help_text='Presione buscar para encontrar un feligres',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label=None,label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
+			estado='Abierto',tipo_libro='Matrimonio',parroquia=parroquia)
+		if not self.instance.id:
+			self.fields['novio']=forms.ModelChoiceField(required=True, queryset=PerfilUsuario.objects.none(),
+				 empty_label='-- Buscar o Crear --', label='Novio *',
+				 help_text='Presione buscar para encontrar un feligres',
+				 widget=forms.Select(attrs={'required':''}))
+			self.fields['novia']=forms.ModelChoiceField(required=True, queryset=PerfilUsuario.objects.none(),
+				 empty_label='-- Buscar o Crear --', label='Novia *',
+				 help_text='Presione buscar para encontrar un feligres',
+				 widget=forms.Select(attrs={'required':''}))
+		else:      
+			self.fields['novio'].empty_label = None
+			self.fields['novia'].empty_label = None
 
-
-	class Meta():
-		model=Confirmacion
-		fields=('confirmado','libro','fecha_sacramento',
-			'lugar_sacramento','celebrante','padrino','madrina','iglesia')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
-
-
-
-class MatrimonioForm(ModelForm):
 	def clean(self):
 		cleaned_data = super(MatrimonioForm, self).clean()
-		libro = self.cleaned_data.get("libro")
 		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
 		novio=self.cleaned_data.get("novio")
 		novia=self.cleaned_data.get("novia")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=novio.id).fecha_nacimiento
 
-		if Confirmacion.objects.filter(confirmado=novio):
-			fecha_confirmacion=Confirmacion.objects.get(confirmado=novio).fecha_sacramento
-			if fecha_sacramento<fecha_confirmacion:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Confirmación del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
+		# Comprobación del novio
+		if novio.es_hombre(): 
+			if not self.instance.id and novio.es_casado():
+				msg=u'El feligrés seleccionado ya está casado'
+				self._errors['novio']=self.error_class([msg])
+			else:
+				fecha_nacimiento_novio=novio.fecha_nacimiento
+				if Confirmacion.objects.filter(confirmado=novio):
+					fecha_confirmacion=Confirmacion.objects.get(confirmado=novio).fecha_sacramento
+					if fecha_sacramento<fecha_confirmacion:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de la confirmación del novio'
+						self._errors['fecha_sacramento']=self.error_class([msg])
 
-		elif Eucaristia.objects.filter(feligres=novio):
-			fecha_eucaristia=Eucaristia.objects.get(feligres=novio).fecha_sacramento
-			if fecha_sacramento<fecha_eucaristia:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Primera Comunion del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
+				elif Eucaristia.objects.filter(feligres=novio):
+					fecha_eucaristia=Eucaristia.objects.get(feligres=novio).fecha_sacramento
+					if fecha_sacramento<fecha_eucaristia:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de la primera comunion del novio'
+						self._errors['fecha_sacramento']=self.error_class([msg])
 
-		elif Bautismo.objects.filter(bautizado=novio):
-			fecha_bautismo=Bautismo.objects.get(bautizado=novio).fecha_sacramento
-			if fecha_sacramento<fecha_bautismo:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-		
-		elif fecha_sacramento<fecha_nacimiento:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
+				elif Bautismo.objects.filter(bautizado=novio):
+					fecha_bautismo=Bautismo.objects.get(bautizado=novio).fecha_sacramento
+					if fecha_sacramento<fecha_bautismo:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha del bautismo del novio'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+				
+				elif fecha_sacramento<fecha_nacimiento_novio:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del novio'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+		else:
+			msg=u'El feligrés seleccionado no pertenece al género masculino'
+			self._errors['novio']=self.error_class([msg])
 
-		if fecha_sacramento>date.today():
-			msg=u'La fecha del Matrimonio no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-		
+
+		# Comprobación de la novia
+		if novia.es_mujer():
+			if not self.instance.id and novia.es_casado():
+					msg=u'La feligrés seleccionada ya está casada'
+					self._errors['novia']=self.error_class([msg])
+				
+			else:
+				fecha_nacimiento_novia=novia.fecha_nacimiento
+				if Confirmacion.objects.filter(confirmado=novia):
+					fecha_confirmacion=Confirmacion.objects.get(confirmado=novia).fecha_sacramento
+					if fecha_sacramento<fecha_confirmacion:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de la confirmación de la novia'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+
+				elif Eucaristia.objects.filter(feligres=novia):
+					fecha_eucaristia=Eucaristia.objects.get(feligres=novia).fecha_sacramento
+					if fecha_sacramento<fecha_eucaristia:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de la primera comunion de la novia'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+
+				elif Bautismo.objects.filter(bautizado=novia):
+					fecha_bautismo=Bautismo.objects.get(bautizado=novia).fecha_sacramento
+					if fecha_sacramento<fecha_bautismo:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha del bautismo de la novia'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+				
+				elif fecha_sacramento<fecha_nacimiento_novia:
+						msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento de la novia'
+						self._errors['fecha_sacramento']=self.error_class([msg])
+		else: 
+			msg=u'La feligrés seleccionada no pertenece al género femenino'
+			self._errors['novia']=self.error_class([msg])
+
 		return cleaned_data
 	
-	TIPO_MATRIMONIO_CHOICES=(
-		('', '--- Seleccione ---'),
-        ('Catolico','Catolico'),
-        ('Mixto','Mixto'),
-        )
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	tipo_matrimonio = forms.TypedChoiceField(label=u'Tipo Matrimonio *', 
-		help_text='Elija tipo de matrimonio Ej: Catolico o Mixto', 
-		choices=TIPO_MATRIMONIO_CHOICES, required=True, 
-		widget=forms.Select(attrs={'required':''}))
-
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	testigo_novio= forms.CharField(max_length=60, required=True,label='Testigo *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de testigo ej: Pablo Robles')
-	testigo_novia= forms.CharField(max_length=60, required=True,label='Testiga *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de testiga ej:Maria Pincay')
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),help_text='Seleccione un libro para el Matrimonio')
-
-
-	def __init__(self,user,novio=PerfilUsuario.objects.none(),novia=PerfilUsuario.objects.none(),
-	celebrante=PerfilUsuario.objects.none(), *args, **kwargs):
 		
-		super(MatrimonioForm, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		# asignacion = AsignacionParroquia.objects.get(persona__user=user)
-		self.fields['libro'].queryset = Libro.objects.filter(
-			estado='Abierto',tipo_libro='Matrimonio',parroquia=asignacion.parroquia)
-		self.fields['novio']=forms.ModelChoiceField(required=True, queryset=novio, 
-			empty_label='-- Buscar --',label='Novio *',
-			 help_text='Presione buscar para encontrar un novio',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['novia']=forms.ModelChoiceField(required=True, queryset=novia, 
-			empty_label='-- Buscar --',label='Novia *',
-			 help_text='Presione buscar para encontrar una novia',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante'] = forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label='-- Buscar --',label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
-
-	class Meta():
-		model=Matrimonio
-		fields=('libro','fecha_sacramento','lugar_sacramento','celebrante',
-			'padrino','madrina','iglesia','novio','novia','testigo_novio','testigo_novia',
-			'tipo_matrimonio')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
-
-
-class MatrimonioFormEditar(ModelForm):
-	def clean(self):
-		cleaned_data = super(MatrimonioFormEditar, self).clean()
-		libro = self.cleaned_data.get("libro")
-		fecha_sacramento=self.cleaned_data.get("fecha_sacramento")
-		novio=self.cleaned_data.get("novio")
-		novia=self.cleaned_data.get("novia")
-		fecha_nacimiento=PerfilUsuario.objects.get(id=novio.id).fecha_nacimiento
-
-		if Confirmacion.objects.filter(confirmado=novio):
-			fecha_confirmacion=Confirmacion.objects.get(confirmado=novio).fecha_sacramento
-			if fecha_sacramento<fecha_confirmacion:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Confirmación del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-
-		elif Eucaristia.objects.filter(feligres=novio):
-			fecha_eucaristia=Eucaristia.objects.get(feligres=novio).fecha_sacramento
-			if fecha_sacramento<fecha_eucaristia:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de la Primera Comunion del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-
-		elif Bautismo.objects.filter(bautizado=novio):
-			fecha_bautismo=Bautismo.objects.get(bautizado=novio).fecha_sacramento
-			if fecha_sacramento<fecha_bautismo:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha del Bautismo del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-		
-		elif fecha_sacramento<fecha_nacimiento:
-				msg=u'La fecha del Sacramento no puede ser menor a la fecha de nacimiento del feligres'
-				self._errors['fecha_sacramento']=self.error_class([msg])
-
-		if fecha_sacramento>date.today():
-			msg=u'La fecha del Matrimonio no debe ser mayor a la fecha actual'
-			self._errors['fecha_sacramento']=self.error_class([msg])
-		return cleaned_data
-
-
-	TIPO_MATRIMONIO_CHOICES=(
-		('', '--- Seleccione ---'),
-        ('Catolico','Catolico'),
-        ('Mixto','Mixto'),
-        )
-	tipo_matrimonio = forms.TypedChoiceField(label=u'Tipo Matrimonio *', 
-		help_text='Elija tipo de matrimonio Ej: Catolico o Mixto', 
-		choices=TIPO_MATRIMONIO_CHOICES, required=True, 
-		widget=forms.Select(attrs={'required':''}))
-	lugar_sacramento = forms.CharField(max_length=30, required=True,label='Lugar del Sacramento *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el lugar del sacramento ej: Loja ')
-	iglesia = forms.CharField(max_length=30, required=True,label='Iglesia *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la iglesia: San Jose')
-	testigo_novio= forms.CharField(max_length=60, required=True,label='Testigo *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de testigo ej: Pablo Robles')
-	testigo_novia= forms.CharField(max_length=60, required=True,label='Testiga *',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de testiga ej:Maria Pincay')
-	libro=forms.ModelChoiceField(empty_label=None,label='Libro',
-		queryset=Libro.objects.none(),help_text='Seleccione un libro para el Matrimonio')
-
-	def __init__(self,user,novio=PerfilUsuario.objects.none(),novia=PerfilUsuario.objects.none(), 
-		celebrante=PerfilUsuario.objects.none(),*args, **kwargs):
-		
-		super(MatrimonioFormEditar, self).__init__(*args, **kwargs)
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=user,
-				periodoasignacionparroquia__estado=True)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		# asignacion = AsignacionParroquia.objects.get(persona__user=user)
-		self.fields['libro'].queryset = Libro.objects.filter(
-			tipo_libro='Matrimonio',parroquia=asignacion.parroquia)
-		self.fields['novio']=forms.ModelChoiceField(required=False, queryset=novio, 
-			empty_label=None,label='Novio *',
-			 help_text='Presione buscar para encontrar un novio',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['novia']=forms.ModelChoiceField(required=False, queryset=novia, 
-			empty_label=None,label='Novia *',
-			 help_text='Presione buscar para encontrar una novia',
-			 widget=forms.Select(attrs={'required':''}))
-		self.fields['celebrante']=forms.ModelChoiceField(required=True,queryset=celebrante,
-			empty_label=None,label='Celebrante *',
-			 help_text='Presione buscar para encontrar un sacerdote',
-			 widget=forms.Select(attrs={'required':''}))
-
-
-	class Meta():
-		model=Matrimonio
-		fields=('libro','fecha_sacramento','lugar_sacramento','celebrante',
-			'padrino','madrina','iglesia','novio','novia','testigo_novio','testigo_novia',
-			'tipo_matrimonio')
-		widgets = {
-			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			
-			}
-
 
 # Forms para Notas Marginales
 class NotaMarginalForm(ModelForm):
@@ -1267,10 +930,6 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 
 #Form para Intenciones de Misa - Funcionando
 class IntencionForm(ModelForm):
-	# fecha = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'],
-	#  widget=forms.DateTimeInput(attrs={'type':'datetime-local'}),
-	#  help_text='Ingrese la fecha de la intencion ej:2010-11-13')
-
 	
 	def clean(self):
 		cleaned_data= super(IntencionForm,self).clean()

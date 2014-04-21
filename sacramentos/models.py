@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 # Para los logs
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
@@ -31,6 +32,9 @@ class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    class Meta:
+	    abstract = True
+
     def save(self, *args, **kwargs):
         LogEntry.objects.log_action(
                     user_id=1,
@@ -41,21 +45,6 @@ class TimeStampedModel(models.Model):
                     change_message='Se update exitosamente prueba' if self.id else 'Se create exitosamente prueba' )
         super(TimeStampedModel, self).save(*args, **kwargs)
 
-
-    class Meta:
-	    abstract = True
-
-
-
-
-
-
-    # def natural_key(self):
-    #   return (self.numero_libro, self.tipo_libro)
-
-
-    # class Meta:
-    #     unique_together = (('numero_libro', 'tipo_libro'),)
 
 
 class PerfilUsuario(TimeStampedModel):
@@ -390,17 +379,39 @@ class PerfilUsuario(TimeStampedModel):
     def es_casado(self):
         if self.estado_civil=='c':
             return True
+        else:
+            return False
 
+    def es_hombre(self):
+        if self.sexo=='m':
+            return True
+        else:
+            return False
 
-    def es_comunion(self):
+    def es_mujer(self):
+        if self.sexo=='f':
+            return True
+        else:
+            return False
+
+    def tiene_bautizo(self):
         try:
-            self.feligres
+            self.bautizado
+            return True    
         except ObjectDoesNotExist:
             return False
-        else:
-            return True
+        
 
-    def es_confirmado(self):
+
+    def tiene_primera_comunion(self):
+        try:
+            self.feligres
+            return True
+        except ObjectDoesNotExist:
+            return False
+        
+
+    def tiene_confirmacion(self):
         try:
             self.confirmado
         except ObjectDoesNotExist:
@@ -408,26 +419,28 @@ class PerfilUsuario(TimeStampedModel):
         else:
             return True
 
-    def es_novio(self):
-        try:
-            self.novio
-        except ObjectDoesNotExist:
-            return False
-        else:
-            return True
+    # def es_novio(self):
+    #     try:
+    #         self.novio:
+    #     except ObjectDoesNotExist:
+    #         return False
+    #     else:
+    #         return True
 
-    def es_novia(self):
-        try:
-            self.novia
-        except ObjectDoesNotExist:
-            return False
-        else:
-            return True
+    # def es_novia(self):
+    #     try:
+    #         self.novia:
+    #     except ObjectDoesNotExist:
+    #         return False
+    #     else:
+    #         return True
 
 
+        
 class Libro(TimeStampedModel):
     
     TIPO_LIBRO_CHOICES = (
+        ('', '-- Seleccione --'),
         ('Bautismo','Bautismo'),
         ('Eucaristia','Primera Comunión'), 
         ('Confirmacion','Confirmación'),
@@ -435,15 +448,16 @@ class Libro(TimeStampedModel):
     )
 
     ESTADO_CHOICES=(
-		('Abierto','Abierto'),
+       	('Abierto','Abierto'),
 		('Cerrado','Cerrado'),
 	)
 
-    numero_libro=models.PositiveIntegerField()
-    tipo_libro=models.CharField(max_length=200, choices=TIPO_LIBRO_CHOICES)
+    numero_libro=models.PositiveIntegerField(u'Numero Libro *', help_text='Ingrese un numero para libro ej:1 - 35')
+    tipo_libro=models.CharField(u'Tipo de Libro *', max_length=200, choices=TIPO_LIBRO_CHOICES, 
+                                help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
     fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
-    estado=models.CharField(max_length=20,choices=ESTADO_CHOICES)
+    estado=models.CharField(u'Estado *', max_length=20,choices=ESTADO_CHOICES, default=None)
     parroquia = models.ForeignKey('Parroquia', related_name='parroquia', help_text='Seleccione una parroquia')
     primera_pagina = models.PositiveIntegerField(blank= True, null=True, default=1)
     primera_acta = models.PositiveIntegerField(blank= True, null=True, default=1)
@@ -467,15 +481,15 @@ class Sacramento(TimeStampedModel):
     	choices=TIPO_SACRAMENTO_CHOICES,help_text='Elija un tipo de sacramento')
     fecha_sacramento = models.DateField(help_text='Elija una fecha ej:dd/mm/aaaa')
     celebrante = models.ForeignKey(PerfilUsuario, related_name='%(class)s_sacerdote',
-        help_text='Nombre del Celebrante ej: Ob Julio Parrilla')
-    lugar_sacramento = models.CharField(max_length=30,
-    	help_text='Ingrese el lugar ej: Loja,San Pedro')
+        help_text='Escoja el celebrante. Ej: Segundo Pardo Rojas')
+    lugar_sacramento = models.CharField(u'Lugar del Sacramento *', max_length=30,
+    	help_text='Ingrese el lugar del sacramento Ej: Loja,San Pedro')
     padrino = models.CharField(max_length= 50,null=True,blank=True,
     	help_text='Ingrese el nombre de padrino ej: Jose Rivera')
     madrina = models.CharField(max_length= 50,null=True,blank=True,
     	help_text='Ingrese el nombre de madrina ej: Luisa Mera')
-    iglesia = models.CharField(max_length=30,help_text='Nombre de iglesia ej: La Catedral')
-    libro=models.ForeignKey(Libro, related_name='%(class)s_libro',
+    iglesia = models.CharField(u'Iglesia *', max_length=30,help_text='Ingrese el nombre de la iglesia Ej: La Catedral')
+    libro=models.ForeignKey(Libro, verbose_name= 'Libro *', related_name='%(class)s_libro',
     	help_text='Seleccione un libro')
     parroquia = models.ForeignKey('Parroquia', related_name='%(class)s_parroquia')
 
@@ -493,25 +507,20 @@ class Bautismo(Sacramento):
 	help_text='Nombre de abuelo materno ej: Jose Gonzalez')
     abuela_materna = models.CharField(max_length=70,null=True,blank=True,
 	help_text='Nombre de abuela materna ej: Gloria Correa')
-    vecinos_paternos = models.CharField(max_length=70,null=True,blank=True,
+    vecinos_paternos = models.CharField(u'Residencia Abuelos Paternos', max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos paternos ej: Catacocha')
-    vecinos_maternos = models.CharField(max_length=70,null=True,blank=True,
+    vecinos_maternos = models.CharField(u'Residencia Abuelos Maternos', max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos maternos ej: Malacatos')
     objects=BautismoManager()
     
     def __unicode__(self):
         return '%s %s' %(self.bautizado.user.first_name,self.bautizado.user.last_name)
 
-    # def natural_key(self):
-    # 	return (self.bautizado.user.first_name,self.bautizado.user.last_name)
-
 
 class Eucaristia(Sacramento):
     feligres=models.OneToOneField(PerfilUsuario, related_name='feligres',
 	help_text='Seleccione un feligres')
 	
- #    def natural_key(self):
-	# return (self.feligres.user.first_name,self.feligres.user.last_name)
     class Meta:
         verbose_name=u'Primera Comunión'
         verbose_name_plural=u'Primera Comunión'
@@ -527,26 +536,25 @@ class Confirmacion(Sacramento):
     def __unicode__(self):
 	   return '%s %s' %(self.confirmado.user.first_name,self.confirmado.user.last_name)
 
- #    def natural_key(self):
-	# return (self.confirmado.user.first_name,self.confirmado.user.last_name)
-
 
 class Matrimonio(Sacramento):
 
     TIPO_MATRIMONIO_CHOICES=(
+        ("", "-- Seleccione --"),
         ('Catolico','Catolico'),
         ('Mixto','Mixto'),
     )
 
-    novio=models.ForeignKey(PerfilUsuario, related_name='novio',
+    novio=models.OneToOneField(PerfilUsuario, related_name='novio',
 		help_text='Seleccione un novio')
-    novia=models.ForeignKey(PerfilUsuario, related_name='novia',
+    novia=models.OneToOneField(PerfilUsuario, related_name='novia',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
     testigo_novia = models.CharField(max_length=70,help_text='Nombre de testiga ej:Fernanda Pincay')
     vigente=models.BooleanField()
-    tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES)
+    tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES, default=TIPO_MATRIMONIO_CHOICES[1][1],
+                                    help_text='Elija tipo de matrimonio Ej: Catolico o Mixto')
 
     def __unicode__(self):
         return str(self.pagina)
