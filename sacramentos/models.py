@@ -36,6 +36,8 @@ class TimeStampedModel(models.Model):
 	    abstract = True
 
     def save(self, *args, **kwargs):
+        print args
+        print kwargs
         LogEntry.objects.log_action(
                     user_id=1,
                     content_type_id=ContentType.objects.get_for_model(self).pk,
@@ -467,6 +469,20 @@ class Libro(TimeStampedModel):
     def __unicode__(self):
         return '%s - %s' %(self.get_tipo_libro_display(), self.fecha_apertura.year)
 
+    def ultima_pagina(self):
+        return self.sacramento_libro.latest('created')
+        # return self.paginas.last()
+
+    def ultima_pagina_par(self):
+        return self.paginas.last()%2==0
+
+    def esta_vacio(self):
+        if self.sacramento_libro.all():
+            return False
+        else:
+            return True
+
+
 
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
@@ -477,10 +493,8 @@ class Sacramento(TimeStampedModel):
     	)
     numero_acta = models.PositiveIntegerField(help_text='Ingrese el numero de acta ej:3,78')
     pagina = models.PositiveIntegerField(help_text='Numero de pagina ej:1,3')
-    tipo_sacramento = models.CharField(max_length=50, 
-    	choices=TIPO_SACRAMENTO_CHOICES,help_text='Elija un tipo de sacramento')
     fecha_sacramento = models.DateField(help_text='Elija una fecha ej:dd/mm/aaaa')
-    celebrante = models.ForeignKey(PerfilUsuario, related_name='%(class)s_sacerdote',
+    celebrante = models.ForeignKey(PerfilUsuario, verbose_name='Celebrante *', related_name='%(class)s_sacerdote',
         help_text='Escoja el celebrante. Ej: Segundo Pardo Rojas')
     lugar_sacramento = models.CharField(u'Lugar del Sacramento *', max_length=30,
     	help_text='Ingrese el lugar del sacramento Ej: Loja,San Pedro')
@@ -488,10 +502,31 @@ class Sacramento(TimeStampedModel):
     	help_text='Ingrese el nombre de padrino ej: Jose Rivera')
     madrina = models.CharField(max_length= 50,null=True,blank=True,
     	help_text='Ingrese el nombre de madrina ej: Luisa Mera')
-    iglesia = models.CharField(u'Iglesia *', max_length=30,help_text='Ingrese el nombre de la iglesia Ej: La Catedral')
+    iglesia = models.ForeignKey('Iglesia', verbose_name=u'Iglesia *', help_text='Ingrese el nombre de la iglesia Ej: La Catedral')
     libro=models.ForeignKey(Libro, verbose_name= 'Libro *', related_name='%(class)s_libro',
     	help_text='Seleccione un libro')
     parroquia = models.ForeignKey('Parroquia', related_name='%(class)s_parroquia')
+
+
+    def ultimo_libro(self, libro):
+        return self.__class__.objects.filter(libro=libro).latest('created')
+
+    # Aqui debería manjerase la página como clase
+    # con atributos como numero y total de actas que contiene. 
+    # def pagina_esta_llena(self, libro):
+    #     libro.actas_por_pagina
+    #     pass
+       
+    def asignar_numero_acta(self, libro):
+        sacramento=self.__class__.objects.filter(libro=libro).latest('created')
+        self.numero_acta= sacramento.numero_acta + 1
+        if self.numero_acta%2 == 0:
+            self.pagina=sacramento.pagina
+        else:
+            self.pagina=sacramento.pagina+1
+
+
+
 
 
 
@@ -549,11 +584,11 @@ class Matrimonio(Sacramento):
 		help_text='Seleccione un novio')
     novia=models.OneToOneField(PerfilUsuario, related_name='novia',
 		help_text='Seleccione una novia')
-    testigo_novio = models.CharField(max_length=70,
+    testigo_novio = models.CharField(u'Testigo novio *',max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
-    testigo_novia = models.CharField(max_length=70,help_text='Nombre de testiga ej:Fernanda Pincay')
+    testigo_novia = models.CharField(u'Testigo novia *',max_length=70,help_text='Nombre de testiga ej:Fernanda Pincay')
     vigente=models.BooleanField()
-    tipo_matrimonio=models.CharField(max_length=100,choices=TIPO_MATRIMONIO_CHOICES, default=TIPO_MATRIMONIO_CHOICES[1][1],
+    tipo_matrimonio=models.CharField(u'Tipo Matrimonio *', max_length=100,choices=TIPO_MATRIMONIO_CHOICES, default=TIPO_MATRIMONIO_CHOICES[1][1],
                                     help_text='Elija tipo de matrimonio Ej: Catolico o Mixto')
 
     def __unicode__(self):

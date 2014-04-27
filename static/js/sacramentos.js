@@ -55,8 +55,8 @@ function inicio(){
 	controles_reportes();
 	controles_intenciones();
 	controles_provincias();
+	
 }
-
 
 // Función para añadir el widget multiselect
 function widget_multiselect(identificador){
@@ -880,11 +880,8 @@ function controles_provincias(){
 
 	($('#id_nombre').alpha({allow:" "}));
 	($('#id_abreviatura').numeric());
-
 	// para campo name de grupos
-
 	($('#id_name').alpha({allow:" "}));
-
 	// para parametriza diocesis
 	($('#id_diocesis').alpha({allow:" "}));
 	($('#id_obispo').alpha({allow:" "}));

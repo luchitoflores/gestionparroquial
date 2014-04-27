@@ -9,7 +9,7 @@ from .models import (
 PerfilUsuario,
 Libro, Bautismo, Eucaristia, Confirmacion, Matrimonio, NotaMarginal,
 Intenciones,
-Parroquia, Direccion, 
+Parroquia, Iglesia, Direccion, 
 AsignacionParroquia,
 PeriodoAsignacionParroquia,
 ParametrizaDiocesis,ParametrizaParroquia,
@@ -33,6 +33,7 @@ admin.site.register(Libro)
 admin.site.register(Matrimonio)
 admin.site.register(NotaMarginal)
 admin.site.register(Parroquia)
+admin.site.register(Iglesia)
 admin.site.register(ParametrizaDiocesis)
 admin.site.register(ParametrizaParroquia)
 admin.site.register(PerfilUsuario)

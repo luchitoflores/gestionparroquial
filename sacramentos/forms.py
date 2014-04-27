@@ -521,7 +521,7 @@ class SacramentosForm(ModelForm):
 			'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
 			'dd/mm/yyyy', 'type':'date'}),
 			'lugar_sacramento': forms.TextInput(attrs={'required':''}),
-			'iglesia': forms.TextInput(attrs={'required':''}),
+			'iglesia': forms.Select(attrs={'required':''}),
 			'celebrante': forms.Select(attrs={'required':''})
 
 			}
@@ -533,7 +533,13 @@ class SacramentosForm(ModelForm):
 		self.fields['celebrante'].empty_label = None
 		self.fields['libro'].queryset=Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
 		self.fields['libro'].empty_label=None
+		try:
+			self.fields['iglesia'].initial=Iglesia.objects.get(principal=True, parroquia=parroquia)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurada una parroquia principal')
+			
 		
+		self.fields['iglesia'].empty_label= '-- Seleccione --'
 		if not self.instance.id:
 			self.fields['celebrante'].queryset=PerfilUsuario.objects.parroco(parroquia)
 		

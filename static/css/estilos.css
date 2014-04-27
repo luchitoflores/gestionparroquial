@@ -61,6 +61,11 @@ span.errors {
 	margin: 0 0 25px;
 }
 
+.rojo{
+	color: red;
+}
+
+
 fieldset.scheduler-border {
 	border: 1px solid #ddd !important;
 	padding: 0 1.4em 1.4em 1.4em !important;

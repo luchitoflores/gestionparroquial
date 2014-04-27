@@ -757,28 +757,15 @@ def bautismo_create_view(request):
 	
 		if formBautismo.is_valid():
 			bautismo=formBautismo.save(commit=False)
-			bautismo.tipo_sacramento =  u'Bautismo'
 			libro=bautismo.libro
-			b=Bautismo.objects.filter(libro=libro, parroquia=parroquia).count()
-			
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
-			except ObjectDoesNotExist:
-				messages.error(request,'No se han configurado aún los parámetros parroquiales')
-				ctx={'formBautismo':formBautismo}
-				return render (request,'bautismo/bautismo_form.html',ctx)
-
-			if b==0:
-				bautismo.pagina=p.pagina
-				bautismo.numero_acta=p.numero_acta
-				bautismo.parroquia = parroquia
-				bautismo.save()
-				
+						
+			if libro.esta_vacio():
+				bautismo.pagina=libro.primera_pagina
+				bautismo.numero_acta=libro.primera_acta
 			else:
 				ultimo_bautismo=Bautismo.objects.filter(libro=libro,parroquia=parroquia).latest('created')
 				num=ultimo_bautismo.numero_acta
 				pagina=ultimo_bautismo.pagina
-
 				bautismo.numero_acta=num+1
 				
 				if bautismo.numero_acta%2 == 0:
@@ -786,8 +773,8 @@ def bautismo_create_view(request):
 				else:
 					bautismo.pagina=pagina+1
 				
-				bautismo.parroquia = parroquia
-				bautismo.save()
+			bautismo.parroquia = parroquia
+			bautismo.save()
 			
 			LogEntry.objects.log_action(
 					user_id=request.user.id,
@@ -827,9 +814,7 @@ def bautismo_update_view(request,pk):
 	bautismo= get_object_or_404(Bautismo, pk=pk)
 	notas=NotaMarginal.objects.filter(bautismo=bautismo)
 	try:
-
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=bautismo.parroquia, estado=True).asignacion.parroquia
+		parroquia = request.session.get('parroquia')
 			
 		if request.method == 'POST':
 			bautismo_form = BautismoForm(request,request.POST,instance=bautismo)
@@ -867,9 +852,8 @@ class BautismoListView(ListView):
 	template_name='bautismo/bautismo_list.html'
 	def get_queryset(self):
 		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Bautismo.objects.filter(parroquia=asignacion.parroquia)
+			parroquia = self.request.session.get('parroquia')
+			queryset = Bautismo.objects.filter(parroquia=parroquia)
 			return queryset
 		except: 
 			return [];
@@ -880,9 +864,8 @@ class BautismoListView(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(BautismoListView, self).dispatch(*args, **kwargs)
 
+
 # VISTAS PARA ADMIN DE EUCARISTIA
-
-
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_eucaristia', login_url='/login/', 
 	raise_exception=permission_required)
@@ -898,26 +881,20 @@ def eucaristia_create_view(request):
 			tipo_sacramento=u'Eucaristia'
 			eucaristia.tipo_sacramento=tipo_sacramento
 			libro=eucaristia.libro			
-			e=Eucaristia.objects.filter(libro=libro,parroquia=parroquia).count()
-
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
-				
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-			if e==0:
-				eucaristia.pagina=p.pagina
-				eucaristia.numero_acta=p.numero_acta
+						
+			if libro.esta_vacio():
+				eucaristia.pagina=libro.primera_pagina
+				eucaristia.numero_acta=primera_acta
 			else:
-				ultimo_eucaristia=Eucaristia.objects.filter(libro=libro,parroquia=parroquia).latest('created')
-				num=ultimo_eucaristia.numero_acta
-				pagina=ultimo_eucaristia.pagina
-
-				eucaristia.numero_acta=num+1
-				if eucaristia.numero_acta%2 == 0:
-					eucaristia.pagina=pagina
-				else:
-					eucaristia.pagina=pagina+1
+				eucaristia.asignar_numero_acta(libro)
+				# ultimo_eucaristia=Eucaristia.objects.filter(libro=libro,parroquia=parroquia).latest('created')
+				# num=ultimo_eucaristia.numero_acta
+				# pagina=ultimo_eucaristia.pagina
+				# eucaristia.numero_acta=num+1
+				# if eucaristia.numero_acta%2 == 0:
+				# 	eucaristia.pagina=pagina
+				# else:
+				# 	eucaristia.pagina=pagina+1
 			
 			eucaristia.parroquia = parroquia
 			eucaristia.save()		
@@ -992,9 +969,8 @@ class EucaristiaListView(ListView):
 	template_name='eucaristia/eucaristia_list.html'
 	def get_queryset(self):
 		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Eucaristia.objects.filter(parroquia=asignacion.parroquia)
+			parroquia = self.request.session.get('parroquia')
+			queryset = Eucaristia.objects.filter(parroquia=parroquia)
 			return queryset
 		except: 
 			return [];
@@ -1025,27 +1001,20 @@ def confirmacion_create_view(request):
 			confirmacion.tipo_sacramento='Confirmacion'
 			libro=confirmacion.libro
 			
-			c=Confirmacion.objects.filter(libro=libro,parroquia=parroquia).count()
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
-				
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-
-			if c==0:
-				confirmacion.pagina=p.pagina
-				confirmacion.numero_acta=p.numero_acta
+			if libro.esta_vacio():
+				confirmacion.pagina=libro.primera_pagina
+				confirmacion.numero_acta=libro.primera_acta
 								
 			else:
-				ultima_confirmacion=Confirmacion.objects.filter(libro=libro,parroquia=parroquia).latest('created')
-				num=ultima_confirmacion.numero_acta
-				pagina=ultima_confirmacion.pagina
-				confirmacion.numero_acta=num+1
-
-				if confirmacion.numero_acta%2 == 0:
-					confirmacion.pagina=pagina
-				else:
-					confirmacion.pagina=pagina+1
+				confirmacion.asignar_numero_acta(libro)
+				# ultima_confirmacion=Confirmacion.objects.filter(libro=libro,parroquia=parroquia).latest('created')
+				# num=ultima_confirmacion.numero_acta
+				# confirmacion.numero_acta=num+1
+				# pagina=ultima_confirmacion.pagina
+				# if confirmacion.numero_acta%2 == 0:
+				# 	confirmacion.pagina=pagina
+				# else:
+				# 	confirmacion.pagina=pagina+1
 			
 			confirmacion.parroquia = parroquia
 			confirmacion.save()
@@ -1127,12 +1096,11 @@ class ConfirmacionListView(ListView):
 
 	def get_queryset(self):
 		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user,
-				periodoasignacionparroquia__estado=True)
-			queryset = Confirmacion.objects.filter(parroquia=asignacion.parroquia)
+			parroquia = self.request.session.get('parroquia')
+			queryset = Confirmacion.objects.filter(parroquia=parroquia)
 			return queryset
 		except: 
-			return [];
+			return []
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_confirmacion', login_url='/login/',
@@ -1161,16 +1129,9 @@ def matrimonio_create_view(request):
 			novia=matrimonio.novia
 			libro=matrimonio.libro
 			
-			m=Matrimonio.objects.filter(libro=libro,parroquia=parroquia).count()
-			
-			try:
-				p=ParametrizaParroquia.objects.get(parroquia=parroquia)
-									
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-			if m==0:
-				matrimonio.pagina=p.pagina
-				matrimonio.numero_acta=p.numero_acta
+			if libro.esta_vacio():
+				matrimonio.pagina=libro.primera_pagina
+				matrimonio.numero_acta=libro.primera_acta
 			else:
 				ultimo_matrimonio=Matrimonio.objects.filter(parroquia=parroquia).latest('created')
 				num=ultimo_matrimonio.numero_acta
