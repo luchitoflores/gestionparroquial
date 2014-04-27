@@ -33,25 +33,26 @@ class DivErrorList(ErrorList):
 
 #forms para manejo de usuarios
 class UsuarioForm(ModelForm):
-	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
-		help_text='Ingrese los nombres completos. Ej: Juan José',
-		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
-		help_text='Ingrese los apellidos completos. Ej: Castro Pardo',
-		widget=forms.TextInput(attrs={'required': ''}))
-	groups = forms.ModelMultipleChoiceField(label='Grupos', required=False, queryset= Group.objects.all(),
-		help_text = 'Los grupos a los que este usuario pertenece. Un usuario obtendrá'+
-		' todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.',
-		 widget=forms.CheckboxSelectMultiple())
-	email = forms.EmailField(max_length=40, label='Email', 
-		help_text='Ingrese correo electrónico. Ej: diocesisloja@gmail.com', required=False)
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email', 'groups')
+		widgets = {
+		'first_name': forms.TextInput(attrs={'required': ''}),
+		'last_name': forms.TextInput(attrs={'required': ''}),
+		'groups': forms.CheckboxSelectMultiple(attrs={'required': ''}),
+		}
 		
-	def __init__(self, *args, **kwargs):
-		super(UsuarioForm, self).__init__(*args, **kwargs)
-
+	def __init__(self, *args, *kwargs):
+		super(UsuarioForm, self).__init__(*args, *kwargs)
+		self.fields['first_name'].label = 'Nombres *'
+		self.fields['first_name'].help_text ='Ingrese los nombres completos. Ej: Juan José'
+		self.fields['last_name'].label = 'Apellidos *'
+		self.fields['last_name'].help_text ='Ingrese los apellidos completos. Ej: Castro Pardo'
+		self.fields['groups'].label = 'Grupos'
+		self.fields['groups'].help_text ='Los grupos a los que este usuario pertenece. Un usuario obtendrá'+
+		' todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.'
+		self.fields['email'].help_text = 'Ingrese correo electrónico. Ej: diocesisloja@gmail.com'
+		self.fields['email'].required = False
 		if self.instance.id:
 			self.fields['groups'].required=True
 		else: 
@@ -61,142 +62,48 @@ class UsuarioForm(ModelForm):
 		email = self.cleaned_data.get('email')
 		if email:
 			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
+				usuario = User.objects.filter(email=email).exclude(pk=self.instance.id)
 				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 			else:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
+				usuario = User.objects.filter(email=email)
 				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 		return email
 
 
-class UsuarioPadreForm(ModelForm):
-	first_name = forms.CharField(max_length=30, required=True, label='Nombres *',
-	 help_text='Ingrese los nombres completos. Ej: Juan José',
-		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
-		help_text='Ingrese los apellidos completos. Ej: Castro Pardo',
-		widget=forms.TextInput(attrs={'required': ''}))
-	email = forms.EmailField(max_length=40, required=False, label='Email', 
-		help_text='Ingrese su dirección de correo electrónico')
-
+class UsuarioPadreForm(UsuarioForm):
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email')
-
-	def email_clean(self):
-		email = self.cleaned_data.get('email')
-		if email:
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-			else:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-		return email
 
 class UsuarioSecretariaForm(ModelForm):
-	first_name = forms.CharField(max_length=30, required=True, label='Nombres *',
-	 help_text='Ingrese los nombres completos. Ej: Juan José',
-		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
-		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
-		widget=forms.TextInput(attrs={'required': ''}))
-	email = forms.EmailField(max_length=40, required=True, label='Email *', 
-		help_text='Ingrese su dirección de correo electrónico',
-		widget=forms.TextInput(attrs={'required': ''}))
-
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email')
 
-
-	def email_clean(self):
-		email = self.cleaned_data.get('email')
-		if email:
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-			else:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-		return email
+	def __init__(self, *args, *kwargs):
+		super(UsuarioForm, self).__init__(*args, *kwargs)
+		self.fields['email'].required = True
 
 class UsuarioSacerdoteForm(ModelForm):
-	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
-		help_text='Ingrese los nombres completos. Ej: Juan José',
-		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
-		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
-		widget=forms.TextInput(attrs={'required': ''}))
-	groups = forms.ModelMultipleChoiceField(label='Grupos *', queryset= Group.objects.all().exclude(name='Feligres'),
-		help_text = 'Los grupos a los que este usuario pertenece. '+
-		'Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos.'+
-		' Ud. puede seleccionar más de una opción.', widget=forms.CheckboxSelectMultiple(), required=False)
-	email = forms.EmailField(max_length=40, required=True, label='Email *', 
-		help_text='Ingrese el email. Ej: juan_salinas12@gmail.com',
-		widget=forms.TextInput(attrs={'required': ''}))
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email','groups')
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioSacerdoteForm, self).__init__(*args, **kwargs)
-		if self.instance.id:
-			self.fields['groups'].required=True
-		else: 
-			self.fields['groups'].required=False
-
-	def email_clean(self):
-		email = self.cleaned_data.get('email')
-		if email:
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-			else:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-		return email
+		self.fields['email'].required = True
+		
 
 class UsuarioAdministradorForm(ModelForm):
-	first_name = forms.CharField(max_length=30, required=True, label='Nombres *', 
-		help_text='Ingrese los nombres completos. Ej: Juan José',
-		widget=forms.TextInput(attrs={'required': ''}))
-	last_name = forms.CharField(max_length=40, required=True, label='Apellidos *', 
-		help_text='Ingrese los nombres completos. Ej: Castro Pardo',
-		widget=forms.TextInput(attrs={'required': ''}))
-	groups = forms.ModelMultipleChoiceField(required=False, label='Grupos *', queryset= Group.objects.all().order_by('name'),
-		help_text = 'Los grupos a los que este usuario pertenece. '+
-		'Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos.'+
-		' Ud. puede seleccionar más de una opción.', widget=forms.CheckboxSelectMultiple())
-	email = forms.EmailField(max_length=40, required=True, label='Email *', 
-		help_text='Ingrese el email. Ej: juan_salinas12@gmail.com',
-		widget=forms.TextInput(attrs={'required': ''}))
-	is_staff = forms.BooleanField(label='Es activo?', required=False,
-		help_text='Marque la casilla si quiere que el usuario pueda entrar al sistema')
-	
 	class Meta():
 		model = User
 		fields= ('first_name', 'last_name', 'email','groups', 'is_staff')
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioAdministradorForm, self).__init__(*args, **kwargs)
-		
-		if self.instance.id:
-			self.fields['groups'].required=True
-		else: 
-			self.fields['groups'].required=False
-
-	def email_clean(self):
-		email = self.cleaned_data.get('email')
-		if email:
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(user__email=email).exclude(pk=self.instance.id)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-			else:
-				usuario = PerfilUsuario.objects.filter(user__email=email)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
-		return email
-
+		self.fields['email'].required = True
+		self.fields['is_staff'].label = 'Es activo?'
+		self.fields['is_staff'].help_text= 'Marque la casilla si quiere que el usuario pueda entrar al sistema'
 
 		
 
@@ -811,35 +718,30 @@ class MatrimonioForm(SacramentosForm):
 
 # Forms para Notas Marginales
 class NotaMarginalForm(ModelForm):
-	
-	descripcion=forms.CharField(max_length=200,required=True,label='Descripción *',
-		widget=forms.Textarea(attrs={'required':''}),
-		help_text='Ingrese una descripcion ej: di copia para matrimonio')
 	class Meta():
 		model= NotaMarginal
 		fields=('descripcion',)
+		widgets = {
+		'descripcion': forms.Textarea(attrs={'required':''}),
+		}
 		
-
-
 #Forms para Parroquia - Funcionando
 class ParroquiaForm(ModelForm):
-	nombre=forms.CharField(max_length=30, required=True,label='Nombre de parroquia',
-		widget=forms.TextInput(attrs={'required':''}),
-		help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
 	class Meta:
 		model = Parroquia
 		fields = ('nombre',)
+		widgets = {
+		'nombre': forms.TextInput(attrs={'required':''}),
+		}
+
 
 #Form para asignar parroquia
 class AsignarParroquiaForm(ModelForm):
 	persona = forms.ModelChoiceField(label = 'Sacerdote', queryset=PerfilUsuario.objects.none(), empty_label='-- Buscar --', widget=forms.Select(attrs={'required':'', 'id':'id_celebrante'})) 
-	
-
 	def __init__(self, parroquia = Parroquia.objects.all(), *args, **kwargs):
 		super(AsignarParroquiaForm, self).__init__(*args, **kwargs)
 		self.fields['parroquia']=forms.ModelChoiceField(required=True, queryset=parroquia, 
 			empty_label=None)
-
 
 	class Meta:
 		model = AsignacionParroquia
@@ -936,7 +838,18 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 
 #Form para Intenciones de Misa - Funcionando
 class IntencionForm(ModelForm):
-	
+	class Meta:
+		model = Intenciones
+		fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
+		widgets = {
+			'intencion': forms.Textarea(attrs={'required':'', 'title':'intencion'}),
+			'oferente': forms.TextInput(attrs={'required':''}),
+			'ofrenda': forms.TextInput(attrs={'required':''}),
+			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
+			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
+			'iglesia': forms.TextInput(attrs={'required':''}),		
+		}
+
 	def clean(self):
 		cleaned_data= super(IntencionForm,self).clean()
 		hora = self.cleaned_data.get('hora')
@@ -953,17 +866,6 @@ class IntencionForm(ModelForm):
 		return cleaned_data
 
 
-	class Meta:
-		model = Intenciones
-		fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
-		widgets = {
-			'intencion': forms.Textarea(attrs={'required':'', 'title':'intencion'}),
-			'oferente': forms.TextInput(attrs={'required':''}),
-			'ofrenda': forms.TextInput(attrs={'required':''}),
-			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
-			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
-			'iglesia': forms.TextInput(attrs={'required':''}),		
-		}
 
 class ParametrizaDiocesisForm(ModelForm):
 	class Meta:
@@ -1104,7 +1006,6 @@ class IglesiaForm(forms.ModelForm):
 
 				if iglesia:
 					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
-		
 			
 		return principal
 

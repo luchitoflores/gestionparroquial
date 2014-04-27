@@ -296,7 +296,7 @@ class PerfilUsuario(TimeStampedModel):
         ('ZW', 'Zimbabue')
     )
 
-
+    # se lo puede llamar con related_name usuario o con el método get_profile
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='usuario', null=True, blank=True)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True, help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador', choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
@@ -525,12 +525,6 @@ class Sacramento(TimeStampedModel):
         else:
             self.pagina=sacramento.pagina+1
 
-
-
-
-
-
-    
 class Bautismo(Sacramento):
     bautizado=models.OneToOneField(PerfilUsuario, related_name='bautizado',
         help_text='Seleccione un feligres')
@@ -597,11 +591,9 @@ class Matrimonio(Sacramento):
     # def natural_key(self):
     # 	return (self.novio.user.last_name, self.novia.user.last_name)
 
-    
-
 class NotaMarginal(TimeStampedModel):
     fecha = models.DateField(help_text='Ingrese una fecha Ej: 16/09/2013')
-    descripcion = models.TextField(max_length=200) 
+    descripcion = models.TextField('Descripción *', max_length=200, help_text='Ingrese una descripcion ej: Di copia para matrimonio') 
     bautismo= models.ForeignKey('Bautismo',related_name='bautismo',null=True,blank=True)
     matrimonio=models.ForeignKey('Matrimonio',related_name='matrimonio',null=True,
 	blank=True)
@@ -681,7 +673,7 @@ class Intenciones(TimeStampedModel):
 
 
 class Parroquia(TimeStampedModel):
-    nombre=models.CharField('Nombre de Parroquia',max_length=50)
+    nombre=models.CharField('Nombre de Parroquia *',max_length=50, help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
     direccion=models.ForeignKey(Direccion, related_name='direccion_parroquia')
 
     def __unicode__(self):
