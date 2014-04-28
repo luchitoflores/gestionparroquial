@@ -337,13 +337,13 @@ class SacramentosForm(ModelForm):
 		self.fields['celebrante'].empty_label = None
 		self.fields['libro'].queryset=Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
 		self.fields['libro'].empty_label=None
+		self.fields['iglesia'].empty_label= '-- Seleccione --'
+		self.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
 		try:
 			self.fields['iglesia'].initial=Iglesia.objects.get(principal=True, parroquia=parroquia)
 		except ObjectDoesNotExist:
-			messages.info(request,'No tiene configurada una parroquia principal')
+			messages.info(request,'No tiene configurada una Iglesia principal')
 			
-		
-		self.fields['iglesia'].empty_label= '-- Seleccione --'
 		if not self.instance.id:
 			self.fields['celebrante'].queryset=PerfilUsuario.objects.parroco(parroquia)
 		
@@ -499,31 +499,27 @@ class MatrimonioForm(SacramentosForm):
 		model=Matrimonio
 		fields= SacramentosForm.Meta.fields + ('novio','novia','testigo_novio','testigo_novia',
 			'tipo_matrimonio')
-
-		widgets = {
-		'tipo_matrimonio': forms.Select(attrs={'required':''}),
-		'testigo_novio': forms.TextInput(attrs={'required':''}),
-		'testigo_novia': forms.TextInput(attrs={'required':''}),
-		'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-		'dd/mm/yyyy', 'type':'date'}),
-		'lugar_sacramento': forms.TextInput(attrs={'required':''}),
-		'iglesia': forms.TextInput(attrs={'required':''}),
-		'celebrante': forms.Select(attrs={'required':''})
-		}
-
-		# widgets = SacramentosForm.Meta.widgets.update({
+		# widgets = {
 		# 'tipo_matrimonio': forms.Select(attrs={'required':''}),
 		# 'testigo_novio': forms.TextInput(attrs={'required':''}),
 		# 'testigo_novia': forms.TextInput(attrs={'required':''}),
-		# })
-		
+		# 'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
+		# 'dd/mm/yyyy', 'type':'date'}),
+		# 'lugar_sacramento': forms.TextInput(attrs={'required':''}),
+		# 'iglesia': forms.TextInput(attrs={'required':''}),
+		# 'celebrante': forms.Select(attrs={'required':''})
+		# }
+
 	def __init__(self, request, *args, **kwargs):
-		
 		super(MatrimonioForm, self).__init__(request, *args, **kwargs)
 		parroquia = request.session.get('parroquia')
 		self.fields['tipo_matrimonio'].empty_label="-- Seleccione --"
 		self.fields['libro'].queryset = Libro.objects.filter(
 			estado='Abierto',tipo_libro='Matrimonio',parroquia=parroquia)
+		self.fields['tipo_matrimonio'].widget = forms.Select(attrs={'required':''}, choices=Matrimonio.TIPO_MATRIMONIO_CHOICES)
+		self.fields['testigo_novio'].widget =  forms.TextInput(attrs={'required':''})
+		self.fields['testigo_novia'].widget =  forms.TextInput(attrs={'required':''})
+
 		if not self.instance.id:
 			self.fields['novio']=forms.ModelChoiceField(required=True, queryset=PerfilUsuario.objects.none(),
 				 empty_label='-- Buscar o Crear --', label='Novio *',
@@ -744,8 +740,13 @@ class IntencionForm(ModelForm):
 			'ofrenda': forms.TextInput(attrs={'required':''}),
 			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
 			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
-			'iglesia': forms.TextInput(attrs={'required':''}),		
+			'iglesia': forms.Select(attrs={'required':''}),		
 		}
+
+	def __init__(self, *args, **kwargs):
+		super(IntencionForm, self).__init__(*args, **kwargs)
+		self.fields['iglesia'].empty_label= '-- Seleccione --'
+		
 
 	def clean(self):
 		cleaned_data= super(IntencionForm,self).clean()

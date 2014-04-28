@@ -1425,53 +1425,57 @@ class ParroquiaListView(BusquedaMixin, ListView):
 def intencion_create_view(request):
 	template_name = 'intencion/intencion_form.html'
 	success_url = '/intencion/'
-
-	if not 'parroquia' in request.session:
+	parroquia = request.session.get('parroquia')
+	if not parroquia:
 		raise PermissionDenied
 
 	if request.method == 'POST':
 		form_intencion = IntencionForm(request.POST)
+		form_intencion.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
+		
 		if form_intencion.is_valid():
 			fecha = request.POST.get('fecha')
 			hora = request.POST.get('hora')
 			individual = request.POST.get('individual')
 			intencion = form_intencion.save(commit=False)
-			try:
-				asignacion = AsignacionParroquia.objects.get(persona__user=request.user, periodoasignacionparroquia__estado=True)
-				parroquia = asignacion.parroquia
-				intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
-				intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
-				if intencion_unica:
-					messages.error(request, u'Los datos del formulario son incorrectos')
-					form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención, porque ya existe una intención única para el dia y hora indicado'])
-					ctx = {'form': form_intencion}
-					return render(request, template_name, ctx)
-				elif intenciones_colectivas and individual:
-					messages.error(request, u'Los datos del formulario son incorrectos')
-					form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención única, porque ya existen intenciones colectivas para el dia y hora indicado'])
-					ctx = {'form': form_intencion, 'object': intencion}
-					return render(request, template_name, ctx)
-				else:
-					# messages.success(request, 'Creado exitosamente: %s' %individual)
-					intencion.parroquia = asignacion.parroquia
-					intencion.save()
-					LogEntry.objects.log_action(
-	            	user_id=request.user.id,
-	            	content_type_id=ContentType.objects.get_for_model(intencion).pk,
-	            	object_id=intencion.id,
-	            	object_repr=unicode(intencion),
-	            	action_flag=ADDITION,
-	            	change_message="Creo una intencion")
-					messages.success(request, 'Creado exitosamente')
-					return HttpResponseRedirect(success_url)
-			except ObjectDoesNotExist:
-				raise PermissionDenied
+			
+			intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
+			intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
+			if intencion_unica:
+				messages.error(request, u'Los datos del formulario son incorrectos')
+				form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención, porque ya existe una intención única para el dia y hora indicado'])
+				ctx = {'form': form_intencion}
+				return render(request, template_name, ctx)
+			elif intenciones_colectivas and individual:
+				messages.error(request, u'Los datos del formulario son incorrectos')
+				form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención única, porque ya existen intenciones colectivas para el dia y hora indicado'])
+				ctx = {'form': form_intencion, 'object': intencion}
+				return render(request, template_name, ctx)
+			else:
+				# messages.success(request, 'Creado exitosamente: %s' %individual)
+				intencion.parroquia = parroquia
+				intencion.save()
+				LogEntry.objects.log_action(
+            	user_id=request.user.id,
+            	content_type_id=ContentType.objects.get_for_model(intencion).pk,
+            	object_id=intencion.id,
+            	object_repr=unicode(intencion),
+            	action_flag=ADDITION,
+            	change_message="Creo una intencion")
+				messages.success(request, 'Creado exitosamente')
+				return HttpResponseRedirect(success_url)
+		
 		else:
 			messages.error(request, u'Los datos del formulario son incorrectos')
 			ctx = {'form': form_intencion}
 			return render(request, template_name, ctx)
 	else:
 		form_intencion = IntencionForm()
+		form_intencion.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
+		try:
+			form_intencion.fields['iglesia'].initial=Iglesia.objects.get(principal=True, parroquia=parroquia)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurada una Iglesia principal')
 		ctx = {'form': form_intencion}
 		return render(request, template_name, ctx)
 
@@ -1479,52 +1483,56 @@ def intencion_create_view(request):
 @permission_required('sacramentos.change_intenciones', login_url='/login/', 
 	raise_exception=permission_required)
 def intencion_edit_view(request, pk):
-	intencion = get_object_or_404(Intenciones, pk=pk)
-	try:
-		periodo_asignacion = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True, asignacion__parroquia=intencion.parroquia)
-		template_name = 'intencion/intencion_form.html'
-		success_url = '/intencion/'
-		if request.method == 'POST':
-			form_intencion = IntencionForm(request.POST, instance=intencion)
-			if form_intencion.is_valid():
-				fecha = request.POST.get('fecha')
-				hora = request.POST.get('hora')
-				individual = request.POST.get('individual')
-				intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia, individual=True).exclude(pk=pk)
-				intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia).exclude(pk=pk)
-				if intencion_unica:
-					messages.error(request, u'Los datos del formulario son incorrectos')
-					form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención, porque ya existe una intención única para el dia y hora indicados'])
-					ctx = {'form': form_intencion, 'object': intencion}
-					return render(request, template_name, ctx)
-				elif intenciones_colectivas and individual:
-					messages.error(request, u'Los datos del formulario son incorrectos')
-					form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención como única, porque ya existen intenciones colectivas para el dia y hora indicados'])
-					ctx = {'form': form_intencion, 'object': intencion}
-					return render(request, template_name, ctx)
-				else:
-					intencion = form_intencion.save(commit=False)
-					intencion.save()
-					LogEntry.objects.log_action(
-		            user_id=request.user.id,
-		            content_type_id=ContentType.objects.get_for_model(intencion).pk,
-		            object_id=intencion.id,
-		            object_repr=unicode(intencion),
-		            action_flag=ADDITION,
-		            change_message="Creo una intencion")
-					messages.success(request, 'Actualizado exitosamente')
-					return HttpResponseRedirect(success_url)
-			else:
-				messages.error(request, u'Los datos del formulario son incorrectos')
-				ctx = {'form': form_intencion}
-				return render(request, template_name, ctx)
-		else:
-			form_intencion = IntencionForm(instance=intencion)
-			ctx = {'form': form_intencion, 'object': intencion}
-			return render(request, template_name, ctx)
-	
-	except ObjectDoesNotExist:
+	parroquia = request.session.get('parroquia')
+	if not parroquia:
 		raise PermissionDenied
+		
+	intencion = get_object_or_404(Intenciones, pk=pk)
+	
+	template_name = 'intencion/intencion_form.html'
+	success_url = '/intencion/'
+	if request.method == 'POST':
+		form_intencion = IntencionForm(request.POST, instance=intencion)
+		form_intencion.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
+		
+		if form_intencion.is_valid():
+			fecha = request.POST.get('fecha')
+			hora = request.POST.get('hora')
+			individual = request.POST.get('individual')
+			intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia, individual=True).exclude(pk=pk)
+			intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia).exclude(pk=pk)
+			if intencion_unica:
+				messages.error(request, u'Los datos del formulario son incorrectos')
+				form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención, porque ya existe una intención única para el dia y hora indicados'])
+				ctx = {'form': form_intencion, 'object': intencion}
+				return render(request, template_name, ctx)
+			elif intenciones_colectivas and individual:
+				messages.error(request, u'Los datos del formulario son incorrectos')
+				form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención como única, porque ya existen intenciones colectivas para el dia y hora indicados'])
+				ctx = {'form': form_intencion, 'object': intencion}
+				return render(request, template_name, ctx)
+			else:
+				intencion = form_intencion.save(commit=False)
+				intencion.save()
+				LogEntry.objects.log_action(
+	            user_id=request.user.id,
+	            content_type_id=ContentType.objects.get_for_model(intencion).pk,
+	            object_id=intencion.id,
+	            object_repr=unicode(intencion),
+	            action_flag=ADDITION,
+	            change_message="Creo una intencion")
+				messages.success(request, 'Actualizado exitosamente')
+				return HttpResponseRedirect(success_url)
+		else:
+			messages.error(request, u'Los datos del formulario son incorrectos')
+			ctx = {'form': form_intencion}
+			return render(request, template_name, ctx)
+	else:
+		form_intencion = IntencionForm(instance=intencion)
+		ctx = {'form': form_intencion, 'object': intencion}
+		return render(request, template_name, ctx)
+	
+
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_intenciones', login_url='/login/', 
@@ -1538,19 +1546,6 @@ def intencion_list_view(request):
 		return render(request, template_name, ctx)
 	else:
 		raise PermissionDenied
-
-	# try:
-	# 	parroquia = AsignacionParroquia.objects.get(persona__user=request.user, periodoasignacionparroquia__estado=True).parroquia
-	# 	object_list = Intenciones.objects.filter(parroquia=parroquia).order_by('fecha', 'hora')
-	# 	ctx = {'object_list': object_list} 
-	# 	return render(request, template_name, ctx)
-	# except ObjectDoesNotExist:
-	# 	object_list = Intenciones.objects.all()
-	# 	ctx = {'object_list': object_list} 
-	# 	return render(request, template_name, ctx)
-
-	
-	
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_asignarsacerdote', login_url='/login/', 

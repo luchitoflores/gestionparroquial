@@ -298,6 +298,7 @@ class PerfilUsuario(TimeStampedModel):
 
     # se lo puede llamar con related_name usuario o con el método get_profile
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='usuario', null=True, blank=True)
+    # full_name = models.CharField(max_length=100, null=True, blank=True)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True, help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador', choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
     padre = models.ForeignKey('PerfilUsuario', related_name='papa', null=True, blank=True, limit_choices_to={'sexo':'m'}, help_text='Presione buscar, si no está en la lista, presione crear')
@@ -656,7 +657,7 @@ class Intenciones(TimeStampedModel):
     parroquia = models.ForeignKey('Parroquia')
     individual = models.BooleanField('Es única?', 
         help_text='Marque para indicar que la intención será la única en la misa')
-    iglesia = models.CharField(max_length=30, help_text='Ingrese el nombre de la iglesia en donde se celebrará la intención')
+    iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
 
     class Meta:
         ordering = ['fecha','hora']

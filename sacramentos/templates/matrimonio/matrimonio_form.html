@@ -56,85 +56,6 @@ Agregar Matrimonio
 	<div class='row'>
 		<div class='span10'>
 			<fieldset class='scheduler-border'>
-				<legend class='scheduler-border'>Datos del Sacramento</legend>
-				<div class="row">
-					<div class="span4">
-						<div class='control-group'>
-							<label for="id_libro" class='control-label'>{{form_matrimonio.libro.label}}</label>
-							<div class='controls'>
-								{{form_matrimonio.libro}}
-
-							</div>
-							<div class="controls help-text">
-								{{form_matrimonio.libro.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_matrimonio.libro.errors}}
-								</div>
-							</div>
-						</div>
-						
-						<div class='control-group'>
-							<label for="id_tipo_matrimonio" class='control-label'>{{form_matrimonio.tipo_matrimonio.label}}</label>
-							<div class='controls'>
-								{{form_matrimonio.tipo_matrimonio}}
-							</div>
-							<div class="controls help-text">
-								{{form_matrimonio.tipo_matrimonio.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_matrimonio.tipo_matrimonio.errors}}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="span4">
-						
-						<div class='control-group'>
-							<label for="id_fecha_sacramento" class='control-label'>{{form_matrimonio.fecha_sacramento.label}} *</label>
-							<div class='controls'>
-								{{form_matrimonio.fecha_sacramento}}
-							</div>
-							<div class="controls help-text">
-								{{form_matrimonio.fecha_sacramento.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_matrimonio.fecha_sacramento.errors}}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span8">
-						<div class='control-group'>
-							<label for="id_celebrante" class='control-label'>
-								{{form_matrimonio.celebrante.label}}
-							</label>
-							<div class='controls'>
-								{{form_matrimonio.celebrante}}
-								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
-							</div>
-							<div class="controls help-text">
-								{{form_matrimonio.celebrante.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_matrimonio.celebrante.errors}}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-
-			</fieldset>
-
-			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos de los Novios</legend>
 				<div class='control-group'>
 					<label for="id_novio" class='control-label'>{{form_matrimonio.novio.label}}</label>
@@ -171,13 +92,65 @@ Agregar Matrimonio
 						</div>
 					</div>
 				</div>
-
-
 			</fieldset>
+
 			<fieldset class='scheduler-border'>
-				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
+				<legend class='scheduler-border'>Datos del Sacramento</legend>
 				<div class="row">
-					<div class='span4'>
+					<div class="span4">
+						<div class='control-group'>
+							<label for="id_libro" class='control-label'>{{form_matrimonio.libro.label}}</label>
+							<div class='controls'>
+								{{form_matrimonio.libro}}
+
+							</div>
+							<div class="controls help-text">
+								{{form_matrimonio.libro.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_matrimonio.libro.errors}}
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="span4">
+						<div class='control-group'>
+							<label for="id_tipo_matrimonio" class='control-label'>{{form_matrimonio.tipo_matrimonio.label}}</label>
+							<div class='controls'>
+								{{form_matrimonio.tipo_matrimonio}}
+							</div>
+							<div class="controls help-text">
+								{{form_matrimonio.tipo_matrimonio.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_matrimonio.tipo_matrimonio.errors}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="span8">
+						<div class='control-group'>
+							<label for="id_fecha_sacramento" class='control-label'>{{form_matrimonio.fecha_sacramento.label}} *</label>
+							<div class='controls'>
+								{{form_matrimonio.fecha_sacramento}}
+							</div>
+							<div class="controls help-text">
+								{{form_matrimonio.fecha_sacramento.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_matrimonio.fecha_sacramento.errors}}
+								</div>
+							</div>
+						</div>
+
 						<div class='control-group'>
 							<label for="id_lugar_sacramento" class='control-label'>{{form_matrimonio.lugar_sacramento.label}}</label>
 							<div class='controls'>
@@ -207,6 +180,33 @@ Agregar Matrimonio
 							</div>
 						</div>
 						<div class='control-group'>
+							<label for="id_celebrante" class='control-label'>
+								{{form_matrimonio.celebrante.label}}
+							</label>
+							<div class='controls'>
+								{{form_matrimonio.celebrante}}
+								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							</div>
+							<div class="controls help-text">
+								{{form_matrimonio.celebrante.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_matrimonio.celebrante.errors}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Datos de Testigos y Padrinos</legend>
+				<div class="row">
+					<div class='span4'>
+						
+						<div class='control-group'>
 							<label for="id_testigo_novio" class='control-label'>{{form_matrimonio.testigo_novio.label}}</label>
 							<div class='controls'>
 								{{form_matrimonio.testigo_novio}}
@@ -220,11 +220,6 @@ Agregar Matrimonio
 								</div>
 							</div>
 						</div>
-						
-
-					</div>
-					<div class="span4">
-
 						<div class='control-group'>
 							<label for="id_testigo_novia" class='control-label'>{{form_matrimonio.testigo_novia.label}}</label>
 							<div class='controls'>
@@ -239,6 +234,9 @@ Agregar Matrimonio
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="span4">
+
 						<div class='control-group'>
 							<label for="id_padrino" class='control-label'>{{form_matrimonio.padrino.label}}</label>
 							<div class='controls'>

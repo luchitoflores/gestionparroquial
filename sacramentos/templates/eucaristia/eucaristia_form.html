@@ -116,6 +116,43 @@ Agregar Primera Comunión
 						</div>
 					</div>
 
+
+					<div class='control-group'>
+						<label for="id_iglesia" class='control-label'>
+							{{form_eucaristia.iglesia.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.iglesia}}
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.iglesia.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.iglesia.errors}}
+							</div>
+						</div>
+					</div>
+					
+					
+					
+					<div class='control-group'>
+						<label for="id_celebrante" class='control-label'>
+							{{form_eucaristia.celebrante.label}}
+						</label>
+						<div class='controls'>
+							{{form_eucaristia.celebrante}}
+							<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+						</div>
+						<div class="controls help-text">
+							{{form_eucaristia.celebrante.help_text}}
+						</div>
+						<div class="controls">
+							<div class="errors">								
+								{{form_eucaristia.celebrante.errors}}
+							</div>
+						</div>
+					</div>
 					<div class='control-group'>
 						<label for="id_padrino" class='control-label'>
 							{{form_eucaristia.padrino.label}}
@@ -146,43 +183,6 @@ Agregar Primera Comunión
 						<div class="controls">
 							<div class="errors">								
 								{{form_eucaristia.madrina.errors}}
-							</div>
-						</div>
-					</div>
-
-					<div class='control-group'>
-						<label for="id_iglesia" class='control-label'>
-							{{form_eucaristia.iglesia.label}}
-						</label>
-						<div class='controls'>
-							{{form_eucaristia.iglesia}}
-						</div>
-						<div class="controls help-text">
-							{{form_eucaristia.iglesia.help_text}}
-						</div>
-						<div class="controls">
-							<div class="errors">								
-								{{form_eucaristia.iglesia.errors}}
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				<div class="span8">
-					<div class='control-group'>
-						<label for="id_celebrante" class='control-label'>
-							{{form_eucaristia.celebrante.label}}
-						</label>
-						<div class='controls'>
-							{{form_eucaristia.celebrante}}
-							<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
-						</div>
-						<div class="controls help-text">
-							{{form_eucaristia.celebrante.help_text}}
-						</div>
-						<div class="controls">
-							<div class="errors">								
-								{{form_eucaristia.celebrante.errors}}
 							</div>
 						</div>
 					</div>

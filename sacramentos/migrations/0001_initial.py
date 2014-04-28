@@ -8,20 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Libro'
-        db.create_table(u'sacramentos_libro', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('numero_libro', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('tipo_libro', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('fecha_apertura', self.gf('django.db.models.fields.DateField')()),
-            ('fecha_cierre', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('estado', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('parroquia', self.gf('django.db.models.fields.related.ForeignKey')(related_name='parroquia', to=orm['sacramentos.Parroquia'])),
-        ))
-        db.send_create_signal(u'sacramentos', ['Libro'])
-
         # Adding model 'PerfilUsuario'
         db.create_table(u'sacramentos_perfilusuario', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -41,6 +27,22 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'sacramentos', ['PerfilUsuario'])
 
+        # Adding model 'Libro'
+        db.create_table(u'sacramentos_libro', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('numero_libro', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('tipo_libro', self.gf('django.db.models.fields.CharField')(default='', max_length=200)),
+            ('fecha_apertura', self.gf('django.db.models.fields.DateField')()),
+            ('fecha_cierre', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('estado', self.gf('django.db.models.fields.CharField')(default=None, max_length=20)),
+            ('parroquia', self.gf('django.db.models.fields.related.ForeignKey')(related_name='parroquia', to=orm['sacramentos.Parroquia'])),
+            ('primera_pagina', self.gf('django.db.models.fields.PositiveIntegerField')(default=1, null=True, blank=True)),
+            ('primera_acta', self.gf('django.db.models.fields.PositiveIntegerField')(default=1, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'sacramentos', ['Libro'])
+
         # Adding model 'Sacramento'
         db.create_table(u'sacramentos_sacramento', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -48,13 +50,12 @@ class Migration(SchemaMigration):
             ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('numero_acta', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('pagina', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('tipo_sacramento', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('fecha_sacramento', self.gf('django.db.models.fields.DateField')()),
             ('celebrante', self.gf('django.db.models.fields.related.ForeignKey')(related_name='sacramento_sacerdote', to=orm['sacramentos.PerfilUsuario'])),
             ('lugar_sacramento', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('padrino', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('madrina', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('iglesia', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('iglesia', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sacramentos.Iglesia'])),
             ('libro', self.gf('django.db.models.fields.related.ForeignKey')(related_name='sacramento_libro', to=orm['sacramentos.Libro'])),
             ('parroquia', self.gf('django.db.models.fields.related.ForeignKey')(related_name='sacramento_parroquia', to=orm['sacramentos.Parroquia'])),
         ))
@@ -90,12 +91,12 @@ class Migration(SchemaMigration):
         # Adding model 'Matrimonio'
         db.create_table(u'sacramentos_matrimonio', (
             (u'sacramento_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['sacramentos.Sacramento'], unique=True, primary_key=True)),
-            ('novio', self.gf('django.db.models.fields.related.ForeignKey')(related_name='novio', to=orm['sacramentos.PerfilUsuario'])),
-            ('novia', self.gf('django.db.models.fields.related.ForeignKey')(related_name='novia', to=orm['sacramentos.PerfilUsuario'])),
+            ('novio', self.gf('django.db.models.fields.related.OneToOneField')(related_name='novio', unique=True, to=orm['sacramentos.PerfilUsuario'])),
+            ('novia', self.gf('django.db.models.fields.related.OneToOneField')(related_name='novia', unique=True, to=orm['sacramentos.PerfilUsuario'])),
             ('testigo_novio', self.gf('django.db.models.fields.CharField')(max_length=70)),
             ('testigo_novia', self.gf('django.db.models.fields.CharField')(max_length=70)),
             ('vigente', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('tipo_matrimonio', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('tipo_matrimonio', self.gf('django.db.models.fields.CharField')(default='Catolico', max_length=100)),
         ))
         db.send_create_signal(u'sacramentos', ['Matrimonio'])
 
@@ -145,7 +146,7 @@ class Migration(SchemaMigration):
             ('ofrenda', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
             ('parroquia', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sacramentos.Parroquia'])),
             ('individual', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('iglesia', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('iglesia', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sacramentos.Iglesia'])),
         ))
         db.send_create_signal(u'sacramentos', ['Intenciones'])
 
@@ -158,6 +159,15 @@ class Migration(SchemaMigration):
             ('direccion', self.gf('django.db.models.fields.related.ForeignKey')(related_name='direccion_parroquia', to=orm['ciudades.Direccion'])),
         ))
         db.send_create_signal(u'sacramentos', ['Parroquia'])
+
+        # Adding model 'Iglesia'
+        db.create_table(u'sacramentos_iglesia', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('nombre', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('parroquia', self.gf('django.db.models.fields.related.ForeignKey')(related_name='iglesias', to=orm['sacramentos.Parroquia'])),
+            ('principal', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal(u'sacramentos', ['Iglesia'])
 
         # Adding model 'ParametrizaDiocesis'
         db.create_table(u'sacramentos_parametrizadiocesis', (
@@ -178,16 +188,17 @@ class Migration(SchemaMigration):
             ('numero_acta', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('pagina', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('parroquia', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['sacramentos.Parroquia'], unique=True)),
+            ('libro', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['sacramentos.Libro'], unique=True, null=True, blank=True)),
         ))
         db.send_create_signal(u'sacramentos', ['ParametrizaParroquia'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Libro'
-        db.delete_table(u'sacramentos_libro')
-
         # Deleting model 'PerfilUsuario'
         db.delete_table(u'sacramentos_perfilusuario')
+
+        # Deleting model 'Libro'
+        db.delete_table(u'sacramentos_libro')
 
         # Deleting model 'Sacramento'
         db.delete_table(u'sacramentos_sacramento')
@@ -218,6 +229,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Parroquia'
         db.delete_table(u'sacramentos_parroquia')
+
+        # Deleting model 'Iglesia'
+        db.delete_table(u'sacramentos_iglesia')
 
         # Deleting model 'ParametrizaDiocesis'
         db.delete_table(u'sacramentos_parametrizadiocesis')
@@ -321,13 +335,20 @@ class Migration(SchemaMigration):
             'feligres': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'feligres'", 'unique': 'True', 'to': u"orm['sacramentos.PerfilUsuario']"}),
             u'sacramento_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['sacramentos.Sacramento']", 'unique': 'True', 'primary_key': 'True'})
         },
+        u'sacramentos.iglesia': {
+            'Meta': {'ordering': "('nombre',)", 'object_name': 'Iglesia'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nombre': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'parroquia': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'iglesias'", 'to': u"orm['sacramentos.Parroquia']"}),
+            'principal': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        },
         u'sacramentos.intenciones': {
             'Meta': {'ordering': "['fecha', 'hora']", 'object_name': 'Intenciones'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'fecha': ('django.db.models.fields.DateField', [], {}),
             'hora': ('django.db.models.fields.TimeField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'iglesia': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'iglesia': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sacramentos.Iglesia']"}),
             'individual': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'intencion': ('django.db.models.fields.TextField', [], {'max_length': '500'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
@@ -338,23 +359,25 @@ class Migration(SchemaMigration):
         u'sacramentos.libro': {
             'Meta': {'object_name': 'Libro'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'estado': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'estado': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '20'}),
             'fecha_apertura': ('django.db.models.fields.DateField', [], {}),
             'fecha_cierre': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'numero_libro': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'parroquia': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'parroquia'", 'to': u"orm['sacramentos.Parroquia']"}),
-            'tipo_libro': ('django.db.models.fields.CharField', [], {'max_length': '200'})
+            'primera_acta': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'null': 'True', 'blank': 'True'}),
+            'primera_pagina': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'null': 'True', 'blank': 'True'}),
+            'tipo_libro': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200'})
         },
         u'sacramentos.matrimonio': {
             'Meta': {'object_name': 'Matrimonio', '_ormbases': [u'sacramentos.Sacramento']},
-            'novia': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'novia'", 'to': u"orm['sacramentos.PerfilUsuario']"}),
-            'novio': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'novio'", 'to': u"orm['sacramentos.PerfilUsuario']"}),
+            'novia': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'novia'", 'unique': 'True', 'to': u"orm['sacramentos.PerfilUsuario']"}),
+            'novio': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'novio'", 'unique': 'True', 'to': u"orm['sacramentos.PerfilUsuario']"}),
             u'sacramento_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['sacramentos.Sacramento']", 'unique': 'True', 'primary_key': 'True'}),
             'testigo_novia': ('django.db.models.fields.CharField', [], {'max_length': '70'}),
             'testigo_novio': ('django.db.models.fields.CharField', [], {'max_length': '70'}),
-            'tipo_matrimonio': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'tipo_matrimonio': ('django.db.models.fields.CharField', [], {'default': "'Catolico'", 'max_length': '100'}),
             'vigente': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         u'sacramentos.notamarginal': {
@@ -380,6 +403,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'ParametrizaParroquia'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'libro': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['sacramentos.Libro']", 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'numero_acta': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'pagina': ('django.db.models.fields.PositiveIntegerField', [], {}),
@@ -427,7 +451,7 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'fecha_sacramento': ('django.db.models.fields.DateField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'iglesia': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'iglesia': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sacramentos.Iglesia']"}),
             'libro': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sacramento_libro'", 'to': u"orm['sacramentos.Libro']"}),
             'lugar_sacramento': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'madrina': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
@@ -435,8 +459,7 @@ class Migration(SchemaMigration):
             'numero_acta': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'padrino': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'pagina': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'parroquia': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sacramento_parroquia'", 'to': u"orm['sacramentos.Parroquia']"}),
-            'tipo_sacramento': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'parroquia': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sacramento_parroquia'", 'to': u"orm['sacramentos.Parroquia']"})
         }
     }
 

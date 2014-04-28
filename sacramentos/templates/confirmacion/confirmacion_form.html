@@ -48,7 +48,7 @@ Agregar Confirmacion
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos del Sacramento</legend>
 				<div class="row">
-					<div class="span4">
+					<div class="span8">
 						<div class='control-group'>
 							<label for="id_libro" class='control-label'>{{form_confirmacion.libro.label}}</label>
 							<div class='controls'>
@@ -64,8 +64,22 @@ Agregar Confirmacion
 							</div>
 						</div>
 						
-					</div>
-					<div class="span4">
+
+						<div class='control-group'>
+							<label for="id_confirmado" class='control-label'>{{form_confirmacion.confirmado.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.confirmado}}
+								<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.confirmado.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.confirmado.errors}}
+								</div>
+							</div>
+						</div>
 						
 						<div class='control-group'>
 							<label for="id_fecha_sacramento" class='control-label'>{{form_confirmacion.fecha_sacramento.label}} *
@@ -82,49 +96,7 @@ Agregar Confirmacion
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="span8">
-						<div class='control-group'>
-							<label for="id_confirmado" class='control-label'>{{form_confirmacion.confirmado.label}}</label>
-							<div class='controls'>
-								{{form_confirmacion.confirmado}}
-								<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
-							</div>
-							<div class="controls help-text">
-								{{form_confirmacion.confirmado.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_confirmacion.confirmado.errors}}
-								</div>
-							</div>
-						</div>
 
-					</div>
-
-				</div>
-			</fieldset>
-			<fieldset class='scheduler-border'>
-				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
-				<div class="row">
-					<div class="span8">
-						<div class='control-group'>
-							<label for="id_celebrante" class='control-label'>{{form_confirmacion.celebrante.label}}</label>
-							<div class='controls'>
-								{{form_confirmacion.celebrante}}
-								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
-							</div>
-							<div class="controls help-text">
-								{{form_confirmacion.celebrante.help_text}}
-							</div>
-							<div class="controls">
-								<div class="errors">								
-									{{form_confirmacion.celebrante.errors}}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="span4">
 						<div class='control-group'>
 							<label for="id_lugar_sacramento" class='control-label'>{{form_confirmacion.lugar_sacramento.label}}</label>
 							<div class='controls'>
@@ -154,9 +126,33 @@ Agregar Confirmacion
 							</div>
 						</div>
 
-					</div>
+						<div class='control-group'>
+							<label for="id_celebrante" class='control-label'>{{form_confirmacion.celebrante.label}}</label>
+							<div class='controls'>
+								{{form_confirmacion.celebrante}}
+								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							</div>
+							<div class="controls help-text">
+								{{form_confirmacion.celebrante.help_text}}
+							</div>
+							<div class="controls">
+								<div class="errors">								
+									{{form_confirmacion.celebrante.errors}}
+								</div>
+							</div>
+						</div>
 
-					<div class="span4">
+					</div>
+					
+
+
+
+				</div>
+			</fieldset>
+			<fieldset class='scheduler-border'>
+				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
+				<div class="row">
+					<div class="span8">
 						<div class='control-group'>
 							<label for="id_padrino" class='control-label'>{{form_confirmacion.padrino.label}}</label>
 							<div class='controls'>
