@@ -704,11 +704,11 @@ class LibroListView(BusquedaMixin, ListView):
 	paginate_by = 10
 
 	def get_queryset(self):
-		try:
-			asignacion = AsignacionParroquia.objects.get(persona__user=self.request.user)
-			queryset = Libro.objects.filter(parroquia=asignacion.parroquia)
+		parroquia = self.request.session.get('parroquia')
+		if parroquia:
+			queryset = Libro.objects.filter(parroquia=parroquia)
 			return queryset
-		except: 
+		else: 
 			raise PermissionDenied;
 
 
@@ -718,10 +718,6 @@ class LibroListView(BusquedaMixin, ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(LibroListView, self).dispatch(*args, **kwargs)
 	
-
-
-
-
 # VISTAS PARA ADMIN DE BAUTISMO
 
 @login_required(login_url='/login/')
@@ -1486,7 +1482,7 @@ def intencion_edit_view(request, pk):
 	parroquia = request.session.get('parroquia')
 	if not parroquia:
 		raise PermissionDenied
-		
+
 	intencion = get_object_or_404(Intenciones, pk=pk)
 	
 	template_name = 'intencion/intencion_form.html'
@@ -1533,19 +1529,23 @@ def intencion_edit_view(request, pk):
 		return render(request, template_name, ctx)
 	
 
+class IntencionListView(BusquedaMixin, ListView):
+	model = Intenciones
+	template_name = 'intencion/intencion_list.html'
+	paginate_by = 10
 
-@login_required(login_url='/login/')
-@permission_required('sacramentos.change_intenciones', login_url='/login/', 
-	raise_exception=permission_required)
-def intencion_list_view(request):
-	template_name= 'intencion/intencion_list.html'
-	if 'parroquia' in request.session:
-		parroquia = request.session['parroquia']
-		object_list = Intenciones.objects.filter(parroquia=parroquia).order_by('fecha', 'hora')
-		ctx = {'object_list': object_list} 
-		return render(request, template_name, ctx)
-	else:
-		raise PermissionDenied
+	def get_queryset(self):
+		parroquia = self.request.session.get('parroquia')
+		if parroquia:
+			return Intenciones.objects.filter(parroquia=parroquia).order_by('fecha', 'hora')
+		else: 
+			raise PermissionDenied
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_intenciones', login_url='/login/', 
+		raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(IntencionListView, self).dispatch(*args, **kwargs)
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_asignarsacerdote', login_url='/login/', 
@@ -2805,9 +2805,17 @@ class IglesiaListView(BusquedaMixin, ListView):
 	paginate_by = 10
 
 	def get_queryset(self):
-		return Iglesia.objects.filter(parroquia=self.request.session.get('parroquia')).extra(
-									select={'nombre': 'lower(nombre)'}).order_by('nombre')
-		# order_by('nombre')
+		parroquia = self.request.session.get('parroquia')
+		if parroquia:
+			# return Iglesia.objects.filter(parroquia=parroquia).extra(select={'nombre': 'lower(nombre)'}).order_by('nombre')
+			name = self.request.GET.get('q', '')			
+			if (name != ''):
+				return Iglesia.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('nombre')
+			else:
+				return Iglesia.objects.filter(parroquia=parroquia).order_by('nombre')
+		else: 
+			PermissionDenied
+	
 
 
 class IglesiaCreateView(CreateView):

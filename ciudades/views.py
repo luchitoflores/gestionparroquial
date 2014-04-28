@@ -178,7 +178,6 @@ class CantonDelete(DeleteView):
 class ParroquiaList(BusquedaMixin, ListView):
 	model                 = Parroquia 
 	template_name         = 'parroquiacivil/parroquia_list.html'
-	# context_object_name = 'list_parroquia'
 	paginate_by = 10
 
 	@method_decorator(login_required(login_url='/login/'))

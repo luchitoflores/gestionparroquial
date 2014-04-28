@@ -23,7 +23,7 @@ from sacramentos.views import (
 	# AsignarParroquiaCreate, AsignarParroquiaUpdate, AsignarParroquiaList,
 	asignar_parroquia_create, asignar_parroco_a_parroquia, asignar_parroquia_update, asignar_parroco_list, parroco_periodos_asignacion_list, parroco_periodos_asignacion_update, nuevo_periodo_asignacion,
 	asignar_secretaria_create, asignar_secretaria_update, asignar_secretaria_list,
-	intencion_create_view, intencion_list_view, intencion_edit_view,
+	intencion_create_view, IntencionListView, intencion_edit_view,
 	parametriza_diocesis_create,
 	parametriza_parroquia_create,
 	LogListView,exportar_csv_logs,
@@ -163,7 +163,7 @@ urlpatterns = patterns('',
 	
 
 	#urls para intenciones de misa
-	url(r'^intencion/$', intencion_list_view, name='intencion_list'),
+	url(r'^intencion/$', IntencionListView.as_view(), name='intencion_list'),
 	url(r'^crear/intencion/$', intencion_create_view, name='intencion_create'),
 	url(r'^intencion/(?P<pk>\d+)/$', intencion_edit_view, name='intencion_update'),
 

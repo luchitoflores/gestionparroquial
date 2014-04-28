@@ -26,7 +26,6 @@ class BusquedaMixin(object):
 		return context
 
 	def get_queryset(self):
-		print self.args
 		name = self.request.GET.get('q', '')
 			
 		if (name != ''):
