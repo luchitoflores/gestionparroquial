@@ -31,61 +31,82 @@ class DivErrorList(ErrorList):
 		return u'<div class="error">%s</div>' % ''.join([u'<div class="error">%s</div>' % e for e in self])
 
 
+# from django.forms.forms import BoundField
+
+# def add_control_label(f):
+#     def control_label_tag(self, contents=None, attrs=None):
+#         if attrs is None: 
+#         	attrs = {}
+#         	attrs['class'] = 'control-label'
+#         	return f(self, contents, attrs)
+#         	return control_label_tag
+
+# BoundField.label_tag = add_control_label(BoundField.label_tag) 
+
+
 #forms para manejo de usuarios
 class UsuarioForm(ModelForm):
-	class Meta():
+	class Meta:
 		model = User
 		fields= ('first_name', 'last_name', 'email', 'groups')
 		widgets = {
 		'first_name': forms.TextInput(attrs={'required': ''}),
 		'last_name': forms.TextInput(attrs={'required': ''}),
-		'groups': forms.CheckboxSelectMultiple(attrs={'required': ''}),
+		# 'groups': forms.CheckboxSelectMultiple(attrs={'required': ''}),
 		}
+
+	def __init__(self, *args, **kwargs):
+		# kwargs['error_class'] = DivErrorList
+		self.label_suffix = '7777ssss'
+		self.error_class = DivErrorList
+		# kwargs.setdefault('label_suffix', '####') 
+		super(UsuarioForm, self).__init__(*args, **kwargs)	
+		if self.instance.id:
+			self.fields['groups'].required=True
+		else: 
+			self.fields['groups'].required=False
 		
-	def __init__(self, *args, *kwargs):
-		super(UsuarioForm, self).__init__(*args, *kwargs)
 		self.fields['first_name'].label = 'Nombres *'
 		self.fields['first_name'].help_text ='Ingrese los nombres completos. Ej: Juan José'
 		self.fields['last_name'].label = 'Apellidos *'
 		self.fields['last_name'].help_text ='Ingrese los apellidos completos. Ej: Castro Pardo'
 		self.fields['groups'].label = 'Grupos'
-		self.fields['groups'].help_text ='Los grupos a los que este usuario pertenece. Un usuario obtendrá'+
-		' todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.'
+		self.fields['groups'].help_text ='Los grupos a los que este usuario pertenece. Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.'
 		self.fields['email'].help_text = 'Ingrese correo electrónico. Ej: diocesisloja@gmail.com'
 		self.fields['email'].required = False
-		if self.instance.id:
-			self.fields['groups'].required=True
-		else: 
-			self.fields['groups'].required=False
 
-	def email_clean(self):
+	def clean_email(self):
 		email = self.cleaned_data.get('email')
+		print "Imprimiendo email"
+		print email
 		if email:
 			if self.instance.id:
 				usuario = User.objects.filter(email=email).exclude(pk=self.instance.id)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 			else:
 				usuario = User.objects.filter(email=email)
-				raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 		return email
 
 
 class UsuarioPadreForm(UsuarioForm):
-	class Meta():
+	class Meta(UsuarioForm.Meta):
 		model = User
-		fields= ('first_name', 'last_name', 'email')
+		fields= ('first_name', 'last_name', 'email', 'groups')
 
 class UsuarioSecretariaForm(ModelForm):
-	class Meta():
+	class Meta:
 		model = User
 		fields= ('first_name', 'last_name', 'email')
 
-	def __init__(self, *args, *kwargs):
-		super(UsuarioForm, self).__init__(*args, *kwargs)
+	def __init__(self, *args, **kwargs):
+		super(UsuarioSecretariaForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
 
-class UsuarioSacerdoteForm(ModelForm):
-	class Meta():
+class UsuarioSacerdoteForm(UsuarioForm):
+	class Meta:
 		model = User
 		fields= ('first_name', 'last_name', 'email','groups')
 
@@ -94,8 +115,8 @@ class UsuarioSacerdoteForm(ModelForm):
 		self.fields['email'].required = True
 		
 
-class UsuarioAdministradorForm(ModelForm):
-	class Meta():
+class UsuarioAdministradorForm(UsuarioForm):
+	class Meta:
 		model = User
 		fields= ('first_name', 'last_name', 'email','groups', 'is_staff')
 
@@ -108,6 +129,30 @@ class UsuarioAdministradorForm(ModelForm):
 		
 
 class PerfilUsuarioForm(ModelForm):
+	class Meta:
+		model = PerfilUsuario
+		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil' ,
+			'profesion', 'padre', 'madre', 'celular');
+		widgets = {
+			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
+				'dd/mm/yyyy', 'type':'date'}),
+			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
+			'nacionalidad': forms.Select(attrs={'required':''}),
+			'sexo': forms.Select(attrs={'required':''}),
+			'estado_civil': forms.Select(attrs={'required':''}),
+			}
+
+	def __init__(self, *args, **kwargs):
+		super(PerfilUsuarioForm, self).__init__(*args, **kwargs)
+		self.fields['padre'].queryset=PerfilUsuario.objects.none()
+		self.fields['padre'].empty_label='-- Buscar o Crear --'
+		self.fields['madre'].queryset=PerfilUsuario.objects.none()
+		self.fields['madre'].empty_label='-- Buscar o Crear --'
+		self.fields['sexo'].label = 'Sexo *'
+		self.fields['nacionalidad'].label = 'Nacionalidad *'
+		self.fields['estado_civil'].label = 'Estado Civil *'
+		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
+		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
 
 	def clean_fecha_nacimiento(self):
 		data = self.cleaned_data['fecha_nacimiento']
@@ -139,7 +184,6 @@ class PerfilUsuarioForm(ModelForm):
 						raise forms.ValidationError('El número de cédula no es válido')
 						return cedula
 
-
 			if self.instance.id:
 				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
 				if usuario:
@@ -154,30 +198,7 @@ class PerfilUsuarioForm(ModelForm):
 		return cedula
 
 	
-	def __init__(self, padre = PerfilUsuario.objects.none() , madre = PerfilUsuario.objects.none(), *args, **kwargs):
-		super(PerfilUsuarioForm, self).__init__(*args, **kwargs)
-		self.fields['padre']=forms.ModelChoiceField(required=False, queryset=padre, 
-			empty_label='-- Buscar o Crear --')
-		self.fields['madre']=forms.ModelChoiceField(required=False, queryset=madre, 
-			empty_label='-- Buscar o Crear --')
-		self.fields['sexo'].label = 'Sexo *'
-		self.fields['nacionalidad'].label = 'Nacionalidad *'
-		self.fields['estado_civil'].label = 'Estado Civil *'
-		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
-		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
 
-	class Meta():
-		model = PerfilUsuario
-		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil' ,
-			'profesion', 'padre', 'madre', 'celular');
-		widgets = {
-			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			'sexo': forms.Select(attrs={'required':''}),
-			'estado_civil': forms.Select(attrs={'required':''}),
-			}
 		
 class PadreForm(ModelForm):
 	def clean_dni(self):

@@ -96,7 +96,7 @@ def padre_create_ajax(request):
 
 
 
-# Método para crear el padre o madre de un feligres - está funcionando
+# Método para crear las secretarias - está funcionando
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_secretaria', login_url='/login/', 
 	raise_exception=permission_required)

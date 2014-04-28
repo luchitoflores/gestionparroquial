@@ -12,9 +12,9 @@ register = template.Library()
 
 @register.inclusion_tag('usuario/feligres.html', takes_context=True)
 def feligres(context):
-	form_perfil = PadreForm()
 	form_usuario = UsuarioPadreForm()
-	ctx = {'form_padre':form_perfil,'form_usuariopadre':form_usuario}
+	form_perfil = PadreForm()
+	ctx = {'form_usuariopadre':form_usuario, 'form_padre':form_perfil}
 	return ctx
 
 @register.inclusion_tag('usuario/secretaria.html', takes_context=True)

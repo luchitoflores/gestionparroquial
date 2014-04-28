@@ -65,11 +65,10 @@ from core.views import BusquedaMixin
 def usuarioCreateView(request):
 	if request.method == 'POST':
 		form_usuario = UsuarioForm(request.POST)
-		padre = PerfilUsuario.objects.padre()
-		madre =  PerfilUsuario.objects.madre()
-		form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
+		form_perfil = PerfilUsuarioForm(request.POST)
+		form_perfil.fields['padre'].queryset = PerfilUsuario.objects.male()
+		form_perfil.fields['madre'].queryset =  PerfilUsuario.objects.female()
 		
-
 		if form_usuario.is_valid() and form_perfil.is_valid():
 			feligres, created = Group.objects.get_or_create(name='Feligres')
 			usuario = form_usuario.save(commit=False)
@@ -88,38 +87,36 @@ def usuarioCreateView(request):
             	action_flag=ADDITION,
             	change_message="Creo un Usuario")
 			messages.success(request, 'Creado exitosamente')
-			return HttpResponseRedirect('/usuario')
+			return HttpResponseRedirect(reverse_lazy('usuario_list'))
 			
 		else:
-			padre = request.POST.get('padre')
-			madre =  request.POST.get('madre')
-
-			if padre and madre:
-				padre = PerfilUsuario.objects.filter(id=padre)
-				madre = PerfilUsuario.objects.filter(id=madre)
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
-			elif padre and not madre:
-				padre = PerfilUsuario.objects.filter(id=padre)
-				madre = PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
-			elif not padre and madre:
-				madre = PerfilUsuario.objects.filter(id=madre)
-				padre= PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
-
+			id_padre = request.POST.get('padre')
+			id_madre =  request.POST.get('madre')
+			form_perfil = PerfilUsuarioForm(request.POST)
+			
+			if id_padre and id_madre:
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.filter(id=id_padre)
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.filter(id=id_madre)
+			
+			elif id_padre and not id_madre:
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.filter(id=id_padre)
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
+			
+			elif not id_padre and id_madre:
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.none()
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.filter(id=id_madre)
+			
 			else:
-				padre = PerfilUsuario.objects.none()
-				madre = PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST)
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.none()
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
+			
 			
 			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 	else:
 		form_usuario = UsuarioForm()
-		form_perfil = PerfilUsuarioForm(label_suffix=':')
-		# form_perfil.fields['madre'] = forms.ModelChoiceField(queryset=PerfilUsuario.objects.female(), required=False, empty_label='--- Seleccione ---')
-		# form_perfil.fields['padre'] = forms.ModelChoiceField(queryset=PerfilUsuario.objects.male(), required=False, empty_label='--- Seleccione ---')
+		form_perfil = PerfilUsuarioForm()
 		ctx = {'form_usuario': form_usuario, 'form_perfil': form_perfil}
 		return render(request, 'usuario/usuario_form.html', ctx)
 
