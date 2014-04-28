@@ -44,15 +44,14 @@ class DivErrorList(ErrorList):
 # BoundField.label_tag = add_control_label(BoundField.label_tag) 
 
 
-#forms para manejo de usuarios
-class UsuarioForm(ModelForm):
+#Formulario básico para el manejo de usuarios
+class UsuarioBaseForm(ModelForm):
 	class Meta:
 		model = User
-		fields= ('first_name', 'last_name', 'email', 'groups')
+		fields= ('first_name', 'last_name', 'email')
 		widgets = {
 		'first_name': forms.TextInput(attrs={'required': ''}),
 		'last_name': forms.TextInput(attrs={'required': ''}),
-		# 'groups': forms.CheckboxSelectMultiple(attrs={'required': ''}),
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -60,25 +59,16 @@ class UsuarioForm(ModelForm):
 		self.label_suffix = '7777ssss'
 		self.error_class = DivErrorList
 		# kwargs.setdefault('label_suffix', '####') 
-		super(UsuarioForm, self).__init__(*args, **kwargs)	
-		if self.instance.id:
-			self.fields['groups'].required=True
-		else: 
-			self.fields['groups'].required=False
-		
+		super(UsuarioBaseForm, self).__init__(*args, **kwargs)	
 		self.fields['first_name'].label = 'Nombres *'
 		self.fields['first_name'].help_text ='Ingrese los nombres completos. Ej: Juan José'
 		self.fields['last_name'].label = 'Apellidos *'
 		self.fields['last_name'].help_text ='Ingrese los apellidos completos. Ej: Castro Pardo'
-		self.fields['groups'].label = 'Grupos'
-		self.fields['groups'].help_text ='Los grupos a los que este usuario pertenece. Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.'
 		self.fields['email'].help_text = 'Ingrese correo electrónico. Ej: diocesisloja@gmail.com'
 		self.fields['email'].required = False
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
-		print "Imprimiendo email"
-		print email
 		if email:
 			if self.instance.id:
 				usuario = User.objects.filter(email=email).exclude(pk=self.instance.id)
@@ -90,306 +80,195 @@ class UsuarioForm(ModelForm):
 					raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 		return email
 
+class UsuarioForm(UsuarioBaseForm):
+	class Meta(UsuarioBaseForm.Meta):
+		fields= UsuarioBaseForm.Meta.fields + ('groups',)
+		
+	def __init__(self, *args, **kwargs):
+		super(UsuarioForm, self).__init__(*args, **kwargs)	
+		self.fields['groups'].label = 'Grupos'
+		self.fields['groups'].help_text ='Los grupos a los que este usuario pertenece. Un usuario obtendrá todos los permisos concedidos a cada uno sus grupos. Ud. puede seleccionar más de una opción.'
+		if self.instance.id:
+			self.fields['groups'].required=True
+		else: 
+			self.fields['groups'].required=False
+		
+class UsuarioPadreForm(UsuarioBaseForm):
+	class Meta(UsuarioBaseForm.Meta):
+		pass
+		
 
-class UsuarioPadreForm(UsuarioForm):
-	class Meta(UsuarioForm.Meta):
-		model = User
-		fields= ('first_name', 'last_name', 'email', 'groups')
-
-class UsuarioSecretariaForm(ModelForm):
-	class Meta:
-		model = User
-		fields= ('first_name', 'last_name', 'email')
+class UsuarioSecretariaForm(UsuarioBaseForm):
+	class Meta(UsuarioBaseForm.Meta):
+		pass
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioSecretariaForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
+		self.fields['email'].widget = forms.TextInput(attrs={'required': '', 'type':'email'})
 
-class UsuarioSacerdoteForm(UsuarioForm):
-	class Meta:
-		model = User
-		fields= ('first_name', 'last_name', 'email','groups')
+class UsuarioSacerdoteForm(UsuarioBaseForm):
+	class Meta(UsuarioBaseForm.Meta):
+		fields= UsuarioBaseForm.Meta.fields + ('groups',)
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioSacerdoteForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
+		self.fields['email'].widget = forms.TextInput(attrs={'required': '', 'type':'email'})
 		
 
 class UsuarioAdministradorForm(UsuarioForm):
-	class Meta:
-		model = User
-		fields= ('first_name', 'last_name', 'email','groups', 'is_staff')
+	class Meta(UsuarioBaseForm.Meta):
+		fields= UsuarioBaseForm.Meta.fields + ('groups', 'is_staff')
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioAdministradorForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
+		self.fields['email'].widget = forms.TextInput(attrs={'required': '', 'type':'email'})
 		self.fields['is_staff'].label = 'Es activo?'
 		self.fields['is_staff'].help_text= 'Marque la casilla si quiere que el usuario pueda entrar al sistema'
 
-		
 
-class PerfilUsuarioForm(ModelForm):
+#Formulario Base para todos los perfiles de usuario
+class PersonaBaseForm(ModelForm):
 	class Meta:
 		model = PerfilUsuario
-		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil' ,
-			'profesion', 'padre', 'madre', 'celular');
+		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento');
 		widgets = {
+			'nacionalidad': forms.Select(attrs={'required':''}),
 			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
 				'dd/mm/yyyy', 'type':'date'}),
 			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			'sexo': forms.Select(attrs={'required':''}),
-			'estado_civil': forms.Select(attrs={'required':''}),
-			}
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(PersonaBaseForm, self).__init__(*args, **kwargs)
+		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
+		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
+		self.fields['nacionalidad'].label = 'Nacionalidad *'
+
+
+	def clean_fecha_nacimiento(self):
+		data = self.cleaned_data['fecha_nacimiento']
+		if data > date.today():
+			raise forms.ValidationError('La fecha de nacimiento no puede ser mayor a la fecha actual')
+		return data
+
+	def clean_dni(self):
+		cedula = self.cleaned_data.get('dni')
+		nacionalidad = self.cleaned_data.get('nacionalidad')
+
+		if cedula:
+			if nacionalidad == 'EC':
+				if not cedula.isdigit():
+					raise forms.ValidationError('El número de cédula no debe contener letras')
+					return cedula
+				if len(cedula)!=10:
+					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
+					return cedula
+				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
+				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+				ultimo_digito = int(str(suma)[-1:])
+				if ultimo_digito != 0: 
+					if int(cedula[9]) != 10 - ultimo_digito :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
+				else: 
+					if int(cedula[9]) != 0 :
+						raise forms.ValidationError('El número de cédula no es válido')
+						return cedula
+
+			if self.instance.id:
+				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+			else:
+				usuario = PerfilUsuario.objects.filter(dni=cedula)
+				if usuario:
+					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
+					return cedula
+		
+		return cedula
+
+
+
+class PerfilUsuarioForm(PersonaBaseForm):
+	class Meta(PersonaBaseForm.Meta):
+		fields = PersonaBaseForm.Meta.fields + ('sexo', 'estado_civil','profesion', 'padre', 'madre', 'celular');
+		# widgets = PersonaBaseForm.Meta.widgets.update({
+		# 	'estado_civil':forms.Select(attrs={'required':''})
+		# 	})
 
 	def __init__(self, *args, **kwargs):
 		super(PerfilUsuarioForm, self).__init__(*args, **kwargs)
-		self.fields['padre'].queryset=PerfilUsuario.objects.none()
+		if not self.instance.id:
+			self.fields['padre'].queryset=PerfilUsuario.objects.none()
+			self.fields['madre'].queryset=PerfilUsuario.objects.none()
+		else:
+			padre = self.instance.padre
+			madre = self.instance.madre
+			if padre and madre:
+				self.fields['padre'].queryset = PerfilUsuario.objects.filter(pk=padre.id)
+				self.fields['madre'].queryset = PerfilUsuario.objects.filter(pk=madre.id)
+			elif padre and not madre:
+				self.fields['padre'].queryset = PerfilUsuario.objects.filter(pk=padre.id)
+				self.fields['madre'].queryset = PerfilUsuario.objects.none()
+			elif not padre and madre:
+				self.fields['madre'].queryset = PerfilUsuario.objects.filter(pk=madre.id)
+				self.fields['padre'].queryset= PerfilUsuario.objects.none()
+			else:
+				self.fields['padre'].queryset = PerfilUsuario.objects.none()
+				self.fields['madre'].queryset = PerfilUsuario.objects.none()
+
+
 		self.fields['padre'].empty_label='-- Buscar o Crear --'
-		self.fields['madre'].queryset=PerfilUsuario.objects.none()
 		self.fields['madre'].empty_label='-- Buscar o Crear --'
 		self.fields['sexo'].label = 'Sexo *'
-		self.fields['nacionalidad'].label = 'Nacionalidad *'
+		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
 		self.fields['estado_civil'].label = 'Estado Civil *'
-		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
-		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
+		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
 
-	def clean_fecha_nacimiento(self):
-		data = self.cleaned_data['fecha_nacimiento']
-		if data > date.today():
-			raise forms.ValidationError('La fecha de nacimiento no puede ser mayor a la fecha actual')
-		return data
-
-	def clean_dni(self):
-		cedula = self.cleaned_data['dni']
-		nacionalidad = self.cleaned_data['nacionalidad']
-
-		if cedula:
-			if nacionalidad == 'EC':
-				if not cedula.isdigit():
-					raise forms.ValidationError('El número de cédula no debe contener letras')
-					return cedula
-				if len(cedula)!=10:
-					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-					return cedula
-				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				ultimo_digito = int(str(suma)[-1:])
-				if ultimo_digito != 0: 
-					if int(cedula[9]) != 10 - ultimo_digito :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-				else: 
-					if int(cedula[9]) != 0 :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			else:
-				usuario = PerfilUsuario.objects.filter(dni=cedula)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
 		
-		return cedula
-
+class PadreForm(PersonaBaseForm):
+	class Meta(PersonaBaseForm.Meta): 
+		fields = PersonaBaseForm.Meta.fields + ('estado_civil', 'profesion');
 	
-
+	def __init__(self, *args, **kwargs):
+		super(PadreForm, self).__init__(*args, **kwargs)
+		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		self.fields['estado_civil'].label = 'Estado Civil *'
+		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
 		
-class PadreForm(ModelForm):
-	def clean_dni(self):
-		cedula = self.cleaned_data['dni']
-		nacionalidad = self.cleaned_data['nacionalidad']
 
-		if cedula:
-			if nacionalidad == 'EC':
-				if not cedula.isdigit():
-					raise forms.ValidationError('El número de cédula no debe contener letras')
-					return cedula
-				if len(cedula)!=10:
-					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-					return cedula
-				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				ultimo_digito = int(str(suma)[-1:])
-				if ultimo_digito != 0: 
-					if int(cedula[9]) != 10 - ultimo_digito :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-				else: 
-					if int(cedula[9]) != 0 :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
+class SecretariaForm(PersonaBaseForm):
+	class Meta(PersonaBaseForm.Meta):
+		fields = PersonaBaseForm.Meta.fields + ('sexo', 'estado_civil')
 
+	def __init__(self, *args, **kwargs):
+		super(PadreForm, self).__init__(*args, **kwargs)
+		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
+		self.fields['estado_civil'].label = 'Estado Civil *'
+		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
 
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			else:
-				usuario = PerfilUsuario.objects.filter(dni=cedula)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-		
-		return cedula
-
-	def clean_fecha_nacimiento(self):
-		data = self.cleaned_data['fecha_nacimiento']
-		if data > date.today():
-			raise forms.ValidationError('La fecha de nacimiento no puede ser mayor a la fecha actual')
-		return data
+class SacerdoteForm(PersonaBaseForm):
+	class Meta(PersonaBaseForm.Meta): 
+		fields = PersonaBaseForm.Meta.fields + ('celular',);
 	
-	lugar_nacimiento = forms.CharField(help_text='Ingrese el lugar de  nacimiento ej: Loja ', 
-		required=True,label='Lugar de Nacimiento',
-		widget=forms.TextInput(attrs={'required':''}))
-	class Meta(): 
-		model = PerfilUsuario
-		fields = ('nacionalidad','dni', 'fecha_nacimiento', 'lugar_nacimiento', 'estado_civil',
-		 'profesion');
-		widgets = {
-			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'dni': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			'estado_civil': forms.Select(attrs={'required':''}),
-			
-			}
-
-
-
-class SecretariaForm(ModelForm):
-	def clean_fecha_nacimiento(self):
-		data = self.cleaned_data['fecha_nacimiento']
-		if data > date.today():
-			raise forms.ValidationError('La fecha de nacimiento no puede ser mayor a la fecha actual')
-		return data
-
-	def clean_dni(self):
-		cedula = self.cleaned_data['dni']
-		nacionalidad = self.cleaned_data['nacionalidad']
-
-		if cedula:
-			if nacionalidad == 'EC':
-				if not cedula.isdigit():
-					raise forms.ValidationError('El número de cédula no debe contener letras')
-					return cedula
-				if len(cedula)!=10:
-					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-					return cedula
-				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				ultimo_digito = int(str(suma)[-1:])
-				if ultimo_digito != 0: 
-					if int(cedula[9]) != 10 - ultimo_digito :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-				else: 
-					if int(cedula[9]) != 0 :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-
-
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			else:
-				usuario = PerfilUsuario.objects.filter(dni=cedula)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-		
-		return cedula
-
-	class Meta():
-		model = PerfilUsuario
-		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil');
-		widgets = {
-			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
-			'dni': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			'sexo': forms.Select(attrs={'required':''}),
-			'estado_civil': forms.Select(attrs={'required':''}),
-			}
-
-
-class SacerdoteForm(ModelForm):
-	def clean_fecha_nacimiento(self):
-		data = self.cleaned_data['fecha_nacimiento']
-		if data > date.today():
-			raise forms.ValidationError('La fecha de nacimiento no puede ser mayor a la fecha actual')
-		return data
-
-	def clean_dni(self):
-		cedula = self.cleaned_data['dni']
-		nacionalidad = self.cleaned_data['nacionalidad']
-
-		if cedula:
-			if nacionalidad == 'EC':
-				if not cedula.isdigit():
-					raise forms.ValidationError('El número de cédula no debe contener letras')
-					return cedula
-				if len(cedula)!=10:
-					raise forms.ValidationError('El número de cédula debe ser de 10 dígitos')
-					return cedula
-				valores = [ int(cedula[x]) * (2 - x % 2) for x in range(9) ]
-				suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-				ultimo_digito = int(str(suma)[-1:])
-				if ultimo_digito != 0: 
-					if int(cedula[9]) != 10 - ultimo_digito :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-				else: 
-					if int(cedula[9]) != 0 :
-						raise forms.ValidationError('El número de cédula no es válido')
-						return cedula
-
-
-			if self.instance.id:
-				usuario = PerfilUsuario.objects.filter(dni=cedula).exclude(pk=self.instance.id)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-			else:
-				usuario = PerfilUsuario.objects.filter(dni=cedula)
-				if usuario:
-					raise forms.ValidationError('Ya existe un usuario registrado con ese número de cédula')
-					return cedula
-		
-		return cedula
-
-	class Meta: 
-		model = PerfilUsuario
-		fields = ('nacionalidad','dni', 'fecha_nacimiento', 'lugar_nacimiento', 'celular');
-		widgets = {
-			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
-			'dni': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			}
-
+	def __init__(self, *args, **kwargs):
+		super(SacerdoteForm, self).__init__(*args, **kwargs)
+		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
 
 class AdministradorForm(SacerdoteForm):
 	class Meta(SacerdoteForm.Meta): 
-		fields = ('nacionalidad','dni', 'fecha_nacimiento', 'lugar_nacimiento', 'celular', 'sexo');
-		widgets = {
-			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-				'dd/mm/yyyy', 'type':'date'}),
-			'lugar_nacimiento': forms.TextInput(attrs={'required':''}),
-			'dni': forms.TextInput(attrs={'required':''}),
-			'nacionalidad': forms.Select(attrs={'required':''}),
-			'sexo': forms.Select(attrs={'required':''}),
-			}
+		fields = SacerdoteForm.Meta.fields + ('sexo',);
+	
+	def __init__(self, *args, **kwargs):
+		super(AdministradorForm, self).__init__(*args, **kwargs)
+		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
+
 
 class AdminForm(forms.Form):
 	administrador = forms.ModelChoiceField(help_text='Nombre del nuevo administrador', 
@@ -398,8 +277,6 @@ class AdminForm(forms.Form):
 	is_staff = forms.BooleanField(label='Es activo?', required=False, 
 		help_text='Marque la casilla si quiere que el usuario pueda entrar al sistema')
 
-	# def __init__(self, *args, **kwargs):
-	# 	super(AdminForm, self).__init__(self, *args, **kwargs):
 
 class EmailForm(forms.Form):
 	email = forms.EmailField() 
@@ -407,9 +284,8 @@ class EmailForm(forms.Form):
 
 # forms para sacramentos
 
-class LibroForm(ModelForm):
-	
-	class Meta():
+class LibroForm(ModelForm):	
+	class Meta:
 		model=Libro
 		fields = ('numero_libro', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
 			'estado', 'primera_pagina', 'primera_acta')

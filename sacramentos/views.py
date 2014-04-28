@@ -134,12 +134,11 @@ def edit_usuario_view(request,pk):
 		raise Http404
 
 	if request.method == 'POST':
-		padre = PerfilUsuario.objects.padre()
-		madre =  PerfilUsuario.objects.madre()
 		form_usuario = UsuarioForm(request.POST,instance=user)
-		form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
+		form_perfil = PerfilUsuarioForm(request.POST,instance=perfil)
+		form_perfil.fields['padre'].queryset = PerfilUsuario.objects.male()
+		form_perfil.fields['madre'].queryset =  PerfilUsuario.objects.female()
 		
-
 		if form_usuario.is_valid() and form_perfil.is_valid():
 			form_usuario.save()
 			form_perfil.save()
@@ -153,44 +152,32 @@ def edit_usuario_view(request,pk):
 			messages.success(request, 'Actualizado exitosamente')
 			return HttpResponseRedirect('/usuario')
 		else:
-			if perfil.padre and perfil.madre:
-				padre = PerfilUsuario.objects.filter(user__id=perfil.padre.user.id)
-				madre = PerfilUsuario.objects.filter(user__id=perfil.madre.user.id)
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
-			elif perfil.padre and not perfil.madre:
-				padre = PerfilUsuario.objects.filter(user__id=perfil.padre.user.id)
-				madre = PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
-			elif not perfil.padre and perfil.madre:
-				madre = PerfilUsuario.objects.filter(user__id=perfil.madre.user.id)
-				padre= PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
-
+			id_padre = request.POST.get('padre')
+			id_madre =  request.POST.get('madre')
+			if id_padre and id_madre:
+				form_perfil = PerfilUsuarioForm(request.POST,instance=perfil)
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.filter(pk=id_padre)
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.filter(pk=id_madre)
+			elif id_padre and not id_madre:
+				form_perfil = PerfilUsuarioForm(request.POST,instance=perfil)
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.filter(pk=id_padre)
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
+			elif not id_padre and id_madre:
+				form_perfil = PerfilUsuarioForm(request.POST,instance=perfil)
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.filter(pk=id_madre)
+				form_perfil.fields['padre'].queryset= PerfilUsuario.objects.none()
 			else:
-				padre = PerfilUsuario.objects.none()
-				madre = PerfilUsuario.objects.none()
-				form_perfil = PerfilUsuarioForm(padre, madre, request.POST,instance=perfil)
-			
+				form_perfil = PerfilUsuarioForm(request.POST,instance=perfil)
+				form_perfil.fields['padre'].queryset = PerfilUsuario.objects.none()
+				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
+
+
 			messages.error(request, 'Los datos del formulario son incorrectos')
 			ctx = {'form_usuario': form_usuario,'form_perfil':form_perfil, 'perfil':perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 
 	else:
-		if perfil.padre and perfil.madre:
-			padre = PerfilUsuario.objects.filter(user__id=perfil.padre.user.id)
-			madre = PerfilUsuario.objects.filter(user__id=perfil.madre.user.id)
-			form_perfil = PerfilUsuarioForm(padre, madre, instance=perfil)
-		elif perfil.padre and not perfil.madre:
-			padre = PerfilUsuario.objects.filter(user__id=perfil.padre.user.id)
-			form_perfil = PerfilUsuarioForm(padre, instance=perfil)
-		elif not perfil.padre and perfil.madre:
-			madre = PerfilUsuario.objects.filter(user__id=perfil.madre.user.id)
-			padre= PerfilUsuario.objects.none()
-			form_perfil = PerfilUsuarioForm(padre, madre, instance=perfil)
-
-		else:
-			form_perfil = PerfilUsuarioForm(instance=perfil)
-
+		form_perfil = PerfilUsuarioForm(instance=perfil)
 		form_usuario = UsuarioForm(instance=user)
 		
 									
@@ -205,15 +192,13 @@ class UsuarioListView(ListView):
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_feligres', 
 		login_url='/login/', raise_exception=permission_required))
-	# @method_decorator(permission_required('auth.change_user', 
-	# 	login_url='/login/', raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(UsuarioListView, self).dispatch(*args, **kwargs)
+
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_administrador', login_url='/login/', 
 	raise_exception=permission_required)
-
 def administrator_create_view(request):
 	template_name= 'usuario/admin_form.html'
 	success_url = '/administrador/'
@@ -247,7 +232,6 @@ def administrator_create_view(request):
 			return render(request, template_name, ctx) 	
 	else:
 		form = AdminForm()
-		# form_email = EmailForm()
 		ctx = {'form': form}
 		return render(request, template_name, ctx) 
 
