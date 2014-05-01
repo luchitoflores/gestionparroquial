@@ -47,7 +47,7 @@ class ParroquiaForm(ModelForm):
 # Forms para dirección
 class DireccionForm(ModelForm):
 	
-    domicilio=forms.CharField(label='Domicilio', max_length=60, required=True,
+    domicilio=forms.CharField(label='Calles', max_length=60, required=True,
 		help_text='Ingrese la direccion Ej: Sucre 7-19 y Lourdes',
 		widget=forms.TextInput(attrs={'required': ''}))
     provincia=forms.ModelChoiceField(queryset=Provincia.objects.all(), empty_label='-- Seleccione --',

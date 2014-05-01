@@ -597,7 +597,7 @@ class Matrimonio(Sacramento):
                                     help_text='Elija tipo de matrimonio Ej: Catolico o Mixto')
 
     def __unicode__(self):
-        return str(self.pagina)
+        return u'%s %s' %(self.novio.user.last_name, self.novia.user.last_name )
 
     # def natural_key(self):
     # 	return (self.novio.user.last_name, self.novia.user.last_name)

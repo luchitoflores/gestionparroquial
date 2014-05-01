@@ -66,8 +66,6 @@ function tabla_vacia(){
 	var total_columnas = $('table > thead > tr > th').length
 	//cuenta el total de filas del tbody de una tabla
 	var total_filas = $('table > tbody > tr > td').length
-	
-	console.log(total_filas);
 	if(total_filas==0){
 		$('table > tbody:last').append('<tr><td colspan='+total_columnas+'>No existen registros disponibles</td></tr>');		
 	}

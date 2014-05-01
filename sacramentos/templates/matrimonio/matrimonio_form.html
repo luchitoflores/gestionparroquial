@@ -15,7 +15,32 @@ Editar Matrimonio
 Agregar Matrimonio 
 {%endif%}
 {%endblock%}
-{%block extra_script%}
+{%block extrascript%}
+
+<script>
+// funcion para obtener los nombres de los novios t¿y mostrarlos en el modal
+$(document).on('ready',function(){
+	$('#id_delete').on('click', function(){
+		var e=$(this).attr('name');
+		$.get('/matrimonio/ajax',function(data){
+			console.log(data.list_matrimonios);
+			var lista = data.list_matrimonios;
+			$.each(lista, function(indice, elemento){
+				var id = elemento.id;
+				if(id == e){
+					$('#id_novio_modal').html('<p>'+elemento.novio+'</p>');
+					$('#id_novia_modal').html('<p>'+elemento.novia+'</p>');
+					$('#id_eliminar').attr('href','/matrimonio/'+e+'/vigencia');
+				}
+			});
+
+		});
+	});		
+
+});
+
+</script>
+
 <script>
 
 	function check(input) {  
@@ -307,6 +332,11 @@ Agregar Matrimonio
 			<div class="form-actions">
 
 				<button type="submit" class='btn btn-primary'> Guardar </button>
+				{%if perms.sacramentos.delete_matrimonio %}
+				<a id='id_delete' class='btn btn-success' href="#id_vigencia" role="button" data-toggle="modal" name='{{object.id}}'>Quitar Vigencia
+				</a>
+				
+				{%endif%}
 				<a href="{%url 'matrimonio_list'%}" class='btn btn-danger'>Cancelar</a>
 
 			</div>
@@ -340,7 +370,25 @@ Agregar Matrimonio
 	</div>
 </div>
 
+<!-- Modal para quitar la vigencia de un matrimonio-->
+<div  id="id_vigencia" class="modal hide fade"  tabindex="5">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		<h3>Eliminar Vigencia del Matrimonio</h3>
+	</div>
+	<div class="modal-body">
+		<p>Está seguro de querer eliminar la vigencia del matrimonio de:</p>
+		<h5 id='id_novio_modal'></h5> con <h5 id='id_novia_modal'></h5> 
+	</div>
+	<div class="modal-footer">
+		<a id='id_eliminar' href="." class="btn btn-success">Eliminar</a>
+		<a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+	</div>
+</div>
+
+
 {%include 'usuario/buscar_hombres.html'%}
 {%include 'usuario/buscar_mujeres.html'%}
 {%include 'usuario/buscar_sacerdotes.html'%}
+
 {% endblock%}
