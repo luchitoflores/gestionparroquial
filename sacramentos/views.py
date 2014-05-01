@@ -362,10 +362,18 @@ def administrador_update_view(request, pk):
 class AdministradorListView(ListView):
 	model=PerfilUsuario
 	template_name="usuario/administrador_list.html"
-	#queryset = PerfilUsuario.objects.administrador()
-	def get_queryset(self):
-		user = self.request.user
-		return PerfilUsuario.objects.administrador()
+	paginate_by = 10
+
+	def get_queryset(self):		
+		name = self.request.GET.get('q', '')		
+		if (name != ''):
+			# name = ' '.join(name.split())
+			name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+			return PerfilUsuario.objects.administrador().filter(
+				Q(nombres_completos__icontains = name) | 
+				Q(dni=name)).order_by('user__last_name')
+		else:
+			return PerfilUsuario.objects.administrador().order_by('user__last_name')
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_administrador', 
@@ -497,16 +505,28 @@ def sacerdote_update_view(request, pk):
 			return render(request, template_name, ctx)
 
 
-class SacerdoteListView(ListView):
+class SacerdoteListView(PaginacionMixin, ListView):
 	model = PerfilUsuario
 	template_name = 'usuario/sacerdote_list.html'
 	queryset = PerfilUsuario.objects.sacerdote()
+	paginate_by = 10
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_sacerdote', login_url='/login/',
 		raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(SacerdoteListView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):		
+		name = self.request.GET.get('q', '')		
+		if (name != ''):
+			# name = ' '.join(name.split())
+			name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+			return PerfilUsuario.objects.sacerdote().filter(
+				Q(nombres_completos__icontains = name) | 
+				Q(dni=name)).order_by('user__last_name')
+		else:
+			return PerfilUsuario.objects.sacerdote().order_by('user__last_name')
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_libro', login_url='/login/', 
@@ -1172,16 +1192,25 @@ class MatrimonioListView(PaginacionMixin, ListView):
 		return super(MatrimonioListView, self).dispatch(*args, **kwargs)
 		
 
-class MatrimonioNoVigenteListView(ListView):
+class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
 	model = Matrimonio
 	template_name = 'matrimonio/matrimonio_list.html'
+	paginate_by = 10
 
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Matrimonio.objects.filter(parroquia=parroquia,vigente=False)
-			return queryset
-		else: 
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return Matrimonio.objects.filter(parroquia=parroquia, vigente=False).filter(
+					Q(novio__nombres_completos__icontains = name) | 
+					Q(novio__dni=name)|
+					Q(novia__nombres_completos__icontains = name) | 
+					Q(novia__dni=name)).order_by('novio__user__last_name')
+			else:
+				return Matrimonio.objects.filter(parroquia=parroquia, vigente=False).order_by('novio__user__last_name')
+		else:  
 			raise PermissionDenied
 
 		
@@ -1191,6 +1220,8 @@ class MatrimonioNoVigenteListView(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(MatrimonioNoVigenteListView, self).dispatch(*args, **kwargs)
 
+
+#Preguntar si esta función es ajax
 @login_required(login_url='/login/')
 @permission_required('sacramentos.delete_matrimonio', login_url='/login/', 
 	raise_exception=permission_required)
@@ -1217,7 +1248,7 @@ def matrimonio_vigencia_view(request,pk):
 		return HttpResponseRedirect('/matrimonio')
 
 	else:
-		form = MatrimonioForm(usuario,instance=matrimonio)
+		form = MatrimonioForm(request,instance=matrimonio)
 		matrimonio.vigente=False
 		matrimonio.save()
 	
@@ -1943,6 +1974,33 @@ def asignar_secretaria_list(request):
 		return render(request, template_name, ctx)
 	except ObjectDoesNotExist:
 		raise PermissionDenied
+
+class SecretariaListView(ListView):
+	model=PerfilUsuario
+	template_name='parroquia/asignar_secretaria_list.html'
+	paginate_by = 10
+
+	def get_queryset(self):		
+		parroquia = self.request.session.get('parroquia')
+		if parroquia:
+			name = self.request.GET.get('q', '')		
+			if (name != ''):
+				# name = ' '.join(name.split())
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return PeriodoAsignacionParroquia.objects.secretaria(parroquia).filter(
+					Q(asignacion__persona__nombres_completos__icontains = name) | 
+					Q(asignacion__persona__dni=name))
+			else:
+				return PeriodoAsignacionParroquia.objects.secretaria(parroquia)
+		else:
+			raise PermissionDenied
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_asignarsecretaria', 
+		login_url='/login/', raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(SecretariaListView, self).dispatch(*args, **kwargs)
+
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_parametrizadiocesis', login_url='/login/', 

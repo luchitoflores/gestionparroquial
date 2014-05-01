@@ -30,8 +30,6 @@ class PersonaManager(models.Manager):
 	def feligres(self):
 		return self.model.objects.all().exclude(user__groups__name='Sacerdote')
 	
-	def administrador(self):
-		return self.model.objects.filter(user__groups__name='Administrador')
 
 	def male(self):
 		return self.model.objects.filter(sexo='m').exclude(user__groups__name='Sacerdote')
@@ -41,6 +39,9 @@ class PersonaManager(models.Manager):
 
 	def todos(self):
 		return self.model.objects.all()
+	
+	def administrador(self):
+		return self.model.objects.filter(user__groups__name='Administrador')
 
 	def sacerdote(self):
 		return self.model.objects.filter(user__groups__name='Sacerdote', profesion='Sacerdote')
@@ -58,6 +59,10 @@ class PersonaManager(models.Manager):
 			return persona.user.username
 		except:
 			return True
+
+class PeriodoAsignacionManager(models.Manager):
+	def secretaria(self, parroquia):
+		return self.model.objects.filter(asignacion__persona__user__groups__name='Secretaria', asignacion__parroquia = parroquia)
 
 class BautismoManager(models.Manager):
 	# def libro_activo(self):

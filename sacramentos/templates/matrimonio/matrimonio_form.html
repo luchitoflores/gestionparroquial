@@ -332,10 +332,12 @@ $(document).on('ready',function(){
 			<div class="form-actions">
 
 				<button type="submit" class='btn btn-primary'> Guardar </button>
+
 				{%if perms.sacramentos.delete_matrimonio %}
+				{%if object.vigente%}
 				<a id='id_delete' class='btn btn-success' href="#id_vigencia" role="button" data-toggle="modal" name='{{object.id}}'>Quitar Vigencia
 				</a>
-				
+				{%endif%}
 				{%endif%}
 				<a href="{%url 'matrimonio_list'%}" class='btn btn-danger'>Cancelar</a>
 

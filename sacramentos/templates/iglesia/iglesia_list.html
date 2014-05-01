@@ -15,7 +15,7 @@ Lista de Iglesias
 	<thead>
 		<tr>
 			<th>Nombre</th>
-			<th>Principal</th>
+			<th>Es la Iglesia Matriz</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,7 +31,7 @@ Lista de Iglesias
 			<td>
 				<a href="{{o.get_absolute_url}}">{{o}}</a>
 			</td>
-			<td>{% if o.principal %} Parroquia Principal {% else %} Parroquias Aledañas {% endif%}</td>
+			<td>{% if o.principal %} <i class='icon-check text-success'></i> {% else %} <i class='icon-check-minus'></i>{% endif%}</td>
 		</tr>
 		{%endfor%}
 	</tbody>

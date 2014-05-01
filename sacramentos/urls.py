@@ -23,7 +23,7 @@ from sacramentos.views import (
 	IglesiaListView, IglesiaCreateView, IglesiaUpdateView,
 	# AsignarParroquiaCreate, AsignarParroquiaUpdate, AsignarParroquiaList,
 	asignar_parroquia_create, asignar_parroco_a_parroquia, asignar_parroquia_update, asignar_parroco_list, parroco_periodos_asignacion_list, parroco_periodos_asignacion_update, nuevo_periodo_asignacion,
-	asignar_secretaria_create, asignar_secretaria_update, asignar_secretaria_list,
+	asignar_secretaria_create, asignar_secretaria_update, asignar_secretaria_list, SecretariaListView, 
 	intencion_create_view, IntencionListView, intencion_edit_view,
 	parametriza_diocesis_create,
 	parametriza_parroquia_create,
@@ -65,7 +65,8 @@ urlpatterns = patterns('',
 	#urls para asignar secretarias
 	url(r'^crear/asignar/secretaria/$', asignar_secretaria_create , name='asignar_secretaria_create'),
 	url(r'^asignar/secretaria/(?P<pk>\d+)/$', asignar_secretaria_update , name='asignar_secretaria_update'),
-	url(r'^asignar/secretaria/$', asignar_secretaria_list , name='asignar_secretaria_list'),
+	# url(r'^asignar/secretaria/$', asignar_secretaria_list , name='asignar_secretaria_list'),
+	url(r'^asignar/secretaria/$', SecretariaListView.as_view() , name='asignar_secretaria_list'),
 	url(r'^secretaria/(?P<pk>\d+)/$', secretaria_update_view, name='secretaria_update'),
 	#urls del api rest usuarios
 	url(r'^api/usuario/$', 'sacramentos.rest.buscar_usuarios', name='api_usuario_list'),

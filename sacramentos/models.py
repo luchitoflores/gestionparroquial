@@ -15,7 +15,7 @@ from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
 
 from ciudades.models import Direccion 
-from sacramentos.managers import PersonaManager,BautismoManager,LibroManager
+from sacramentos.managers import PersonaManager,BautismoManager,LibroManager, PeriodoAsignacionManager
 # Create your models here.
 
 def user_new_unicode(self):
@@ -646,6 +646,7 @@ class PeriodoAsignacionParroquia(TimeStampedModel):
     fin = models.DateField(null=True, blank=True, help_text='Ingrese la fecha final de asignación  Ej: dd/mm/aaaa') 
     estado = models.BooleanField('Activo?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
     asignacion = models.ForeignKey('AsignacionParroquia')
+    objects = PeriodoAsignacionManager()
 
     def __unicode__(self):
         return u'%s - %s : %s' % (self.asignacion.persona, self.asignacion.parroquia, self.estado)
