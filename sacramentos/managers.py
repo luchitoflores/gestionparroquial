@@ -12,11 +12,10 @@ class LibroManager(models.Manager):
 		return self.model.objects.filter(tipo_libro='Bautismo',estado='Abierto',
 			parroquia=self.parroquia)
 
-	#def get_by_natural_key(self,numero_libro,tipo_libro):
-	 #	return self.get(numero_libro=numero_libro, tipo_libro=tipo_libro)
+	def ultimo_libro(self, parroquia, tipo_libro):
+		return self.model.objects.filter(parroquia=parroquia, tipo_libro=tipo_libro).latest('created')
 
-
-
+	
 class ParroquiaManager(models.Manager):
 	pass
 

@@ -12,18 +12,19 @@ Lista de Confirmados
 
 {%block content%}
 
-
+{% include 'includes/busqueda_persona_form.html' %}
+{%if perms.sacramentos.add_confirmacion %}
+<a href="{% url 'confirmacion_create' %}" class='btn btn-primary'>Nuevo Registro</a>
+{%endif%}
+ 
 <table id='id_table_confirmacion' class='table table-bordered table-striped'>
 	<thead>
-		<tr class='alert alert-info'>
-			
+		<tr>		
 			<th>Confirmado</th>
 			<th data-hide='phone'>Fecha Nacimiento</th>
 			<th>Fecha Sacramento</th>
 			<th data-hide='phone, tablet'>Padre</th>
-			<th data-hide='phone, tablet'>Madre</th>
-			
-			
+			<th data-hide='phone, tablet'>Madre</th>		
 		</tr>
 		
 	</thead>
@@ -41,7 +42,5 @@ Lista de Confirmados
 	</tbody>
 
 </table>
-{%if perms.sacramentos.add_confirmacion %}
-<a href="{% url 'confirmacion_create' %}" class='btn btn-primary'>Nuevo Registro</a>
-{%endif%}
+{% include 'includes/paginacion.html' %}
 {%endblock%}

@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 
 # from sacramentos.rest import api_usuario_list
 from sacramentos.views import (
-	usuarioCreateView, UsuarioListView,edit_usuario_view,
+	configuracion_inicial_view,
+	usuarioCreateView, UsuarioListView,edit_usuario_view, UsuarioDetailView,
 	usuario_reporte_honorabilidad,
 	sacerdote_create_view, SacerdoteListView,  sacerdote_update_view,
 	administrator_create_view, AdministradorListView, administrador_create_view, administrador_update_view,
@@ -38,6 +39,7 @@ from sacramentos.views import (
 
 
 urlpatterns = patterns('', 
+	url(r'^configuracion/inicial/$', configuracion_inicial_view, name='configuracion_inicial'),
 	#url para el home de personas
 	# url(r'^personas/$', login_required(TemplateView.as_view(template_name='personas.html'),login_url='/login/'), 
 	# 	name='personas'),
@@ -45,6 +47,7 @@ urlpatterns = patterns('',
 	#urls de usuarios
 	url(r'^usuario/$', UsuarioListView.as_view(), name='usuario_list'),
 	url(r'^crear/usuario/$', usuarioCreateView, name='usuario_create'),
+	url(r'^detalle/usuario/(?P<pk>\d+)/$', UsuarioDetailView.as_view(), name='usuario_detail'),
 	url(r'^usuario/(?P<pk>\d+)/$', edit_usuario_view, name='usuario_update'),
 	# url(r'^padre/crear/$', padre_create_view, name='padre_create'),
 	# url(r'^feligres/crear/$', feligres_create_view, name='feligres_create'),

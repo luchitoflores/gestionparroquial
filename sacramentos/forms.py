@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
-from datetime import datetime, date
 import time
+import unicodedata
+from datetime import datetime, date
 
 from django import forms
 from django.contrib import messages
@@ -79,6 +80,14 @@ class UsuarioBaseForm(ModelForm):
 				if usuario:
 					raise forms.ValidationError('Ya existe un usuario registrado con ese correo electrónico')
 		return email
+
+	def clean_first_name(self):
+		nombres = ''.join((c for c in unicodedata.normalize('NFD', unicode(self.cleaned_data.get('first_name'))) if unicodedata.category(c) != 'Mn'))
+		return nombres
+
+	def clean_last_name(self):
+		apellidos = ''.join((c for c in unicodedata.normalize('NFD', unicode(self.cleaned_data.get('last_name'))) if unicodedata.category(c) != 'Mn'))
+		return apellidos
 
 class UsuarioForm(UsuarioBaseForm):
 	class Meta(UsuarioBaseForm.Meta):
@@ -284,10 +293,27 @@ class EmailForm(forms.Form):
 
 # forms para sacramentos
 
+class LibroBaseForm(ModelForm):
+	class Meta:
+		model = Libro
+		fields = ('fecha_apertura', 'primera_pagina', 'primera_acta')
+		widgets = {
+			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
+				'dd/mm/yyyy', 'type':'date'}),
+			}
+
+	def clean_fecha_apertura(self):
+		fecha_apertura=self.cleaned_data.get("fecha_apertura")
+		if fecha_apertura > date.today():
+			raise forms.ValidationError("La fecha de apertura no puede ser mayor a la fecha actual")		
+		return fecha_apertura	
+		
+	
+
 class LibroForm(ModelForm):	
 	class Meta:
 		model=Libro
-		fields = ('numero_libro', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
+		fields = ('tipo_libro', 'fecha_apertura', 'fecha_cierre', 
 			'estado', 'primera_pagina', 'primera_acta')
 		widgets = {
 			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
@@ -296,13 +322,19 @@ class LibroForm(ModelForm):
 				'label':'Fecha Cierre *'}),
 			'tipo_libro': forms.Select(attrs={'required':''}),
 			'estado': RadioSelect(attrs={'required':''}),
-			'numero_libro': forms.TextInput(attrs={'required':''}),
+			# 'numero_libro': forms.TextInput(attrs={'required':''}),
 			}
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(LibroForm, self).__init__(*args, **kwargs)
+
 
 	def clean(self):
 		cleaned_data = super(LibroForm, self).clean()
 		fecha_apertura=self.cleaned_data.get("fecha_apertura")
 		fecha_cierre=self.cleaned_data.get("fecha_cierre")
+		estado=self.cleaned_data.get("estado")
+		tipo_libro = self.cleaned_data.get("tipo_libro")
 		if fecha_apertura > date.today():
 			msg=u"La fecha de apertura no puede ser mayor a la fecha actual"
 			self._errors['fecha_apertura']=self.error_class([msg])
@@ -311,6 +343,18 @@ class LibroForm(ModelForm):
 			if fecha_cierre <= fecha_apertura:
 				msg=u"La fecha de cierre no puede ser menor o igual a la fecha de apertura"
 				self._errors['fecha_cierre']=self.error_class([msg])
+
+		if estado == 'Abierto':
+			parroquia = self.request.session.get('parroquia')
+			if self.instance.id:
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, estado='Abierto').exclude(pk=self.instance.id):
+					msg=u"Ya existe un libro abierto, cierrelo y vuelva a crear'"
+					self._errors['estado']=self.error_class([msg])
+			else:
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, estado='Abierto'):
+					msg=u"Ya existe un libro abierto, cierrelo y vuelva a crear'"
+					self._errors['estado']=self.error_class([msg])
+
 		return cleaned_data
 	
 

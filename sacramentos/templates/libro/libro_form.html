@@ -25,22 +25,6 @@ Agregar Libro
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos del Libro</legend>
 				<div class='row'>
-					
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.numero_libro.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.numero_libro}}
-
-						</div>
-						<div class="controls help-text">
-							{{form_libro.numero_libro.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.numero_libro.errors}}
-						</div>
-					</div>
 					<div class="control-group">
 						<label for="" class="control-label">
 							{{form_libro.tipo_libro.label}}
@@ -64,11 +48,15 @@ Agregar Libro
 							{{form_libro.estado}}
 
 						</div>
-						<div class="controls help-text">
-							{{form_libro.estado.help_text}}
+						<div class="controls">
+							<div class="help-text">
+								{{form_libro.estado.help_text}}
+							</div>
 						</div>
-						<div class="controls errors">
-							{{form_libro.estado.errors}}
+						<div class="controls">
+							<div class="errors">							
+								{{form_libro.estado.errors}}
+							</div>
 						</div>
 					</div>
 					

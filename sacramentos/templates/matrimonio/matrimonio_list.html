@@ -35,10 +35,14 @@ $(document).ready(function(){
 {%endblock%}
 {%block content%}
 
+{% include 'includes/busqueda_persona_form.html' %}
+{%if perms.sacramentos.add_matrimonio %}
+<a href="{% url 'matrimonio_create' %}" class='btn btn-primary'>Nueva Acta Matrimonial</a>
+{%endif%}
 
 <table id='id_table_matrimonio' class='table table-bordered table-striped'>
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			<th>Novio</th>
 			<th>Novia</th>
 			<th>Fecha Sacramento</th>
@@ -77,9 +81,8 @@ $(document).ready(function(){
 	</tbody>
 
 </table>
-{%if perms.sacramentos.add_matrimonio %}
-<a href="{% url 'matrimonio_create' %}" class='btn btn-primary'>Nueva Acta Matrimonial</a>
-{%endif%}
+
+{% include 'includes/paginacion.html' %}
 
 
 <!-- Modal para quitar la vigencia de un matrimonio-->

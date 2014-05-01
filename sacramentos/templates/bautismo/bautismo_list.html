@@ -7,9 +7,13 @@ Lista de Bautizados
 
 
 {%block content%}
+{%include 'includes/busqueda_persona_form.html'%}
+{%if perms.sacramentos.add_bautismo %}
+<a id='id_crear_bautismo' href="{% url 'bautismo_create' %}" class='btn btn-primary'>Nueva Acta Bautismal</a>
+{%endif%}
 <table id='id_table_bautismo' class='footable table table-bordered table-striped'>
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			
 			<th>Bautizado</th>
 			<th data-hide='phone'>Fecha Nacimiento</th>
@@ -36,8 +40,6 @@ Lista de Bautizados
 	</tbody>
 
 </table>
-{%if perms.sacramentos.add_bautismo %}
-<a id='id_crear_bautismo' href="{% url 'bautismo_create' %}" class='btn btn-primary'>Nueva Acta Bautismal</a>
-{%endif%}
+{% include 'includes/paginacion.html'%}
 
 {%endblock%}

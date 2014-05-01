@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import re
+import unicodedata
 from datetime import datetime
 from django.db import models
 from django.db.models import Q
@@ -298,7 +299,7 @@ class PerfilUsuario(TimeStampedModel):
 
     # se lo puede llamar con related_name usuario o con el método get_profile
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='usuario', null=True, blank=True)
-    # full_name = models.CharField(max_length=100, null=True, blank=True)
+    nombres_completos = models.CharField(max_length=100, null=True, blank=True)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True, help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador', choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
     padre = models.ForeignKey('PerfilUsuario', related_name='papa', null=True, blank=True, limit_choices_to={'sexo':'m'}, help_text='Presione buscar, si no está en la lista, presione crear')
@@ -348,10 +349,18 @@ class PerfilUsuario(TimeStampedModel):
 
     def get_absolute_url_administrador(self):
         return u'/administrador/%i' % self.id
+
+    def save(self, *args, **kwargs):
+        nombres = ''.join((c for c in unicodedata.normalize('NFD', unicode(self.user.first_name)) if unicodedata.category(c) != 'Mn'))
+        apellidos = ''.join((c for c in unicodedata.normalize('NFD', unicode(self.user.last_name)) if unicodedata.category(c) != 'Mn'))
+        self.user.first_name = nombres.strip()
+        self.user.last_name = apellidos.strip()
+        self.nombres_completos = u'%s %s' % (self.user.first_name, self.user.last_name)
+        super(PerfilUsuario, self).save(*args, **kwargs)
+
     
 
     def crear_username(self, nombres, apellidos):
-        import unicodedata
         nombres = ''.join((c for c in unicodedata.normalize('NFD', unicode(nombres)) if unicodedata.category(c) != 'Mn'))
         apellidos = ''.join((c for c in unicodedata.normalize('NFD', unicode(apellidos)) if unicodedata.category(c) != 'Mn'))
         nombres = nombres.lower().split()
@@ -397,9 +406,9 @@ class PerfilUsuario(TimeStampedModel):
         else:
             return False
 
-    def tiene_bautizo(self):
+    def es_bautizado(self):
         try:
-            self.bautizado
+            self.bautismo
             return True    
         except ObjectDoesNotExist:
             return False
@@ -408,15 +417,15 @@ class PerfilUsuario(TimeStampedModel):
 
     def tiene_primera_comunion(self):
         try:
-            self.feligres
+            self.primera_comunion
             return True
         except ObjectDoesNotExist:
             return False
         
 
-    def tiene_confirmacion(self):
+    def es_confirmado(self):
         try:
-            self.confirmado
+            self.confirmacion
         except ObjectDoesNotExist:
             return False
         else:
@@ -455,13 +464,14 @@ class Libro(TimeStampedModel):
 		('Cerrado','Cerrado'),
 	)
 
-    numero_libro=models.PositiveIntegerField(u'Numero Libro *', help_text='Ingrese un numero para libro ej:1 - 35')
+    nombre=models.CharField(u'Nombre *', max_length='50', help_text='Nombre del Libro', null=True, blank=True)
+    numero_libro = models.PositiveIntegerField(null=True, blank=True)
     tipo_libro=models.CharField(u'Tipo de Libro *', max_length=200, choices=TIPO_LIBRO_CHOICES, 
                                 help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
     fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
     estado=models.CharField(u'Estado *', max_length=20,choices=ESTADO_CHOICES, default=None)
-    parroquia = models.ForeignKey('Parroquia', related_name='parroquia', help_text='Seleccione una parroquia')
+    parroquia = models.ForeignKey('Parroquia', related_name='libros', help_text='Seleccione una parroquia')
     primera_pagina = models.PositiveIntegerField(blank= True, null=True, default=1)
     primera_acta = models.PositiveIntegerField(blank= True, null=True, default=1)
 
@@ -527,7 +537,7 @@ class Sacramento(TimeStampedModel):
             self.pagina=sacramento.pagina+1
 
 class Bautismo(Sacramento):
-    bautizado=models.OneToOneField(PerfilUsuario, related_name='bautizado',
+    bautizado=models.OneToOneField(PerfilUsuario, related_name='bautismo',
         help_text='Seleccione un feligres')
     abuelo_paterno = models.CharField(max_length=70,null=True,blank=True,
         help_text='Nombre de abuelo paterno ej: Jose Rivera')
@@ -548,7 +558,7 @@ class Bautismo(Sacramento):
 
 
 class Eucaristia(Sacramento):
-    feligres=models.OneToOneField(PerfilUsuario, related_name='feligres',
+    feligres=models.OneToOneField(PerfilUsuario, related_name='primera_comunion',
 	help_text='Seleccione un feligres')
 	
     class Meta:
@@ -560,7 +570,7 @@ class Eucaristia(Sacramento):
 
 
 class Confirmacion(Sacramento):
-    confirmado=models.OneToOneField(PerfilUsuario, related_name='confirmado',null=True,
+    confirmado=models.OneToOneField(PerfilUsuario, related_name='confirmacion',null=True,
 	blank=True,help_text='Seleccione un feligres')
 	
     def __unicode__(self):
@@ -575,9 +585,9 @@ class Matrimonio(Sacramento):
         ('Mixto','Mixto'),
     )
 
-    novio=models.OneToOneField(PerfilUsuario, related_name='novio',
+    novio=models.OneToOneField(PerfilUsuario, related_name='matrimonio_hombre',
 		help_text='Seleccione un novio')
-    novia=models.OneToOneField(PerfilUsuario, related_name='novia',
+    novia=models.OneToOneField(PerfilUsuario, related_name='matrimonio_mujer',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(u'Testigo novio *',max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
@@ -648,11 +658,10 @@ class Intenciones(TimeStampedModel):
 	help_text='Ingrese la intención. Ej: Aniversario de fallecimiento')
     fecha = models.DateField(help_text=
         'Ingrese la fecha de la intención Ej: dd/mm/yyyy')
-    hora = models.TimeField(help_text=
-        'Ingrese la hora de celebración de la intención Ej: 17:00')
+    hora = models.TimeField(help_text='Ingrese la hora de celebración de la intención Ej: 17:00')
     oferente = models.CharField(max_length=70, 
         help_text='Ingrese quien ofrece la intención. Ej: La Flia Flores')
-    ofrenda = models.DecimalField(decimal_places=2, max_digits=5,
+    ofrenda = models.DecimalField(decimal_places=2, max_digits=7,
         help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
     parroquia = models.ForeignKey('Parroquia')
     individual = models.BooleanField('Es única?', 
@@ -690,7 +699,7 @@ class Parroquia(TimeStampedModel):
 class Iglesia(models.Model):
     nombre = models.CharField(max_length=100)
     parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
-    principal = models.BooleanField()
+    principal = models.BooleanField('Es la Iglesia Matriz?')
 
     class Meta:
         verbose_name_plural=u'Iglesias'

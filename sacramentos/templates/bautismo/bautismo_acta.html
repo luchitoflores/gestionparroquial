@@ -40,56 +40,74 @@ body {
 				<td>
 					<p align="justify"> 
 
-						{{ "En la Iglesia Parroquial de "}} <strong>{{bautismo.iglesia|title}}</strong>, {%for d in p%}
+						{{ "En la Iglesia Parroquial de "}} 
+						<strong>{{bautismo.iglesia}}</strong>, 
+						{%for d in p%}
 						<strong>{{d.diocesis|title}}</strong><br/>
 						{%endfor%}
 						a <strong>{{bautismo.fecha_sacramento|date:'d'}}</strong> dias del mes de <strong>{{bautismo.fecha_sacramento|date:'F'}}</strong>, del año del Señor del <strong>{{bautismo.fecha_sacramento|date:'Y'}}</strong>.<br/>
 						Yo, <strong>{{bautismo.celebrante}}</strong>, Cura-Párroco de la misma,
 						bauticé solemnemente a 
-						{% if "m" in bautismo.bautizado.sexo%}
-						un <strong>niño</strong>
-						{%else%}
-						una <strong>niña</strong>
-						{%endif%}
-						que nació el día  <strong>{{bautismo.bautizado.fecha_nacimiento|date:'d'}}</strong>
+						un{% if bautismo.bautizado.sexo == 'f'%}a{%endif%} <strong>niñ{% if "m" in bautismo.bautizado.sexo%}o {%else%}a {%endif%}</strong>que nació el día  <strong>{{bautismo.bautizado.fecha_nacimiento|date:'d'}}</strong>
 						del mes de <strong>{{bautismo.bautizado.fecha_nacimiento|date:'F'}}</strong> del año <strong>{{bautismo.bautizado.fecha_nacimiento|date:'Y'}}</strong> y a quién
 						puse los nombres de <strong>{{ bautismo.bautizado}}</strong>. <br/>
 
 						{% if "m" in bautismo.bautizado.sexo%}
-						Es hijo de 
+						Es hijo de {%else%} Es hija de {% endif%}
 						{%if bautismo.bautizado.padre%}
 						<strong>{{ bautismo.bautizado.padre}}</strong>
 						{%else%}
 						<strong>{{"S/N"}}</strong> <br>
 						{%endif%}
-						feligrés de <strong>{{bautismo.lugar_sacramento}}</strong>
+						<!--feligrés de <strong>{{bautismo.lugar_sacramento}}</strong>-->
 						y de 
 						{%if bautismo.bautizado.madre%}
 						<strong>{{ bautismo.bautizado.madre}}</strong>
 						{%else%}
 						<strong> {{"S/N"}} </strong> <br>
 						{%endif%}
-						de la parroquia de <strong>{{bautismo.lugar_sacramento}}</strong>, 
+						<!--de la parroquia de <strong>{{bautismo.lugar_sacramento}}</strong>, -->
+						siendo sus abuelos paternos 
+						{% if bautismo.abuelo_paterno%}
+						<strong>{{bautismo.abuelo_paterno}}</strong>
 						{%else%}
-						Es hija de 
-						{%if bautismo.bautizado.padre%}	
-						<strong>{{ bautismo.bautizado.padre}}</strong>
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+						 y 
+						{% if bautismo.abuela_paterna%}
+						<strong>{{bautismo.abuela_paterna}}</strong>
 						{%else%}
-						<strong>{{"S/N"}}</strong> <br>
-						{%endif%}
-						feligrés de <strong>{{bautismo.lugar_sacramento}}</strong>
-						y de 
-						{%if bautismo.bautizado.madre%}
-						<strong>{{ bautismo.bautizado.madre}}</strong>
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+						
+						vecinos de 
+						{% if bautismo.vecinos_paternos %}
+						<strong>{{bautismo.vecinos_paternos}}</strong>
+						{% else %}
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+
+						y los maternos
+						{% if bautismo.abuelo_materno%}
+						<strong>{{bautismo.abuelo_materno}}</strong>
 						{%else%}
-						<strong>{{"S/N"}}</strong> <br>
-						{%endif%}
-						de la parroquia de <strong>{{bautismo.lugar_sacramento}}</strong>, 
-						{%endif%}
-						siendo sus abuelos paternos <strong>{{bautismo.abuelo_paterno}}</strong> y <strong>{{bautismo.abuela_paterna}}</strong>
-						vecinos de <strong>{{bautismo.vecinos_paternos}}</strong> y los maternos
-						<strong>{{bautismo.abuelo_materno}}</strong> y <strong>{{bautismo.abuela_materna}}</strong> 
-						vecinos de <strong>{{bautismo.vecinos_maternos}}</strong>.<br/>
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+						 y 
+						{% if bautismo.abuela_materna%}
+						<strong>{{bautismo.abuela_materna}}</strong>
+						{%else%}
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+
+						vecinos de 
+						{% if bautismo.vecinos_maternos %}
+						<strong>{{bautismo.vecinos_maternos}}</strong>
+						{% else %}
+						<strong>{{"S/N"}}</strong>
+						{% endif %}
+						.
+						<br/>
 						{%if bautismo.padrino and bautismo.madrina%}
 						Fueron sus Padrinos <strong>{{ bautismo.padrino}}</strong> y <strong>{{ bautismo.madrina}}</strong> a quienes advertí de su parentezco espiritual y obligaciones. Y para que conste lo firmo.<br/>
 						{%endif%}	

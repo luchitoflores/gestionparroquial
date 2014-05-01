@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, Passw
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, render, redirect
 from django.utils.decorators import method_decorator
@@ -57,6 +58,8 @@ def login_view(request):
 					parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
 					if parroquia:
 						request.session["parroquia"] = parroquia
+						# if not parroquia.libros.filter(estado='Abierto') and not parroquia.iglesias.filter(principal='Abierto'):
+						# 	return HttpResponseRedirect(reverse_lazy('iglesia_create'))
 				except ObjectDoesNotExist:
 					pass
 				if redirect_to:

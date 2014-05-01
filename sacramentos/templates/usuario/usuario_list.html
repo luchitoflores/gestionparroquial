@@ -8,16 +8,21 @@ Lista de Feligreses
 
 {%block content%}
 
+{% include 'includes/busqueda_persona_form.html'%}
+{%if perms.sacramentos.add_feligres%}
+<a href="{% url 'usuario_create' %}" class='btn btn-primary'>Nuevo Feligres</a>
+{%endif%}
 
-<table id='id_table_feligres' class='footable table table-bordered table-striped' width="100%">
+<table id='id_table_feligres' class='table table-bordered table-striped table-hover'>
+
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			
 			<th>Nombres</th>
 			<th>Dni</th>
 			<th data-hide="phone">Fecha Nacimiento</th>
-			<th data-hide="phone,tablet">Padre</th>
-			<th data-hide="phone,tablet">Madre</th>
+			<th data-hide="phone,tablet">Lugar de Nacimiento</th>
+			<th>Acciones</th>
 		</tr>
 		
 	</thead>
@@ -27,18 +32,15 @@ Lista de Feligreses
 			<td><a href="{%url 'usuario_update' pk=o.id%}"> {{o.user.get_full_name}}</a></td>
 			<td> {{o.dni}}</td>
 			<td id='id_fecha_nacimiento'>{{o.fecha_nacimiento}}</td>
-			<td>{{o.padre.user.get_full_name}}</td>
-			<td>{{o.madre.user.get_full_name}}</td>
-
+			<td>{{o.lugar_nacimiento}}</td>
+			<td><a href="{% url 'usuario_detail' pk=o.id %}"><i class='icon-eye-open'></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 
 </table>
 
-{%if perms.sacramentos.add_feligres%}
-<a href="{% url 'usuario_create' %}" class='btn btn-primary'>Nuevo Feligres</a>
-{%endif%}
+{% include 'paginacion.html' %}
 
 
 {%endblock%}

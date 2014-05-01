@@ -2,16 +2,18 @@
 # Create your views here.
 import json
 import csv
+import unicodedata
 from datetime import datetime
 from datetime import date
 from django import forms
-from django.db.models import Sum
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sessions.models import Session
+from django.db.models import Sum
+from django.db.models import Q
 from django.forms.util import ErrorList
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
@@ -20,6 +22,7 @@ from django.shortcuts import render,get_object_or_404
 from django.utils.decorators import method_decorator
 from django.utils.html import format_html, mark_safe
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 # Para los logs
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
@@ -45,7 +48,7 @@ from sacramentos.forms import (
 	BautismoForm,
 	EucaristiaForm,EucaristiaForm,
 	ConfirmacionForm,ConfirmacionForm,
-	LibroForm,NotaMarginalForm,
+	LibroForm, LibroBaseForm, NotaMarginalForm,
 	DivErrorList,
 	IntencionForm,
 	ParroquiaForm, 
@@ -58,7 +61,19 @@ from sacramentos.forms import (
 
 from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
-from core.views import BusquedaMixin
+from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
+
+
+def configuracion_inicial_view(request):
+	template_name = 'configuracion/configuracion_inicial.html'
+	form_libro_bautismo = LibroBaseForm()
+	form_libro_pcomunion = LibroBaseForm()
+	form_libro_confirmacion = LibroBaseForm()
+	form_libro_matrimonio = LibroBaseForm()
+	form_iglesia = IglesiaForm(request=request)
+	# form_iglesia.kwargs({'request':request})
+	ctx = {'form_iglesia': form_iglesia, 'form_libro_bautismo':form_libro_bautismo,'form_libro_pcomunion': form_libro_pcomunion, 'form_libro_confirmacion':form_libro_confirmacion,'form_libro_matrimonio': form_libro_matrimonio}
+	return render(request, template_name, ctx)
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_feligres', login_url='/login/', raise_exception=permission_required)
@@ -184,10 +199,11 @@ def edit_usuario_view(request,pk):
 	ctx = {'form_usuario': form_usuario,'form_perfil':form_perfil, 'perfil':perfil}
 	return render(request, 'usuario/usuario_form.html', ctx)
 
-class UsuarioListView(ListView):
+class UsuarioListView(BusquedaPersonaMixin, ListView):
 	model=PerfilUsuario
 	template_name="usuario/usuario_list.html"
 	queryset = PerfilUsuario.objects.feligres()
+	paginate_by = 10
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_feligres', 
@@ -195,6 +211,29 @@ class UsuarioListView(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(UsuarioListView, self).dispatch(*args, **kwargs)
 
+
+	def get_queryset(self):		
+		name = self.request.GET.get('q', '')		
+		if (name != ''):
+			# name = ' '.join(name.split())
+			name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+			return PerfilUsuario.objects.feligres().filter(
+				Q(nombres_completos__icontains = name) | 
+				Q(dni=name)).order_by('user__last_name')
+		else:
+			return PerfilUsuario.objects.feligres().order_by('user__last_name')
+		
+
+class UsuarioDetailView(DetailView):
+	model = PerfilUsuario
+	template_name = 'usuario/usuario_detail.html'
+	
+
+	@method_decorator(login_required(login_url='/login/'))
+	@method_decorator(permission_required('sacramentos.change_feligres', 
+		login_url='/login/', raise_exception=permission_required))
+	def dispatch(self, *args, **kwargs):
+		return super(UsuarioDetailView, self).dispatch(*args, **kwargs)
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_administrador', login_url='/login/', 
@@ -473,96 +512,36 @@ class SacerdoteListView(ListView):
 @permission_required('sacramentos.add_libro', login_url='/login/', 
 	raise_exception=permission_required)
 def libro_create_view(request):
-	if(request.method=='POST'):
-		form_libro=LibroForm(request.POST)
-		asignacion = AsignacionParroquia.objects.get(
-				persona__user=request.user,periodoasignacionparroquia__estado=True)
-		parroquia=asignacion.parroquia
-		numero1=request.POST.get('numero_libro')
-		tipo2=request.POST.get('tipo_libro')
-		if numero1:
-			libro2=''
-			try:
-				libro2 = Libro.objects.get(tipo_libro=tipo2, numero_libro=numero1,
-					parroquia=asignacion.parroquia)
-			except ObjectDoesNotExist:
-				print 'hola'
+	parroquia = request.session.get('parroquia')
+	if not parroquia:
+		raise PermissionDenied
 
-			if libro2:
-				form_libro.errors["numero_libro"] = ErrorList([u'Ya existe un libro con este numero'])
-
+	if(request.method == 'POST'):
+		form_libro=LibroForm(request.POST, request=request)
+		
 		if form_libro.is_valid():
-			libro=form_libro.save(commit=False)
-			estado=libro.estado
-			tipo=libro.tipo_libro
-			numero=libro.numero_libro
+			libro=form_libro.save(commit=False)	
+			libro.parroquia = parroquia
+			ultimo_libro = Libro.objects.ultimo_libro(parroquia, 'Bautismo')
+			if ultimo_libro:
+				libro.numero_libro = int(ultimo_libro.numero_libro) + 1
+			else:  
+				libro.numero_libro = 1
 			
-			libro.parroquia = asignacion.parroquia
-
-			try:
-				consulta=Libro.objects.get(estado='Abierto',tipo_libro=tipo,
-					parroquia=asignacion.parroquia)
-				if(estado != consulta.estado and tipo!=consulta.tipo_libro):
-					libro.save()
-					LogEntry.objects.log_action(
-						user_id=request.user.id,
-						content_type_id=ContentType.objects.get_for_model(libro).pk,
-						object_id=libro.id,
-						object_repr=unicode(libro),
-						action_flag=ADDITION,
-						change_message="Creo un libro")
-					messages.success(request, 'Creado exitosamente')
-					return HttpResponseRedirect('/libro')
-					
-
-				elif(estado != consulta.estado and tipo==consulta.tipo_libro):
-					libro.save()
-					LogEntry.objects.log_action(
-						user_id=request.user.id,
-						content_type_id=ContentType.objects.get_for_model(libro).pk,
-						object_id=libro.id,
-						object_repr=unicode(libro.tipo_libro),
-						action_flag=ADDITION,
-						change_message="Creo un libro")
-					messages.success(request, 'Creado exitosamente')
-					return HttpResponseRedirect('/libro')
-					
-				
-				elif(estado == consulta.estado and tipo!=consulta.tipo_libro):
-					libro.save()
-					LogEntry.objects.log_action(
-						user_id=request.user.id,
-						content_type_id=ContentType.objects.get_for_model(libro).pk,
-						object_id=libro.id,
-						object_repr=unicode(libro.tipo_libro),
-						action_flag=ADDITION,
-						change_message="Creo un libro")
-					messages.success(request, 'Creado exitosamente')
-					return HttpResponseRedirect('/libro')
-					
-				else:
-					messages.error(request,'Ya existe un libro abierto, cierrelo '+
-						'y vuela a crear')
-					ctx={'form_libro':form_libro}
-					return render(request,'libro/libro_form.html',ctx)
-					
-			except ObjectDoesNotExist:
-				libro.save()
-				LogEntry.objects.log_action(
-					user_id=request.user.id,
-            		content_type_id=ContentType.objects.get_for_model(libro).pk,
-            		object_id=libro.id,
-            		object_repr=unicode(libro),
-            		action_flag=ADDITION,
-            		change_message="Creo un libro")
-				messages.success(request, 'Creado exitosamente')
-				return HttpResponseRedirect('/libro')
-				
-
+			libro.nombre = 	u'%s%s%s' % (libro.tipo_libro, libro.fecha_apertura.year, libro.numero_libro)
+			libro.save()
+			LogEntry.objects.log_action(
+				user_id=request.user.id,
+        		content_type_id=ContentType.objects.get_for_model(libro).pk,
+        		object_id=libro.id,
+        		object_repr=unicode(libro),
+        		action_flag=ADDITION,
+        		change_message="Creo un libro")
+			messages.success(request, 'Creado exitosamente')
+			return HttpResponseRedirect(reverse_lazy('libro_list'))
 		else:
-			print('FORM INVALIDO ')
 			ctx={'form_libro':form_libro}
-			messages.error(request,"Datos del formularios son inválidos")
+			messages.error(request,"Los datos del formulario son incorrectos")
 			return render(request,'libro/libro_form.html',ctx)
 	else:
 		form_libro=LibroForm()
@@ -573,129 +552,36 @@ def libro_create_view(request):
 @permission_required('sacramentos.change_libro', login_url='/login/', 
 	raise_exception=permission_required)
 def libro_update_view(request,pk):
-	libros=get_object_or_404(Libro,pk=pk)
-	try:
-		parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, 
-			asignacion__parroquia=libros.parroquia, estado=True).asignacion.parroquia
-		if(request.method=='POST'):
-			form_libro=LibroForm(request.POST,instance=libros)
-			asignacion = AsignacionParroquia.objects.get(
-				persona__user=request.user,periodoasignacionparroquia__estado=True)
-			numero1=request.POST.get('numero_libro')
-			tipo2=request.POST.get('tipo_libro')
-			if numero1:
-				libro2 = Libro.objects.filter(tipo_libro=tipo2, numero_libro=numero1,parroquia=asignacion.parroquia).exclude(pk=pk)
-				if libro2:
-					form_libro.errors["numero_libro"] = ErrorList([u'Ya existe un libro con este numero'])
-			if(form_libro.is_valid()):
-				libro=form_libro.save(commit=False)
-				estado=libro.estado
-				tipo=libro.tipo_libro
-				numero=libro.numero_libro
-				try:
-					consulta=Libro.objects.get(estado='Abierto',tipo_libro=tipo,
-						parroquia=asignacion.parroquia)
-					if (libro.id == consulta.id):
-						if libro.estado == consulta.estado:
-							l=Libro.objects.filter(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia).exclude(pk=pk)
-							if not l:
-								libro.save()
-								LogEntry.objects.log_action(
-									user_id=request.user.id,
-									content_type_id=ContentType.objects.get_for_model(libro).pk,
-									object_id=libro.id,
-									object_repr=unicode(libro),
-									action_flag=CHANGE,
-									change_message="Libro actualizado")
-								messages.success(request, 'Actualizado exitosamente')
-								# form_libro._errors["numero_libro"] = ErrorList([u"error message goes here"])
-								# print 'errores de libro %s' % form_libro.errors
-								return HttpResponseRedirect('/libro')
-							else:
-								messages.error(request,'Ya existe el numero de libro')
-						else:
-							l=Libro.objects.filter(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia).exclude(pk=pk)
-							if not l:
-								libro.save()
-								LogEntry.objects.log_action(
-            						user_id=request.user.id,
-            						content_type_id=ContentType.objects.get_for_model(libro).pk,
-            						object_id=libro.id,
-            						object_repr=unicode(libro.tipo_libro),
-            						action_flag=CHANGE,
-            						change_message="Libro actualizado")
-								messages.success(request, 'Actualizado exitosamente')
-
-								return HttpResponseRedirect('/libro')
-							else:
-								messages.error(request,'Ya existe el numero de libro')
-						
-					else:
-						if(estado != consulta.estado and tipo!=consulta.tipo_libro):
-							l=Libro.objects.filter(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia).exclude(pk=pk)
-							if not l:
-								libro.save()
-								LogEntry.objects.log_action(
-            					user_id=request.user.id,
-            					content_type_id=ContentType.objects.get_for_model(libro).pk,
-            					object_id=libro.id,
-            					object_repr=unicode(libro.tipo_libro),
-            					action_flag=CHANGE,
-            					change_message="Libro actualizado")
-								messages.success(request, 'Actualizado exitosamente')
-								return HttpResponseRedirect('/libro')
-							else:
-								messages.error(request,'Ya existe el numero de libro')
-						
-						elif(estado != consulta.estado and tipo==consulta.tipo_libro):
-							l=Libro.objects.filter(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia).exclude(pk=pk)
-							if not l:	
-								libro.save()
-								LogEntry.objects.log_action(
-            						user_id=request.user.id,
-            						content_type_id=ContentType.objects.get_for_model(libro).pk,
-            						object_id=libro.id,
-            						object_repr=unicode(libro.tipo_libro),
-            						action_flag=CHANGE,
-            						change_message="Libro actualizado")
-								messages.success(request, 'Actualizado exitosamente')
-								return HttpResponseRedirect('/libro')
-							else:
-								messages.error(request,'Ya existe el numero del libro')
-													
-						else:
-
-							messages.error(request,'Ya existe un libro abierto, cierrelo '+
-								'y vuela a crear')
-						
-				except ObjectDoesNotExist:
-					l=Libro.objects.filter(tipo_libro=tipo, numero_libro=numero,parroquia=asignacion.parroquia).exclude(pk=pk)
-					if not l:
-						libro.save()
-						LogEntry.objects.log_action(
-							user_id=request.user.id,
-            				content_type_id=ContentType.objects.get_for_model(libro).pk,
-            				object_id=libro.id,
-            				object_repr=unicode(libro.tipo_libro),
-            				action_flag=CHANGE,
-            				change_message="Libro actualizado")
-						messages.success(request, 'Actualizado exitosamente')
-						return HttpResponseRedirect('/libro')
-					else:
-						messages.error(request,'Ya existe el numero del libro')
-						ctx={'form_libro':form_libro,'object':libros}
-						return render(request,'libro/libro_form.html',ctx)
-			else:
-			
-				ctx={'form_libro':form_libro,'object':libros}
-				messages.error(request,'Los datos del formulario son incorrectos %s'%form_libro.errors)
-				return render(request,'libro/libro_form.html',ctx)
-		else:
-			form_libro=LibroForm(instance=libros)
-		ctx={'form_libro':form_libro,'object':libros}
-		return render(request,'libro/libro_form.html',ctx)
-	except ObjectDoesNotExist:
+	parroquia = request.session.get('parroquia')
+	if not parroquia:
 		raise PermissionDenied
+
+	libro=get_object_or_404(Libro,pk=pk)
+			
+	if request.method=='POST':
+		form_libro=LibroForm(request.POST,instance=libro, request=request)
+		
+		if form_libro.is_valid():
+			form_libro.save()
+			LogEntry.objects.log_action(
+				user_id=request.user.id,
+				content_type_id=ContentType.objects.get_for_model(libro).pk,
+				object_id=libro.id,
+				object_repr=unicode(libro.tipo_libro),
+				action_flag=CHANGE,
+				change_message="Libro actualizado")
+			messages.success(request, 'Actualizado exitosamente')
+			return HttpResponseRedirect(reverse_lazy('libro_list'))
+				
+		else:
+			ctx={'form_libro':form_libro,'object':libro}
+			messages.error(request,'Los datos del formulario son incorrectos')
+			return render(request,'libro/libro_form.html',ctx)
+	else:
+		form_libro=LibroForm(instance=libro)
+	ctx={'form_libro':form_libro,'object':libro}
+	return render(request,'libro/libro_form.html',ctx)
+	
 
 
 class LibroListView(BusquedaMixin, ListView):
@@ -706,11 +592,13 @@ class LibroListView(BusquedaMixin, ListView):
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Libro.objects.filter(parroquia=parroquia)
-			return queryset
+			name = self.request.GET.get('q', '')			
+			if (name != ''):
+				return Libro.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('nombre')
+			else:
+				return Libro.objects.filter(parroquia=parroquia).order_by('nombre')
 		else: 
-			raise PermissionDenied;
-
+			PermissionDenied
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_libro', login_url='/login/',
@@ -827,14 +715,22 @@ def bautismo_update_view(request,pk):
 	
 
 
-class BautismoListView(ListView):
+class BautismoListView(PaginacionMixin, ListView):
 	model=Bautismo
 	template_name='bautismo/bautismo_list.html'
+	paginate_by = 10
+
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Bautismo.objects.filter(parroquia=parroquia)
-			return queryset
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return Bautismo.objects.filter(parroquia=parroquia).filter(
+					Q(bautizado__nombres_completos__icontains = name) | 
+					Q(bautizado__dni=name)).order_by('bautizado__user__last_name')
+			else:
+				return Bautismo.objects.filter(parroquia=parroquia).order_by('bautizado__user__last_name')
 		else:  
 			raise PermissionDenied
 
@@ -949,15 +845,23 @@ def eucaristia_update_view(request,pk):
 
 
 
-class EucaristiaListView(ListView):
+class EucaristiaListView(PaginacionMixin, ListView):
 	model=Eucaristia
 	template_name='eucaristia/eucaristia_list.html'
+	paginate_by = 10
+	
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Eucaristia.objects.filter(parroquia=parroquia)
-			return queryset
-		else: 
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return Eucaristia.objects.filter(parroquia=parroquia).filter(
+					Q(feligres__nombres_completos__icontains = name) | 
+					Q(feligres__dni=name)).order_by('feligres__user__last_name')
+			else:
+				return Eucaristia.objects.filter(parroquia=parroquia).order_by('feligres__user__last_name')
+		else:  
 			raise PermissionDenied
 			
 
@@ -1079,16 +983,23 @@ def confirmacion_update_view(request,pk):
 	return render(request,'confirmacion/confirmacion_form.html',ctx)
 	
 
-class ConfirmacionListView(ListView):
+class ConfirmacionListView(PaginacionMixin, ListView):
 	model=Confirmacion
 	template_name='confirmacion/confirmacion_list.html'
+	paginate_by = 10
 
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Confirmacion.objects.filter(parroquia=parroquia)
-			return queryset
-		else: 
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return Confirmacion.objects.filter(parroquia=parroquia).filter(
+					Q(confirmado__nombres_completos__icontains = name) | 
+					Q(confirmado__dni=name)).order_by('confirmado__user__last_name')
+			else:
+				return Confirmacion.objects.filter(parroquia=parroquia).order_by('confirmado__user__last_name')
+		else:  
 			raise PermissionDenied
 			
 
@@ -1232,16 +1143,25 @@ def matrimonio_update_view(request,pk):
 	ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio}
 	return render(request, 'matrimonio/matrimonio_form.html', ctx)
 	
-class MatrimonioListView(ListView):
+class MatrimonioListView(PaginacionMixin, ListView):
 	model = Matrimonio
 	template_name = 'matrimonio/matrimonio_list.html'
+	paginate_by = 10
 
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			queryset = Matrimonio.objects.filter(parroquia=parroquia,vigente=True)
-			return queryset
-		else: 
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+				return Matrimonio.objects.filter(parroquia=parroquia).filter(
+					Q(novio__nombres_completos__icontains = name) | 
+					Q(novio__dni=name)|
+					Q(novia__nombres_completos__icontains = name) | 
+					Q(novia__dni=name)).order_by('novio__user__last_name')
+			else:
+				return Matrimonio.objects.filter(parroquia=parroquia).order_by('novio__user__last_name')
+		else:  
 			raise PermissionDenied
 			
 
@@ -1537,7 +1457,11 @@ class IntencionListView(BusquedaMixin, ListView):
 	def get_queryset(self):
 		parroquia = self.request.session.get('parroquia')
 		if parroquia:
-			return Intenciones.objects.filter(parroquia=parroquia).order_by('fecha', 'hora')
+			name = self.request.GET.get('q', '')
+			if (name != ''):
+				return Intenciones.objects.filter(oferente__icontains= name, parroquia=parroquia).order_by('-fecha', 'hora')
+			else:
+				return Intenciones.objects.filter(parroquia=parroquia).order_by('-fecha', 'hora')
 		else: 
 			raise PermissionDenied
 

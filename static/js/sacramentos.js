@@ -15,6 +15,7 @@ function inicio(){
 		}
 	}
 
+	tabla_vacia();
 	prueba_localstore();
 	combinacionTeclas();
 	cancelar_modal();
@@ -29,7 +30,7 @@ function inicio(){
 	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/crear/api/nota/');
 	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/crear/api/nota_matrimonio/');
 	tablas_estilo_bootstrap();
-	modelo_tablas('#id_table_secretaria,#id_table_asignar_parroquia,#id_table_log, #id_table_feligres, #id_table_matrimonio,#id_table_bautismo,#id_table_eucaristia,#id_table_confirmacion, #id_table_group, #id_table_sacerdotes');
+	modelo_tablas('#id_table_secretaria,#id_table_asignar_parroquia,#id_table_log, #id_table_group, #id_table_sacerdotes');
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
 	ocultar_tablas_aceptar('#id_buscar_hombres');
 	ocultar_tablas_aceptar('#id_buscar_mujeres');
@@ -56,6 +57,21 @@ function inicio(){
 	controles_intenciones();
 	controles_provincias();
 	
+}
+
+//Función para verificar si una tabla está vacía
+function tabla_vacia(){
+	var tbody = $('table').attr('tbody');
+	//cuenta el total de columnas del thead de una tabla
+	var total_columnas = $('table > thead > tr > th').length
+	//cuenta el total de filas del tbody de una tabla
+	var total_filas = $('table > tbody > tr > td').length
+	
+	console.log(total_filas);
+	if(total_filas==0){
+		$('table > tbody:last').append('<tr><td colspan='+total_columnas+'>No existen registros disponibles</td></tr>');		
+	}
+
 }
 
 // Función para añadir el widget multiselect
