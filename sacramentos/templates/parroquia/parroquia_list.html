@@ -6,7 +6,7 @@ Lista de Parroquias Eclesiásticas
 
 {%block content%}
 
-{% include 'busqueda_form.html' %} 
+{% include 'includes/busqueda_form.html' %} 
 {%if perms.sacramentos.add_parroquia %}
 <a href="{%url 'parroquia_create'%}" class='btn btn-primary'>Nueva Parroquia</a>
 {%endif%}
@@ -48,6 +48,6 @@ Lista de Parroquias Eclesiásticas
 	</tbody>
 </table>
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 
 {%endblock%}

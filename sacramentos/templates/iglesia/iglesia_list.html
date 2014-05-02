@@ -6,7 +6,7 @@ Lista de Iglesias
 
 {%block content%}
 
-{% include 'busqueda_form.html' %} 
+{% include 'includes/busqueda_form.html' %} 
 
 <a href="{%url 'iglesia_create'%}" class='btn btn-primary'>Nueva Iglesia</a>
 
@@ -16,6 +16,7 @@ Lista de Iglesias
 		<tr>
 			<th>Nombre</th>
 			<th>Es la Iglesia Matriz</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,15 +29,16 @@ Lista de Iglesias
 
 		{%for o in object_list%}
 		<tr>
-			<td>
-				<a href="{{o.get_absolute_url}}">{{o}}</a>
-			</td>
+			<td>{{o}}</td>
 			<td>{% if o.principal %} <i class='icon-check text-success'></i> {% else %} <i class='icon-check-minus'></i>{% endif%}</td>
+			<td>
+				<a href="{{o.get_absolute_url}}"><i class="icon-pencil"></i></a>
+			</td>
 		</tr>
 		{%endfor%}
 	</tbody>
 </table>
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 
 {%endblock%}

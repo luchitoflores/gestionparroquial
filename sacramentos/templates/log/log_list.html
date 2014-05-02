@@ -5,6 +5,11 @@ Lista de Logs
 {%endblock%}
 
 {%block content%}
+
+
+{% include 'includes/busqueda_form.html' %}
+<a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a CSV</a>
+
 <table id='id_table_log' class='table table-bordered table-striped'>
 	<thead>
 		<tr>
@@ -42,10 +47,10 @@ Lista de Logs
 		{%endfor%}
 	</tbody>
 </table>
+{% include 'includes/paginacion.html' %}
 <!--{%if user.is_superuser%}
 <a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a Csv</a>
 {%endif%}-->
-<a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a CSV</a>
 
 
 

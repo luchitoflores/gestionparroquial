@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# Create your views here.
+
 import json
 import csv
 import unicodedata
@@ -7,6 +7,7 @@ from datetime import datetime
 from datetime import date
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
@@ -604,7 +605,7 @@ def libro_update_view(request,pk):
 	
 
 
-class LibroListView(BusquedaMixin, ListView):
+class LibroListView(PaginacionMixin, ListView):
 	model = Libro
 	template_name = 'libro/libro_list.html'
 	paginate_by = 10
@@ -618,7 +619,7 @@ class LibroListView(BusquedaMixin, ListView):
 			else:
 				return Libro.objects.filter(parroquia=parroquia).order_by('nombre')
 		else: 
-			PermissionDenied
+			raise PermissionDenied
 
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('sacramentos.change_libro', login_url='/login/',
@@ -1803,9 +1804,53 @@ def parroco_periodos_asignacion_list(request, pk):
 	raise_exception=permission_required)
 def asignar_parroco_list(request, pk):
 	template_name = 'parroquia/asignar_parroquia_list.html'
-	object_list = AsignacionParroquia.objects.filter(parroquia__id=pk, persona__user__groups__name='Sacerdote') 
 	parroquia = get_object_or_404(Parroquia, pk=pk)
-	ctx = {'object_list': object_list, 'parroquia':parroquia}
+	q = request.GET.get('q', '')
+	if q:
+		asignaciones = AsignacionParroquia.objects.filter(parroquia=parroquia, persona__user__groups__name='Sacerdote').filter(
+			Q(persona__nombres_completos__icontains=q)|
+			Q(persona__dni__icontains=q)
+			)		
+	else:
+		asignaciones = AsignacionParroquia.objects.filter(parroquia=parroquia, persona__user__groups__name='Sacerdote') 
+	
+	paginator = Paginator(asignaciones, 10)
+	page = request.GET.get('page')
+	
+	
+	try:
+		page_obj = paginator.page(page)
+	except PageNotAnInteger:
+		page_obj = paginator.page(1)
+		# pagina_actual = paginator.page(1)
+	except EmptyPage:
+		page_obj = paginator.page(paginator.num_pages)
+
+	
+	numero_paginas = paginator.num_pages
+	pagina_actual = page
+	
+	if numero_paginas > 1:
+		is_paginated = True
+	else:
+		is_paginated = False
+		
+	if numero_paginas > 5 :
+		resta = numero_paginas - pagina_actual
+
+		if pagina_actual <= 2:
+			rango = [x for x in range(1,6)]
+		else:				
+			if resta > 1:
+				rango = [pagina_actual-2, pagina_actual-1, pagina_actual, pagina_actual+1, pagina_actual+2]
+			elif resta <= 1:
+				rango = [x for x in range(numero_paginas-4,numero_paginas+1)]
+	elif numero_paginas <= 5:
+		rango = [x for x in range(1,numero_paginas+1)]
+
+
+	
+	ctx = {'page_obj':page_obj,'object_list': asignaciones, 'parroquia':parroquia, 'rango':rango, 'q':q, 'is_paginated': is_paginated}
 	return render(request, template_name, ctx)
 	
 
@@ -1989,9 +2034,9 @@ class SecretariaListView(ListView):
 				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
 				return PeriodoAsignacionParroquia.objects.secretaria(parroquia).filter(
 					Q(asignacion__persona__nombres_completos__icontains = name) | 
-					Q(asignacion__persona__dni=name))
+					Q(asignacion__persona__dni=name)).order_by('asignacion__persona__user__last_name')
 			else:
-				return PeriodoAsignacionParroquia.objects.secretaria(parroquia)
+				return PeriodoAsignacionParroquia.objects.secretaria(parroquia).order_by('asignacion__persona__user__last_name')
 		else:
 			raise PermissionDenied
 
@@ -2142,20 +2187,27 @@ def parametriza_parroquia_create(request):
 
 # views para los LOGS del ekklesia
 
-class LogListView(ListView):
+class LogListView(PaginacionMixin, ListView):
 	model=LogEntry
 	template_name='log/log_list.html'
+	paginate_by = 10
 
-	def get_queryset(self):
-		try:
-			if not (self.request.user.is_superuser):
+	# def get_queryset(self):
+	# 	try:
+	# 		if self.request.user.is_superuser:
+	# 			queryset = LogEntry.objects.all()
+	# 			return queryset
+	# 	except: 
+	# 		return [];
 
-				queryset = LogEntry.objects.all()
-				return queryset
-			
+	def get_queryset(self):		
+		name = self.request.GET.get('q', '')		
+		if (name != ''):
+			name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+			return LogEntry.objects.filter(user__username__icontains = name).order_by('user__username', '-action_time')
+		else:
+			return LogEntry.objects.all().order_by('user__username', '-action_time')
 
-		except: 
-			return [];
 	@method_decorator(login_required(login_url='/login/'))
 	@method_decorator(permission_required('admin.change_logentry', login_url='/login/', 
 		raise_exception=permission_required))
@@ -2781,7 +2833,7 @@ def redireccionar_parametros(request):
 		return render(request,'parametros.html')  
 
 
-class IglesiaListView(BusquedaMixin, ListView):
+class IglesiaListView(PaginacionMixin, ListView):
 	model = Iglesia
 	template_name = 'iglesia/iglesia_list.html'
 	paginate_by = 10
@@ -2796,8 +2848,7 @@ class IglesiaListView(BusquedaMixin, ListView):
 			else:
 				return Iglesia.objects.filter(parroquia=parroquia).order_by('nombre')
 		else: 
-			PermissionDenied
-	
+			raise PermissionDenied
 
 
 class IglesiaCreateView(CreateView):

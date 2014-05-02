@@ -7,6 +7,11 @@ Lista de Grupos
 
 {%block content%}
 
+{% include 'includes/busqueda_form.html' %}
+{%if perms.auth.add_group %}
+<a href="{%url 'group_create'%}" class='btn btn-primary'>Nuevo Grupo</a>
+{%endif%}
+
 <table id='id_table_group' class='table table-bordered table-striped'>
 	<thead>
 		<tr>
@@ -21,8 +26,6 @@ Lista de Grupos
 		{%endfor%}
 	</tbody>
 </table>
-{%if perms.auth.add_group %}
-<a href="{%url 'group_create'%}" class='btn btn-primary'>Nuevo Grupo</a>
-{%endif%}
+{% include 'includes/paginacion.html' %}
 
 {%endblock%}

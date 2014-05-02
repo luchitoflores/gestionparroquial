@@ -7,12 +7,12 @@ Lista de Parroquias Civiles
 {%block content%}
 
 
-{%include 'busqueda_form.html'%}
+{%include 'includes/busqueda_form.html'%}
 <a href="{% url 'parroquiacivil_create' %}" class='btn btn-primary'>Nueva Parroquia Civil</a>
 
 <table id='id_table_parroquia_civil' class="table table-bordered table-striped">
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			<th>Nombre</th>
 			<th data-hide='phone'>Código</th>
 		</tr>
@@ -30,5 +30,5 @@ Lista de Parroquias Civiles
 </table>
 
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 {%endblock%}

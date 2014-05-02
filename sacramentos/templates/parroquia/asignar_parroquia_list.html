@@ -7,6 +7,13 @@ Párrocos - {{parroquia.nombre}}
 
 
 {% block content%}
+<form id='id_form_buscar' class="form-search">
+	<input type='text' class="input-xlarge search-query" name='q' value="{{q}}" placeholder='Sacerdote, Dni, Parroquia'/>
+	<button class="btn btn-primary">Buscar</button>
+	<!--<input type='submit' value='Buscar' class="btn btn-primary" />-->
+</form>
+<a href="{%url 'asignar_parroco_a_parroquia' pk=parroquia.id%}" class='btn btn-primary'>Nueva Asignación</a>
+
 <table id='id_table_asignar_parroquia' class='table table-bordered table-striped'>
 	<thead>
 		<tr>
@@ -20,13 +27,14 @@ Párrocos - {{parroquia.nombre}}
 		<tr>
 			<td>{{o.persona}}</td>
 			<td>{{o.parroquia}}</td>
-			{# <!--<td>{%if o.periodo.estado%}<i class='icon-check'>{%else%}<i class=' icon-minus-sign'>{%endif%}</i> </td>--> #}
 			<td><a href="{%url 'parroco_periodos_asignacion_list' pk=o.id%}">Ver Asignaciones</a></td>
 		</tr>
 		{%endfor%}
 	</tbody>
 </table>
-<a href="{%url 'asignar_parroco_a_parroquia' pk=parroquia.id%}" class='btn btn-primary'>Nueva Asignación</a>
+
+{% include 'includes/paginacion.html' %}
+
 <a href="{%url 'parroquia_list'%}" class='btn btn-danger'>Cancelar</a>
 
 {% endblock%}

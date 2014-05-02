@@ -29,18 +29,22 @@ Lista de Feligreses
 	<tbody>
 		{% for o in object_list %}
 		<tr>
-			<td><a href="{%url 'usuario_update' pk=o.id%}"> {{o.user.get_full_name}}</a></td>
+			<td>{{o.user.get_full_name}}</td>
 			<td> {{o.dni}}</td>
 			<td id='id_fecha_nacimiento'>{{o.fecha_nacimiento}}</td>
 			<td>{{o.lugar_nacimiento}}</td>
-			<td><a href="{% url 'usuario_detail' pk=o.id %}"><i class='icon-eye-open'></i></a></td>
+			<td>
+				<a href="{% url 'usuario_detail' pk=o.id %}"><i class='icon-eye-open'></i></a>
+				&nbsp
+				<a href="{%url 'usuario_update' pk=o.id%}"><i class='icon-pencil'></i></a>
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 
 </table>
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 
 
 {%endblock%}

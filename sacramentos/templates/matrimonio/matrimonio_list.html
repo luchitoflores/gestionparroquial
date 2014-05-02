@@ -55,27 +55,12 @@ $(document).ready(function(){
 	<tbody>
 		{% for o in object_list %}
 		<tr>
-			<td><a href="{%url 'matrimonio_update' pk=o.id%}"> {{o.novio.user.first_name}} {{o.novio.user.last_name}}</a></td>
-			<td>{{o.novia.user.first_name}} {{o.novia.user.last_name}}</td>
+			<td>{{o.novio.nombres_completos}}</td>
+			<td>{{o.novia.nombres_completos}}</td>
 			<td id='id_fecha_sacramento'>{{o.fecha_sacramento}}</td>
 			<td>{{o.testigo_novio}}</td>
 			<td>{{o.testigo_novia}}</td>
-			{%if o.vigente%}
-
-			<td>
-				{%if perms.sacramentos.delete_matrimonio %}
-				<a class='id_delete' href="#id_vigencia" role="button" data-toggle="modal" name='{{o.id}}'>Quitar Vigencia
-				</a>
-				{%endif%}
-			</td>
-			{%else%}
-			<td>
-				Sin acciones
-			</td>
-			{%endif%}
-
-			
-			
+			<td><a href="{%url 'matrimonio_update' pk=o.id%}"><i class="icon-pencil"></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>

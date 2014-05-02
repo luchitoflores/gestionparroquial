@@ -255,7 +255,7 @@ class SecretariaForm(PersonaBaseForm):
 		fields = PersonaBaseForm.Meta.fields + ('sexo', 'estado_civil')
 
 	def __init__(self, *args, **kwargs):
-		super(PadreForm, self).__init__(*args, **kwargs)
+		super(SecretariaForm, self).__init__(*args, **kwargs)
 		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
 		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
 		self.fields['estado_civil'].label = 'Estado Civil *'

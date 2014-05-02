@@ -6,12 +6,12 @@ Lista de Cantones
 {%block content%}
 
 
-{% include 'busqueda_form.html' %} 
+{% include 'includes/busqueda_form.html' %} 
 <a href="{% url 'canton_create' %}" class='btn btn-primary'>Nuevo Cantón</a>
 
 <table id='id_table_canton' class="table table-bordered table-striped">
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			<th>Nombre</th>
 			<th data-hide='phone'>Código</th>
 		</tr>
@@ -28,6 +28,6 @@ Lista de Cantones
 	</tbody>
 </table>
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 
 {%endblock%}

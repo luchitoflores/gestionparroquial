@@ -30,7 +30,7 @@ function inicio(){
 	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/crear/api/nota/');
 	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/crear/api/nota_matrimonio/');
 	tablas_estilo_bootstrap();
-	modelo_tablas('#id_table_asignar_parroquia,#id_table_log, #id_table_group');
+	/*modelo_tablas('#id_table_asignar_parroquia');*/
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
 	ocultar_tablas_aceptar('#id_buscar_hombres');
 	ocultar_tablas_aceptar('#id_buscar_mujeres');

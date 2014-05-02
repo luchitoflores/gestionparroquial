@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # Create your views here.
 import json
+import unicodedata
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -19,6 +20,7 @@ from django.views.generic import ListView
 
 from .forms import SendEmailForm, GruposForm
 from sacramentos.models import PeriodoAsignacionParroquia
+from core.views import BusquedaMixin
 
 #Login de usuarios sin utilizar ningún formulario preestablecido
 # def login_view(request):
@@ -179,16 +181,26 @@ class GroupUpdate(UpdateView):
 	def dispatch(self, *args, **kwargs):
 		return super(GroupUpdate, self).dispatch(*args, **kwargs)
 
-class GroupList(ListView):
+class GroupList(BusquedaMixin, ListView):
 	model = Group
 	context_object_name = 'object_list'
 	template_name = 'auth/group_list.html'
+	paginate_by = 10
 
 	@method_decorator(login_required(login_url='login'))
 	@method_decorator(permission_required('auth.change_group', login_url='/login/',
 		raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(GroupList, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):		
+		name = self.request.GET.get('q', '')		
+		if (name != ''):
+			name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
+			return Group.objects.filter(name__icontains = name).order_by('name')
+		else:
+			return Group.objects.all().order_by('name')
+	
 
 	
 		

@@ -9,6 +9,7 @@ from django.contrib.auth.models import User, Permission
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import six
 
 # Para los logs
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
@@ -22,7 +23,16 @@ def user_new_unicode(self):
     return self.username if self.get_full_name() == '' else self.get_full_name()
 
 def permissions_new_unicode(self):
-    return self.name 
+    nombre_clase = six.text_type(self.content_type)
+    nombre_permiso = six.text_type(self.name)
+    if 'Can delete' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can delete', 'Puede eliminar')
+    elif 'Can add' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can add', 'Puede crear')
+    elif 'Can change' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can change', 'Puede modificar')
+
+    return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
 
 # Replace the __unicode__ method in the User class with out new implementation
 User.__unicode__ = user_new_unicode 
@@ -32,6 +42,7 @@ Permission.__unicode__ = permissions_new_unicode
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    es_activo = models.BooleanField(default=True)
 
     class Meta:
 	    abstract = True
@@ -697,7 +708,7 @@ class Parroquia(TimeStampedModel):
 	# return self.nombre
 
 
-class Iglesia(models.Model):
+class Iglesia(TimeStampedModel):
     nombre = models.CharField(max_length=100)
     parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
     principal = models.BooleanField('Es la Iglesia Matriz?')

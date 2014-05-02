@@ -6,12 +6,12 @@ Lista de Provincias
 {%block content%}
 
 
-{% include 'busqueda_form.html' %} 
+{% include 'includes/busqueda_form.html' %} 
 <a href="{% url 'provincia_create' %}" class='btn btn-primary'>Nueva Provincia</a>
 
 <table id='id_table_provincia' class="table table-bordered">
 	<thead>
-		<tr class='alert alert-info'>
+		<tr>
 			<th>Nombre</th>
 			<th data-hide='phone'>Código</th>
 			
@@ -29,6 +29,6 @@ Lista de Provincias
 	</tbody>
 </table>
 
-{% include 'paginacion.html' %}
+{% include 'includes/paginacion.html' %}
 
 {%endblock%}
