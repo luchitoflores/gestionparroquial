@@ -68,15 +68,15 @@ urlpatterns = patterns('',
 	# url(r'^asignar/secretaria/$', asignar_secretaria_list , name='asignar_secretaria_list'),
 	url(r'^asignar/secretaria/$', SecretariaListView.as_view() , name='asignar_secretaria_list'),
 	url(r'^secretaria/(?P<pk>\d+)/$', secretaria_update_view, name='secretaria_update'),
+	
 	#urls del api rest usuarios
 	url(r'^api/usuario/$', 'sacramentos.rest.buscar_usuarios', name='api_usuario_list'),
 	url(r'^api/hombres/$', 'sacramentos.rest.buscar_hombres', name='buscar_hombres'),
 	url(r'^api/mujeres/$', 'sacramentos.rest.buscar_mujeres', name='buscar_mujeres'),
 	url(r'^api/sacerdote/$', 'sacramentos.rest.buscar_sacerdotes', name='api_sacerdote_list'),
-	url(r'^api/asignarpadre/$', 'sacramentos.rest.edit_padre_viewapi', 
-		name='api_setear_padre'),
-	url(r'^crear/api/padre/$', 'sacramentos.rest.padre_create_ajax', 
-		name='api_create_padre'),
+	url(r'^api/asignarpadre/$', 'sacramentos.rest.edit_padre_viewapi', name='api_setear_padre'),
+	url(r'^api/crear/padre/$', 'sacramentos.rest.padre_create_ajax', name='api_create_padre'),
+	url(r'^api/crear/iglesia/$', 'sacramentos.rest.iglesia_api_create', name='api_iglesia_create'),
 
 
 	# urls de libro
@@ -107,10 +107,10 @@ urlpatterns = patterns('',
 
 	#urls de Nota Marginal para crear con bautismo y matrimonios
 
-	url(r'^crear/api/nota/$', 'sacramentos.rest.nota_marginal_create_ajax', 
+	url(r'^api/crear/nota/$', 'sacramentos.rest.nota_marginal_create_ajax', 
 		name='api_create_nota'),
 	
-	url(r'^crear/api/nota_matrimonio/$', 'sacramentos.rest.nota_create_matrimonio_ajax', 
+	url(r'^api/crear/nota_matrimonio/$', 'sacramentos.rest.nota_create_matrimonio_ajax', 
 		name='api_create_nota_matrimonio'),
 
 	#urls de Bautismo
@@ -174,9 +174,9 @@ urlpatterns = patterns('',
 
 	#urls del api rest usuarios
 	url(r'^api/usuario/$', 'sacramentos.rest.buscar_usuarios', name='api_usuario_list'),
-	url(r'^crear/api/padre/$', 'sacramentos.rest.padre_create_ajax', name='api_create_padre'),
-	url(r'^crear/api/secretaria/$', 'sacramentos.rest.secretaria_create_ajax', name='api_create_secretaria'),
-	url(r'^crear/api/email/$', 'sacramentos.rest.agregar_email', name='agregar_email'),
+	url(r'^api/crear/padre/$', 'sacramentos.rest.padre_create_ajax', name='api_create_padre'),
+	url(r'^api/crear/secretaria/$', 'sacramentos.rest.secretaria_create_ajax', name='api_create_secretaria'),
+	url(r'^api/crear/email/$', 'sacramentos.rest.agregar_email', name='agregar_email'),
 	
 	# urls de parameetrizacion de la diocesis(general)
 	url(r'^crear/parametros/diocesis/$', parametriza_diocesis_create, name='parametriza_create'),

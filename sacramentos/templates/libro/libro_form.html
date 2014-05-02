@@ -1,23 +1,12 @@
 {% extends 'base.html'%}
-{%block title%}
-{%if object.id%}
-Editar Libro 
-{%else%}
-Agregar Libro
-{%endif%}
-{%endblock%}
+
 {%block content_title%}
-{%if object.id%} 
-Editar Libro 
-{%else%}
-Agregar Libro 
-{%endif%}
+{% block title %}{%if object.id%}Editar Libro{%else%}Agregar Libro{%endif%}
+{% endblock %}
 {%endblock%}
 
 {%block content%}
-<div id="id_mensaje">
-	
-</div>
+
 <form id='id_form_libro' action="." method='POST' class='form-horizontal'>
 	{% csrf_token%}
 	<div class='row'>

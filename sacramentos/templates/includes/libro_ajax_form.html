@@ -1,4 +1,17 @@
 <form id='id_libro_form' action=".">
 	{% csrf_token %}
-	{{ form }}
+	<div id="id_crear_libro" class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3>Crear Libro</h3>
+		</div>
+		<div class="modal-body">
+			<form action="">
+				{{ form_libro }}
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a id='id_aceptar' href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+		</div>
+	</div>
 </form>

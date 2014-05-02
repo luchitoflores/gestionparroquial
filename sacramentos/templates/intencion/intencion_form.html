@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load sacramentos_tags %}
 
 {%block title%}{%if object.id%}Editar Intenciones de Misa{%else%}Agregar Intenciones de Misa{%endif%}{%endblock%}
 {%block content_title%}
@@ -10,6 +11,8 @@ Agregar Intenciones de Misa
 {%endblock%}
 
 {%block content%}
+
+{% iglesia_ajax %}
 
 <form action="." method='POST' class='form-horizontal'>
 	{%csrf_token%}
@@ -68,6 +71,9 @@ Agregar Intenciones de Misa
 			</label>
 			<div class="controls">
 				{{f}}
+				{% if f.label = form.iglesia.label%}
+				<a href="#id_modal_iglesia" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+				{%endif%}
 			</div>
 			<div class="controls">
 				<div class="help-text">

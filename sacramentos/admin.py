@@ -21,6 +21,11 @@ ParametrizaDiocesis,ParametrizaParroquia,
 # admin.site.unregister(User)
 # admin.site.register(User)
 
+class LibroAdmin(admin.ModelAdmin):
+	# fields = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
+	list_display = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
+	search_fields = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
+	list_per_page = 1
 
 
 
@@ -29,7 +34,7 @@ admin.site.register(Bautismo)
 admin.site.register(Confirmacion)
 admin.site.register(Eucaristia)
 admin.site.register(Intenciones)
-admin.site.register(Libro)
+admin.site.register(Libro, LibroAdmin)
 admin.site.register(Matrimonio)
 admin.site.register(NotaMarginal)
 admin.site.register(Parroquia)

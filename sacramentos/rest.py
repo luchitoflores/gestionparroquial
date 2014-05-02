@@ -17,9 +17,16 @@ from datetime import datetime,date
 # from tastypie.resources import ModelResource
 
 # Librerías del proyecto
-from sacramentos.forms import PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm, EmailForm
-from sacramentos.models import (PerfilUsuario,NotaMarginal,Bautismo,Matrimonio,
-	Parroquia)
+from sacramentos.forms import (
+	PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm, 
+	EmailForm,
+	IglesiaForm,
+	)
+
+from sacramentos.models import (
+	PerfilUsuario,NotaMarginal,Bautismo,Matrimonio,
+	Parroquia, Iglesia
+	)
 
 logger = logging.getLogger(__name__)
 
@@ -131,6 +138,22 @@ def secretaria_create_ajax(request):
 	else:
 		raise Http404
 
+# Crear Iglesias via ajax
+def iglesia_api_create(request):
+	if request.is_ajax():
+		if request.method == 'POST':
+			form = IglesiaForm(request.POST, request = request)
+			if form.is_valid():
+				iglesia = form.save()
+				respuesta = True
+				ctx = {'respuesta': respuesta, 'id': iglesia.id, 'nombre': iglesia.nombre}
+			else:
+				errores = form.errors
+				ctx = {'respuesta': False, 'errores': errores}
+		return HttpResponse(json.dumps(ctx), content_type='application/json')
+	else:
+		raise Http404
+
 # vista para crear una nota marginal a Bautismo con modal.....
 
 @login_required(login_url='/login/')
@@ -162,7 +185,7 @@ def nota_marginal_create_ajax(request):
 
 		return HttpResponse(json.dumps(ctx), content_type='application/json')
 	else:
-		Http404
+		raise Http404
 
 
 # vista para crear una nota marginal a Matrimonio con modal.....
@@ -195,7 +218,7 @@ def nota_create_matrimonio_ajax(request):
 
 		return HttpResponse(json.dumps(ctx), content_type='application/json')
 	else:
-		Http404
+		raise Http404
 
 
 

@@ -23,12 +23,13 @@ function inicio(){
 	var map2 = '';
 	crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
 	crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
+	crear_iglesia('#id_crear_iglesia');
 	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
 	//autocomplete('#id_padre');
 	asignar_padre();
 	asignar_email();
-	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/crear/api/nota/');
-	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/crear/api/nota_matrimonio/');
+	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/crear/nota/');
+	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/crear/nota_matrimonio/');
 	tablas_estilo_bootstrap();
 	/*modelo_tablas('#id_table_asignar_parroquia');*/
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
@@ -691,7 +692,7 @@ function crear_padre(identificador, idpadre, idmodal, sexo){
 		$('.alert').remove();
 
 		e.preventDefault();
-		var url = '/crear/api/padre/';
+		var url = '/api/crear/padre/';
 		var json = $(this).serialize()+'&sexo='+sexo;
 		$.post(url, json , function(data){
 			if(!data.respuesta){
@@ -727,6 +728,42 @@ function crear_padre(identificador, idpadre, idmodal, sexo){
 });
 }
 
+// Función para crear una Iglesia via Ajax
+function crear_iglesia(identificador){
+	$(identificador).on('submit',function(e){
+		$('span').remove();
+		$('.alert').remove();
+		e.preventDefault();
+		// Quita el elemento seleccionado por defecto
+		$('#id_iglesia option:selected').removeAttr("selected");
+		var html_inicial = $('#id_iglesia').html();
+		var url = "/api/crear/iglesia/";
+		var json = $(this).serialize();
+
+		$.post(url, json, function(data){
+			if(!data.respuesta){
+				
+				var error = '<div class="alert alert-error">' + 
+				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
+				
+				$('.modal-header').append(error);
+				
+				$.each(data.errores, function(index, element){
+					var mensajes_error = '<span class="errors">' + element+ '</span>';
+					$("#id_errors_"+index).append(mensajes_error);
+				});
+
+			}else{
+				$('#id_iglesia').html('<option value="'+ data.id+'" selected="selected">'+data.nombre+'</option>'+ html_inicial);
+				$(".modal").modal('hide');
+				limpiar_campos('#id_crear_iglesia :input');
+			}
+		});
+
+	});
+}
+
 
 //  Esta función llama a un modal para crear una secretaria
 function crear_secretaria(identificador, idsecretaria, idmodal){
@@ -734,7 +771,7 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 		$('span').remove();
 		$('.alert').remove();
 		e.preventDefault();
-		var url = '/crear/api/secretaria/';
+		var url = '/api/crear/secretaria/';
 		var json = $(this).serialize();
 		$.post(url, json , function(data){
 			if(!data.respuesta){
@@ -909,7 +946,7 @@ function asignar_email(){
 	$('#id_form_email').on('submit', function(e){
 		e.preventDefault();
 		var ctx = $(this).serialize()
-		var url = '/crear/api/email/'
+		var url = '/api/crear/email/'
 		$.post(url, ctx, function(data){
 			if (data.respuesta) {
 				$('#id_modal_email').modal('hide');

@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from django import template
 from sacramentos.forms import UsuarioForm, PadreForm,PerfilUsuarioForm
-from sacramentos.models import ParametrizaDiocesis
+from sacramentos.models import ParametrizaDiocesis, Libro
+from sacramentos.views import  LibroForm
 register = template.Library()
 
 @register.filter(is_safe=True)
@@ -16,3 +17,4 @@ def footer_tag():
 		return u'<h5>%s</h5><p>%s | %s - Ecuador | Teléfono: %s </p>' % (objeto[0].diocesis, objeto[0].direccion, str(objeto[0].direccion.provincia).title(), objeto[0].direccion.telefono)
 	else:
 		return ""
+

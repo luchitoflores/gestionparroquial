@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
+# from django.contrib.auth.signals import user_logged_in
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,26 +18,26 @@ from django.contrib.contenttypes.models import ContentType
 
 from ciudades.models import Direccion 
 from sacramentos.managers import PersonaManager,BautismoManager,LibroManager, PeriodoAsignacionManager
-# Create your models here.
 
-def user_new_unicode(self):
-    return self.username if self.get_full_name() == '' else self.get_full_name()
 
-def permissions_new_unicode(self):
-    nombre_clase = six.text_type(self.content_type)
-    nombre_permiso = six.text_type(self.name)
-    if 'Can delete' in nombre_permiso:
-        nombre_permiso = nombre_permiso.replace('Can delete', 'Puede eliminar')
-    elif 'Can add' in nombre_permiso:
-        nombre_permiso = nombre_permiso.replace('Can add', 'Puede crear')
-    elif 'Can change' in nombre_permiso:
-        nombre_permiso = nombre_permiso.replace('Can change', 'Puede modificar')
+# def user_new_unicode(self):
+#     return self.username if self.get_full_name() == '' else self.get_full_name()
 
-    return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
+# def permissions_new_unicode(self):
+#     nombre_clase = six.text_type(self.content_type)
+#     nombre_permiso = six.text_type(self.name)
+#     if 'Can delete' in nombre_permiso:
+#         nombre_permiso = nombre_permiso.replace('Can delete', 'Puede eliminar')
+#     elif 'Can add' in nombre_permiso:
+#         nombre_permiso = nombre_permiso.replace('Can add', 'Puede crear')
+#     elif 'Can change' in nombre_permiso:
+#         nombre_permiso = nombre_permiso.replace('Can change', 'Puede modificar')
 
-# Replace the __unicode__ method in the User class with out new implementation
-User.__unicode__ = user_new_unicode 
-Permission.__unicode__ = permissions_new_unicode
+#     return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
+
+# # Replace the __unicode__ method in the User class with out new implementation
+# User.__unicode__ = user_new_unicode 
+# Permission.__unicode__ = permissions_new_unicode
 
 
 class TimeStampedModel(models.Model):
