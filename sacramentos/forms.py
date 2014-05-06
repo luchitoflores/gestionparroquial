@@ -115,7 +115,7 @@ class UsuarioSecretariaForm(UsuarioBaseForm):
 		super(UsuarioSecretariaForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
 		self.fields['email'].widget = forms.TextInput(attrs={'required': '', 'type':'email'})
-
+		self.fields['groups'].initial= 2,3
 class UsuarioSacerdoteForm(UsuarioBaseForm):
 	class Meta(UsuarioBaseForm.Meta):
 		fields= UsuarioBaseForm.Meta.fields + ('groups',)
