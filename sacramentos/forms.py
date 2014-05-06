@@ -109,7 +109,7 @@ class UsuarioPadreForm(UsuarioBaseForm):
 
 class UsuarioSecretariaForm(UsuarioBaseForm):
 	class Meta(UsuarioBaseForm.Meta):
-		pass
+		fields= UsuarioBaseForm.Meta.fields + ('groups',)
 
 	def __init__(self, *args, **kwargs):
 		super(UsuarioSecretariaForm, self).__init__(*args, **kwargs)

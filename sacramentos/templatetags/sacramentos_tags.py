@@ -44,11 +44,11 @@ def mujer(context):
 	ctx = {'form_usuario':form_usuario, 'form_perfil':form_perfil, 'tipo_sacramento':tipo_sacramento}
 	return ctx
 
-@register.inclusion_tag('includes/secretaria.html', takes_context=True)
+@register.inclusion_tag('includes/secretaria_ajax_form.html', takes_context=True)
 def secretaria(context):
 	form_perfil = SecretariaForm()
 	form_usuario = UsuarioSecretariaForm()
-	ctx = {'form_padre':form_perfil,'form_usuariopadre':form_usuario}
+	ctx = {'form_perfil':form_perfil,'form_usuario':form_usuario}
 	return ctx
 
 @register.inclusion_tag('includes/sacerdote_ajax_form.html', takes_context=True)
