@@ -56,14 +56,12 @@ def login_view(request):
 			print 'imprimiendo meta: %s' %redirect_to
 			if user is not None and user.is_active and user.is_staff:
 				login(request, user)
-				try:
-					parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
-					if parroquia:
-						request.session["parroquia"] = parroquia
-						# if not parroquia.libros.filter(estado='Abierto') and not parroquia.iglesias.filter(principal='Abierto'):
-						# 	return HttpResponseRedirect(reverse_lazy('iglesia_create'))
-				except ObjectDoesNotExist:
-					pass
+				# try:
+				# 	parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
+				# 	if parroquia:
+				# 		request.session["parroquia"] = parroquia
+				# except ObjectDoesNotExist:
+				# 	pass
 				if redirect_to:
 					return HttpResponseRedirect(redirect_to)
 				else:

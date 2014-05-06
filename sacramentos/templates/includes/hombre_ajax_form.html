@@ -1,12 +1,11 @@
 {% load core_tags %}
-<div id="id_modal_feligres" class="modal hide fade">
-	<form id='id_crear_{% if tipo_sacramento == "bautismo"%}bautizado{% elif tipo_sacramento == "eucaristia"%}feligres{% elif tipo_sacramento == "confirmacion" %}confirmado{% endif %}' class='form-horizontal' action="." method="POST">
+<div id="id_modal_padre" class="modal hide fade">
+	<form id='id_crear_{% if tipo_sacramento == "matrimonio" %}novio{% else %}padre{% endif %}' class='form-horizontal' action="." method="POST">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 			<h3>Crear Feligrés</h3>
 		</div>
 		<div class="modal-body">
-		{%csrf_token%}
 			{% for f in form_usuario%}
 			<div class="control-group">
 				<label class="control-label">{{f.label}}</label>
@@ -15,18 +14,18 @@
 				<div class="controls"><div id='id_errors_{{f.name|lower}}'class="errors">{{f.errors}}</div></div>
 			</div>
 			{%endfor%}
+
 			{% for f in form_perfil%}
+			{% ifequal f.label form_perfil.sexo.label%}
+			{{f|hidden_value:'m'}}
+			{%else%}
 			<div class="control-group">
 				<label class="control-label">{{f.label}}</label>
-				{%ifequal f.label form_perfil.dni.label%}
-				<div class="controls">{{f|field_no_required}}</div>
-				{%else%}
 				<div class="controls">{{f}}</div>
-				{%endifequal%}
 				<div class="controls"><div class="help-text">{{f.help_text}}</div></div>
 				<div class="controls"><div id='id_errors_{{f.name|lower}}'class="errors">{{f.errors}}</div></div>
 			</div>
-
+			{%endifequal%}
 			{%endfor%}
 		</div>
 		<div class="modal-footer">

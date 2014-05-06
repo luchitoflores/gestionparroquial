@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 
 {%load sacramentos_tags%}
-{%load tags_direccion%}
+{%load tags_direccion core_tags%}
 {%load tags_html%}
 
 {%block title%}
@@ -223,7 +223,7 @@ Agregar Feligrés
 					<div class="controls">
 						{{form_perfil.padre}}
 						<a href="#id_buscar_hombres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
-						<a href="#id_crear_padre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+						<a href="#id_modal_padre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 					</div>
 					<div class="controls">
 						<div class="help-text">
@@ -241,7 +241,7 @@ Agregar Feligrés
 					<div class="controls">
 						{{form_perfil.madre}}
 						<a href="#id_buscar_mujeres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
-						<a href="#id_crear_madre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+						<a href="#id_modal_madre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 					</div>
 					<div class="controls">
 						<div class="help-text">
@@ -342,7 +342,7 @@ Agregar Feligrés
 			{%endif%}
 
 			<div class="form-actions">
-				<button type="submit" class='btn btn-primary'> Guardar </button>
+				<button id='id_guardar' type="submit" class='btn btn-primary'> Guardar </button>
 				<a href="{%url 'usuario_list'%}" class='btn btn-danger'>Cancelar</a>
 			</div>
 		</div>
@@ -351,81 +351,15 @@ Agregar Feligrés
 </form>
 
 
-
-<!--<a href="#id_modal_direccion" class='btn btn-primary' data-toggle='modal'>Nueva Dirección</a> -->
-
 <!-- Inclusion de Modal de Busqueda-->
-{%include 'usuario/buscar_hombres.html'%}
-{%include 'usuario/buscar_mujeres.html'%}
+{%include 'includes/buscar_hombres_ajax.html'%}
+{%include 'includes/buscar_mujeres_ajax.html'%}
 
-<!-- Modal para crear padre-->
-<div id="id_crear_padre" class="modal hide fade" data-backdrop='static'>
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		<h3>Crear Padre</h3>
-	</div>
-	<div class="modal-body">
-		<form id='id_form_crear_padre' class='form-horizontal' method='POST'>
-			{%feligres%}
+<!-- Inclusion tags -->
+{% hombre %}
+{% mujer %}
 
-			<div class="control-group">
-				<div class='controls'>
-					<button type="submit" class="btn btn-primary">Guardar</button>
-				</div>
-			</div>
-		</form>
 
-	</div>
-	<div class="modal-footer">
-		<a href="." class="cancelar-modal btn btn-danger" data-dismiss="modal">Cancelar</a>
-	</div>
-</div>
-
-<!-- Modal para crear madre-->
-<div id="id_crear_madre" class="modal hide fade">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		<h3>Crear Madre</h3>
-	</div>
-	<div class="modal-body">
-		<form id='id_form_crear_madre' class='form-horizontal' method='POST'>
-			{%feligres%}
-			<div class="control-group">
-				<div class='controls'>
-					<button type="submit" class="btn btn-primary">Guardar</button>
-				</div>
-			</div>
-		</form>
-
-	</div>
-	<div class="modal-footer">
-		<a href="." class="cancelar-modal btn btn-danger" data-dismiss="modal">Cancelar</a>
-	</div>
-</div>
-
-	<!-- Modal para asignar la dirección de un feligrés 
-	<div id="id_modal_direccion" class="modal hide fade">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-			<h3>Búsqueda de Feligreses</h3>
-		</div>
-		<div class="modal-body">
-			<form id='id_form_direccion' class='form-horizontal' method='POST'>
-				{%direccion%}
-				<div class="control-group">
-					<div class='controls'>
-						<input type="submit" value='Enviar' class='btn btn-primary'>
-					</div>
-				</div>
-			</form>
-
-		</div>
-		<div class="modal-footer">
-			<a href="." class="btn btn-primary" data-dismiss="modal">Cancelar</a>
-		</div>
-	</div>
-
--->
 <!-- codigo copiado de twitter, aun no funciona, es para alert
 <div class="alert-messages" id="message-drawer" style="opacity: 1;">
 	<div class="message ">

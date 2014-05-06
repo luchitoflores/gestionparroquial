@@ -17,7 +17,7 @@ from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
 
 from ciudades.models import Direccion 
-from sacramentos.managers import PersonaManager,BautismoManager,LibroManager, PeriodoAsignacionManager
+from sacramentos.managers import PersonaManager,LibroManager, PeriodoAsignacionManager
 
 
 # def user_new_unicode(self):
@@ -43,7 +43,7 @@ from sacramentos.managers import PersonaManager,BautismoManager,LibroManager, Pe
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    es_activo = models.BooleanField(default=True)
+    es_activo = models.BooleanField('Está activo?',default=True)
 
     class Meta:
 	    abstract = True
@@ -460,21 +460,41 @@ class PerfilUsuario(TimeStampedModel):
     #         return True
 
 
+class Parroquia(TimeStampedModel):
+    nombre=models.CharField('Nombre de Parroquia *',max_length=50, help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
+    direccion=models.ForeignKey(Direccion, related_name='direccion_parroquia')
+
+    def __unicode__(self):
+        return u'%s' % (self.nombre)
+
+    def get_absolute_url(self):
+        return '/parroquia/%s' %(self.id)
+
+class Iglesia(TimeStampedModel):
+    nombre = models.CharField(max_length=100)
+    parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
+    principal = models.BooleanField('Es la Iglesia Matriz?')
+
+    class Meta:
+        verbose_name_plural=u'Iglesias'
+        ordering = ('nombre',)
+
+    def __unicode__(self):
+        return self.nombre
+
+    def get_absolute_url(self):
+        return reverse('iglesia_update', kwargs={'pk':str(self.id)})
+
         
 class Libro(TimeStampedModel):
     
     TIPO_LIBRO_CHOICES = (
         ('', '-- Seleccione --'),
-        ('Bautismo','Bautismo'),
-        ('Eucaristia','Primera Comunión'), 
-        ('Confirmacion','Confirmación'),
-        ('Matrimonio','Matrimonio'),
+        ('bautismo','Bautismo'),
+        ('eucaristia','Primera Comunión'), 
+        ('confirmacion','Confirmación'),
+        ('matrimonio','Matrimonio'),
     )
-
-    ESTADO_CHOICES=(
-       	('Abierto','Abierto'),
-		('Cerrado','Cerrado'),
-	)
 
     nombre=models.CharField(u'Nombre *', max_length='50', help_text='Nombre del Libro', null=True, blank=True)
     numero_libro = models.PositiveIntegerField(null=True, blank=True)
@@ -482,15 +502,15 @@ class Libro(TimeStampedModel):
                                 help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
     fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
-    estado=models.CharField(u'Estado *', max_length=20,choices=ESTADO_CHOICES, default=None)
+    principal=models.BooleanField(u'Es principal *', default=False)
     parroquia = models.ForeignKey('Parroquia', related_name='libros', help_text='Seleccione una parroquia')
-    primera_pagina = models.PositiveIntegerField(blank= True, null=True, default=1)
-    primera_acta = models.PositiveIntegerField(blank= True, null=True, default=1)
+    primera_pagina = models.PositiveIntegerField(blank= True, null=True)
+    primera_acta = models.PositiveIntegerField(blank= True, null=True)
 
     objects=LibroManager()
 
     def __unicode__(self):
-        return '%s - %s' %(self.get_tipo_libro_display(), self.fecha_apertura.year)
+        return '%s.- %s %s' %(self.numero_libro, self.get_tipo_libro_display(), self.fecha_apertura.year)
 
     def ultima_pagina(self):
         return self.sacramento_libro.latest('created')
@@ -505,8 +525,6 @@ class Libro(TimeStampedModel):
         else:
             return True
 
-
-
 class Sacramento(TimeStampedModel):
     TIPO_SACRAMENTO_CHOICES = (
             ('Bautismo','Bautismo'),
@@ -514,6 +532,7 @@ class Sacramento(TimeStampedModel):
             ('Confirmacion','Confirmacion'),
             ('Matrimonio','Matrimonio')           
     	)
+
     numero_acta = models.PositiveIntegerField(help_text='Ingrese el numero de acta ej:3,78')
     pagina = models.PositiveIntegerField(help_text='Numero de pagina ej:1,3')
     fecha_sacramento = models.DateField(help_text='Elija una fecha ej:dd/mm/aaaa')
@@ -563,8 +582,7 @@ class Bautismo(Sacramento):
 	help_text='Residencia de abuelos paternos ej: Catacocha')
     vecinos_maternos = models.CharField(u'Residencia Abuelos Maternos', max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos maternos ej: Malacatos')
-    objects=BautismoManager()
-    
+       
     def __unicode__(self):
         return '%s %s' %(self.bautizado.user.first_name,self.bautizado.user.last_name)
 
@@ -611,9 +629,6 @@ class Matrimonio(Sacramento):
     def __unicode__(self):
         return u'%s %s' %(self.novio.user.last_name, self.novia.user.last_name )
 
-    # def natural_key(self):
-    # 	return (self.novio.user.last_name, self.novia.user.last_name)
-
 class NotaMarginal(TimeStampedModel):
     fecha = models.DateField(help_text='Ingrese una fecha Ej: 16/09/2013')
     descripcion = models.TextField('Descripción *', max_length=200, help_text='Ingrese una descripcion ej: Di copia para matrimonio') 
@@ -623,11 +638,32 @@ class NotaMarginal(TimeStampedModel):
 
     def __unicode__(self):
         return self.descripcion
+
+class Intenciones(TimeStampedModel):
+    intencion = models.TextField(max_length=500, 
+    help_text='Ingrese la intención. Ej: Aniversario de fallecimiento')
+    fecha = models.DateField(help_text=
+        'Ingrese la fecha de la intención Ej: dd/mm/yyyy')
+    hora = models.TimeField(help_text='Ingrese la hora de celebración de la intención Ej: 17:00')
+    oferente = models.CharField(max_length=70, 
+        help_text='Ingrese quien ofrece la intención. Ej: La Flia Flores')
+    ofrenda = models.DecimalField(decimal_places=2, max_digits=7,
+        help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
+    parroquia = models.ForeignKey('Parroquia')
+    individual = models.BooleanField('Es única?', 
+        help_text='Marque para indicar que la intención será la única en la misa')
+    iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
+
+    class Meta:
+        ordering = ['fecha','hora']
+
+    def __unicode__(self):
+        return self.intencion
+
+    def get_absolute_url(self):
+        return u'/intencion/%i' % self.id
+
     
-    # def natural_key(self):
-    # 	return self.id
-
-
 class AsignacionParroquia(TimeStampedModel):
     persona = models.ForeignKey('PerfilUsuario')
     parroquia = models.ForeignKey('Parroquia')
@@ -649,83 +685,17 @@ class AsignacionParroquia(TimeStampedModel):
     def get_absolute_url(self):
         return '/asignar/parroquia/parroco/%i' % self.id
 
- #    def natural_key(self):
-    # return self.persona.user.username
-
 
 class PeriodoAsignacionParroquia(TimeStampedModel):
     inicio = models.DateField(null=True, blank=True, help_text='Ingrese la fecha de inicial de asignación Ej: dd/mm/aaaa')
     fin = models.DateField(null=True, blank=True, help_text='Ingrese la fecha final de asignación  Ej: dd/mm/aaaa') 
     estado = models.BooleanField('Activo?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
-    asignacion = models.ForeignKey('AsignacionParroquia')
+    asignacion = models.ForeignKey('AsignacionParroquia', related_name='periodos')
     objects = PeriodoAsignacionManager()
 
     def __unicode__(self):
         return u'%s - %s : %s' % (self.asignacion.persona, self.asignacion.parroquia, self.estado)
      
-    # def natural_key(self):
-    # 	return self.asignacion.persona.user.username    
-
-class Intenciones(TimeStampedModel):
-    intencion = models.TextField(max_length=500, 
-	help_text='Ingrese la intención. Ej: Aniversario de fallecimiento')
-    fecha = models.DateField(help_text=
-        'Ingrese la fecha de la intención Ej: dd/mm/yyyy')
-    hora = models.TimeField(help_text='Ingrese la hora de celebración de la intención Ej: 17:00')
-    oferente = models.CharField(max_length=70, 
-        help_text='Ingrese quien ofrece la intención. Ej: La Flia Flores')
-    ofrenda = models.DecimalField(decimal_places=2, max_digits=7,
-        help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
-    parroquia = models.ForeignKey('Parroquia')
-    individual = models.BooleanField('Es única?', 
-        help_text='Marque para indicar que la intención será la única en la misa')
-    iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
-
-    class Meta:
-        ordering = ['fecha','hora']
-
-    def __unicode__(self):
-    	return self.intencion
-
-    # def natural_key(self):
-    #   return self.id, 
-
-    def get_absolute_url(self):
-    	return u'/intencion/%i' % self.id
-
-
-
-class Parroquia(TimeStampedModel):
-    nombre=models.CharField('Nombre de Parroquia *',max_length=50, help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
-    direccion=models.ForeignKey(Direccion, related_name='direccion_parroquia')
-
-    def __unicode__(self):
-	    return u'%s' % (self.nombre)
-
-    def get_absolute_url(self):
-	    return '/parroquia/%s' %(self.id)
-    
- #    def natural_key(self):
-	# return self.nombre
-
-
-class Iglesia(TimeStampedModel):
-    nombre = models.CharField(max_length=100)
-    parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
-    principal = models.BooleanField('Es la Iglesia Matriz?')
-
-    class Meta:
-        verbose_name_plural=u'Iglesias'
-        ordering = ('nombre',)
-
-    def __unicode__(self):
-        return self.nombre
-
-    def get_absolute_url(self):
-        return reverse('iglesia_update', kwargs={'pk':str(self.id)})
-        # return '/iglesia/%s' %(self.id)
-
- 
 class ParametrizaDiocesis(TimeStampedModel):
     diocesis=models.CharField('Nombre Diócesis',max_length=50,
         help_text='Nombre de la Diócesis Ej:Diócesis de Loja')
@@ -736,9 +706,6 @@ class ParametrizaDiocesis(TimeStampedModel):
     def __unicode__(self):
         return 'Parametros-Diocesis: %s'%(self.diocesis)
     
-    # def natural_key(self):
-    # 	return self.diocesis
-
 class ParametrizaParroquia(TimeStampedModel):
     numero_acta=models.PositiveIntegerField(help_text='Ingrese el numero de acta Ej: 1 - 17')
     pagina=models.PositiveIntegerField(help_text='Ingrese el numero de la página Ej: 1 - 17')
@@ -748,5 +715,3 @@ class ParametrizaParroquia(TimeStampedModel):
     def __unicode__(self):
         return 'Parametros-Parroquia: %s' %(self.parroquia.nombre)
     
-    # def natural_key(self):
-    # 	return self.parroquia.nombre

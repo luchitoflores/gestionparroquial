@@ -20,7 +20,6 @@
 						</label>
 						<div class="controls">
 							{{form_libro.tipo_libro}}
-
 						</div>
 						<div class="controls help-text">
 							{{form_libro.tipo_libro.help_text}}
@@ -31,20 +30,19 @@
 					</div>
 					<div class="control-group">
 						<label for="" class="control-label">
-							{{form_libro.estado.label}}
+							{{form_libro.principal.label}}
 						</label>
 						<div class="controls">
-							{{form_libro.estado}}
-
+							{{form_libro.principal}}
 						</div>
 						<div class="controls">
 							<div class="help-text">
-								{{form_libro.estado.help_text}}
+								{{form_libro.principal.help_text}}
 							</div>
 						</div>
 						<div class="controls">
 							<div class="errors">							
-								{{form_libro.estado.errors}}
+								{{form_libro.principal.errors}}
 							</div>
 						</div>
 					</div>
@@ -111,6 +109,25 @@
 							{{form_libro.primera_acta.errors}}
 						</div>
 					</div>
+
+					{% if form_libro.es_activo.is_hidden%}
+					{{form_libro.es_activo}}
+					{%else%}
+					<div class="control-group">
+						<label for="" class="control-label">
+							{{form_libro.es_activo.label}}
+						</label>
+						<div class="controls">
+							{{form_libro.es_activo}}
+						</div>
+						<div class="controls help-text">
+							{{form_libro.es_activo.help_text}}
+						</div>
+						<div class="controls errors">
+							{{form_libro.es_activo.errors}}
+						</div>
+					</div>
+					{% endif %}
 
 
 				</div>

@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'sacramentos.middleware.ParroquiaSessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sacramentos.middleware.AdminLocaleURLMiddleware',
     # Uncomment the next line for simple clickjacking protection:

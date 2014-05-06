@@ -74,9 +74,11 @@ urlpatterns = patterns('',
 	url(r'^api/hombres/$', 'sacramentos.rest.buscar_hombres', name='buscar_hombres'),
 	url(r'^api/mujeres/$', 'sacramentos.rest.buscar_mujeres', name='buscar_mujeres'),
 	url(r'^api/sacerdote/$', 'sacramentos.rest.buscar_sacerdotes', name='api_sacerdote_list'),
+	url(r'^api/crear/sacerdote/$', 'sacramentos.rest.sacerdote_create_ajax', name='api_create_sacerdote'),
 	url(r'^api/asignarpadre/$', 'sacramentos.rest.edit_padre_viewapi', name='api_setear_padre'),
 	url(r'^api/crear/padre/$', 'sacramentos.rest.padre_create_ajax', name='api_create_padre'),
 	url(r'^api/crear/iglesia/$', 'sacramentos.rest.iglesia_api_create', name='api_iglesia_create'),
+	url(r'^api/crear/libro/$', 'sacramentos.rest.libro_api_create', name='api_libro_create'),
 
 
 	# urls de libro

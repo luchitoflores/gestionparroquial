@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load tags%}
+{%load tags sacramentos_tags%}
 
 {%block title%}
 {%if object.id%}
@@ -17,6 +17,7 @@ Agregar Primera Comunión
 {%endblock%}
 
 {%block content%}
+<input id='id_hidden_sacramento' type="hidden" value="{{tipo_sacramento}}">
 
 
 <!-- Div para manejar mensajes de error -->
@@ -51,6 +52,7 @@ Agregar Primera Comunión
 						<label for="id_libro" class='control-label'>{{form_eucaristia.libro.label}}</label>
 						<div class='controls'>
 							{{form_eucaristia.libro}}
+							<a href="#id_modal_libro" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 						</div>
 						<div class="controls help-text">
 							{{form_eucaristia.libro.help_text}}
@@ -71,7 +73,8 @@ Agregar Primera Comunión
 						</label>
 						<div class='controls'>
 							{{form_eucaristia.feligres}}
-							<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+							<a href="#id_modal_feligres" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 						</div>
 						<div class="controls help-text">
 							{{form_eucaristia.feligres.help_text}}
@@ -123,6 +126,7 @@ Agregar Primera Comunión
 						</label>
 						<div class='controls'>
 							{{form_eucaristia.iglesia}}
+							<a class='btn btn-primary' href="#id_modal_iglesia" data-toggle='modal'><i class='icon-plus'></i></a>
 						</div>
 						<div class="controls help-text">
 							{{form_eucaristia.iglesia.help_text}}
@@ -142,7 +146,8 @@ Agregar Primera Comunión
 						</label>
 						<div class='controls'>
 							{{form_eucaristia.celebrante}}
-							<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+							<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+							<a href="#id_modal_sacerdote" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 						</div>
 						<div class="controls help-text">
 							{{form_eucaristia.celebrante.help_text}}
@@ -201,7 +206,13 @@ Agregar Primera Comunión
 
 
 <!-- Modales para buscar un usuario y sacerdote respectivamente-->
-{%include 'usuario/buscar_feligreses.html'%}
-{%include 'usuario/buscar_sacerdotes.html'%}
+{%include 'includes/buscar_feligreses_ajax.html'%}
+{%include 'includes/buscar_sacerdotes_ajax.html'%}
+
+<!-- Inclusion Tags-->
+{% libro %}
+{% feligres %}
+{% sacerdote %}
+{% iglesia %}
 
 {% endblock%}

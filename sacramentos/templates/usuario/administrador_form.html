@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load tags_html%}
+{%load tags_html sacramentos_tags %}
 {%block title%}
 {%if object.id%}
 Editar Administrador
@@ -60,7 +60,7 @@ Agregar Administrador
 					<div class="span4">
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.nacionalidad.label}} *
+								{{form_sacerdote.nacionalidad.label}}
 							</div>
 							
 							<div class="controls">
@@ -79,7 +79,7 @@ Agregar Administrador
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.dni.label}} *
+								{{form_sacerdote.dni.label}} 
 							</div>
 							<div class="controls">
 								{{form_sacerdote.dni}} 
@@ -97,7 +97,7 @@ Agregar Administrador
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.sexo.label}} *
+								{{form_sacerdote.sexo.label}} 
 							</div>
 							<div class="controls">
 								{{form_sacerdote.sexo}} 
@@ -124,7 +124,7 @@ Agregar Administrador
 				<div class="control-group">
 					<label for="id_fecha_nacimiento" class='control-label'>
 
-						{{form_sacerdote.fecha_nacimiento.label}} *
+						{{form_sacerdote.fecha_nacimiento.label}} 
 					</label>
 					<div class="controls">
 						<div class='error'>
@@ -144,7 +144,7 @@ Agregar Administrador
 				</div>
 				<div class="control-group">
 					<label for="id_lugar_nacimiento" class='control-label'>
-						{{form_sacerdote.lugar_nacimiento.label}} *
+						{{form_sacerdote.lugar_nacimiento.label}} 
 					</label>
 					<div class="controls">
 						{{form_sacerdote.lugar_nacimiento}}
@@ -256,5 +256,7 @@ Agregar Administrador
 
 
 </form>
+
+
 
 {% endblock%}

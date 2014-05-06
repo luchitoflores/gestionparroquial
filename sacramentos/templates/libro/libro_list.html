@@ -27,7 +27,7 @@ Lista de Libros
 			<th>Nombre</th>
 			<th data-hide='phone'>Fecha de Apertura</th>
 			<th data-hide='phone'>Fecha de Cierre</th>
-			<th>Estado</th>
+			<th>Es principal</th>
 			<th>Acciones</th>
 		</tr>
 		
@@ -47,7 +47,11 @@ Lista de Libros
 			{%else%}
 			<td id='id_fecha_cierre'>{{'No hay fecha'}}</td>
 			{%endif%}
-			<td>{{o.estado}}</td>
+			{%if o.principal%}
+			<td><i class="icon-check"></i></td>
+			{%else%}
+			<td><i class="icon-check-minus"></i></td>
+			{%endif%}
 			<td ><a href="{%url 'libro_update' pk=o.id%}"><i class="icon-pencil"></i></a> </td>
 			
 		</tr>

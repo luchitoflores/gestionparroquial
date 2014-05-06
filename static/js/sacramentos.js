@@ -21,9 +21,16 @@ function inicio(){
 	cancelar_modal();
 	var map = '';
 	var map2 = '';
-	crear_padre('#id_form_crear_padre', '#id_padre','#id_crear_padre', 'm');
-	crear_padre('#id_form_crear_madre', '#id_madre','#id_crear_madre', 'f');
+	crear_feligres('#id_crear_padre', '#id_padre','#id_modal_padre');
+	crear_feligres('#id_crear_madre', '#id_madre','#id_modal_madre');
+	crear_feligres('#id_crear_novio', '#id_novio','#id_modal_padre');
+	crear_feligres('#id_crear_novia', '#id_novia','#id_modal_madre');
+	crear_feligres('#id_crear_bautizado', '#id_bautizado','#id_modal_feligres');
+	crear_feligres('#id_crear_feligres', '#id_feligres','#id_modal_feligres');
+	crear_feligres('#id_crear_confirmado', '#id_confirmado','#id_modal_feligres');
+	crear_sacerdote('#id_crear_sacerdote');
 	crear_iglesia('#id_crear_iglesia');
+	crear_libro('#id_crear_libro');
 	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
 	//autocomplete('#id_padre');
 	asignar_padre();
@@ -43,6 +50,7 @@ function inicio(){
 	radio_button_mujeres();
 	deshabilitar_campos('#id_form_padre input:text, #id_form_padre select');
 	deshabilitar_campos('#id_form_bautizado input:text, #id_form_bautizado select');
+	/*campo_no_requerido('#id_bautizado, #id_feligres, #id_confirmado');*/
 	cargar_tabla_usuarios_en_modal();
 	cargar_tabla_hombres_en_modal();
 	cargar_tabla_mujeres_en_modal();
@@ -57,8 +65,11 @@ function inicio(){
 	controles_reportes();
 	controles_intenciones();
 	controles_provincias();
-	
+
+
 }
+
+
 
 //Función para verificar si una tabla está vacía
 function tabla_vacia(){
@@ -98,36 +109,10 @@ function mostrar_nota_marginal(idFieldSet){
 
 }  
 
-function crear_nota_marginal(id_form,id_modal,url_rest){
-	$(id_form).on('submit', function(e){
-		// $('.alert').remove();
-		// $('span').remove();
-		e.preventDefault();
-		var id=$('#id_hidden').val();
-		var url = url_rest;
-		var json = $(this).serialize()+"&id="+id+"";
-		$.post(url, json, function(data){
-			if(data.respuesta){
-				$(id_modal).modal('hide');
-				limpiar_campos('#id_descripcion');
-				$('tbody tr').remove();
-				$.each(data.tabla,function(index,element){
-					$('tbody').append(element.tabla);
-					habilitar_campos('#id_href');
-				});
-			} else{
-				var mensaje = '<div class="alert alert-error">' + 
-				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
-				$('#id_mensaje_nota').html(mensaje);
-				$.each(data.errores_nota, function(index, element){
-					var mensajes_error = '<span>' + element+ '</span>';
-					$("#id_errors_"+index).append(mensajes_error);
-				});
-				
-			}
-		});
-	})
+
+
+function campo_no_requerido(identificador){
+	$(identificador).removeAttr('required');
 }
 
 
@@ -685,24 +670,131 @@ function cancelar_modal(){
 		});
 }
 
+function crear_nota_marginal(id_form,id_modal,url_rest){
+	$(id_form).on('submit', function(e){
+		// $('.alert').remove();
+		// $('span').remove();
+		$(id_form + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
+		e.preventDefault();
+		var id=$('#id_hidden').val();
+		var url = url_rest;
+		var json = $(this).serialize()+"&id="+id+"";
+		$.post(url, json, function(data){
+			if(data.respuesta){
+				$(id_modal).modal('hide');
+				limpiar_campos('#id_descripcion');
+				$('tbody tr').remove();
+				$.each(data.tabla,function(index,element){
+					$('tbody').append(element.tabla);
+					habilitar_campos('#id_href');
+				});
+				$('#id_spinner').remove();
+			} else{
+				var mensaje = '<div class="alert alert-error">' + 
+				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
+				$('#id_mensaje_nota').html(mensaje);
+				$.each(data.errores_nota, function(index, element){
+					var mensajes_error = '<span>' + element+ '</span>';
+					$(id_form + " #id_errors_"+index).append(mensajes_error);
+				});
+				$('#id_spinner').remove();				
+			}
+		});
+	})
+}
+// Función para crear una Iglesia via Ajax
+function crear_iglesia(identificador){
+	$(identificador).on('submit',function(e){
+		$('span').remove();
+		$('.alert').remove();
+		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
+		e.preventDefault();
+		// Quita el elemento seleccionado por defecto
+		$('#id_iglesia option:selected').removeAttr("selected");
+		var html_inicial = $('#id_iglesia').html();
+		var url = "/api/crear/iglesia/";
+		var json = $(this).serialize();
+
+		$.post(url, json, function(data){
+			if(!data.respuesta){
+				var error = '<div class="alert alert-error">' + 
+				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
+				
+				$(identificador + ' .modal-header').append(error);
+				
+				$.each(data.errores, function(index, element){
+					var mensajes_error = '<span class="errors">' + element+ '</span>';
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
+				});
+				$('#id_spinner').remove();
+			}else{
+				$('#id_iglesia').html('<option value="'+ data.id+'" selected="selected">'+data.nombre+'</option>'+ html_inicial);
+				$(".modal").modal('hide');
+				limpiar_campos('#id_crear_iglesia :input');
+				$('#id_spinner').remove();
+			}
+		});
+
+	});
+}
+
+// Función para crear un Libro via Ajax
+function crear_libro(identificador){
+	$(identificador).on('submit',function(e){
+		$('span').remove();
+		$('.alert').remove();
+		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
+		e.preventDefault();
+		// Quita el elemento seleccionado por defecto
+		$('#id_libro option:selected').removeAttr("selected");
+		var html_inicial = $('#id_libro').html();
+		var url = "/api/crear/libro/";
+		var json = $(this).serialize()+'&tipo_libro='+$('#id_hidden_sacramento').val();
+		console.log(json);
+
+		$.post(url, json, function(data){
+			if(!data.respuesta){
+				var error = '<div class="alert alert-error">' + 
+				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
+				$(identificador + ' .modal-header').append(error);
+				$.each(data.errores, function(index, element){
+					var mensajes_error = '<span class="errors">' + element+ '</span>';
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
+				});
+				$('#id_spinner').remove();
+			}else{
+				$('#id_libro').html('<option value="'+ data.id+'" selected="selected">'+data.nombre+'</option>'+ html_inicial);
+				$(".modal").modal('hide');
+				limpiar_campos('#id_crear_libro :input');
+				$('#id_spinner').remove();
+			}
+		});
+
+	});
+}
+
 //  Esta función llama a un modal para crear un padre para un feligrés
-function crear_padre(identificador, idpadre, idmodal, sexo){
+function crear_feligres(identificador, idpadre, idmodal){
 	$(identificador).on('submit', function(e){
 		$('span').remove();
 		$('.alert').remove();
+		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
 
 		e.preventDefault();
 		var url = '/api/crear/padre/';
-		var json = $(this).serialize()+'&sexo='+sexo;
+		var json = $(this).serialize();
 		$.post(url, json , function(data){
 			if(!data.respuesta){
 				var mensaje = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
 				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
-				$('.modal-header').append(mensaje);
+				$(identificador + ' .modal-header').append(mensaje);
 				$.each(data.errores_usuario, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
-					$(identificador+" #id_errors_"+index).append(mensajes_error);
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
 				});
 				$.each(data.errores_perfil, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
@@ -713,55 +805,57 @@ function crear_padre(identificador, idpadre, idmodal, sexo){
 					var mensaje = '<div class="alert alert-error">' + 
 					'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
 					'<img src="/static/img/error.png" alt=""> '+data.messages_error+' </div>';
-					$('.modal-header').append(mensaje);
+					$(identificador + ' .modal-header').append(mensaje);
 				}
+				$('#id_spinner').remove();
 
 			}else{
 				$(idpadre).html('<option value="">-- Seleccione --</option><option value="'+ data.id+'" selected>'+data.full_name+'</option>');
 				$(idmodal).modal('hide');
-				limpiar_campos('#id_form_crear_padre :input');
-				limpiar_campos('#id_form_crear_madre :input');
-
+				limpiar_campos(identificador + ' :input');
+				$('#id_spinner').remove();
 			}
-
 		});
 });
 }
 
-// Función para crear una Iglesia via Ajax
-function crear_iglesia(identificador){
-	$(identificador).on('submit',function(e){
+//  Esta función llama a un modal para crear un sacerdote
+function crear_sacerdote(identificador){
+	$(identificador).on('submit', function(e){
 		$('span').remove();
 		$('.alert').remove();
+		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
 		e.preventDefault();
-		// Quita el elemento seleccionado por defecto
-		$('#id_iglesia option:selected').removeAttr("selected");
-		var html_inicial = $('#id_iglesia').html();
-		var url = "/api/crear/iglesia/";
+		var url = '/api/crear/sacerdote/';
 		var json = $(this).serialize();
-
-		$.post(url, json, function(data){
+		$.post(url, json , function(data){
 			if(!data.respuesta){
-				
 				var error = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
 				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
 				
-				$('.modal-header').append(error);
+				$(identificador + ' .modal-header').append(error);
 				
-				$.each(data.errores, function(index, element){
+				$.each(data.errores_usuario, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
-					$("#id_errors_"+index).append(mensajes_error);
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
 				});
 
-			}else{
-				$('#id_iglesia').html('<option value="'+ data.id+'" selected="selected">'+data.nombre+'</option>'+ html_inicial);
-				$(".modal").modal('hide');
-				limpiar_campos('#id_crear_iglesia :input');
-			}
-		});
+				$.each(data.errores_perfil, function(index, element){
+					var mensajes_error = '<span class="errors">' + element+ '</span>';
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
+				});
+				$('#id_spinner').remove();
 
-	});
+			}else{
+				$('#id_celebrante').html('<option value="">-- Seleccione --</option><option value="'+ data.id+'" selected>'+data.full_name+'</option>');
+				$('.modal').modal('hide');
+				limpiar_campos(id_crear_sacerdote + ' :input');
+				$('#id_spinner').remove();
+			}
+
+		});
+});
 }
 
 
@@ -770,6 +864,7 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 	$(identificador).on('submit', function(e){
 		$('span').remove();
 		$('.alert').remove();
+		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
 		e.preventDefault();
 		var url = '/api/crear/secretaria/';
 		var json = $(this).serialize();
@@ -778,23 +873,25 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 				var mensaje = '<div class="alert alert-error">' + 
 				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
 				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
-				$('.modal-header').append(mensaje);
+				$(identificador + ' .modal-header').append(mensaje);
 				$.each(data.errores_usuario, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
-					$("#id_errors_"+index).append(mensajes_error);
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
 				});
 				$.each(data.errores_perfil, function(index, element){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
-					$("#id_errors_"+index).append(mensajes_error);
+					$(identificador + " #id_errors_"+index).append(mensajes_error);
 				});
+				$('#id_spinner').remove();
 			}else{
 				$(idsecretaria).html('<option value="">-- Seleccione --</option><option value="'+ data.id+'" selected>'+data.full_name+'</option>');
 				$(idmodal).modal('hide');
 				limpiar_campos('#id_form_crear_secretaria :input');
+				$('#id_spinner').remove();
 			}
 
 		});
-	});
+});
 }
 
 
@@ -802,14 +899,17 @@ function crear_secretaria(identificador, idsecretaria, idmodal){
 function crear_direccion(identificador){
 	$(identificador).on('submit', function(e){
 		e.preventDefault();
+		$('#id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
 		var url = '/crear/ciudades/direccion/'
 		var json = $(this).serialize()
 		$.post(url, json, function(data){
 			if(data.respuesta){
 				$('#id_modal_direccion').modal('hide');
+				$('#id_spinner').remove();
 			} else{
 				console.log('Existen errores');
 				console.log(data.errores);
+				$('#id_spinner').remove();
 			}
 		});
 	})

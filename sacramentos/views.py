@@ -456,7 +456,7 @@ def sacerdote_create_view(request):
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, 'Los datos del formulario son incorrectos %s %s' % (form_sacerdote.errors, form_usuario.errors))
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
@@ -541,15 +541,15 @@ def libro_create_view(request):
 		form_libro=LibroForm(request.POST, request=request)
 		
 		if form_libro.is_valid():
-			libro=form_libro.save(commit=False)	
+			libro=form_libro.save(commit=False)
 			libro.parroquia = parroquia
-			ultimo_libro = Libro.objects.ultimo_libro(parroquia, 'Bautismo')
+			ultimo_libro = Libro.objects.ultimo_libro(parroquia, libro.tipo_libro)
 			if ultimo_libro:
 				libro.numero_libro = int(ultimo_libro.numero_libro) + 1
 			else:  
 				libro.numero_libro = 1
 			
-			libro.nombre = 	u'%s%s%s' % (libro.tipo_libro, libro.fecha_apertura.year, libro.numero_libro)
+			libro.nombre = 	u'%s%s%s' % (libro.tipo_libro.title(), libro.fecha_apertura.year, libro.numero_libro)
 			libro.save()
 			LogEntry.objects.log_action(
 				user_id=request.user.id,
@@ -615,9 +615,9 @@ class LibroListView(PaginacionMixin, ListView):
 		if parroquia:
 			name = self.request.GET.get('q', '')			
 			if (name != ''):
-				return Libro.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('nombre')
+				return Libro.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('-principal', 'tipo_libro', 'numero_libro', 'nombre')
 			else:
-				return Libro.objects.filter(parroquia=parroquia).order_by('nombre')
+				return Libro.objects.filter(parroquia=parroquia).order_by('-principal', 'tipo_libro', 'numero_libro', 'nombre')
 		else: 
 			raise PermissionDenied
 
@@ -682,11 +682,11 @@ def bautismo_create_view(request):
 			formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautizado)
 			formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=celebrante)
 			messages.error(request,'Los datos del formulario son incorrectos')
-			ctx={'formBautismo':formBautismo}
+			ctx={'formBautismo':formBautismo, 'tipo_sacramento':'bautismo'}
 			return render (request,'bautismo/bautismo_form.html',ctx)
 	else:		
 		formBautismo=BautismoForm(request)
-	ctx={'formBautismo':formBautismo}
+	ctx={'formBautismo':formBautismo, 'tipo_sacramento':'bautismo'}
 	return render (request,'bautismo/bautismo_form.html',ctx)
 
 
@@ -727,11 +727,11 @@ def bautismo_update_view(request,pk):
 			bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
 			bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
 			messages.error(request, "Los datos del formulario son incorrectos")
-			ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
+			ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo, 'tipo_sacramento':'bautismo'}
 			return render(request, 'bautismo/bautismo_form.html', ctx)
 	else:
 		bautismo_form = BautismoForm(request, instance=bautismo)
-		ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo}
+		ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo, 'tipo_sacramento':'bautismo'}
 		return render(request, 'bautismo/bautismo_form.html', ctx)
 	
 
@@ -815,11 +815,11 @@ def eucaristia_create_view(request):
 			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=id_feligres)
 			form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			messages.error(request,"Los datos del formulario son incorrectos")
-			ctx={'form_eucaristia':form_eucaristia}
+			ctx={'form_eucaristia':form_eucaristia, 'tipo_sacramento':'eucaristia'}
 			return render(request,'eucaristia/eucaristia_form.html',ctx)
 	else:
 		form_eucaristia=EucaristiaForm(request)
-		ctx={'form_eucaristia':form_eucaristia}
+		ctx={'form_eucaristia':form_eucaristia, 'tipo_sacramento':'eucaristia'}
 		return render(request,'eucaristia/eucaristia_form.html',ctx)
 
 
@@ -860,7 +860,7 @@ def eucaristia_update_view(request,pk):
 		form_eucaristia = EucaristiaForm(request, instance=eucaristia)
 		form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=eucaristia.feligres.id) 
 		form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=eucaristia.celebrante.id) 
-	ctx={'form_eucaristia':form_eucaristia, 'object':eucaristia}
+	ctx={'form_eucaristia':form_eucaristia, 'object':eucaristia, 'tipo_sacramento':'eucaristia'}
 	return render(request,'eucaristia/eucaristia_form.html',ctx)
 	
 
@@ -950,12 +950,12 @@ def confirmacion_create_view(request):
 			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			
 			messages.error(request,"Los datos del formulario son incorrectos")
-			ctx={'form_confirmacion':form_confirmacion}
+			ctx={'form_confirmacion':form_confirmacion, 'tipo_sacramento':'confirmacion'}
 			return render(request,'confirmacion/confirmacion_form.html',ctx)
 			
 	else:
 		form_confirmacion=ConfirmacionForm(request)
-	ctx={'form_confirmacion':form_confirmacion}
+	ctx={'form_confirmacion':form_confirmacion, 'tipo_sacramento':'confirmacion'}
 	return render(request,'confirmacion/confirmacion_form.html',ctx)
 
 
@@ -994,13 +994,13 @@ def confirmacion_update_view(request,pk):
 			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=id_confirmado)
 			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			messages.error(request,"Los datos del formulario son incorrectos")
-			ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
+			ctx={'form_confirmacion':form_confirmacion,'object':confirmacion, 'tipo_sacramento':'confirmacion'}
 			return render(request,'confirmacion/confirmacion_form.html',ctx)
 	else:
 		form_confirmacion = ConfirmacionForm(request, instance=confirmacion)
 		form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=confirmacion.confirmado.id) 
 		form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=confirmacion.celebrante.id) 
-	ctx={'form_confirmacion':form_confirmacion,'object':confirmacion}
+	ctx={'form_confirmacion':form_confirmacion,'object':confirmacion, 'tipo_sacramento':'confirmacion'}
 	return render(request,'confirmacion/confirmacion_form.html',ctx)
 	
 
@@ -1093,14 +1093,14 @@ def matrimonio_create_view(request):
 			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			
 			messages.error(request,'Los datos del formulario son incorrectos')
-			ctx={'form_matrimonio':form_matrimonio}
+			ctx={'form_matrimonio':form_matrimonio, 'tipo_sacramento':'matrimonio'}
 			return render(request,'matrimonio/matrimonio_form.html',ctx)
 		
 	else:
 
 		form_matrimonio=MatrimonioForm(request)
 		
-	ctx={'form_matrimonio':form_matrimonio}
+	ctx={'form_matrimonio':form_matrimonio, 'tipo_sacramento':'matrimonio'}
 	return render(request,'matrimonio/matrimonio_form.html',ctx)
 
 
@@ -1153,7 +1153,7 @@ def matrimonio_update_view(request,pk):
 			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(id=id_novia)
 			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			messages.error(request, 'Los datos del formulario son incorrectos')
-			ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio}
+			ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio, 'tipo_sacramento':'matrimonio'}
 			return render(request,'matrimonio/matrimonio_form.html', ctx)
 	else:
 		form_matrimonio = MatrimonioForm(request, instance=matrimonio)
@@ -1161,7 +1161,7 @@ def matrimonio_update_view(request,pk):
 		form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(user__id=matrimonio.novia.user.id)
 		form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(user__id=matrimonio.celebrante.user.id)
 									
-	ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio}
+	ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio, 'tipo_sacramento':'matrimonio'}
 	return render(request, 'matrimonio/matrimonio_form.html', ctx)
 	
 class MatrimonioListView(PaginacionMixin, ListView):
@@ -2844,9 +2844,9 @@ class IglesiaListView(PaginacionMixin, ListView):
 			# return Iglesia.objects.filter(parroquia=parroquia).extra(select={'nombre': 'lower(nombre)'}).order_by('nombre')
 			name = self.request.GET.get('q', '')			
 			if (name != ''):
-				return Iglesia.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('nombre')
+				return Iglesia.objects.filter(parroquia=parroquia, nombre__icontains = name).order_by('-principal','nombre')
 			else:
-				return Iglesia.objects.filter(parroquia=parroquia).order_by('nombre')
+				return Iglesia.objects.filter(parroquia=parroquia).order_by('-principal', 'nombre')
 		else: 
 			raise PermissionDenied
 

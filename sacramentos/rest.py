@@ -18,14 +18,17 @@ from datetime import datetime,date
 
 # Librerías del proyecto
 from sacramentos.forms import (
-	PerfilUsuarioForm, UsuarioForm, PadreForm,NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm, 
+	PerfilUsuarioForm, UsuarioForm, PadreForm,
+	NotaMarginalForm, UsuarioPadreForm, SecretariaForm, UsuarioSecretariaForm, 
+	UsuarioSacerdoteForm, SacerdoteForm,
 	EmailForm,
 	IglesiaForm,
+	LibroBaseForm,
 	)
 
 from sacramentos.models import (
 	PerfilUsuario,NotaMarginal,Bautismo,Matrimonio,
-	Parroquia, Iglesia
+	Parroquia, Iglesia, Libro
 	)
 
 logger = logging.getLogger(__name__)
@@ -100,7 +103,72 @@ def padre_create_ajax(request):
 	else:
 		raise Http404
 
+# Método para crear un feligrés
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_feligres', login_url='/login/', 
+	raise_exception=permission_required)
+def feligres_create_ajax(request):
+	if request.is_ajax():
+		if request.method == 'POST':
+			sexo = request.POST.get('sexo')
+			respuesta = False
+			usuario_form = UsuarioPadreForm(request.POST)
+			perfil_form = PadreForm(request.POST)
+			
+			if usuario_form.is_valid() and perfil_form.is_valid():
+				perfil = perfil_form.save(commit=False)
+				usuario = usuario_form.save(commit=False)
+				usuario.username = perfil.crear_username(usuario.first_name, usuario.last_name)
+				usuario.set_password(usuario.username)
+				feligres, created = Group.objects.get_or_create(name='Feligres')
+				usuario.save()
+				usuario.groups.add(feligres)
+				perfil.user = usuario
+				perfil.save()
+				respuesta = True
+				ctx = {'respuesta': respuesta, 'id': perfil.id, 
+				'full_name': perfil.user.get_full_name()}
+			else:
+				errores_usuario = usuario_form.errors
+				errores_perfil =  perfil_form.errors
+				ctx = {'respuesta': False, 'errores_usuario':errores_usuario,
+				 'errores_perfil': errores_perfil}
+		return HttpResponse(json.dumps(ctx), content_type='application/json')
+	else:
+		raise Http404
 
+# Creación de un sacerdote mediante ajax
+def sacerdote_create_ajax(request):
+	if request.is_ajax():
+		if request.method == 'POST':
+			respuesta = False
+			usuario_form = UsuarioSacerdoteForm(request.POST)
+			perfil_form = SacerdoteForm(request.POST)
+			
+			if usuario_form.is_valid() and perfil_form.is_valid():
+				perfil = perfil_form.save(commit=False)
+				usuario = usuario_form.save(commit=False)
+				usuario.username = perfil.crear_username(usuario.first_name, usuario.last_name)
+				usuario.set_password(usuario.username)
+				feligres, created = Group.objects.get_or_create(name='Sacerdote')
+				usuario.save()
+				usuario.groups.add(feligres)
+				perfil.user = usuario
+				perfil.sexo = 'm'
+				perfil.estado_civil = 's'
+				perfil.profesion = 'Sacerdote'
+				perfil.save()
+				respuesta = True
+				ctx = {'respuesta': respuesta, 'id': perfil.id, 
+				'full_name': perfil.user.get_full_name()}
+			else:
+				errores_usuario = usuario_form.errors
+				errores_perfil =  perfil_form.errors
+				ctx = {'respuesta': False, 'errores_usuario':errores_usuario,
+				 'errores_perfil': errores_perfil}
+		return HttpResponse(json.dumps(ctx), content_type='application/json')
+	else:
+		raise Http404
 
 
 # Método para crear las secretarias - está funcionando
@@ -147,6 +215,37 @@ def iglesia_api_create(request):
 				iglesia = form.save()
 				respuesta = True
 				ctx = {'respuesta': respuesta, 'id': iglesia.id, 'nombre': iglesia.nombre}
+			else:
+				errores = form.errors
+				ctx = {'respuesta': False, 'errores': errores}
+		return HttpResponse(json.dumps(ctx), content_type='application/json')
+	else:
+		raise Http404
+
+# Crear Iglesias via ajax
+def libro_api_create(request):
+	if request.is_ajax():
+		parroquia = request.session.get('parroquia')
+		if not parroquia:
+			raise Http404
+
+		if request.method == 'POST':
+			form = LibroBaseForm(request.POST)
+			if form.is_valid():
+				libro = form.save(commit=False)
+				libro.es_activo = True
+				libro.parroquia = parroquia
+				libro.tipo_libro = request.POST.get('tipo_libro')
+				ultimo_libro = Libro.objects.ultimo_libro(parroquia, libro.tipo_libro)
+				print ultimo_libro
+				if ultimo_libro:
+					libro.numero_libro = int(ultimo_libro.numero_libro) + 1
+				else:  
+					libro.numero_libro = 1
+				libro.nombre = 	u'%s%s%s' % (libro.tipo_libro.title(), libro.fecha_apertura.year, libro.numero_libro)
+				libro.save()
+				respuesta = True
+				ctx = {'respuesta': respuesta, 'id': libro.id, 'nombre': libro.__unicode__()}
 			else:
 				errores = form.errors
 				ctx = {'respuesta': False, 'errores': errores}
@@ -260,9 +359,9 @@ def buscar_usuarios(request):
 		if cedula:
 			try:
 				if id_perfil:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil)
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil).order_by('user__last_name', 'user__first_name')
 				else:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote')
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').order_by('user__last_name', 'user__first_name')
 				
 				if len(perfiles) > 0:
 					perfiles.distinct().order_by('user__last_name', 'user__first_name')
@@ -284,9 +383,9 @@ def buscar_usuarios(request):
 			try:
 				bandera = True
 				if id_perfil:
-					perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil)
+					perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil).order_by('user__last_name', 'user__first_name')
 				else:
-					perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres).exclude(user__groups__name='Sacerdote')
+					perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres).exclude(user__groups__name='Sacerdote').order_by('user__last_name', 'user__first_name')
 				if len(perfiles) > 0:
 					perfiles.distinct().order_by('user__last_name', 'user__first_name')
 
@@ -324,9 +423,9 @@ def buscar_hombres(request):
 		if cedula:
 			try:
 				if id_perfil:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil)
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil).order_by('user__last_name', 'user__first_name')
 				else:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote')
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').order_by('user__last_name', 'user__first_name')
 				
 				if len(perfiles) > 0:
 					perfiles.distinct().order_by('user__last_name', 'user__first_name')
@@ -390,9 +489,9 @@ def buscar_mujeres(request):
 		if cedula:
 			try:
 				if id_perfil:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil)
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').exclude(pk=id_perfil).order_by('user__last_name', 'user__first_name')
 				else:
-					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote')
+					perfiles = PerfilUsuario.objects.filter(dni=cedula).exclude(user__groups__name='Sacerdote').order_by('user__last_name', 'user__first_name')
 				
 				if len(perfiles) > 0:
 					perfiles.distinct().order_by('user__last_name', 'user__first_name')
@@ -453,7 +552,7 @@ def buscar_sacerdotes(request):
 		
 		if cedula:
 			try:
-				perfil = PerfilUsuario.objects.get(dni=cedula,profesion='Sacerdote')
+				perfil = PerfilUsuario.objects.get(dni=cedula,profesion='Sacerdote').order_by('user__last_name', 'user__first_name')
 				bandera = True
 				full_name = perfil.user.get_full_name()
 				lista.append({'id': perfil.id , 'dni': perfil.dni, 'full_name': '<a class="id_click" href="javascript:prueba3()">%s</a>' % full_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId":perfil.id, 'fecha_nacimiento': str(perfil.fecha_nacimiento)}) 
@@ -467,7 +566,7 @@ def buscar_sacerdotes(request):
 		elif nombres or apellidos:
 			try:
 				bandera = True
-				perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres,profesion='Sacerdote')
+				perfiles = PerfilUsuario.objects.filter(user__last_name__icontains= apellidos, user__first_name__icontains=nombres,profesion='Sacerdote').order_by('user__last_name', 'user__first_name')
 				if len(perfiles) > 0:
 					perfiles.distinct().order_by('user__last_name', 'user__first_name')
 

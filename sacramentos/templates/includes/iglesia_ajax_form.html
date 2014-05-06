@@ -1,4 +1,3 @@
-
 <div id="id_modal_iglesia" class="modal hide fade">
 	<form id='id_crear_iglesia' class='form-horizontal' action="." method="POST">
 		<div class="modal-header">
@@ -6,27 +5,10 @@
 			<h3>Crear Iglesia</h3>
 		</div>
 		<div class="modal-body">
-			{% csrf_token %}
-			{% for f in form_iglesia %}
-			<div class="control-group">
-				<div class="control-label">{{f.label}}</div>
-				<div class="controls">{{f}}</div>
-				<div class="controls">
-					<div class="help-text">
-						{{f.help_text}}
-					</div>
-				</div>
-				<div class="controls">
-					<div id="id_errors_{{f.html_name}}" class="errors">
-						{{f.errors}}
-					</div>
-				</div>
-			</div>	
-			{% endfor %}
-			
+			{% include 'includes/form.html' with form=form_iglesia %}			
 		</div>
 		<div class="modal-footer">
-			<button class="btn btn-primary" type="submit">Guardar</button>
+			<button id='id_guardar' class="btn btn-primary" type="submit">Guardar</button>
 			<a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
 		</div>
 	</form>

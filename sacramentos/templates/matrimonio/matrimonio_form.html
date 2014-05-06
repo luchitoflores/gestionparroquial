@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load tags%}
+{%load tags sacramentos_tags%}
 
 {%block title%}
 {%if object.id%}
@@ -53,12 +53,10 @@ $(document).on('ready',function(){
 </script>
 {%endblock%}
 {%block content%}
-
+<input id='id_hidden_sacramento' type="hidden" value="{{tipo_sacramento}}">
 
 <!-- Div para manejar mensajes de error -->
-<div id="id_mensaje">
-	
-</div>
+<div id="id_mensaje"></div>
 {%if object.id%}
 <div class="btn-toolbar pull-right">
 	<div class="btn-group">
@@ -86,7 +84,8 @@ $(document).on('ready',function(){
 					<label for="id_novio" class='control-label'>{{form_matrimonio.novio.label}}</label>
 					<div class='controls'>
 						{{form_matrimonio.novio}}
-						<a href="#id_buscar_hombres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+						<a href="#id_buscar_hombres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+						<a href="#id_modal_padre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 					</div>
 					<div class="controls">
 						<div class="help-text">
@@ -104,7 +103,8 @@ $(document).on('ready',function(){
 					<label for="id_novia" class='control-label'>{{form_matrimonio.novia.label}}</label>
 					<div class='controls'>
 						{{form_matrimonio.novia}}
-						<a href="#id_buscar_mujeres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+						<a href="#id_buscar_mujeres" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+						<a href="#id_modal_madre" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 					</div>
 					<div class="controls">
 						<div class="help-text">
@@ -122,12 +122,12 @@ $(document).on('ready',function(){
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos del Sacramento</legend>
 				<div class="row">
-					<div class="span4">
+					<div class="span8">
 						<div class='control-group'>
 							<label for="id_libro" class='control-label'>{{form_matrimonio.libro.label}}</label>
 							<div class='controls'>
 								{{form_matrimonio.libro}}
-
+								<a href="#id_modal_libro" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{form_matrimonio.libro.help_text}}
@@ -139,9 +139,6 @@ $(document).on('ready',function(){
 							</div>
 						</div>
 						
-					</div>
-					
-					<div class="span4">
 						<div class='control-group'>
 							<label for="id_tipo_matrimonio" class='control-label'>{{form_matrimonio.tipo_matrimonio.label}}</label>
 							<div class='controls'>
@@ -156,11 +153,7 @@ $(document).on('ready',function(){
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span8">
+						
 						<div class='control-group'>
 							<label for="id_fecha_sacramento" class='control-label'>{{form_matrimonio.fecha_sacramento.label}} *</label>
 							<div class='controls'>
@@ -194,6 +187,7 @@ $(document).on('ready',function(){
 							<label for="id_iglesia" class='control-label'>{{form_matrimonio.iglesia.label}}</label>
 							<div class='controls'>
 								{{form_matrimonio.iglesia}}
+								<a class='btn btn-primary' href="#id_modal_iglesia" data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{form_matrimonio.iglesia.help_text}}
@@ -210,7 +204,8 @@ $(document).on('ready',function(){
 							</label>
 							<div class='controls'>
 								{{form_matrimonio.celebrante}}
-								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								<a href="#id_modal_sacerdote" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{form_matrimonio.celebrante.help_text}}
@@ -389,8 +384,17 @@ $(document).on('ready',function(){
 </div>
 
 
-{%include 'usuario/buscar_hombres.html'%}
-{%include 'usuario/buscar_mujeres.html'%}
-{%include 'usuario/buscar_sacerdotes.html'%}
+{%include 'includes/buscar_hombres_ajax.html'%}
+{%include 'includes/buscar_mujeres_ajax.html'%}
+{%include 'includes/buscar_sacerdotes_ajax.html'%}
+
+<!-- Inclusion Tags-->
+{% libro %}
+{% feligres %}
+{% sacerdote %}
+{% iglesia %}
+{% hombre %}
+{% mujer %}
+
 
 {% endblock%}

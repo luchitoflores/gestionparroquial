@@ -1,17 +1,15 @@
-<form id='id_libro_form' action=".">
-	{% csrf_token %}
-	<div id="id_crear_libro" class="modal hide fade">
+<div id="id_modal_libro" class="modal hide fade">
+	<form id='id_crear_libro' class='form-horizontal' action="." method="POST">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 			<h3>Crear Libro</h3>
 		</div>
 		<div class="modal-body">
-			<form action="">
-				{{ form_libro }}
-			</form>
+			{% include 'includes/form.html' with form=form_libro %}			
 		</div>
 		<div class="modal-footer">
-			<a id='id_aceptar' href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+			<button id='id_guardar' class="btn btn-primary" type="submit">Guardar</button>
+			<a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
 		</div>
-	</div>
-</form>
+	</form>
+</div>

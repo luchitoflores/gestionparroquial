@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
-{%load tags%}
+{%load tags core_tags sacramentos_tags%}
+
 
 {%block title%}
 {%if object.id%}
@@ -15,18 +16,10 @@ Editar Bautismo
 Agregar Bautismo
 {%endif%}
 {%endblock%}
-{%block extrascript%}
-<script>
-// funcion para obtener los nombres de los novios t¿y mostrarlos en el modal
-$(document).ready(function(){
-	
 
-});
 
-</script>
-
-{%endblock%}
 {%block content%}
+<input id='id_hidden_sacramento' type="hidden" value="{{tipo_sacramento}}">
 
 
 <!-- Div para manejar mensajes de error -->
@@ -69,9 +62,8 @@ $(document).ready(function(){
 							</label>
 							<div class='controls'>
 								{{formBautismo.libro}}
-								<span>
-									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
-								</span>
+								<a href="#id_modal_libro" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
+								
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.libro.help_text}}
@@ -92,12 +84,8 @@ $(document).ready(function(){
 							<label for="id_bautizado" class='control-label'>{{formBautismo.bautizado.label}}</label>
 							<div class='controls'>
 								{{formBautismo.bautizado}}
-								<span>
-									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
-								</span>
-								<span>
-									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
-								</span>
+								<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+								<a href="#id_modal_feligres" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.bautizado.help_text}}
@@ -148,6 +136,7 @@ $(document).ready(function(){
 							</label>
 							<div class='controls'>
 								{{formBautismo.iglesia}}
+								<a class='btn btn-primary' href="#id_modal_iglesia" data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.iglesia.help_text}}
@@ -167,9 +156,7 @@ $(document).ready(function(){
 							<div class='controls'>
 								{{formBautismo.celebrante}}
 								<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
-								<span>
-									<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
-								</span>
+								<a href="#id_modal_sacerdote" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 							</div>
 							<div class="controls help-text">
 								{{formBautismo.celebrante.help_text}}
@@ -396,7 +383,14 @@ $(document).ready(function(){
 	</div>
 </div>
 
-{%include 'usuario/buscar_sacerdotes.html'%}
-{%include 'usuario/buscar_feligreses.html'%}
+{%include 'includes/buscar_sacerdotes_ajax.html'%}
+{%include 'includes/buscar_feligreses_ajax.html'%}
+
+
+<!-- Inclusion Tags-->
+{% libro %}
+{% feligres %}
+{% sacerdote %}
+{% iglesia %}
 
 {% endblock%}

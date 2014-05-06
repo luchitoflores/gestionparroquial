@@ -25,7 +25,7 @@ class LibroAdmin(admin.ModelAdmin):
 	# fields = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
 	list_display = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
 	search_fields = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
-	list_per_page = 1
+	list_per_page = 20
 
 
 

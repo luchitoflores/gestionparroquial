@@ -1,0 +1,42 @@
+<div id="id_modal_sacerdote" class="modal hide fade">
+	<form id='id_crear_sacerdote' class='form-horizontal' action="." method="POST">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3>Crear Sacerdote</h3>
+		</div>
+		<div class="modal-body">
+			{% csrf_token %}
+			{% for f in form_usuario%}
+			{% if f.label == form_usuario.groups.label %}
+			{{f.as_hidden}}
+			{%else%}
+			<div class="control-group">
+				<label class="control-label">{{f.label}}</label>
+				<div class="controls">{{f}}</div>
+				<div class="controls"><div class="help-text">{{f.help_text}}</div></div>
+				<div class="controls"><div id='id_errors_{{f.name|lower}}'class="errors">{{f.errors}}</div></div>
+			</div>
+			{% endif %}
+			{%endfor%}
+
+			{% for f in form_perfil%}
+			{% if f.label == form_perfil.sexo.label or f.label == form_perfil.estado_civil.label%}
+			<div class="controls">{{f.as_hidden}}</div>
+			{%else%}
+			<div class="control-group">
+				<label class="control-label">{{f.label}}</label>
+				<div class="controls">{{f}}</div>
+				<div class="controls"><div class="help-text">{{f.help_text}}</div></div>
+				<div class="controls"><div id='id_errors_{{f.name|lower}}'class="errors">{{f.errors}}</div></div>
+			</div>
+			{%endif%}
+			{%endfor%}		
+		</div>
+		
+		<div class="modal-footer">
+			<button id='id_guardar' class="btn btn-primary" type="submit">Guardar</button>
+			<a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+		</div>
+
+	</form>
+</div>

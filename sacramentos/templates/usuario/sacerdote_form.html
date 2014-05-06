@@ -71,11 +71,15 @@ Agregar Sacerdote
 						</div>
 					</div>
 				</div>
+
+				{{form_sacerdote.sexo.as_hidden}}
+				{{form_sacerdote.estado_civil.as_hidden}}
+
 				<div class="row">
 					<div class="span4">
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.nacionalidad.label}} *
+								{{form_sacerdote.nacionalidad.label}} 
 							</div>
 							
 							<div class="controls">
@@ -94,7 +98,7 @@ Agregar Sacerdote
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.dni.label}} *
+								{{form_sacerdote.dni.label}} 
 							</div>
 							<div class="controls">
 								{{form_sacerdote.dni}} 
@@ -121,7 +125,7 @@ Agregar Sacerdote
 				<div class="control-group">
 					<label for="id_fecha_nacimiento" class='control-label'>
 
-						{{form_sacerdote.fecha_nacimiento.label}} *
+						{{form_sacerdote.fecha_nacimiento.label}} 
 					</label>
 					<div class="controls">
 						<div class='error'>
@@ -141,7 +145,7 @@ Agregar Sacerdote
 				</div>
 				<div class="control-group">
 					<label for="id_lugar_nacimiento" class='control-label'>
-						{{form_sacerdote.lugar_nacimiento.label}} *
+						{{form_sacerdote.lugar_nacimiento.label}} 
 					</label>
 					<div class="controls">
 						{{form_sacerdote.lugar_nacimiento}}
@@ -252,8 +256,5 @@ Agregar Sacerdote
 
 		</div>
 	</div>
-
-
-
 </form>
 {% endblock%}

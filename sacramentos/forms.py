@@ -142,7 +142,7 @@ class UsuarioAdministradorForm(UsuarioForm):
 class PersonaBaseForm(ModelForm):
 	class Meta:
 		model = PerfilUsuario
-		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento');
+		fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil');
 		widgets = {
 			'nacionalidad': forms.Select(attrs={'required':''}),
 			'fecha_nacimiento': forms.TextInput(attrs={'required':'', 'data-date-format': 
@@ -155,6 +155,12 @@ class PersonaBaseForm(ModelForm):
 		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
 		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
 		self.fields['nacionalidad'].label = 'Nacionalidad *'
+		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		self.fields['sexo'].label = 'Sexo *'
+		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
+		self.fields['estado_civil'].label = 'Estado Civil *'
+		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
+
 
 
 	def clean_fecha_nacimiento(self):
@@ -204,13 +210,14 @@ class PersonaBaseForm(ModelForm):
 
 class PerfilUsuarioForm(PersonaBaseForm):
 	class Meta(PersonaBaseForm.Meta):
-		fields = PersonaBaseForm.Meta.fields + ('sexo', 'estado_civil','profesion', 'padre', 'madre', 'celular');
+		fields = PersonaBaseForm.Meta.fields + ('profesion', 'padre', 'madre', 'celular');
 		# widgets = PersonaBaseForm.Meta.widgets.update({
 		# 	'estado_civil':forms.Select(attrs={'required':''})
 		# 	})
 
 	def __init__(self, *args, **kwargs):
 		super(PerfilUsuarioForm, self).__init__(*args, **kwargs)
+		self.fields['dni'].widget = forms.TextInput(attrs={'':''})
 		if not self.instance.id:
 			self.fields['padre'].queryset=PerfilUsuario.objects.none()
 			self.fields['madre'].queryset=PerfilUsuario.objects.none()
@@ -233,33 +240,22 @@ class PerfilUsuarioForm(PersonaBaseForm):
 
 		self.fields['padre'].empty_label='-- Buscar o Crear --'
 		self.fields['madre'].empty_label='-- Buscar o Crear --'
-		self.fields['sexo'].label = 'Sexo *'
-		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
-		self.fields['estado_civil'].label = 'Estado Civil *'
-		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
-
+		
 		
 class PadreForm(PersonaBaseForm):
 	class Meta(PersonaBaseForm.Meta): 
-		fields = PersonaBaseForm.Meta.fields + ('estado_civil', 'profesion');
+		fields = PersonaBaseForm.Meta.fields + ('profesion',);
 	
 	def __init__(self, *args, **kwargs):
 		super(PadreForm, self).__init__(*args, **kwargs)
-		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
-		self.fields['estado_civil'].label = 'Estado Civil *'
-		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
-		
+		# self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+			
 
 class SecretariaForm(PersonaBaseForm):
-	class Meta(PersonaBaseForm.Meta):
-		fields = PersonaBaseForm.Meta.fields + ('sexo', 'estado_civil')
-
 	def __init__(self, *args, **kwargs):
 		super(SecretariaForm, self).__init__(*args, **kwargs)
-		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
-		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
-		self.fields['estado_civil'].label = 'Estado Civil *'
-		self.fields['estado_civil'].widget = forms.Select(attrs={'required':''}, choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
+		# self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		
 
 class SacerdoteForm(PersonaBaseForm):
 	class Meta(PersonaBaseForm.Meta): 
@@ -267,16 +263,15 @@ class SacerdoteForm(PersonaBaseForm):
 	
 	def __init__(self, *args, **kwargs):
 		super(SacerdoteForm, self).__init__(*args, **kwargs)
-		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+		self.fields['sexo'].initial=  'm'
+		self.fields['estado_civil'].initial=  's'
+
 
 class AdministradorForm(SacerdoteForm):
-	class Meta(SacerdoteForm.Meta): 
-		fields = SacerdoteForm.Meta.fields + ('sexo',);
-	
 	def __init__(self, *args, **kwargs):
 		super(AdministradorForm, self).__init__(*args, **kwargs)
-		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
-		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
+		# self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
+	
 
 
 class AdminForm(forms.Form):
@@ -296,11 +291,15 @@ class EmailForm(forms.Form):
 class LibroBaseForm(ModelForm):
 	class Meta:
 		model = Libro
-		fields = ('fecha_apertura', 'primera_pagina', 'primera_acta')
+		fields = ('principal', 'fecha_apertura', 'primera_pagina', 'primera_acta')
 		widgets = {
 			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
 				'dd/mm/yyyy', 'type':'date'}),
 			}
+	# def __init__(self, *args, **kwargs):
+	# 	self.request = kwargs.pop('request', None)
+	# 	super(LibroForm, self).__init__(*args, **kwargs)
+	
 
 	def clean_fecha_apertura(self):
 		fecha_apertura=self.cleaned_data.get("fecha_apertura")
@@ -313,21 +312,23 @@ class LibroBaseForm(ModelForm):
 class LibroForm(ModelForm):	
 	class Meta:
 		model=Libro
-		fields = ('tipo_libro', 'fecha_apertura', 'fecha_cierre', 
-			'estado', 'primera_pagina', 'primera_acta')
+		fields = ('principal', 'tipo_libro', 'fecha_apertura', 'fecha_cierre', 
+			'primera_pagina', 'primera_acta', 'es_activo')
 		widgets = {
 			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
 				'dd/mm/yyyy', 'type':'date'}),
 			'fecha_cierre': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date',
 				'label':'Fecha Cierre *'}),
 			'tipo_libro': forms.Select(attrs={'required':''}),
-			'estado': RadioSelect(attrs={'required':''}),
-			# 'numero_libro': forms.TextInput(attrs={'required':''}),
+			'primera_pagina': forms.TextInput(attrs={'required':'', 'type':'number', 'min':1}),
+			'primera_acta': forms.TextInput(attrs={'required':'', 'type':'number', 'min':1}),
 			}
+
 	def __init__(self, *args, **kwargs):
 		self.request = kwargs.pop('request', None)
 		super(LibroForm, self).__init__(*args, **kwargs)
-
+		if not self.instance.id:
+			self.fields['es_activo'].widget = forms.HiddenInput()
 
 	def clean(self):
 		cleaned_data = super(LibroForm, self).clean()
@@ -379,8 +380,7 @@ class SacramentosForm(ModelForm):
 
 		parroquia=request.session.get('parroquia')
 		self.fields['celebrante'].empty_label = None
-		self.fields['libro'].queryset=Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
-		self.fields['libro'].empty_label=None
+		self.fields['libro'].empty_label='-- Seleccione --'
 		self.fields['iglesia'].empty_label= '-- Seleccione --'
 		self.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
 		try:
@@ -414,7 +414,11 @@ class BautismoForm(SacramentosForm):
 	def __init__(self, request, *args, **kwargs):
 		parroquia=request.session.get('parroquia')
 		super(BautismoForm, self).__init__(request, *args, **kwargs)
-		self.fields['libro'].queryset = Libro.objects.filter(estado='Abierto',tipo_libro='Bautismo', parroquia=parroquia)
+		self.fields['libro'].queryset=Libro.objects.filter(tipo_libro='bautismo', parroquia=parroquia, es_activo=True)
+		try:
+			self.fields['libro'].initial = Libro.objects.get(principal=True,tipo_libro='bautismo', parroquia=parroquia, es_activo=True)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurado un Libro de bautismos principal')
 		
 		if not self.instance.id:
 			self.fields['bautizado']=forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
@@ -455,8 +459,11 @@ class EucaristiaForm(SacramentosForm):
 	def __init__(self, request, *args, **kwargs):		
 		super(EucaristiaForm, self).__init__(request, *args, **kwargs)
 		parroquia=request.session.get('parroquia')
-		self.fields['libro'].queryset = Libro.objects.filter(
-			estado='Abierto',tipo_libro='Eucaristia', parroquia=parroquia)
+		self.fields['libro'].queryset=Libro.objects.filter(tipo_libro='eucaristia', parroquia=parroquia, es_activo=True)
+		try:
+			self.fields['libro'].initial = Libro.objects.get(principal=True,tipo_libro='eucaristia', parroquia=parroquia, es_activo=True)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurado un Libro principal de primeras comuniones')
 
 		if not self.instance.id:
 			self.fields['feligres']=forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
@@ -499,7 +506,12 @@ class ConfirmacionForm(SacramentosForm):
 	def __init__(self, request, *args, **kwargs):
 		super(ConfirmacionForm, self).__init__(request, *args, **kwargs)
 		parroquia=request.session.get('parroquia')
-		self.fields['libro'].queryset = Libro.objects.filter(estado='Abierto',tipo_libro='Confirmacion',parroquia=parroquia)
+		self.fields['libro'].queryset=Libro.objects.filter(tipo_libro='confirmacion', parroquia=parroquia, es_activo=True)
+		try:
+			self.fields['libro'].initial = Libro.objects.get(principal=True,tipo_libro='confirmacion', parroquia=parroquia, es_activo=True)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurado un Libro principal de confirmaciones')
+
 		if not self.instance.id:
 			self.fields['confirmado']=forms.ModelChoiceField(required=True, queryset=Confirmacion.objects.none(),
 				 empty_label='-- Buscar o Crear --', label='Confirmado *',
@@ -558,8 +570,12 @@ class MatrimonioForm(SacramentosForm):
 		super(MatrimonioForm, self).__init__(request, *args, **kwargs)
 		parroquia = request.session.get('parroquia')
 		self.fields['tipo_matrimonio'].empty_label="-- Seleccione --"
-		self.fields['libro'].queryset = Libro.objects.filter(
-			estado='Abierto',tipo_libro='Matrimonio',parroquia=parroquia)
+		self.fields['libro'].queryset=Libro.objects.filter(tipo_libro='matrimonio', parroquia=parroquia, es_activo=True)
+		try:
+			self.fields['libro'].initial = Libro.objects.get(principal=True,tipo_libro='matrimonio', parroquia=parroquia, es_activo=True)
+		except ObjectDoesNotExist:
+			messages.info(request,'No tiene configurado un Libro principal de matrimonios')
+
 		self.fields['tipo_matrimonio'].widget = forms.Select(attrs={'required':''}, choices=Matrimonio.TIPO_MATRIMONIO_CHOICES)
 		self.fields['testigo_novio'].widget =  forms.TextInput(attrs={'required':''})
 		self.fields['testigo_novia'].widget =  forms.TextInput(attrs={'required':''})

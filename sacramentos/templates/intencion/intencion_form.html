@@ -12,7 +12,6 @@ Agregar Intenciones de Misa
 
 {%block content%}
 
-{% iglesia_ajax %}
 
 <form action="." method='POST' class='form-horizontal'>
 	{%csrf_token%}
@@ -99,5 +98,7 @@ Agregar Intenciones de Misa
 	</div>
 
 </form>
+
+{% iglesia %}
 
 {%endblock%}

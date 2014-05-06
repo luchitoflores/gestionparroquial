@@ -1,26 +1,19 @@
 from django.db import models
-# from sacramentos.models import *
+from django.core.exceptions import ObjectDoesNotExist
+
 
 class LibroManager(models.Manager):
-	#def get_query_set(self):
-	#	return super(LibroManager, self).get_query_set().filter(parroquia='1')
-	
-	#def libros_por_parroquia(self):
-	#  	return self.models.objects.filter(parroquia=self)
-
 	def libro(self):
 		return self.model.objects.filter(tipo_libro='Bautismo',estado='Abierto',
 			parroquia=self.parroquia)
 
 	def ultimo_libro(self, parroquia, tipo_libro):
-		return self.model.objects.filter(parroquia=parroquia, tipo_libro=tipo_libro).latest('created')
-
-	
-class ParroquiaManager(models.Manager):
-	pass
+		try:
+			return self.model.objects.filter(parroquia=parroquia, tipo_libro=tipo_libro).latest('created')
+		except ObjectDoesNotExist:
+			return None
 
 class PersonaManager(models.Manager):
-
 	def padre(self):
 		return self.model.objects.filter(sexo='m').exclude(user__groups__name='Sacerdote')
 
@@ -30,7 +23,6 @@ class PersonaManager(models.Manager):
 	def feligres(self):
 		return self.model.objects.all().exclude(user__groups__name='Sacerdote')
 	
-
 	def male(self):
 		return self.model.objects.filter(sexo='m').exclude(user__groups__name='Sacerdote')
 
@@ -48,10 +40,7 @@ class PersonaManager(models.Manager):
 
 	def parroco(self, parroquia):
 		return self.model.objects.filter(user__groups__name='Sacerdote', profesion='Sacerdote', 
-			asignacionparroquia__parroquia = parroquia)
-
-	# def feligres(self):
-	# 	return self.model.objects.filter(user__groups__name='Feligres', profesion='-Sacerdote')
+			asignacionparroquia__parroquia = parroquia, asignacionparroquia__periodos__estado=True)
 
 	def username_disponible(self, username):
 		try:
@@ -64,15 +53,3 @@ class PeriodoAsignacionManager(models.Manager):
 	def secretaria(self, parroquia):
 		return self.model.objects.filter(asignacion__persona__user__groups__name='Secretaria', asignacion__parroquia = parroquia)
 
-class BautismoManager(models.Manager):
-	# def libro_activo(self):
-	# 	return self.model.objects.filter(libro__tipo_libro='Bautismo')
-	pass
-
-class NotaMarginalManager(models.Manager):
-	
-	pass
-
-
-class AsignacionParroquiaManager(models.Manager):
-	pass
