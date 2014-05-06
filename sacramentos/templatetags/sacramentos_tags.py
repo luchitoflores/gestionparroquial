@@ -61,7 +61,8 @@ def sacerdote(context):
 
 @register.inclusion_tag('includes/libro_ajax_form.html', takes_context=True)
 def libro(context):
-	form_libro = LibroBaseForm()
+	request = context['request']
+	form_libro = LibroBaseForm(request=request)
 	ctx = {'form_libro': form_libro}
 	return ctx
 

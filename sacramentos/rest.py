@@ -23,7 +23,7 @@ from sacramentos.forms import (
 	UsuarioSacerdoteForm, SacerdoteForm,
 	EmailForm,
 	IglesiaForm,
-	LibroBaseForm,
+	LibroBaseForm, LibroForm,
 	)
 
 from sacramentos.models import (
@@ -230,7 +230,7 @@ def libro_api_create(request):
 			raise Http404
 
 		if request.method == 'POST':
-			form = LibroBaseForm(request.POST)
+			form = LibroForm(request.POST, request=request)
 			if form.is_valid():
 				libro = form.save(commit=False)
 				libro.es_activo = True

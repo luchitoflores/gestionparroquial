@@ -295,17 +295,43 @@ class LibroBaseForm(ModelForm):
 		widgets = {
 			'fecha_apertura': forms.TextInput(attrs={'required':'', 'data-date-format': 
 				'dd/mm/yyyy', 'type':'date'}),
+			'primera_pagina': forms.TextInput(attrs={'required':'', 'type':'number', 'min':1}),
+			'primera_acta': forms.TextInput(attrs={'required':'', 'type':'number', 'min':1}),
 			}
-	# def __init__(self, *args, **kwargs):
-	# 	self.request = kwargs.pop('request', None)
-	# 	super(LibroForm, self).__init__(*args, **kwargs)
+
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(LibroBaseForm, self).__init__(*args, **kwargs)
+	
+	def clean(self):
+		cleaned_data = super(LibroBaseForm, self).clean()
+		fecha_apertura=self.cleaned_data.get("fecha_apertura")
+		principal=self.cleaned_data.get("principal")
+		tipo_libro = self.cleaned_data.get("tipo_libro")
+		if fecha_apertura > date.today():
+			msg=u"La fecha de apertura no puede ser mayor a la fecha actual"
+			self._errors['fecha_apertura']=self.error_class([msg])
+			
+		if principal:
+			parroquia = self.request.session.get('parroquia')
+			if self.instance.id:
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, principal=True).exclude(pk=self.instance.id):
+					msg=u"Ya existe un libro principal"
+					self._errors['principal']=self.error_class([msg])
+			else:
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, principal=True):
+					msg=u"Ya existe un libro principal"
+					self._errors['principal']=self.error_class([msg])
+
+		return cleaned_data
+
 	
 
-	def clean_fecha_apertura(self):
-		fecha_apertura=self.cleaned_data.get("fecha_apertura")
-		if fecha_apertura > date.today():
-			raise forms.ValidationError("La fecha de apertura no puede ser mayor a la fecha actual")		
-		return fecha_apertura	
+	# def clean_fecha_apertura(self):
+	# 	fecha_apertura=self.cleaned_data.get("fecha_apertura")
+	# 	if fecha_apertura > date.today():
+	# 		raise forms.ValidationError("La fecha de apertura no puede ser mayor a la fecha actual")		
+	# 	return fecha_apertura	
 		
 	
 
@@ -334,7 +360,7 @@ class LibroForm(ModelForm):
 		cleaned_data = super(LibroForm, self).clean()
 		fecha_apertura=self.cleaned_data.get("fecha_apertura")
 		fecha_cierre=self.cleaned_data.get("fecha_cierre")
-		estado=self.cleaned_data.get("estado")
+		principal=self.cleaned_data.get("principal")
 		tipo_libro = self.cleaned_data.get("tipo_libro")
 		if fecha_apertura > date.today():
 			msg=u"La fecha de apertura no puede ser mayor a la fecha actual"
@@ -345,16 +371,16 @@ class LibroForm(ModelForm):
 				msg=u"La fecha de cierre no puede ser menor o igual a la fecha de apertura"
 				self._errors['fecha_cierre']=self.error_class([msg])
 
-		if estado == 'Abierto':
+		if principal:
 			parroquia = self.request.session.get('parroquia')
 			if self.instance.id:
-				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, estado='Abierto').exclude(pk=self.instance.id):
-					msg=u"Ya existe un libro abierto, cierrelo y vuelva a crear'"
-					self._errors['estado']=self.error_class([msg])
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, principal=True).exclude(pk=self.instance.id):
+					msg=u"Ya existe un libro principal"
+					self._errors['principal']=self.error_class([msg])
 			else:
-				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, estado='Abierto'):
-					msg=u"Ya existe un libro abierto, cierrelo y vuelva a crear'"
-					self._errors['estado']=self.error_class([msg])
+				if Libro.objects.filter(tipo_libro=tipo_libro, parroquia=parroquia, principal=True):
+					msg=u"Ya existe un libro principal"
+					self._errors['principal']=self.error_class([msg])
 
 		return cleaned_data
 	

@@ -502,7 +502,7 @@ class Libro(TimeStampedModel):
                                 help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
     fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
-    principal=models.BooleanField(u'Es principal *', default=False)
+    principal=models.BooleanField(u'Es principal', default=False)
     parroquia = models.ForeignKey('Parroquia', related_name='libros', help_text='Seleccione una parroquia')
     primera_pagina = models.PositiveIntegerField(blank= True, null=True)
     primera_acta = models.PositiveIntegerField(blank= True, null=True)

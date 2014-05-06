@@ -764,12 +764,12 @@ function crear_libro(identificador){
 					var mensajes_error = '<span class="errors">' + element+ '</span>';
 					$(identificador + " #id_errors_"+index).append(mensajes_error);
 				});
-				$('#id_spinner').remove();
+				$(identificador +' #id_spinner').remove();
 			}else{
 				$('#id_libro').html('<option value="'+ data.id+'" selected="selected">'+data.nombre+'</option>'+ html_inicial);
 				$(".modal").modal('hide');
 				limpiar_campos('#id_crear_libro :input');
-				$('#id_spinner').remove();
+				$(identificador +' #id_spinner').remove();
 			}
 		});
 
