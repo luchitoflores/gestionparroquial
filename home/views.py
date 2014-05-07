@@ -18,13 +18,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 def index_view(request):
 	return HttpResponseRedirect('/')
 
-# @login_required(login_url='/login/')
 def home_view(request):
 	if request.user.is_authenticated():
 		return redirect('/home/')
 	else:
 		return redirect('/')
-
 
 def buscar_sacramentos_view(request):
 	if not request.user.is_authenticated():

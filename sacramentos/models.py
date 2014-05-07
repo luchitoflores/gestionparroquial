@@ -659,7 +659,7 @@ class Intenciones(TimeStampedModel):
 
     
 class AsignacionParroquia(TimeStampedModel):
-    persona = models.ForeignKey('PerfilUsuario')
+    persona = models.ForeignKey('PerfilUsuario', verbose_name=u'Sacerdote *')
     parroquia = models.ForeignKey('Parroquia')
 
     class Meta:

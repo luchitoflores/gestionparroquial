@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load sacramentos_tags%}
 
 {%block title%}
 {%if object.id%}
@@ -30,10 +31,10 @@ Agregar Asignación - {{object}}
 		</div>
 		<div class="controls">
 			{{f}}
-			{%if f.label = 'Sacerdote'%}
-			<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i> Buscar</a>
+			{%if f.label == form.persona.label %}
+			<a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
+			<a href="#id_modal_sacerdote" class='btn btn-primary' data-toggle='modal'><i class='icon-plus'></i></a>
 			{%endif%}
-
 		</div>
 
 		<div class="controls">
@@ -41,6 +42,7 @@ Agregar Asignación - {{object}}
 				{{f.help_text}}
 			</div>
 		</div>
+
 		<div class="controls">
 			<div class='errors'>
 				{{f.errors}}
@@ -86,5 +88,6 @@ Agregar Asignación - {{object}}
 </form>
 
 {%include 'includes/buscar_sacerdotes_ajax.html'%}
+{% sacerdote %}
 
 {%endblock%}

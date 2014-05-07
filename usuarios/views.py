@@ -22,23 +22,6 @@ from .forms import SendEmailForm, GruposForm
 from sacramentos.models import PeriodoAsignacionParroquia
 from core.views import BusquedaMixin
 
-#Login de usuarios sin utilizar ningún formulario preestablecido
-# def login_view(request):
-# 	if request.user.is_authenticated():
-# 		return HttpResponseRedirect('/feligres/add')
-# 	else:
-# 		if request.method == 'POST':
-# 			username = request.POST['username']
-# 			password = request.POST['password']
-# 			user = authenticate(username=username, password=password)
-# 			if user is not None and user.is_active:
-# 				login(request,user)
-# 				return HttpResponseRedirect('/')
-# 			else:
-# 				messages.add_message(request, messages.ERROR, 'El user o la pass son incorrectas')
-# 		return render(request, 'login.html')
-
-
 #Login con AthenticateForm	
 def login_view(request):
 	redirect_to = request.REQUEST.get('next', '')
@@ -82,25 +65,25 @@ def logout_view(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
-##Cambiar la contraseña sin proporcionar la antigua contraseña
-# @login_required(login_url='/login/')
-# def change_password_view(request):
-# 	user = request.user
-# 	if request.method == 'POST':
-# 		form = SetPasswordForm(user, request.POST)
-# 		if form.is_valid():
-# 			form.save()
-# 			logout(request)
-# 			messages.add_message(request, messages.INFO, 'El cambio de clave se realizó con éxito')
-# 			return HttpResponseRedirect('/')
-# 		else:
-# 			messages.add_message(request, messages.ERROR, 'Los datos ingresados no son válidos')
-# 	else:
-# 		form = SetPasswordForm(user)
+# Cambiar la contraseña sin proporcionar la antigua contraseña
+@login_required(login_url='/login/')
+def change_password_view(request):
+	user = request.user
+	if request.method == 'POST':
+		form = SetPasswordForm(user, request.POST)
+		if form.is_valid():
+			form.save()
+			logout(request)
+			messages.add_message(request, messages.INFO, 'El cambio de clave se realizó con éxito')
+			return HttpResponseRedirect('/')
+		else:
+			messages.add_message(request, messages.ERROR, 'Los datos ingresados no son válidos')
+	else:
+		form = SetPasswordForm(user)
 
-# 	ctx = {'form': form}
-# 	return render(request, 'change-password.html', ctx)
-# 	
+	ctx = {'form': form}
+	return render(request, 'change-password.html', ctx)
+ 	
 
 #Cambiar la contraseña proporcionando la antigua contraseña 
 @login_required(login_url='/login/')
@@ -151,11 +134,9 @@ def send_email_view(request):
 		return render(request, template_name, ctx)
 
 
-	
-
 class GroupCreate(CreateView):
 	model = Group
-	success_url = '/group/'
+	success_url = reverse_lazy('group_list')
 	form_class = GruposForm
 
 	@method_decorator(login_required(login_url='login'))
@@ -164,13 +145,12 @@ class GroupCreate(CreateView):
 	def dispatch(self, *args, **kwargs):
 		return super(GroupCreate, self).dispatch(*args, **kwargs)
 
-
 class GroupUpdate(UpdateView):
 	"""docstring for GroupUpdate"""
 	model = Group
 	template_name       = 'auth/group_form.html'
 	context_object_name = 'form'
-	success_url = '/group/'
+	success_url = reverse_lazy('group_list')
 	form_class = GruposForm
 
 	@method_decorator(login_required(login_url='login'))
@@ -198,11 +178,3 @@ class GroupList(BusquedaMixin, ListView):
 			return Group.objects.filter(name__icontains = name).order_by('name')
 		else:
 			return Group.objects.all().order_by('name')
-	
-
-	
-		
-
-	
-		
-

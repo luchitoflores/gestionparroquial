@@ -582,17 +582,7 @@ class MatrimonioForm(SacramentosForm):
 		model=Matrimonio
 		fields= SacramentosForm.Meta.fields + ('novio','novia','testigo_novio','testigo_novia',
 			'tipo_matrimonio')
-		# widgets = {
-		# 'tipo_matrimonio': forms.Select(attrs={'required':''}),
-		# 'testigo_novio': forms.TextInput(attrs={'required':''}),
-		# 'testigo_novia': forms.TextInput(attrs={'required':''}),
-		# 'fecha_sacramento': forms.TextInput(attrs={'required':'', 'data-date-format': 
-		# 'dd/mm/yyyy', 'type':'date'}),
-		# 'lugar_sacramento': forms.TextInput(attrs={'required':''}),
-		# 'iglesia': forms.TextInput(attrs={'required':''}),
-		# 'celebrante': forms.Select(attrs={'required':''})
-		# }
-
+	
 	def __init__(self, request, *args, **kwargs):
 		super(MatrimonioForm, self).__init__(request, *args, **kwargs)
 		parroquia = request.session.get('parroquia')
@@ -704,6 +694,40 @@ class NotaMarginalForm(ModelForm):
 		widgets = {
 		'descripcion': forms.Textarea(attrs={'required':''}),
 		}
+
+#Form para Intenciones de Misa - Funcionando
+class IntencionForm(ModelForm):
+	class Meta:
+		model = Intenciones
+		fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
+		widgets = {
+			'intencion': forms.Textarea(attrs={'required':'', 'title':'intencion'}),
+			'oferente': forms.TextInput(attrs={'required':''}),
+			'ofrenda': forms.TextInput(attrs={'required':''}),
+			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
+			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
+			'iglesia': forms.Select(attrs={'required':''}),		
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(IntencionForm, self).__init__(*args, **kwargs)
+		self.fields['iglesia'].empty_label= '-- Seleccione --'
+		
+
+	def clean(self):
+		cleaned_data= super(IntencionForm,self).clean()
+		hora = self.cleaned_data.get('hora')
+		fecha = self.cleaned_data.get('fecha')
+
+		if date.today() > fecha:
+			msg=u'No puede ingresar fechas en el pasado'
+			self._errors['fecha']=self.error_class([msg])
+
+		if hora < datetime.time(datetime.now()) and date.today() == fecha:
+	 		msg=u'No se puede ingresar horas en el pasado'
+	 		self._errors['hora']=self.error_class([msg])
+	  		
+		return cleaned_data
 		
 #Forms para Parroquia - Funcionando
 class ParroquiaForm(ModelForm):
@@ -714,18 +738,53 @@ class ParroquiaForm(ModelForm):
 		'nombre': forms.TextInput(attrs={'required':''}),
 		}
 
+class IglesiaForm(forms.ModelForm):
+	class Meta:
+		model = Iglesia
+		fields = ('nombre', 'principal', 'parroquia')
+
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(IglesiaForm, self).__init__(*args, **kwargs)
+		parroquia = self.request.session.get('parroquia')
+		self.fields['parroquia'].queryset = Parroquia.objects.filter(pk=parroquia.pk)
+		self.fields['parroquia'].empty_label = None
+
+	def clean_principal(self):
+		principal = self.cleaned_data.get('principal')
+		parroquia = self.request.session.get('parroquia')
+		
+		if principal:
+			
+			if self.instance.id:
+				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia).exclude(pk=self.instance.id)
+				
+				if iglesia:
+					print iglesia
+					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
+			else:
+				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia)
+
+				if iglesia:
+					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
+			
+		return principal
 
 #Form para asignar parroquia
 class AsignarParroquiaForm(ModelForm):
-	persona = forms.ModelChoiceField(label = 'Sacerdote', queryset=PerfilUsuario.objects.none(), empty_label='-- Buscar --', widget=forms.Select(attrs={'required':'', 'id':'id_celebrante'})) 
+	class Meta:
+		model = AsignacionParroquia
+		fields = ('persona', 'parroquia')
+		widgets = {
+		'persona': forms.Select(attrs={'required':'', 'id':'id_celebrante'})
+		}
+
 	def __init__(self, parroquia = Parroquia.objects.all(), *args, **kwargs):
 		super(AsignarParroquiaForm, self).__init__(*args, **kwargs)
 		self.fields['parroquia']=forms.ModelChoiceField(required=True, queryset=parroquia, 
 			empty_label=None)
-
-	class Meta:
-		model = AsignacionParroquia
-		fields = ('persona', 'parroquia')
+		self.fields['persona'].empty_label = "-- Buscar o crear --"
+		self.fields['persona'].queryset = PerfilUsuario.objects.none()
 			
 	def clean(self):
 		cleaned_data = super(AsignarParroquiaForm, self).clean()
@@ -816,42 +875,6 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 		'fin': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
 		}
 
-#Form para Intenciones de Misa - Funcionando
-class IntencionForm(ModelForm):
-	class Meta:
-		model = Intenciones
-		fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
-		widgets = {
-			'intencion': forms.Textarea(attrs={'required':'', 'title':'intencion'}),
-			'oferente': forms.TextInput(attrs={'required':''}),
-			'ofrenda': forms.TextInput(attrs={'required':''}),
-			'fecha': forms.TextInput(attrs={'required':'', 'type': 'date'}),
-			'hora': forms.TextInput(attrs={'required':'', 'type':'time'}),	
-			'iglesia': forms.Select(attrs={'required':''}),		
-		}
-
-	def __init__(self, *args, **kwargs):
-		super(IntencionForm, self).__init__(*args, **kwargs)
-		self.fields['iglesia'].empty_label= '-- Seleccione --'
-		
-
-	def clean(self):
-		cleaned_data= super(IntencionForm,self).clean()
-		hora = self.cleaned_data.get('hora')
-		fecha = self.cleaned_data.get('fecha')
-
-		if date.today() > fecha:
-			msg=u'No puede ingresar fechas en el pasado'
-			self._errors['fecha']=self.error_class([msg])
-
-		if hora < datetime.time(datetime.now()) and date.today() == fecha:
-	 		msg=u'No se puede ingresar horas en el pasado'
-	 		self._errors['hora']=self.error_class([msg])
-	  		
-		return cleaned_data
-
-
-
 class ParametrizaDiocesisForm(ModelForm):
 	class Meta:
 		model=ParametrizaDiocesis
@@ -859,11 +882,9 @@ class ParametrizaDiocesisForm(ModelForm):
 		widgets={
 		'diocesis':forms.TextInput(attrs={'required':''}),
 		'obispo':forms.TextInput(attrs={'required':''}),
-
 		}
 
 class ParametrizaParroquiaForm(ModelForm):
-	
 	class Meta:
 		model=ParametrizaParroquia
 		fields=('numero_acta','pagina','parroquia')
@@ -901,8 +922,6 @@ class ReporteIntencionesForm(forms.Form):
 
    	hora=forms.CharField(required=False,help_text='Ingrese una hora ej: 8:00 - 17:00',
     	label='Hora',widget=forms.TextInput(attrs={'type':'time'}))
-
-   
 
 class ReporteSacramentosAnualForm(forms.Form):
 	anio=forms.CharField(max_length=4,help_text='Ingrese un año para generar el reporte',label='Año *',
@@ -962,35 +981,4 @@ class ReportePermisoForm(forms.Form):
 			widget=forms.Select(attrs={'required':''}))
 		
 		
-class IglesiaForm(forms.ModelForm):
-	class Meta:
-		model = Iglesia
-		fields = ('nombre', 'principal', 'parroquia')
-
-	def __init__(self, *args, **kwargs):
-		self.request = kwargs.pop('request', None)
-		super(IglesiaForm, self).__init__(*args, **kwargs)
-		parroquia = self.request.session.get('parroquia')
-		self.fields['parroquia'].queryset = Parroquia.objects.filter(pk=parroquia.pk)
-		self.fields['parroquia'].empty_label = None
-
-	def clean_principal(self):
-		principal = self.cleaned_data.get('principal')
-		parroquia = self.request.session.get('parroquia')
-		
-		if principal:
-			
-			if self.instance.id:
-				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia).exclude(pk=self.instance.id)
-				
-				if iglesia:
-					print iglesia
-					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
-			else:
-				iglesia = Iglesia.objects.filter(principal=True, parroquia=parroquia)
-
-				if iglesia:
-					raise forms.ValidationError('No pueden existir dos iglesias principales en una parroquia')
-			
-		return principal
 
