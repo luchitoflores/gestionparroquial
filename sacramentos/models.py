@@ -331,7 +331,7 @@ class PerfilUsuario(TimeStampedModel):
     class Meta:
         permissions = (
             ('add_secretaria', 'Puede crear secretarias'),
-            ('change_se cretaria', 'Puede actualizar secretarias'),
+            ('change_secretaria', 'Puede actualizar secretarias'),
             ('delete_secretaria', 'Puede eliminar secretarias'),
             
             ('add_feligres', 'Puede crear feligreses'),
