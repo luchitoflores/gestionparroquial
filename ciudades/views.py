@@ -40,7 +40,7 @@ class ProvinciaCreate(CreateView):
 	model               = Provincia
 	template_name       = 'provincia/provincia_form.html'
 	# context_object_name = 'form'
-	success_url         = '/ciudades/provincia/'
+	success_url         = reverse_lazy('provincia_list')
 	form_class = ProvinciaForm
 	
 	def form_invalid(self, form):
@@ -62,7 +62,7 @@ class ProvinciaUpdate(UpdateView):
 	model               = Provincia 
 	template_name       = 'provincia/provincia_form.html'
 	context_object_name = 'form'
-	success_url         = '/ciudades/provincia/'
+	success_url         = reverse_lazy('provincia_list')
 	form_class = ProvinciaForm
 	
 	
@@ -116,7 +116,7 @@ class CantonCreate(CreateView):
 	model               = Canton
 	template_name       = 'canton/canton_form.html'
 	context_object_name = 'form'
-	success_url         = '/ciudades/canton/'
+	success_url         = reverse_lazy('canton_list')
 	form_class = CantonForm
 	
 	def form_invalid(self, form):
@@ -138,7 +138,7 @@ class CantonUpdate(UpdateView):
 	model               = Canton 
 	template_name       = 'canton/canton_form.html'
 	context_object_name = 'form'
-	success_url         = '/ciudades/canton/'
+	success_url         = reverse_lazy('canton_list')
 	form_class = CantonForm
 	
 
@@ -191,7 +191,7 @@ class ParroquiaCreate(CreateView):
 	model               = Parroquia
 	template_name       = 'parroquiacivil/parroquia_form.html'
 	context_object_name = 'form'
-	success_url         = '/ciudades/parroquia/'
+	success_url         = reverse_lazy('parroquiacivil_list')
 	form_class = ParroquiaForm
 	
 	def form_invalid(self, form):
@@ -213,7 +213,7 @@ class ParroquiaUpdate(UpdateView):
 	model               = Parroquia 
 	template_name       = 'parroquiacivil/parroquia_form.html'
 	context_object_name = 'form'
-	success_url         = '/ciudades/parroquia/'
+	success_url         = reverse_lazy('parroquiacivil_list')
 	form_class = ParroquiaForm
 
 	def form_valid(self, form):

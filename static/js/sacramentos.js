@@ -2,22 +2,8 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio(){
-	
 	detectar_navegador();
-
-	if(localStorage.nombre){
-		if(localStorage.getItem('nombre')=='pequenia'){
-			$('body').css('font-size', '1em');
-		}else if (localStorage.getItem('nombre')=='mediana'){
-			$('body').css('font-size', '1.25em');
-		} else {
-			$('body').css('font-size', '1.5em');
-		}
-	}
-
 	tabla_vacia();
-	prueba_localstore();
-	combinacionTeclas();
 	cancelar_modal();
 	var map = '';
 	var map2 = '';
@@ -32,13 +18,12 @@ function inicio(){
 	crear_iglesia('#id_crear_iglesia');
 	crear_libro('#id_crear_libro');
 	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
-	//autocomplete('#id_padre');
+	
 	asignar_padre();
 	asignar_email();
 	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/crear/nota/');
 	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/crear/nota_matrimonio/');
 	tablas_estilo_bootstrap();
-	/*modelo_tablas('#id_table_asignar_parroquia');*/
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
 	ocultar_tablas_aceptar('#id_buscar_hombres');
 	ocultar_tablas_aceptar('#id_buscar_mujeres');
@@ -50,7 +35,6 @@ function inicio(){
 	radio_button_mujeres();
 	deshabilitar_campos('#id_form_padre input:text, #id_form_padre select');
 	deshabilitar_campos('#id_form_bautizado input:text, #id_form_bautizado select');
-	/*campo_no_requerido('#id_bautizado, #id_feligres, #id_confirmado');*/
 	cargar_tabla_usuarios_en_modal();
 	cargar_tabla_hombres_en_modal();
 	cargar_tabla_mujeres_en_modal();
@@ -66,6 +50,8 @@ function inicio(){
 	controles_intenciones();
 	controles_provincias();
 
+	/*campo_no_requerido('#id_bautizado, #id_feligres, #id_confirmado');*/
+	/*modelo_tablas('#id_table_asignar_parroquia');*/
 
 }
 
@@ -970,20 +956,14 @@ function verificar_select_seleccionado(){
 
 function seleccionar_hora(){
 	$('#id_tipo').on('change', function(e){
-		
 		console.log('Change de tipo')
-
 		if ($('#id_tipo option:selected').text()=='Diario') {
 			e.preventDefault();
 			console.log('Entre al If de cambio');
 			($('#id_div_hora')).css('display', 'inline-block');
-
-			
 		}else{
 			($('#id_div_hora')).css('display', 'none');
-
 		}
-		
 	});
 }
 
@@ -1041,7 +1021,6 @@ function controles_provincias(){
 }
 
 
-
 function asignar_email(){
 	$('#id_form_email').on('submit', function(e){
 		e.preventDefault();
@@ -1065,132 +1044,6 @@ function asignar_email(){
 		});
 	});
 }
-
-
-function combinacionTeclas(){
-	Mousetrap.bind('ctrl+f1', function(){
-		document.location.href='/home/';
-	});
-
-
-	Mousetrap.bind('mod+f2', function(){
-		document.location.href='/group/';
-	});
-
-	Mousetrap.bind('ctrl+f3', function(){
-		document.location.href='/log/';
-	});
-
-
-	Mousetrap.bind(['mod+f6', 'meta+f6'], function(e){
-		if (e.preventDefault) {
-			e.preventDefault();
-		} else {
-			e.returnValue = false;
-		}
-
-		document.location.href='/administrador/';
-	});
-
-	Mousetrap.bind(['ctrl+f7', 'meta+f7'], function(e){
-		if (e.preventDefault) {
-			e.preventDefault();
-		} else {
-			e.returnValue = false;
-		}
-
-		document.location.href='/usuario/';
-	});
-
-	Mousetrap.bind('mod+f8', function(){
-		document.location.href='/sacerdote/';
-	});
-
-	Mousetrap.bind('mod+f9', function(){
-		document.location.href='/asignar/secretaria/';
-	});
-
-	Mousetrap.bind('mod+f10', function(){
-		document.location.href='/ciudades/provincia/';
-	});
-
-	Mousetrap.bind('mod+f11', function(){
-		document.location.href='/ciudades/canton/';
-	});
-
-	Mousetrap.bind(['mod+f12', 'meta+f12'], function(e){
-		if (e.preventDefault) {
-			e.preventDefault();
-		} else {
-			e.returnValue = false;
-		}
-
-		document.location.href='/ciudades/parroquia/';
-	});
-
-	Mousetrap.bind('shift+alt+l', function(e){
-		document.location.href='/libro/';
-	});
-
-	Mousetrap.bind('mod+b', function(){
-		document.location.href='/bautismo/';
-	});																																																																								
-
-	Mousetrap.bind('mod+alt+e', function(e){
-		document.location.href='/eucaristia/';
-	});
-
-	Mousetrap.bind('mod+c', function(){
-		document.location.href='/confirmacion/';
-	});
-
-	Mousetrap.bind('mod+m', function(){
-		document.location.href='/matrimonio/';
-	});
-
-	Mousetrap.bind('mod+alt+i', function(){
-		document.location.href='/intencion/';
-	});
-
-	Mousetrap.bind('mod+alt+p', function(e){
-		document.location.href='/parroquia/';
-	});
-
-	
-}
-
-function prueba_localstore(){
-	$('#pequenia').on('click', function(e){
-		e.preventDefault();
-		if(!localStorage.nombre){
-			localStorage.nombre='pequenia';
-		} else {
-			localStorage.setItem('nombre', 'pequenia');
-		}
-		$('body').css('font-size', '1em');
-
-	});
-	$('#mediana').on('click', function(e){
-		e.preventDefault();
-		if(!localStorage.nombre){
-			localStorage.nombre='media';
-		} else {
-			localStorage.setItem('nombre', 'media');
-		}
-		$('body').css('font-size', '1.25em');
-	});
-	$('#grande').on('click', function(e){
-		e.preventDefault();
-		if(!localStorage.nombre){
-			localStorage.nombre='grande';
-		} else {
-			localStorage.setItem('nombre', 'grande');
-		}
-		$('body').css('font-size', '1.5em');
-	});
-}
-
-
 
 // Script para detectar el navegador que está utilizando el usuario
 function detectar_navegador(){

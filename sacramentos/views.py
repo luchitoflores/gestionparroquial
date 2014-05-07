@@ -281,24 +281,24 @@ def administrador_create_view(request):
 	success_url = '/administrador/'
 	
 	if request.method == 'POST':
-		form_sacerdote = AdministradorForm(request.POST)
+		form_perfil = AdministradorForm(request.POST)
 		form_usuario = UsuarioAdministradorForm(request.POST)
 
-		if form_sacerdote.is_valid() and form_usuario.is_valid():
+		if form_perfil.is_valid() and form_usuario.is_valid():
 			administrador, created = Group.objects.get_or_create(name='Administrador')
 			usuario = form_usuario.save(commit= False) 
-			sacerdote = form_sacerdote.save(commit=False)
-			usuario.username= sacerdote.crear_username(usuario.first_name, usuario.last_name)
+			perfil = form_perfil.save(commit=False)
+			usuario.username= perfil.crear_username(usuario.first_name, usuario.last_name)
 			usuario.set_password(usuario.username)
 			usuario.save()
 			usuario.groups.add(administrador)
-			sacerdote.user =usuario
-			sacerdote.save()
+			perfil.user =usuario
+			perfil.save()
 			LogEntry.objects.log_action(
             	user_id=request.user.id,
-            	content_type_id=ContentType.objects.get_for_model(sacerdote).pk,
-            	object_id=sacerdote.id,
-            	object_repr=unicode(sacerdote),
+            	content_type_id=ContentType.objects.get_for_model(perfil).pk,
+            	object_id=perfil.id,
+            	object_repr=unicode(perfil),
             	action_flag=ADDITION,
             	change_message="Creo un administrador")
 			messages.success(request, 'Creado exitosamente')
@@ -306,42 +306,42 @@ def administrador_create_view(request):
 
 		else:
 			messages.error(request, 'Los datos del formulario son incorrectos')
-			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
+			ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
 	else:
-		form_sacerdote = AdministradorForm()
+		form_perfil = AdministradorForm()
 		form_usuario = UsuarioAdministradorForm()
-		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
+		ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario}
 		return render(request, template_name, ctx)
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_administrador', login_url='/login/', 
 	raise_exception=permission_required)
 def administrador_update_view(request, pk):
-	sacerdote = get_object_or_404(PerfilUsuario, pk=pk)
+	perfil = get_object_or_404(PerfilUsuario, pk=pk)
 	template_name = 'usuario/administrador_form.html' 
 	success_url = '/administrador/'
 
 	if request.method == 'POST':
 		staff = request.POST.get('is_staff')
-		form_sacerdote = AdministradorForm(request.POST, instance=sacerdote)
-		form_usuario = UsuarioAdministradorForm(request.POST, instance=sacerdote.user)
+		form_perfil = AdministradorForm(request.POST, instance=perfil)
+		form_usuario = UsuarioAdministradorForm(request.POST, instance=perfil.user)
 
-		if request.user == sacerdote.user and not staff:
+		if request.user == perfil.user and not staff:
 			form_usuario.errors["is_staff"] = ErrorList([u'No está permitido que Ud se desactive del sistema.'])
 
-		if form_sacerdote.is_valid() and form_usuario.is_valid():
+		if form_perfil.is_valid() and form_usuario.is_valid():
 			usuario = form_usuario.save() 
-			sacerdote = form_sacerdote.save()
+			perfil = form_perfil.save()
 			if not usuario.is_staff:
 				#Esta linea de código permite desloguear a un usuario de manera remota
 				[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == usuario.id]
 			LogEntry.objects.log_action(
            		user_id=request.user.id,
-           		content_type_id=ContentType.objects.get_for_model(sacerdote).pk,
-           		object_id=sacerdote.id,
-           		object_repr=unicode(sacerdote),
+           		content_type_id=ContentType.objects.get_for_model(perfil).pk,
+           		object_id=perfil.id,
+           		object_repr=unicode(perfil),
            		action_flag=CHANGE,
            		change_message="Administrador actualizado")
 			messages.success(request, 'Actualizado exitosamente')
@@ -349,13 +349,13 @@ def administrador_update_view(request, pk):
 
 		else:
 			messages.error(request, 'Los datos del formulario son incorrectos')
-			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
+			ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario, 'object': perfil}
 			return render(request, template_name, ctx)
 
 	else:
-		form_sacerdote = AdministradorForm(instance=sacerdote)
-		form_usuario = UsuarioAdministradorForm(instance=sacerdote.user)
-		ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
+		form_perfil = AdministradorForm(instance=perfil)
+		form_usuario = UsuarioAdministradorForm(instance=perfil.user)
+		ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario, 'object': perfil}
 		return render(request, template_name, ctx)
 
 
@@ -1286,9 +1286,9 @@ def parroquia_create_view(request):
 	success_url = '/parroquia/'
 	if request.method== 'POST':
 		form_parroquia = ParroquiaForm(request.POST)
-		canton = Canton.objects.all()
-		parroquia_civil = ParroquiaCivil.objects.all()
-		form_direccion = DireccionForm(canton, parroquia_civil, request.POST)
+		form_direccion = DireccionForm(request.POST)
+		form_direccion.fields['canton'].queryset = Canton.objects.all()
+		form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
 		if form_parroquia.is_valid() and form_direccion.is_valid():
 			parroquia = form_parroquia.save(commit=False)
 			direccion = form_direccion.save()
@@ -1322,12 +1322,11 @@ def parroquia_update_view(request, pk):
 	parroquia = get_object_or_404(Parroquia, pk = pk)
 	direccion = parroquia.direccion
 	
-
 	if request.method == 'POST':
 		form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
-		canton = Canton.objects.all()
-		parroquia_civil = ParroquiaCivil.objects.all()
 		form_direccion = DireccionForm(canton, parroquia_civil, request.POST, instance=direccion)
+		form_direccion.fields['canton'].queryset = Canton.objects.all()
+		form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
 		if form_parroquia.is_valid() and form_direccion.is_valid():
 			form_parroquia.save()
 			form_direccion.save()

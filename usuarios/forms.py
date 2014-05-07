@@ -63,5 +63,5 @@ class GruposForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(GruposForm, self).__init__(*args, **kwargs)
-		self.fields['permissions'].queryset= Permission.objects.exclude(name__icontains='Can')
+		self.fields['permissions'].queryset= Permission.objects.all()
 

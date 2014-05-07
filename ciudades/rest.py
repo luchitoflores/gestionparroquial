@@ -28,8 +28,6 @@ class ParroquiaCreateReadUpdateDelete(ListCreateAPIView):
 	model =Parroquia
 
 
-
-
 def seleccionar_ciudades(request):
 	form_direccion = DireccionForm()
 	provincia = request.GET.get('provincia')

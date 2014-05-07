@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load tags_html sacramentos_tags %}
+{%load core_tags sacramentos_tags %}
 {%block title%}
 {%if object.id%}
 Editar Administrador
@@ -25,7 +25,7 @@ Agregar Administrador
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Personales</legend>
 				<div class="control-group">
-					{{form_usuario.first_name|label_with_classes:'control-label'}}
+					{{form_usuario.first_name|label_class:'control-label'}}
 					<div class="controls">
 						{{form_usuario.first_name}}
 					</div>
@@ -41,7 +41,7 @@ Agregar Administrador
 					</div>
 				</div>
 				<div class="control-group">
-					{{form_usuario.last_name|label_with_classes:'control-label'}}
+					{{form_usuario.last_name|label_class:'control-label'}}
 					<div class="controls">
 						{{form_usuario.last_name}}
 					</div>
@@ -60,56 +60,75 @@ Agregar Administrador
 					<div class="span4">
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.nacionalidad.label}}
+								{{form_perfil.nacionalidad.label}}
 							</div>
 							
 							<div class="controls">
-								{{form_sacerdote.nacionalidad}}
+								{{form_perfil.nacionalidad}}
 							</div>
 							<div class="controls">
 								<div class='help-text'>
-									{{form_sacerdote.nacionalidad.help_text}}
+									{{form_perfil.nacionalidad.help_text}}
 								</div>
 							</div>
 							<div class="controls">
 								<div class='errors'>
-									{{form_sacerdote.nacionalidad.errors}}
+									{{form_perfil.nacionalidad.errors}}
 								</div>
 							</div>
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.dni.label}} 
+								{{form_perfil.dni.label}} 
 							</div>
 							<div class="controls">
-								{{form_sacerdote.dni}} 
+								{{form_perfil.dni}} 
 							</div>
 							<div class="controls">
 								<div class='help-text'>
-									{{form_sacerdote.dni.help_text}}
+									{{form_perfil.dni.help_text}}
 								</div>
 							</div>
 							<div class="controls">
 								<div class='errors'>
-									{{form_sacerdote.dni.errors}}
+									{{form_perfil.dni.errors}}
 								</div>
 							</div>
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								{{form_sacerdote.sexo.label}} 
+								{{form_perfil.sexo.label}} 
 							</div>
 							<div class="controls">
-								{{form_sacerdote.sexo}} 
+								{{form_perfil.sexo}} 
 							</div>
 							<div class="controls">
 								<div class='help-text'>
-									{{form_sacerdote.sexo.help_text}}
+									{{form_perfil.sexo.help_text}}
 								</div>
 							</div>
 							<div class="controls">
 								<div class='errors'>
-									{{form_sacerdote.sexo.errors}}
+									{{form_perfil.sexo.errors}}
+								</div>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div class="control-label">
+								{{form_perfil.estado_civil.label}} 
+							</div>
+							<div class="controls">
+								{{form_perfil.estado_civil}} 
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_perfil.estado_civil.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_perfil.estado_civil.errors}}
 								</div>
 							</div>
 						</div>
@@ -124,39 +143,39 @@ Agregar Administrador
 				<div class="control-group">
 					<label for="id_fecha_nacimiento" class='control-label'>
 
-						{{form_sacerdote.fecha_nacimiento.label}} 
+						{{form_perfil.fecha_nacimiento.label}} 
 					</label>
 					<div class="controls">
 						<div class='error'>
-							{{form_sacerdote.fecha_nacimiento}}
+							{{form_perfil.fecha_nacimiento}}
 						</div>
 					</div>
 					<div class="controls">
 						<div class="help-text">
-							{{form_sacerdote.fecha_nacimiento.help_text}}
+							{{form_perfil.fecha_nacimiento.help_text}}
 						</div>
 					</div>
 					<div class="controls">
 						<div class="errors">
-							{{form_sacerdote.fecha_nacimiento.errors}}
+							{{form_perfil.fecha_nacimiento.errors}}
 						</div>
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="id_lugar_nacimiento" class='control-label'>
-						{{form_sacerdote.lugar_nacimiento.label}} 
+						{{form_perfil.lugar_nacimiento.label}} 
 					</label>
 					<div class="controls">
-						{{form_sacerdote.lugar_nacimiento}}
+						{{form_perfil.lugar_nacimiento}}
 					</div>
 					<div class="controls">
 						<div class="help-text">
-							{{form_sacerdote.lugar_nacimiento.help_text}}
+							{{form_perfil.lugar_nacimiento.help_text}}
 						</div>
 					</div>
 					<div class="controls">
 						<div class="errors">
-							{{form_sacerdote.lugar_nacimiento.errors}}
+							{{form_perfil.lugar_nacimiento.errors}}
 						</div>
 					</div>
 				</div>
@@ -184,19 +203,22 @@ Agregar Administrador
 
 				</div> 
 
+
 				<div class="control-group">
-					{{form_sacerdote.celular|label_with_classes:'control-label'}}
+				<label for="" class='control-label'>
+						{{form_perfil.celular}}
+					</label>
 					<div class='controls'>
-						{{form_sacerdote.celular}}
+						{{form_perfil.celular}}
 					</div>
 					<div class="controls">
 						<div class="help-text">
-							{{form_sacerdote.celular.help_text}}
+							{{form_perfil.celular.help_text}}
 						</div>
 					</div>
 					<div class="controls">
 						<div class="errors">
-							{{form_sacerdote.celular.errors}}
+							{{form_perfil.celular.errors}}
 						</div>
 					</div>
 				</div>
@@ -205,7 +227,7 @@ Agregar Administrador
 			<fieldset class="scheduler-border">
 				<legend class="scheduler-border">Grupos y Permisos</legend>
 				<div class="control-group">
-					{{form_usuario.is_staff|label_with_classes:'control-label'}}
+					{{form_usuario.is_staff|label_class:'control-label'}}
 					<div class='controls'>
 						{{form_usuario.is_staff}}
 					</div>
@@ -224,7 +246,7 @@ Agregar Administrador
 				{%if perms.auth.change_group or perms.auth.add_group%}
 				{%if object.id%}
 				<div class="control-group">
-					{{form_usuario.groups|label_with_classes:'control-label'}}
+					{{form_usuario.groups|label_class:'control-label'}}
 					<div class='controls'>
 						{{form_usuario.groups}}
 					</div>

@@ -20,24 +20,24 @@ from ciudades.models import Direccion
 from sacramentos.managers import PersonaManager,LibroManager, PeriodoAsignacionManager
 
 
-# def user_new_unicode(self):
-#     return self.username if self.get_full_name() == '' else self.get_full_name()
+def user_new_unicode(self):
+    return self.username if self.get_full_name() == '' else self.get_full_name()
 
-# def permissions_new_unicode(self):
-#     nombre_clase = six.text_type(self.content_type)
-#     nombre_permiso = six.text_type(self.name)
-#     if 'Can delete' in nombre_permiso:
-#         nombre_permiso = nombre_permiso.replace('Can delete', 'Puede eliminar')
-#     elif 'Can add' in nombre_permiso:
-#         nombre_permiso = nombre_permiso.replace('Can add', 'Puede crear')
-#     elif 'Can change' in nombre_permiso:
-#         nombre_permiso = nombre_permiso.replace('Can change', 'Puede modificar')
+def permissions_new_unicode(self):
+    nombre_clase = six.text_type(self.content_type)
+    nombre_permiso = six.text_type(self.name)
+    if 'Can delete' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can delete', 'Puede eliminar')
+    elif 'Can add' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can add', 'Puede crear')
+    elif 'Can change' in nombre_permiso:
+        nombre_permiso = nombre_permiso.replace('Can change', 'Puede modificar')
 
-#     return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
+    return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
 
-# # Replace the __unicode__ method in the User class with out new implementation
-# User.__unicode__ = user_new_unicode 
-# Permission.__unicode__ = permissions_new_unicode
+# Replace the __unicode__ method in the User class with out new implementation
+User.__unicode__ = user_new_unicode 
+Permission.__unicode__ = permissions_new_unicode
 
 
 class TimeStampedModel(models.Model):
@@ -311,7 +311,7 @@ class PerfilUsuario(TimeStampedModel):
 
     # se lo puede llamar con related_name usuario o con el método get_profile
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='usuario', null=True, blank=True)
-    nombres_completos = models.CharField(max_length=100, null=True, blank=True)
+    nombres_completos = models.CharField(max_length=100)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True, help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador', choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
     padre = models.ForeignKey('PerfilUsuario', related_name='papa', null=True, blank=True, limit_choices_to={'sexo':'m'}, help_text='Presione buscar, si no está en la lista, presione crear')
@@ -347,9 +347,6 @@ class PerfilUsuario(TimeStampedModel):
             ('delete_administrador', 'Puede eliminar administradores'),
         )
 
-    # def natural_key(self):
-    #   return self.user.get_full_name()
-
     def __unicode__(self):
         if self.user.first_name == None and self.user.last_name == None:
             return self.user.username 
@@ -369,8 +366,6 @@ class PerfilUsuario(TimeStampedModel):
         self.user.last_name = apellidos.strip()
         self.nombres_completos = u'%s %s' % (self.user.first_name, self.user.last_name)
         super(PerfilUsuario, self).save(*args, **kwargs)
-
-    
 
     def crear_username(self, nombres, apellidos):
         nombres = ''.join((c for c in unicodedata.normalize('NFD', unicode(nombres)) if unicodedata.category(c) != 'Mn'))
@@ -497,15 +492,15 @@ class Libro(TimeStampedModel):
     )
 
     nombre=models.CharField(u'Nombre *', max_length='50', help_text='Nombre del Libro', null=True, blank=True)
-    numero_libro = models.PositiveIntegerField(null=True, blank=True)
+    numero_libro = models.PositiveIntegerField()
     tipo_libro=models.CharField(u'Tipo de Libro *', max_length=200, choices=TIPO_LIBRO_CHOICES, 
                                 help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
     fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
     principal=models.BooleanField(u'Es principal', default=False)
     parroquia = models.ForeignKey('Parroquia', related_name='libros', help_text='Seleccione una parroquia')
-    primera_pagina = models.PositiveIntegerField(blank= True, null=True)
-    primera_acta = models.PositiveIntegerField(blank= True, null=True)
+    primera_pagina = models.PositiveIntegerField()
+    primera_acta = models.PositiveIntegerField()
 
     objects=LibroManager()
 
@@ -600,8 +595,7 @@ class Eucaristia(Sacramento):
 
 
 class Confirmacion(Sacramento):
-    confirmado=models.OneToOneField(PerfilUsuario, related_name='confirmacion',null=True,
-	blank=True,help_text='Seleccione un feligres')
+    confirmado=models.OneToOneField(PerfilUsuario, related_name='confirmacion', help_text='Seleccione un feligres')
 	
     def __unicode__(self):
 	   return '%s %s' %(self.confirmado.user.first_name,self.confirmado.user.last_name)
@@ -615,9 +609,9 @@ class Matrimonio(Sacramento):
         ('Mixto','Mixto'),
     )
 
-    novio=models.OneToOneField(PerfilUsuario, related_name='matrimonio_hombre',
+    novio=models.ForeignKey(PerfilUsuario, related_name='matrimonio_hombre',
 		help_text='Seleccione un novio')
-    novia=models.OneToOneField(PerfilUsuario, related_name='matrimonio_mujer',
+    novia=models.ForeignKey(PerfilUsuario, related_name='matrimonio_mujer',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(u'Testigo novio *',max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
@@ -687,7 +681,7 @@ class AsignacionParroquia(TimeStampedModel):
 
 
 class PeriodoAsignacionParroquia(TimeStampedModel):
-    inicio = models.DateField(null=True, blank=True, help_text='Ingrese la fecha de inicial de asignación Ej: dd/mm/aaaa')
+    inicio = models.DateField(help_text='Ingrese la fecha de inicial de asignación Ej: dd/mm/aaaa')
     fin = models.DateField(null=True, blank=True, help_text='Ingrese la fecha final de asignación  Ej: dd/mm/aaaa') 
     estado = models.BooleanField('Activo?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
     asignacion = models.ForeignKey('AsignacionParroquia', related_name='periodos')

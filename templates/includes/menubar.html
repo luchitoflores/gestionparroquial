@@ -145,12 +145,6 @@
 					</li>
 				</ul>
 				<ul class="nav pull-right">
-					<li  class='ocultar'><ul class='inline nav'>
-						<li><a class='small' id='pequenia' href="" style='font-size: 0.80em'>A</a></li>
-						<li><a class='small' id='mediana' href="" style='font-size: 1em'>A</a></li>
-						<li><a class='small' id='grande' href="" style='font-size: 1.20em'>A</a></li>
-					</ul></li>
-					<li class="divider-vertical"></li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							{%if user.get_full_name%}{{ user.get_full_name }}{%else%}{{ user.username }}{%endif%}<b class="caret"></b>
@@ -171,11 +165,6 @@
 				<li><a href="{%url 'buscar'%}">Buscar</a></li>
 			</ul>
 			<ul class="nav pull-right">
-				<li class='ocultar'><ul class='inline nav'>
-					<li><a class='small' id='pequenia' href="" style='font-size: 0.80em'>A</a></li>
-					<li><a class='small' id='mediana' href="" style='font-size: 1em'>A</a></li>
-					<li><a class='small' id='grande' href="" style='font-size: 1.20em'>A</a></li>
-				</ul></li>
 				<li><a href='/login/'>Iniciar Sesión</a></li>
 			</ul>
 			{%endif%}

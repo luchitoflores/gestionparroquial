@@ -155,6 +155,7 @@ class PersonaBaseForm(ModelForm):
 		self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
 		self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
 		self.fields['nacionalidad'].label = 'Nacionalidad *'
+		self.fields['dni'].label = "Cédula/Pasaporte *"
 		self.fields['dni'].widget = forms.TextInput(attrs={'required':''})
 		self.fields['sexo'].label = 'Sexo *'
 		self.fields['sexo'].widget =  forms.Select(attrs={'required':''}, choices=PerfilUsuario.SEXO_CHOICES)
@@ -267,7 +268,7 @@ class SacerdoteForm(PersonaBaseForm):
 		self.fields['estado_civil'].initial=  's'
 
 
-class AdministradorForm(SacerdoteForm):
+class AdministradorForm(PersonaBaseForm):
 	def __init__(self, *args, **kwargs):
 		super(AdministradorForm, self).__init__(*args, **kwargs)
 		# self.fields['dni'].widget = forms.TextInput(attrs={'required':''})

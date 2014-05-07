@@ -118,7 +118,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'sacramentos.middleware.ParroquiaSessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'sacramentos.middleware.AdminLocaleURLMiddleware',
+    # 'sacramentos.middleware.AdminLocaleURLMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_extensions',
     'mockups',
-    'south'
+    # 'south'
 
     )
 
