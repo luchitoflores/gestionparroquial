@@ -33,7 +33,7 @@ class ParroquiaForm(ModelForm):
 		}
 
 	def __init__(self, *args, **kwargs):
-		super(CantonForm, self).__init__(*args, **kwargs)
+		super(ParroquiaForm, self).__init__(*args, **kwargs)
 		self.fields['canton'].empty_label='-- Seleccione --'
 
 # Forms para dirección

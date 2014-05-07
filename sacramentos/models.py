@@ -683,7 +683,7 @@ class AsignacionParroquia(TimeStampedModel):
 class PeriodoAsignacionParroquia(TimeStampedModel):
     inicio = models.DateField(help_text='Ingrese la fecha de inicial de asignación Ej: dd/mm/aaaa')
     fin = models.DateField(null=True, blank=True, help_text='Ingrese la fecha final de asignación  Ej: dd/mm/aaaa') 
-    estado = models.BooleanField('Activo?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
+    estado = models.BooleanField('Es administrador?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
     asignacion = models.ForeignKey('AsignacionParroquia', related_name='periodos')
     objects = PeriodoAsignacionManager()
 

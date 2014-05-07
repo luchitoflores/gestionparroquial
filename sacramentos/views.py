@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 import json
 import csv
 import unicodedata
@@ -63,6 +62,7 @@ from sacramentos.forms import (
 from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
+from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 
 
 def configuracion_inicial_view(request):
@@ -102,7 +102,7 @@ def usuarioCreateView(request):
             	object_repr=unicode(perfil),
             	action_flag=ADDITION,
             	change_message="Creo un Usuario")
-			messages.success(request, 'Creado exitosamente')
+			messages.success(request, MENSAJE_EXITO_CREACION )
 			return HttpResponseRedirect(reverse_lazy('usuario_list'))
 			
 		else:
@@ -127,7 +127,7 @@ def usuarioCreateView(request):
 				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
 			
 			
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'form_usuario': form_usuario , 'form_perfil': form_perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 	else:
@@ -165,7 +165,7 @@ def edit_usuario_view(request,pk):
             	object_repr=unicode(perfil),
             	action_flag=CHANGE,
             	change_message="Usuario actualizado")
-			messages.success(request, 'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect('/usuario')
 		else:
 			id_padre = request.POST.get('padre')
@@ -188,7 +188,7 @@ def edit_usuario_view(request,pk):
 				form_perfil.fields['madre'].queryset = PerfilUsuario.objects.none()
 
 
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'form_usuario': form_usuario,'form_perfil':form_perfil, 'perfil':perfil}
 			return render(request, 'usuario/usuario_form.html', ctx)
 
@@ -301,11 +301,11 @@ def administrador_create_view(request):
             	object_repr=unicode(perfil),
             	action_flag=ADDITION,
             	change_message="Creo un administrador")
-			messages.success(request, 'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
@@ -344,11 +344,11 @@ def administrador_update_view(request, pk):
            		object_repr=unicode(perfil),
            		action_flag=CHANGE,
            		change_message="Administrador actualizado")
-			messages.success(request, 'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'form_perfil': form_perfil, 'form_usuario':form_usuario, 'object': perfil}
 			return render(request, template_name, ctx)
 
@@ -408,10 +408,10 @@ def secretaria_update_view(request, pk):
            		object_repr=unicode(secretaria),
            		action_flag=CHANGE,
            		change_message="Secretaria actualizado")
-			messages.success(request, 'Actualizado exitosamente')			
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)			
 			return HttpResponseRedirect(success_url)
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'form_usuario': usuario_form, 'form_perfil':perfil_form, 'object': secretaria}
 			return render(request,template_name, ctx)
 	else:
@@ -452,11 +452,11 @@ def sacerdote_create_view(request):
             	object_repr=unicode(sacerdote),
             	action_flag=ADDITION,
             	change_message="Creo un sacerdote")
-			messages.success(request, 'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos %s %s' % (form_sacerdote.errors, form_usuario.errors))
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario}
 			return render(request, template_name, ctx)
 
@@ -491,11 +491,11 @@ def sacerdote_update_view(request, pk):
             		object_repr=unicode(sacerdote),
             		action_flag=CHANGE,
             		change_message="Sacerdote actualizado")
-				messages.success(request, 'Actualizado exitosamente')
+				messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 				return HttpResponseRedirect(success_url)
 
 			else:
-				messages.error(request, 'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR)
 				ctx = {'form_sacerdote': form_sacerdote, 'form_usuario':form_usuario, 'object': sacerdote}
 				return render(request, template_name, ctx)
 
@@ -558,11 +558,11 @@ def libro_create_view(request):
         		object_repr=unicode(libro),
         		action_flag=ADDITION,
         		change_message="Creo un libro")
-			messages.success(request, 'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('libro_list'))
 		else:
 			ctx={'form_libro':form_libro}
-			messages.error(request,"Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR )
 			return render(request,'libro/libro_form.html',ctx)
 	else:
 		form_libro=LibroForm()
@@ -591,12 +591,12 @@ def libro_update_view(request,pk):
 				object_repr=unicode(libro.tipo_libro),
 				action_flag=CHANGE,
 				change_message="Libro actualizado")
-			messages.success(request, 'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('libro_list'))
 				
 		else:
 			ctx={'form_libro':form_libro,'object':libro}
-			messages.error(request,'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			return render(request,'libro/libro_form.html',ctx)
 	else:
 		form_libro=LibroForm(instance=libro)
@@ -672,7 +672,7 @@ def bautismo_create_view(request):
 					object_repr=unicode(bautismo),
 					action_flag=ADDITION,
 					change_message='Se creo bautismo')
-			messages.success(request,'Creado exitosamente')
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect('/bautismo')
 		
 		else:
@@ -681,7 +681,7 @@ def bautismo_create_view(request):
 			formBautismo = BautismoForm(request, request.POST)
 			formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautizado)
 			formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=celebrante)
-			messages.error(request,'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx={'formBautismo':formBautismo, 'tipo_sacramento':'bautismo'}
 			return render (request,'bautismo/bautismo_form.html',ctx)
 	else:		
@@ -721,12 +721,12 @@ def bautismo_update_view(request,pk):
 	           	object_repr=unicode(bautismo),
 	           	action_flag=CHANGE,
 	           	change_message='Bautismo actualizado')
-			messages.success(request,'Actualizado exitosamente')
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect('/bautismo')
 		else:
 			bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
 			bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
-			messages.error(request, "Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR)
 			ctx = {'formBautismo': bautismo_form,'notas':notas,'object':bautismo, 'tipo_sacramento':'bautismo'}
 			return render(request, 'bautismo/bautismo_form.html', ctx)
 	else:
@@ -805,7 +805,7 @@ def eucaristia_create_view(request):
 					object_repr=unicode(eucaristia),
 					action_flag=ADDITION,
 					change_message='Se creo eucaristia')
-			messages.success(request,'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
 		
 		else:
@@ -814,7 +814,7 @@ def eucaristia_create_view(request):
 			form_eucaristia = EucaristiaForm(request, request.POST)
 			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=id_feligres)
 			form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
-			messages.error(request,"Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR )
 			ctx={'form_eucaristia':form_eucaristia, 'tipo_sacramento':'eucaristia'}
 			return render(request,'eucaristia/eucaristia_form.html',ctx)
 	else:
@@ -846,7 +846,7 @@ def eucaristia_update_view(request,pk):
         		object_repr=unicode(eucaristia),
         		action_flag=CHANGE,
         		change_message='Primera Comunión actualizada')
-			messages.success(request,'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
 		else:
 			id_feligres = request.POST.get('feligres')
@@ -854,7 +854,7 @@ def eucaristia_update_view(request,pk):
 			form_eucaristia = EucaristiaForm(request, request.POST, instance=eucaristia)
 			form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.filter(id=id_feligres)
 			form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
-			messages.error(request,"Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR )
 
 	else:
 		form_eucaristia = EucaristiaForm(request, instance=eucaristia)
@@ -939,7 +939,7 @@ def confirmacion_create_view(request):
 				object_repr=unicode(confirmacion),
 				action_flag=ADDITION,
 				change_message='Se creo bautismo')
-			messages.success(request,'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect('/confirmacion')
 
 		else:
@@ -949,7 +949,7 @@ def confirmacion_create_view(request):
 			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=id_confirmado)
 			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			
-			messages.error(request,"Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR )
 			ctx={'form_confirmacion':form_confirmacion, 'tipo_sacramento':'confirmacion'}
 			return render(request,'confirmacion/confirmacion_form.html',ctx)
 			
@@ -985,7 +985,7 @@ def confirmacion_update_view(request,pk):
         		object_repr=unicode(confirmacion),
         		action_flag=CHANGE,
         		change_message='Confirmacion actualizado')
-			messages.success(request,'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('confirmacion_list'))
 		else:
 			id_confirmado = request.POST.get('confirmado')
@@ -993,7 +993,7 @@ def confirmacion_update_view(request,pk):
 			form_confirmacion = ConfirmacionForm(request, request.POST, instance=confirmacion)
 			form_confirmacion.fields['confirmado'].queryset = PerfilUsuario.objects.filter(id=id_confirmado)
 			form_confirmacion.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
-			messages.error(request,"Los datos del formulario son incorrectos")
+			messages.error(request, MENSAJE_ERROR )
 			ctx={'form_confirmacion':form_confirmacion,'object':confirmacion, 'tipo_sacramento':'confirmacion'}
 			return render(request,'confirmacion/confirmacion_form.html',ctx)
 	else:
@@ -1080,7 +1080,7 @@ def matrimonio_create_view(request):
 				object_repr=unicode(matrimonio),
 				action_flag=ADDITION,
 				change_message='Se creo matrimonio')
-			messages.success(request,'Creado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
 								
 		else:
@@ -1092,7 +1092,7 @@ def matrimonio_create_view(request):
 			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(id=id_novia)
 			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
 			
-			messages.error(request,'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			ctx={'form_matrimonio':form_matrimonio, 'tipo_sacramento':'matrimonio'}
 			return render(request,'matrimonio/matrimonio_form.html',ctx)
 		
@@ -1142,7 +1142,7 @@ def matrimonio_update_view(request,pk):
         		object_repr=unicode(matrimonio),
         		action_flag=CHANGE,
         		change_message='Matrimonio actualizado')
-			messages.success(request,'Actualizado exitosamente')
+			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
 		else:
 			id_novio = request.POST.get('novio')
@@ -1152,7 +1152,7 @@ def matrimonio_update_view(request,pk):
 			form_matrimonio.fields['novio'].queryset = PerfilUsuario.objects.filter(id=id_novio)
 			form_matrimonio.fields['novia'].queryset = PerfilUsuario.objects.filter(id=id_novia)
 			form_matrimonio.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=id_celebrante)
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form_matrimonio': form_matrimonio,'notas':notas,'object':matrimonio, 'tipo_sacramento':'matrimonio'}
 			return render(request,'matrimonio/matrimonio_form.html', ctx)
 	else:
@@ -1301,11 +1301,12 @@ def parroquia_create_view(request):
             	object_repr=unicode(parroquia),
             	action_flag=ADDITION,
             	change_message="Creo una parroquia")
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(success_url)
 		else:
 			ctx = {'form_parroquia': form_parroquia, 'form_direccion':form_direccion}
 			# messages.error(request, ctx)
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			return render(request, template_name, ctx)
 	else:
 		form_parroquia = ParroquiaForm()
@@ -1324,7 +1325,7 @@ def parroquia_update_view(request, pk):
 	
 	if request.method == 'POST':
 		form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
-		form_direccion = DireccionForm(canton, parroquia_civil, request.POST, instance=direccion)
+		form_direccion = DireccionForm(request.POST, instance=direccion)
 		form_direccion.fields['canton'].queryset = Canton.objects.all()
 		form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
 		if form_parroquia.is_valid() and form_direccion.is_valid():
@@ -1341,16 +1342,17 @@ def parroquia_update_view(request, pk):
 			# direccion = form_direccion.save()
 			# parroquia.direccion = direccion
 			# parroquia.save()
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(success_url)
 		else:
 			ctx = {'form_parroquia':form_parroquia, 'form_direccion':form_direccion}
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR)
 			return render(request, template_name, ctx)
 	else:
-		canton = Canton.objects.filter(provincia=parroquia.direccion.provincia)
-		parroquia_civil = ParroquiaCivil.objects.filter(canton=parroquia.direccion.canton)
 		form_parroquia = ParroquiaForm(instance=parroquia)
-		form_direccion = DireccionForm(instance=direccion, canton = canton, parroquia=parroquia_civil)
+		form_direccion = DireccionForm(instance=direccion)
+		form_direccion.fields['canton'].queryset = Canton.objects.filter(provincia=direccion.provincia)
+		form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.filter(canton=direccion.canton)
 		ctx = {'form_parroquia': form_parroquia, 'form_direccion':form_direccion,'object':parroquia}
 		return render(request, template_name, ctx)
 
@@ -1389,12 +1391,12 @@ def intencion_create_view(request):
 			intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
 			intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
 			if intencion_unica:
-				messages.error(request, u'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención, porque ya existe una intención única para el dia y hora indicado'])
 				ctx = {'form': form_intencion}
 				return render(request, template_name, ctx)
 			elif intenciones_colectivas and individual:
-				messages.error(request, u'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form_intencion.errors['individual'] = ErrorList([u'No se puede puede crear una intención única, porque ya existen intenciones colectivas para el dia y hora indicado'])
 				ctx = {'form': form_intencion, 'object': intencion}
 				return render(request, template_name, ctx)
@@ -1409,11 +1411,11 @@ def intencion_create_view(request):
             	object_repr=unicode(intencion),
             	action_flag=ADDITION,
             	change_message="Creo una intencion")
-				messages.success(request, 'Creado exitosamente')
+				messages.succes(request, MENSAJE_EXITO_CREACION)
 				return HttpResponseRedirect(success_url)
 		
 		else:
-			messages.error(request, u'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form_intencion}
 			return render(request, template_name, ctx)
 	else:
@@ -1422,7 +1424,9 @@ def intencion_create_view(request):
 		try:
 			form_intencion.fields['iglesia'].initial=Iglesia.objects.get(principal=True, parroquia=parroquia)
 		except ObjectDoesNotExist:
-			messages.info(request,'No tiene configurada una Iglesia principal')
+			mensaje = 'No tiene configurada una Iglesia principal. Configurela '
+			msg = mark_safe(u"%s %s" % (mensaje, '<a class="btn btn-primary" href="#id_modal_iglesia" data-toggle="modal">aqui</a>'))
+			messages.info(request, msg )			
 		ctx = {'form': form_intencion}
 		return render(request, template_name, ctx)
 
@@ -1449,12 +1453,12 @@ def intencion_edit_view(request, pk):
 			intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia, individual=True).exclude(pk=pk)
 			intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia).exclude(pk=pk)
 			if intencion_unica:
-				messages.error(request, u'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención, porque ya existe una intención única para el dia y hora indicados'])
 				ctx = {'form': form_intencion, 'object': intencion}
 				return render(request, template_name, ctx)
 			elif intenciones_colectivas and individual:
-				messages.error(request, u'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form_intencion.errors['individual'] = ErrorList([u'No se puede puede editar la intención como única, porque ya existen intenciones colectivas para el dia y hora indicados'])
 				ctx = {'form': form_intencion, 'object': intencion}
 				return render(request, template_name, ctx)
@@ -1468,10 +1472,10 @@ def intencion_edit_view(request, pk):
 	            object_repr=unicode(intencion),
 	            action_flag=ADDITION,
 	            change_message="Creo una intencion")
-				messages.success(request, 'Actualizado exitosamente')
+				messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
 				return HttpResponseRedirect(success_url)
 		else:
-			messages.error(request, u'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form_intencion}
 			return render(request, template_name, ctx)
 	else:
@@ -1557,7 +1561,7 @@ def asignar_parroquia_create(request):
 				return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form, 'form_periodo': form_periodo}
 			# return render(request, template_name, ctx)
 	else:
@@ -1618,10 +1622,11 @@ def asignar_parroco_a_parroquia(request, pk):
             	object_repr=unicode(parroquia),
             	action_flag=ADDITION,
             	change_message="Asigno parroquia y sacerdote")
+				messages.success(request, MENSAJE_EXITO_CREACION)
 				return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			form = AsignarParroquiaForm(parroquias, request.POST)
 			form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=persona)
 			ctx = {'form': form, 'form_periodo': form_periodo, 'object': parroquia}
@@ -1657,9 +1662,10 @@ def asignar_parroquia_update(request, pk):
             	object_repr=unicode(asignacion),
             	action_flag=CHANGE,
             	change_message="Actualizado asignacion parroquia y sacerdote")
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(success_url)
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form, 'form_periodo': form_periodo, 'object': asignacion.parroquia}
 			# return render(request, template_name, ctx)
 	else:
@@ -1683,13 +1689,13 @@ def nuevo_periodo_asignacion(request, pk):
 			periodo_activo= PeriodoAsignacionParroquia.objects.filter(asignacion=asignacion, estado=True)
 			periodo_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(asignacion__persona=asignacion.persona, estado=True).exclude(asignacion__parroquia=asignacion.parroquia)
 			if periodo_activo:
-				messages.error(request, 'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form.errors['estado'] = ErrorList(["El sacerdote ya está asignado a la parroquia"])
 				ctx = {'form': form, 'object':asignacion}
 				return render(request, template_name, ctx)
 				
 			elif periodo_activo_otra_parroquia:
-				messages.error(request, 'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form.errors['estado'] = ErrorList(["El sacerdote tiene un periodo activo en otra parroquia"])
 				ctx = {'form': form, 'object':asignacion}
 				return render(request, template_name, ctx)
@@ -1713,10 +1719,11 @@ def nuevo_periodo_asignacion(request, pk):
             	object_repr=unicode(periodo),
             	action_flag=ADDITION,
             	change_message="Creo periodo de asignacion")
+				messages.success(request, MENSAJE_EXITO_CREACION)
 				return HttpResponseRedirect(success_url)
 
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form, 'object':asignacion}
 			return render(request, template_name, ctx)
 
@@ -1743,13 +1750,13 @@ def parroco_periodos_asignacion_update(request, pk):
 			periodo_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(asignacion__persona=periodo.asignacion.persona, estado=True).exclude(asignacion__parroquia=periodo.asignacion.parroquia)
 			
 			if periodo_activo:
-				messages.error(request, 'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				form.errors['estado'] = ErrorList(["El sacerdote ya está asignado a la parroquia"])
 				ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 				return render(request, template_name, ctx)
 			
 			elif  periodo_activo_otra_parroquia:
-				messages.error(request, 'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR)
 				form.errors['estado'] = ErrorList(["El sacerdote tiene un periodo activo en otra parroquia"])
 				ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 				return render(request, template_name, ctx)
@@ -1770,10 +1777,11 @@ def parroco_periodos_asignacion_update(request, pk):
             	object_id=periodo.id,
             	object_repr=unicode(periodo),
             	action_flag=CHANGE,
-            	change_message="Periodo asignacion actualizado") 
+            	change_message="Periodo asignacion actualizado")
+				messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 				return HttpResponseRedirect(success_url)
 		else:
-			messages.error(request, 'Los datos del formulario son incorrectos')
+			messages.error(request, MENSAJE_ERROR )
 			ctx = {'form': form, 'periodo':periodo, 'object': periodo.asignacion}
 			return render(request, template_name, ctx)
 
@@ -1871,7 +1879,7 @@ def asignar_secretaria_create(request):
 				try:
 					periodo_asignacion =  PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado = True)
 					form.errors["persona"] = ErrorList([u'El usuario elegido ya cuenta con una asignación activa.'])
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR )
 					form.fields['persona'].queryset = PerfilUsuario.objects.filter(id = perfil.id)
 					ctx = {'form': form, 'form_periodo':form_periodo}
 					return render(request, template_name, ctx)
@@ -1881,7 +1889,7 @@ def asignar_secretaria_create(request):
 						mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
 						msg = mark_safe(u"%s %s" % (mensaje, '<a href="/asignar/secretaria/'+str(asignacion.id)+'/" >formulario</a>'))
 						form.errors["persona"] = ErrorList([msg])
-						messages.error(request, 'Los datos del formulario son incorrectos')
+						messages.error(request, MENSAJE_ERROR )
 						ctx = {'form': form, 'form_periodo':form_periodo}
 						return render(request, template_name, ctx)
 					except ObjectDoesNotExist: 
@@ -1913,13 +1921,13 @@ def asignar_secretaria_create(request):
 						return HttpResponseRedirect(success_url)
 			else:
 				if request.POST.get('persona'):
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR )
 					form_email = EmailForm()
 					personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
 					form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
 					ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': perfil}
 				else: 
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR )
 					persona = PerfilUsuario.objects.none()
 					form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
 					ctx = {'form': form, 'form_periodo': form_periodo}
@@ -1977,11 +1985,11 @@ def asignar_secretaria_update(request, pk):
 					return HttpResponseRedirect(success_url)
 				else:
 					if periodo.asignacion.persona:
-						messages.error(request, 'Los datos del formulario son incorrectos') 
+						messages.error(request, MENSAJE_ERROR ) 
 						persona = PerfilUsuario.objects.filter(user__id=periodo.asignacion.persona.user.id)
 						form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff, request.POST, instance=periodo.asignacion)
 					else:
-						messages.error(request, 'Los datos del formulario son incorrectos %s' % form) 
+						messages.error(request, MENSAJE_ERROR ) 
 						persona = PerfilUsuario.objects.none()
 						form = AsignarSecretariaForm(usuario, persona, request.POST,  instance=periodo.asignacion)
 
@@ -2077,7 +2085,7 @@ def parametriza_diocesis_create(request):
 				return HttpResponseRedirect('/home/')
 			else:
 				ctx = {'form_parametriza':form_parametriza, 'form_direccion':form_direccion}
-				messages.error(request,'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				return render(request, 'parametriza/parametriza_form.html', ctx)
 		else:
 			canton = Canton.objects.filter(provincia=of.direccion.provincia)
@@ -2110,7 +2118,7 @@ def parametriza_diocesis_create(request):
 				return HttpResponseRedirect('/home/')
 			else:
 				ctx={'form_parametriza':form_parametriza,'form_direccion':form_direccion}
-				messages.error(request,'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				return render(request,'parametriza/parametriza_form.html',ctx)
 		else:
 			form_parametriza = ParametrizaDiocesisForm()
@@ -2151,7 +2159,7 @@ def parametriza_parroquia_create(request):
 				return HttpResponseRedirect('/home/')
 			else:
 				ctx = {'form_parametriza':form_parametriza}
-				messages.error(request,'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR )
 				return render(request, 'parametriza/parroquia/parametriza_form.html', ctx)
 		else:
 			form_parametriza = ParametrizaParroquiaForm(usuario,instance=of)
@@ -2176,7 +2184,7 @@ def parametriza_parroquia_create(request):
 				return HttpResponseRedirect('/home/')
 			else:
 				ctx={'form_parametriza':form_parametriza}
-				messages.error(request,'Los datos del formulario son incorrectos')
+				messages.error(request, MENSAJE_ERROR)
 				return render(request,'parametriza/parroquia/parametriza_form.html',ctx)
 		else:
 			form_parametriza = ParametrizaParroquiaForm(usuario)
@@ -2415,7 +2423,7 @@ def reporte_anual_sacramentos(request):
 					
 					
 				else:
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR)
 					ctx = {'form': form}
 					# return render(request, template_name, ctx)
 			else:
@@ -2471,7 +2479,7 @@ def reporte_intenciones(request):
 				
 				
 				else:
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR)
 					ctx = {'form': form}
 					return render(request, template_name, ctx)
 			else:
@@ -2504,7 +2512,7 @@ def reporte_intenciones(request):
 				
 				
 				else:
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR)
 					ctx = {'form': form}
 					return render(request, template_name, ctx)
 			else:
@@ -2539,7 +2547,7 @@ def reporte_intenciones(request):
 					return generar_pdf(html)
 					
 				else:
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR)
 					ctx = {'form': form}
 					return render(request, template_name, ctx)
 			else:
@@ -2574,7 +2582,7 @@ def reporte_intenciones(request):
 				
 				
 				else:
-					messages.error(request, 'Los datos del formulario son incorrectos')
+					messages.error(request, MENSAJE_ERROR)
 					ctx = {'form': form}
 					return render(request, template_name, ctx)
 			else:
@@ -2861,6 +2869,14 @@ class IglesiaCreateView(CreateView):
 	    kwargs['request'] = self.request
 	    return kwargs
 
+	def form_valid(self, form):
+		messages.success(self.request, MENSAJE_EXITO_CREACION)
+		return super(IglesiaCreateView, self).form_valid(form)
+
+	def form_invalid(self, form):
+		messages.error(self.request, MENSAJE_ERROR)
+		return super(IglesiaCreateView, self).form_invalid(form)
+
 class IglesiaUpdateView(UpdateView):
 	model = Iglesia
 	template_name = 'iglesia/iglesia_form.html'
@@ -2871,6 +2887,14 @@ class IglesiaUpdateView(UpdateView):
 	    kwargs = super(IglesiaUpdateView, self).get_form_kwargs()
 	    kwargs['request'] = self.request
 	    return kwargs
+
+	def form_valid(self, form):
+		messages.success(self.request, MENSAJE_EXITO_ACTUALIZACION)
+		return super(IglesiaUpdateView, self).form_valid(form)
+
+	def form_invalid(self, form):
+		messages.error(self.request, MENSAJE_ERROR)
+		return super(IglesiaUpdateView, self).form_invalid(form)
 
 
 

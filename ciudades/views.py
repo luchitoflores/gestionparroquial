@@ -18,6 +18,7 @@ from django.core.urlresolvers import reverse_lazy
 from .forms	import ProvinciaForm,CantonForm,ParroquiaForm
 from .models import Provincia,Canton,Parroquia
 from core.views import BusquedaMixin
+from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 
 logger = logging.getLogger(__name__)
 
@@ -44,11 +45,11 @@ class ProvinciaCreate(CreateView):
 	form_class = ProvinciaForm
 	
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Datos incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(ProvinciaCreate, self).form_invalid(form)
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.SUCCESS, 'Guardado exitosamente')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_CREACION)
 		return super(ProvinciaCreate, self).form_valid(form)
 	
 	@method_decorator(login_required(login_url='/login/'))
@@ -68,11 +69,11 @@ class ProvinciaUpdate(UpdateView):
 	
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.SUCCESS, 'Actualizado Exitosamente')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_ACTUALIZACION)
 		return super(ProvinciaUpdate, self).form_valid(form)
 
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Uno o más datos son incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(ProvinciaUpdate, self).form_invalid(form)
 
 	@method_decorator(login_required(login_url='/login/'))
@@ -120,11 +121,11 @@ class CantonCreate(CreateView):
 	form_class = CantonForm
 	
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Datos incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(CantonCreate, self).form_invalid(form)
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.SUCCESS, 'Guardado exitosamente')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_CREACION)
 		return super(CantonCreate, self).form_valid(form)
 	
 	@method_decorator(login_required(login_url='/login/'))
@@ -143,11 +144,11 @@ class CantonUpdate(UpdateView):
 	
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.WARNING, 'Objeto Actualizado')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_ACTUALIZACION)
 		return super(CantonUpdate, self).form_valid(form)
 
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Datos incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(CantonUpdate, self).form_invalid(form)
 
 	@method_decorator(login_required(login_url='/login/'))
@@ -165,7 +166,7 @@ class CantonDelete(DeleteView):
 	success_url   =  reverse_lazy('canton_list')
 
 	def delete(self, request, *args, **kwargs):
-		messages.add_message(self.request, messages.ERROR, 'Eliminado Correctamente')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(CantonDelete, self).delete(request, *args, **kwargs)
 
 	@method_decorator(login_required(login_url='/login/'))
@@ -195,11 +196,11 @@ class ParroquiaCreate(CreateView):
 	form_class = ParroquiaForm
 	
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Datos incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(ParroquiaCreate, self).form_invalid(form)
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.SUCCESS, 'Guardado exitosamente')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_CREACION)
 		return super(ParroquiaCreate, self).form_valid(form)
 	
 	@method_decorator(login_required(login_url='/login/'))
@@ -217,11 +218,11 @@ class ParroquiaUpdate(UpdateView):
 	form_class = ParroquiaForm
 
 	def form_valid(self, form):
-		messages.add_message(self.request, messages.WARNING, 'Objeto Actualizado')
+		messages.add_message(self.request, messages.SUCCESS, MENSAJE_EXITO_ACTUALIZACION)
 		return super(ParroquiaUpdate, self).form_valid(form)
 
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Datos incorrectos')
+		messages.add_message(self.request, messages.ERROR, MENSAJE_ERROR)
 		return super(ParroquiaUpdate, self).form_invalid(form)
 
 	@method_decorator(login_required(login_url='/login/'))

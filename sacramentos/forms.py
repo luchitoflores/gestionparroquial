@@ -804,10 +804,11 @@ class AsignarParroquiaForm(ModelForm):
 			if esta_activo_otra_parroquia:
 				msg = u"El sacerdote ya tiene una asignación activa en otra parroquia"
 				self._errors["persona"] = self.error_class([msg])
-     
-		periodo_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__parroquia=parroquia, estado=True).exclude(asignacion__persona=persona)
+
+		periodo_activo_otra_parroquia= PeriodoAsignacionParroquia.objects.filter(asignacion__parroquia=parroquia, asignacion__persona__user__groups__name='Sacerdote', estado=True).exclude(asignacion__persona=persona)
+		print periodo_activo_otra_parroquia
 		if periodo_activo_otra_parroquia:
-			msg = u"La parroquia elegida ya tiene asignado un párroco con estado activo"
+			msg = u"Ya existe un sacerdote asignado a esta parroquia"
 			self._errors["parroquia"] = self.error_class([msg])
 		return cleaned_data
 
@@ -847,13 +848,18 @@ class AsignarSecretariaForm(ModelForm):
 
 
 class PeriodoAsignacionParroquiaForm(ModelForm):
+	class Meta:
+		model = PeriodoAsignacionParroquia
+		fields = ('inicio', 'fin', 'estado')
+		widgets = {
+		'inicio': forms.TextInput(attrs={'required':'', 'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
+		'fin': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
+		}
 	
 	def clean(self):
 		cleaned_data = super(PeriodoAsignacionParroquiaForm, self).clean()
 		inicio = self.cleaned_data.get('inicio')
 		fin = self.cleaned_data.get('fin')
-		# presente = self.cleaned_data.get('presente')
-		# print presente
 		estado = self.cleaned_data.get('estado')
 
 		if not self.instance.id and inicio < date.today():
@@ -867,13 +873,6 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
 
 		return cleaned_data	
 
-	class Meta:
-		model = PeriodoAsignacionParroquia
-		fields = ('inicio', 'fin', 'estado')
-		widgets = {
-		'inicio': forms.TextInput(attrs={'required':'', 'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
-		'fin': forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type':'date'}),
-		}
 
 class ParametrizaDiocesisForm(ModelForm):
 	class Meta:

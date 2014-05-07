@@ -21,6 +21,7 @@ from django.views.generic import ListView
 from .forms import SendEmailForm, GruposForm
 from sacramentos.models import PeriodoAsignacionParroquia
 from core.views import BusquedaMixin
+from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 
 #Login con AthenticateForm	
 def login_view(request):
@@ -77,7 +78,7 @@ def change_password_view(request):
 			messages.add_message(request, messages.INFO, 'El cambio de clave se realizó con éxito')
 			return HttpResponseRedirect('/')
 		else:
-			messages.add_message(request, messages.ERROR, 'Los datos ingresados no son válidos')
+			messages.add_message(request, messages.ERROR, MENSAJE_ERROR)
 	else:
 		form = SetPasswordForm(user)
 
@@ -97,7 +98,7 @@ def change_password_view(request):
 			messages.add_message(request, messages.INFO, 'El cambio de clave se realizó con éxito')
 			return HttpResponseRedirect('/')
 		else:
-			messages.add_message(request, messages.ERROR, 'Revise los errores')
+			messages.add_message(request, messages.ERROR, MENSAJE_ERROR)
 	else:
 		form = PasswordChangeForm(user)
 

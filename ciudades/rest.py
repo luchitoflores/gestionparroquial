@@ -37,13 +37,11 @@ def seleccionar_ciudades(request):
 		if request.method == 'GET':
 			if request.GET.get('provincia'):
 				cantones = Canton.objects.filter(provincia__nombre=provincia)
-				# form_direccion.fields['canton'] = forms.ModelChoiceField(queryset=Canton.objects.filter(provincia__nombre=provincia), empty_label='--- Seleccione ---')
 				lista.append({'option': u'<option value="">--Seleccione--</option>'})
 				for canton in cantones:
 					lista.append({'option':u'<option value="%s">%s</option>'%(canton.id, canton.nombre)})
 				ctx = {'cantones':lista}
 				return HttpResponse(json.dumps(ctx), content_type='application/json')
-
 
 			if request.GET.get('canton'):
 				parroquias = Parroquia.objects.filter(canton__nombre=canton)
