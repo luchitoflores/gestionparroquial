@@ -15,7 +15,7 @@ Agregar Iglesia
 <span class="divider">»</span>
 <li><a href="{% url 'iglesia_list' %}">Iglesias</a></li>
 <span class="divider">»</span>
-{%if object.id%}<li clas='active'>{{object}}</li>{%else%}<li clas='active'>Nueva</li>{%endif%}
+{%if object.id%}<li class='active'>{{object}}</li>{%else%}<li class='active'>Nueva</li>{%endif%}
 {% endblock %}
 
 {%block content%}

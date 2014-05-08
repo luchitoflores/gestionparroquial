@@ -25,7 +25,7 @@ Agregar Feligrés
 <span class="divider">»</span>
 <li><a href="{% url 'usuario_list' %}">Feligreses</a></li>
 <span class="divider">»</span>
-{%if perfil.id%}<li clas='active'>{{perfil}}</li>{%else%}<li clas='active'>Nuevo</li>{%endif%}
+{%if perfil.id%}<li class='active'>{{perfil}}</li>{%else%}<li class='active'>Nuevo</li>{%endif%}
 {% endblock %}
 
 {%block content%}

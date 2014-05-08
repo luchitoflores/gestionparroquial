@@ -13,9 +13,9 @@ Agregar Intenciones de Misa
 {% block breadcrumbs %}
 {{ block.super }}
 <span class="divider">»</span>
-<li><a href="{% url 'intencion_list' %}">Intenciones</a></li>
+<li><a href="{% url 'intencion_list' %}">Intenciones de Misa</a></li>
 <span class="divider">»</span>
-{%if object.id%}<li clas='active'>{{object}}</li>{%else%}<li clas='active'>Nuevo</li>{%endif%}
+{%if object.id%}<li class='active'>{{object}}</li>{%else%}<li class='active'>Nueva</li>{%endif%}
 {% endblock %}
 
 
