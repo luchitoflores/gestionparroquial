@@ -4,9 +4,13 @@
 Lista de Logs
 {%endblock%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Logs</li>
+{% endblock %}
+
 {%block content%}
-
-
 {% include 'includes/busqueda_form.html' %}
 <a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a CSV</a>
 

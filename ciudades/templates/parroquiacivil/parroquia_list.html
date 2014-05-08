@@ -4,9 +4,14 @@
 {%block content_title%}
 Lista de Parroquias Civiles
 {%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Parroquias Civiles</li>
+{% endblock %}
+
 {%block content%}
-
-
 {%include 'includes/busqueda_form.html'%}
 <a href="{% url 'parroquiacivil_create' %}" class='btn btn-primary'>Nueva Parroquia Civil</a>
 

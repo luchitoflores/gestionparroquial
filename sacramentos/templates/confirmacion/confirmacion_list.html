@@ -7,8 +7,13 @@ Lista de Confirmados
 
 {%block extrascript%}
 <script src='/static/js/tablas.js'></script>
-
 {%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Confirmaciones</li>
+{% endblock %}
 
 {%block content%}
 

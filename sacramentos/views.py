@@ -408,7 +408,7 @@ def secretaria_update_view(request, pk):
            		object_repr=unicode(secretaria),
            		action_flag=CHANGE,
            		change_message="Secretaria actualizado")
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)			
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)			
 			return HttpResponseRedirect(success_url)
 		else:
 			messages.error(request, MENSAJE_ERROR)
@@ -1918,6 +1918,7 @@ def asignar_secretaria_create(request):
 							user.save()
 							secretaria, created = Group.objects.get_or_create(name='Secretaria')
 							user.groups.add(secretaria)
+						messages.success(request, MENSAJE_EXITO_CREACION)
 						return HttpResponseRedirect(success_url)
 			else:
 				if request.POST.get('persona'):
@@ -1982,6 +1983,7 @@ def asignar_secretaria_update(request, pk):
 		            	object_repr=unicode(periodo.asignacion),
 		            	action_flag=ADDITION,
 		            	change_message="Asignacion parroquia y secretaria actualizado")
+					messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 					return HttpResponseRedirect(success_url)
 				else:
 					if periodo.asignacion.persona:
@@ -2135,7 +2137,7 @@ def parametriza_parroquia_create(request):
 	usuario=request.user
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=usuario,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 
@@ -2247,13 +2249,13 @@ def matrimonio_certificado(request, pk):
 	matrimonio=get_object_or_404(Matrimonio, pk=pk)
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		parroquia=asignacion.parroquia,periodos__estado=True)
 	notas=NotaMarginal.objects.filter(matrimonio=matrimonio)
 	html = render_to_string('matrimonio/matrimonio_certificado.html', {'pagesize':'A4', 
 		'matrimonio':matrimonio,'cura':cura,'notas':notas,'asignacion':asignacion,'p':p},
@@ -2267,12 +2269,12 @@ def bautismo_certificado(request, pk):
 	bautismo=get_object_or_404(Bautismo, pk=pk)
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-			parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+			parroquia=asignacion.parroquia,periodos__estado=True)
 	notas=NotaMarginal.objects.filter(bautismo=bautismo)
 	html = render_to_string('bautismo/bautismo_certificado.html', {'pagesize':'A4', 'bautismo':bautismo,
 		'cura':cura,'notas':notas,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
@@ -2286,12 +2288,12 @@ def bautismo_acta(request, pk):
 	bautismo=get_object_or_404(Bautismo, pk=pk)
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		parroquia=asignacion.parroquia,periodos__estado=True)
 	notas=NotaMarginal.objects.filter(bautismo=bautismo)
 	html = render_to_string('bautismo/bautismo_acta.html', {'pagesize':'A4', 'bautismo':bautismo,
 		'cura':cura,'notas':notas,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
@@ -2305,13 +2307,13 @@ def confirmacion_reporte(request, pk):
 	confirmacion=get_object_or_404(Confirmacion, pk=pk)
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 		
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		parroquia=asignacion.parroquia,periodos__estado=True)
 	html = render_to_string('confirmacion/confirmacion_certificado.html', 
 		{'pagesize':'A4', 'confirmacion':confirmacion,'cura':cura,'asignacion':asignacion,'p':p},
 		context_instance=RequestContext(request))
@@ -2324,12 +2326,12 @@ def eucaristia_reporte(request, pk):
 	eucaristia=get_object_or_404(Eucaristia, pk=pk)
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		parroquia=asignacion.parroquia,periodos__estado=True)
 	# notas=NotaMarginal.objects.filter()
 	html = render_to_string('eucaristia/eucaristia_certificado.html', {'pagesize':'A4', 'eucaristia':eucaristia,
 		'cura':cura,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
@@ -2343,12 +2345,12 @@ def usuario_reporte_honorabilidad(request,pk):
 	# parroquia=AsignacionParroquia.objects.get(persona__user=request.user).parroquia
 	try:
 		asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-			periodoasignacionparroquia__estado=True)
+			periodos__estado=True)
 		p=ParametrizaDiocesis.objects.all()
 	except ObjectDoesNotExist:
 		raise PermissionDenied
 	cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-		parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+		parroquia=asignacion.parroquia,periodos__estado=True)
 	html = render_to_string('usuario/certificado_honorabilidad.html', {'pagesize':'A4', 'perfil':perfil,
 		'cura':cura,'asignacion':asignacion,'p':p},context_instance=RequestContext(request))
 	return generar_pdf(html)
@@ -2375,7 +2377,7 @@ def reporte_anual_sacramentos(request):
 			ninios=0
 			try:
 				asignacion= AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
@@ -2399,7 +2401,7 @@ def reporte_anual_sacramentos(request):
 					print('Niños mayores de 7: %s' % ninios)
 
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			# bautismos=Bautismo.objects.filter(fecha_sacramento__year=anio_actual).count()
 			eucaristias=Eucaristia.objects.filter(fecha_sacramento__year=anio_actual,
 				parroquia=asignacion.parroquia).count()
@@ -2447,6 +2449,9 @@ def reporte_anual_sacramentos(request):
 @permission_required('sacramentos.change_intenciones', login_url='/login/', 
 	raise_exception=permission_required)
 def reporte_intenciones(request):
+	parroquia = request.session.get('parroquia')
+	if not parroquia:
+		raise PermissionDenied
 	tipo=request.GET.get('tipo')
 	fecha=request.GET.get('fecha')
 	# mes=request.GET.get('fecha')
@@ -2454,19 +2459,11 @@ def reporte_intenciones(request):
 	template_name = "reportes/reporte_intenciones_form.html"
 	if tipo=='d':
 		if fecha and not hora:
-			try:
-				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
-				p=ParametrizaDiocesis.objects.all()
-			except ObjectDoesNotExist:
-				raise PermissionDenied
-			
-			intenciones=Intenciones.objects.filter(fecha=fecha,
-				parroquia=asignacion.parroquia).order_by('hora')
-			suma=Intenciones.objects.filter(fecha=fecha,
-				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
+			p=ParametrizaDiocesis.objects.all()
+			intenciones=Intenciones.objects.filter(fecha=fecha, parroquia=parroquia).order_by('hora')
+			suma=Intenciones.objects.filter(fecha=fecha, parroquia=parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=parroquia,periodos__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if (intenciones):
 				
@@ -2483,14 +2480,14 @@ def reporte_intenciones(request):
 					ctx = {'form': form}
 					return render(request, template_name, ctx)
 			else:
-				messages.error(request,'No hay intenciones en ha fecha ingresada')
+				messages.error(request,'No hay intenciones en la fecha ingresada')
 				ctx={'form':form}
 				return render(request, template_name, ctx)
 
 		if fecha and hora:
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
@@ -2499,7 +2496,7 @@ def reporte_intenciones(request):
 			suma=Intenciones.objects.filter(fecha=fecha,hora=hora,
 				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if(intenciones):
 
@@ -2527,7 +2524,7 @@ def reporte_intenciones(request):
 			anio=fecha[:4]
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
@@ -2536,7 +2533,7 @@ def reporte_intenciones(request):
 			suma=Intenciones.objects.filter(fecha__year=anio,fecha__month=mes,
 				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if(intenciones):
 				if form.is_valid():
@@ -2561,7 +2558,7 @@ def reporte_intenciones(request):
 			anio=fecha[:4]
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
@@ -2570,7 +2567,7 @@ def reporte_intenciones(request):
 			suma=Intenciones.objects.filter(fecha__year=anio,
 				parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			form = ReporteIntencionesForm(request.GET)
 			if(intenciones):
 				if form.is_valid():
@@ -2619,13 +2616,13 @@ def reporte_permisos(request):
 			print(feligres)
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
 			
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			try:
 				if Bautismo.objects.get(bautizado=feligres):
 					messages.error(request,'El feligres tiene registrado un Bautismo')
@@ -2645,13 +2642,13 @@ def reporte_permisos(request):
 			feligres=PerfilUsuario.objects.get(id=feligres)
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
 			
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			
 			try:
 				if Eucaristia.objects.get(feligres=feligres):
@@ -2673,12 +2670,12 @@ def reporte_permisos(request):
 			feligres=PerfilUsuario.objects.get(id=feligres)
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			try:
 				if Confirmacion.objects.get(confirmado=feligres):
 					messages.error(request,'El feligres tiene registrado una Confirmacion')
@@ -2699,12 +2696,12 @@ def reporte_permisos(request):
 			feligres=PerfilUsuario.objects.get(id=feligres)
 			try:
 				asignacion=AsignacionParroquia.objects.get(persona__user=request.user,
-					periodoasignacionparroquia__estado=True)
+					periodos__estado=True)
 				p=ParametrizaDiocesis.objects.all()
 			except ObjectDoesNotExist:
 				raise PermissionDenied
 			cura=AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-				parroquia=asignacion.parroquia,periodoasignacionparroquia__estado=True)
+				parroquia=asignacion.parroquia,periodos__estado=True)
 			
 			if feligres.sexo=='m':
 				if Matrimonio.objects.filter(novio=feligres,vigente=True):

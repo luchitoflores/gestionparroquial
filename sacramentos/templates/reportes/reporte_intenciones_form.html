@@ -6,6 +6,13 @@ Reporte
 {%block content_title%}
 Reporte Intenciones de Misa
 {%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Reporte Intenciones</li>
+{% endblock %}
+
 {%block content%}
 <form id='id_form_intenciones_hora' action="." class='form-horizontal' target="_blank">
 	<div class='row'>

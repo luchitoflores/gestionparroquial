@@ -4,8 +4,13 @@
 Lista de Parroquias Eclesiásticas
 {%endblock%}
 
-{%block content%}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Parroquias Eclesiásticas</li>
+{% endblock %}
 
+{%block content%}
 {% include 'includes/busqueda_form.html' %} 
 {%if perms.sacramentos.add_parroquia %}
 <a href="{%url 'parroquia_create'%}" class='btn btn-primary'>Nueva Parroquia</a>

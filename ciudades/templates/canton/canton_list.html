@@ -3,9 +3,14 @@
 {%block content_title%}
 Lista de Cantones
 {%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Cantones</li>
+{% endblock %}
+
 {%block content%}
-
-
 {% include 'includes/busqueda_form.html' %} 
 <a href="{% url 'canton_create' %}" class='btn btn-primary'>Nuevo Cantón</a>
 

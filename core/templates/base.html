@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 	<title>{% block title %}{% endblock %}</title>
 	<meta charset="UTF-8">
@@ -28,15 +27,12 @@
 		<nav>
 			{%include 'includes/menubar.html'%}
 		</nav>
-		
-		{% block breadcrumbs %}
-		<div class="breadcrumbs">
-			<a href="{% url 'admin:index' %}">'Home'</a>
-			{% if title %} &rsaquo; {{ title }}{% endif %}
-		</div>
-		{% endblock %}
-
 		<div id='id_title' class="container">
+			<ul class="breadcrumb">
+				{% block breadcrumbs %}
+				<li><a href="{% url 'home' %}">Inicio</a></li>
+				{% endblock %}
+			</ul> 
 			<div class="row-fluid">
 				<div class="span10 offset1">
 					<h1>{% block content_title %}{% endblock %}</h1>

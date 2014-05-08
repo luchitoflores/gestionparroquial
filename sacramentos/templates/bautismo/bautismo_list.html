@@ -5,6 +5,11 @@
 Lista de Bautizados
 {%endblock%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Bautismos</li>
+{% endblock %}
 
 {%block content%}
 {%include 'includes/busqueda_persona_form.html'%}

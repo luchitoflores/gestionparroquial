@@ -5,8 +5,13 @@
 Lista de Grupos
 {%endblock%}
 
-{%block content%}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Grupos</li>
+{% endblock %}
 
+{%block content%}
 {% include 'includes/busqueda_form.html' %}
 {%if perms.auth.add_group %}
 <a href="{%url 'group_create'%}" class='btn btn-primary'>Nuevo Grupo</a>

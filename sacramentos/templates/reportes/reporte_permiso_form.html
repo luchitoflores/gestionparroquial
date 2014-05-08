@@ -7,6 +7,12 @@ Reporte de Permisos Sacramentales
 Reporte de Permisos Sacramentales
 {%endblock%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Reporte Permisos</li>
+{% endblock %}
+
 {%block content%}
 <form action="." class='form-horizontal' method='POST' target="_blank">
 	{%csrf_token%}
@@ -72,5 +78,5 @@ Reporte de Permisos Sacramentales
 
 	</div>
 </form>
-{%include 'usuario/buscar_feligreses.html'%}
+{%include 'includes/buscar_feligreses_ajax.html'%}
 {%endblock%}

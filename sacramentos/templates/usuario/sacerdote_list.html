@@ -3,8 +3,14 @@
 {%block content_title%}
 Lista de Sacerdotes
 {%endblock%}
-{% block content%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Sacerdotes</li>
+{% endblock %}
+
+{% block content%}
 {% include 'includes/busqueda_persona_form.html' %}
 {%if perms.sacramentos.add_sacerdote%}
 <a href="{%url 'sacerdote_create'%}" class='btn btn-primary'>Nuevo Sacerdote</a>

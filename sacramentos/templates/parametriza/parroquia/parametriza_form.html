@@ -10,8 +10,13 @@ Agregar Parámetros
 {%endif%}
 {%endblock%}
 
-{%block content%}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Parroquia</li>
+{% endblock %}
 
+{%block content%}
 <form action="." method='POST' class="form-horizontal">
 	{%csrf_token%}
 	<div class='row'>
@@ -22,7 +27,7 @@ Agregar Parámetros
 					<div class="span4">
 						<div class="control-group">
 							<div class='control-label'>
-								{{form_parametriza.numero_acta.label}} *
+								{{form_parametriza.numero_acta.label}} 
 							</div>
 							<div class="controls">
 								{{form_parametriza.numero_acta}}
@@ -36,7 +41,7 @@ Agregar Parámetros
 						</div>
 						<div class="control-group">
 							<div class='control-label'>
-								{{form_parametriza.pagina.label}} *
+								{{form_parametriza.pagina.label}} 
 							</div>
 							<div class="controls">
 								{{form_parametriza.pagina}}
@@ -53,7 +58,7 @@ Agregar Parámetros
 
 						<div class='control-group'>
 							<div class='control-label'>
-								{{form_parametriza.parroquia.label}} * 
+								{{form_parametriza.parroquia.label}} 
 							</div>
 
 							<div class='controls'>

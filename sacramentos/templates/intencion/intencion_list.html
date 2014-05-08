@@ -4,8 +4,14 @@
 Lista de Intenciones de Misa
 {%endblock%}
 
-{%block content%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Intenciones de Misa</li>
+{% endblock %}
+
+{%block content%}
 {% include 'includes/busqueda_form.html' %} 
 {%if perms.sacramentos.add_intenciones %}
 <a href="{%url 'intencion_create'%}" class='btn btn-primary'>Nueva Intención</a>

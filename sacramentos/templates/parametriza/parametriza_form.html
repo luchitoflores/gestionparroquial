@@ -10,8 +10,13 @@ Agregar Parámetro
 {%endif%}
 {%endblock%}
 
-{%block content%}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Diócesis</li>
+{% endblock %}
 
+{%block content%}
 <form action="." method='POST' class="form-horizontal">
 	{%csrf_token%}
 	<div class='row'>

@@ -6,13 +6,15 @@ Lista de Libros
 
 {%block extrascript%}
 <script src='/static/js/tablas.js'></script>
-
 {%endblock%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Libros</li>
+{% endblock %}
+
 {%block content%}
-
-
-
 {% include 'includes/busqueda_form.html' %} 
 
 {%if perms.sacramentos.add_libro %}

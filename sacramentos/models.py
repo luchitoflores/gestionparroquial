@@ -420,8 +420,6 @@ class PerfilUsuario(TimeStampedModel):
         except ObjectDoesNotExist:
             return False
         
-
-
     def tiene_primera_comunion(self):
         try:
             self.primera_comunion
@@ -429,7 +427,6 @@ class PerfilUsuario(TimeStampedModel):
         except ObjectDoesNotExist:
             return False
         
-
     def es_confirmado(self):
         try:
             self.confirmacion
@@ -438,22 +435,11 @@ class PerfilUsuario(TimeStampedModel):
         else:
             return True
 
-    # def es_novio(self):
-    #     try:
-    #         self.novio:
-    #     except ObjectDoesNotExist:
-    #         return False
-    #     else:
-    #         return True
-
-    # def es_novia(self):
-    #     try:
-    #         self.novia:
-    #     except ObjectDoesNotExist:
-    #         return False
-    #     else:
-    #         return True
-
+    def tiene_matrimonios(self):
+        if self.matrimonios_hombre.all() or self.matrimonios_mujer.all():
+            return True
+        else:
+            return False
 
 class Parroquia(TimeStampedModel):
     nombre=models.CharField('Nombre de Parroquia *',max_length=50, help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
@@ -609,9 +595,9 @@ class Matrimonio(Sacramento):
         ('Mixto','Mixto'),
     )
 
-    novio=models.ForeignKey(PerfilUsuario, related_name='matrimonio_hombre',
+    novio=models.ForeignKey(PerfilUsuario, related_name='matrimonios_hombre',
 		help_text='Seleccione un novio')
-    novia=models.ForeignKey(PerfilUsuario, related_name='matrimonio_mujer',
+    novia=models.ForeignKey(PerfilUsuario, related_name='matrimonios_mujer',
 		help_text='Seleccione una novia')
     testigo_novio = models.CharField(u'Testigo novio *',max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
@@ -652,7 +638,7 @@ class Intenciones(TimeStampedModel):
         ordering = ['fecha','hora']
 
     def __unicode__(self):
-        return self.intencion
+        return self.oferente
 
     def get_absolute_url(self):
         return u'/intencion/%i' % self.id

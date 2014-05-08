@@ -7,6 +7,12 @@ Reporte
 Reporte Anual de Sacramentos
 {%endblock%}
 
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Reporte Anual</li>
+{% endblock %}
+
 {%block content%}
 <form id ='id_form_anio' action="." class='form-horizontal' target="_blank">
 	

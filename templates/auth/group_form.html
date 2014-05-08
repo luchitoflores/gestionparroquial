@@ -35,8 +35,16 @@ Agregar Grupo
 </script>
 {%endblock%}
 
-{%block content%}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li><a href="{% url 'group_list' %}">Grupos</a></li>
+<span class="divider">»</span>
+{%if object.id%}<li clas='active'>{{object}}</li>{%else%}<li clas='active'>Nuevo</li>{%endif%}
+{% endblock %}
 
+
+{%block content%}
 <form action="." method="POST" class="form-horizontal">
 	{%csrf_token%}
 

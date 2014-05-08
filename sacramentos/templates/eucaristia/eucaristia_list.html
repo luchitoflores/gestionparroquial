@@ -6,10 +6,13 @@ Lista de Primera Comunión
 
 {%block extrascript%}
 <script src='/static/js/tablas.js'></script>
-
 {%endblock%}
 
-
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Primeras Comuniones</li>
+{% endblock %}
 
 
 {%block content%}

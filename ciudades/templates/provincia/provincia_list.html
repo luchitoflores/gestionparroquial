@@ -3,9 +3,14 @@
 {%block content_title%}
 Lista de Provincias
 {%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Provincias</li>
+{% endblock %}
+
 {%block content%}
-
-
 {% include 'includes/busqueda_form.html' %} 
 <a href="{% url 'provincia_create' %}" class='btn btn-primary'>Nueva Provincia</a>
 
