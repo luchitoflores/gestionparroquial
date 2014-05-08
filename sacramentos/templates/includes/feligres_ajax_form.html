@@ -1,6 +1,6 @@
 {% load core_tags %}
 <div id="id_modal_feligres" class="modal hide fade">
-	<form id='id_crear_{% if tipo_sacramento == "bautismo"%}bautizado{% elif tipo_sacramento == "eucaristia"%}feligres{% elif tipo_sacramento == "confirmacion" %}confirmado{% endif %}' class='form-horizontal' action="." method="POST">
+	<form id='id_crear_{% if tipo_sacramento == "bautismo"%}bautizado{% elif tipo_sacramento == "eucaristia"%}feligres{% elif tipo_sacramento == "confirmacion" %}confirmado{% else %}feligres{% endif %}' class='form-horizontal' action="." method="POST">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 			<h3>Crear Feligrés</h3>

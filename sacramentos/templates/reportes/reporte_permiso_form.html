@@ -1,5 +1,6 @@
-<!doctype html>
 {%extends 'base.html'%}
+{% load sacramentos_tags %}
+
 {%block title%}
 Reporte de Permisos Sacramentales
 {%endblock%}
@@ -49,7 +50,7 @@ Reporte de Permisos Sacramentales
 						<div class='controls'>
 							{{form.feligres}}
 							<a href="#id_buscar_feligreses" class='btn btn-primary' data-toggle='modal'><i class='icon-search'></i></a>
-							<a href="{%url 'usuario_create'%}" class='btn btn-primary'>
+							<a href="#id_modal_feligres" class='btn btn-primary' data-toggle='modal'>
 							<i class='icon-plus'></i> </a>
 
 						</div>
@@ -79,4 +80,6 @@ Reporte de Permisos Sacramentales
 	</div>
 </form>
 {%include 'includes/buscar_feligreses_ajax.html'%}
+{% feligres %}
+
 {%endblock%}
