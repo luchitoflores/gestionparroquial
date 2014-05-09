@@ -634,7 +634,7 @@ class Matrimonio(Sacramento):
         ordering = ['novio__user__last_name', 'novio__user__first_name', 'novia__user__last_name', 'novia__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
 
     def __unicode__(self):
-        return u'%s %s' %(self.novio.user.last_name, self.novia.user.last_name )
+        return u'%s - %s' %(self.novio.user.last_name, self.novia.user.last_name )
 
 class NotaMarginal(TimeStampedModel):
     fecha = models.DateField(help_text='Ingrese una fecha Ej: 16/09/2013')

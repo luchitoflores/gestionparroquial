@@ -1081,7 +1081,7 @@ def matrimonio_create_view(request):
 				object_repr=unicode(matrimonio),
 				action_flag=ADDITION,
 				change_message='Se creo matrimonio')
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
 								
 		else:
@@ -1176,13 +1176,13 @@ class MatrimonioListView(PaginacionMixin, ListView):
 			name = self.request.GET.get('q', '')
 			if (name != ''):
 				name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
-				return Matrimonio.objects.filter(parroquia=parroquia).filter(
+				return Matrimonio.objects.filter(parroquia=parroquia, vigente=True).filter(
 					Q(novio__nombres_completos__icontains = name) | 
 					Q(novio__dni=name)|
 					Q(novia__nombres_completos__icontains = name) | 
-					Q(novia__dni=name)).order_by('novio__user__last_name')
+					Q(novia__dni=name))
 			else:
-				return Matrimonio.objects.filter(parroquia=parroquia).order_by('novio__user__last_name')
+				return Matrimonio.objects.filter(parroquia=parroquia, vigente=True)
 		else:  
 			raise PermissionDenied
 			
@@ -1209,9 +1209,9 @@ class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
 					Q(novio__nombres_completos__icontains = name) | 
 					Q(novio__dni=name)|
 					Q(novia__nombres_completos__icontains = name) | 
-					Q(novia__dni=name)).order_by('novio__user__last_name')
+					Q(novia__dni=name))
 			else:
-				return Matrimonio.objects.filter(parroquia=parroquia, vigente=False).order_by('novio__user__last_name')
+				return Matrimonio.objects.filter(parroquia=parroquia, vigente=False)
 		else:  
 			raise PermissionDenied
 
@@ -1228,8 +1228,8 @@ class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
 @permission_required('sacramentos.delete_matrimonio', login_url='/login/', 
 	raise_exception=permission_required)
 def matrimonio_vigencia_view(request,pk):
-	usuario = request.user
-	matrimonio=Matrimonio.objects.get(pk=pk)	
+	matrimonio= get_object_or_404(Matrimonio, pk= pk)	
+	1/0
 	if request.method == 'POST':
 		novio=matrimonio.novio
 		novia=matrimonio.novia
@@ -1246,9 +1246,8 @@ def matrimonio_vigencia_view(request,pk):
             object_repr=unicode(matrimonio),
             action_flag=DELETION,
             change_message='Dado de baja matrimonio')
-		messages.success(usuario, 'Se ha quitado la vigencia con exito')
-		return HttpResponseRedirect('/matrimonio')
-
+		messages.success(request, 'Se quitó la vigencia del matrimonio con éxito')
+		return HttpResponse(json.dumps({'respuesta': True}), content_type='application/json')
 	else:
 		form = MatrimonioForm(request,instance=matrimonio)
 		matrimonio.vigente=False
@@ -1269,9 +1268,6 @@ def matrimonio_ajax_view(request):
 		list_matrimonios.append({ 'id': m.pk, 'novio':novio,'novia':novia})
 	ctx={'list_matrimonios':list_matrimonios, 'exito':exito}
 	return HttpResponse(json.dumps(ctx), content_type='application/json')
-
-
-
 
 #Vistas para crear una parroquia
 @login_required(login_url='/login/')

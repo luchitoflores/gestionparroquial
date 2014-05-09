@@ -7,37 +7,19 @@
 
 {%block extrascript%}
 <script>
-// funcion para obtener los nombres de los novios t¿y mostrarlos en el modal
-$(document).on('ready',function(){
-	$('#id_delete').on('click', function(){
-		var e=$(this).attr('name');
-		$.get('/matrimonio/ajax',function(data){
-			console.log(data.list_matrimonios);
-			var lista = data.list_matrimonios;
-			$.each(lista, function(indice, elemento){
-				var id = elemento.id;
-				if(id == e){
-					$('#id_novio_modal').html('<p>'+elemento.novio+'</p>');
-					$('#id_novia_modal').html('<p>'+elemento.novia+'</p>');
-					$('#id_eliminar').attr('href','/matrimonio/'+e+'/vigencia');
+	$(document).on('ready',function(){
+		$('#id_eliminar').on('click', function(e){
+			$('#id_eliminar').append(" <i id='id_spinner' class='icon-refresh icon-spin'></i>");
+			e.preventDefault();
+			$.post('/matrimonio/{{object.id}}/vigencia/', function(data){
+				if(data.respuesta){
+					$('#id_vigencia').hide();
+					$(location).attr('href','/matrimonio/no_vigentes/'); 
+					$('#id_spinner').remove();
 				}
 			});
-
-		});
-	});		
-
-});
-</script>
-
-<script>
-
-	function check(input) {  
-		if(input.validity.typeMismatch){  
-			input.setCustomValidity("Dude '" + input.value + "' is not a valid email. Enter something nice!!");  
-		}else {  
-			input.setCustomValidity("");  
-		}                 
-	}  
+		});		
+	});
 </script>
 {%endblock%}
 
@@ -326,7 +308,7 @@ $(document).on('ready',function(){
 
 				{%if perms.sacramentos.delete_matrimonio %}
 				{%if object.vigente%}
-				<a id='id_delete' class='btn btn-success' href="#id_vigencia" role="button" data-toggle="modal" name='{{object.id}}'>Quitar Vigencia
+				<a id='id_delete' class='btn btn-success' href="#id_vigencia" role="button" data-toggle="modal">Quitar Vigencia
 				</a>
 				{%endif%}
 				{%endif%}
@@ -371,10 +353,10 @@ $(document).on('ready',function(){
 	</div>
 	<div class="modal-body">
 		<p>Está seguro de querer eliminar la vigencia del matrimonio de:</p>
-		<h5 id='id_novio_modal'></h5> con <h5 id='id_novia_modal'></h5> 
+		<p><strong>{{object.novio}}</strong> y <strong>{{object.novia}}</strong></p> 
 	</div>
 	<div class="modal-footer">
-		<a id='id_eliminar' href="." class="btn btn-success">Eliminar</a>
+		<a id='id_eliminar' href="." class="btn btn-primary">Eliminar Vigencia </a>
 		<a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
 	</div>
 </div>

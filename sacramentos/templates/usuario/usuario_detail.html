@@ -76,26 +76,33 @@
 			<td>{{object.confirmacion.iglesia}}</td>
 		</tr>
 		{%endif%}
-
-		{% if object.matrimonios_hombre.all %}
+		
+		{% with matrimonios=object.matrimonios_hombre.all %}
+		{% if  matrimonios %}
+		{% for matrimonio in matrimonios %}
 		<tr>
-			<td><a href="{% url 'matrimonio_update' pk=object.matrimonio_hombre.id%}">Matrimonio</a></td>
-			<td>{{object.matrimonio_hombre.fecha_sacramento}}</td>
-			<td>{{object.matrimonio_hombre.parroquia}}</td>
-			<td>{{object.matrimonio_hombre.iglesia}}</td>
+			<td><a href="{% url 'matrimonio_update' pk=matrimonio.id%}">Matrimonio</a></td>
+			<td>{{matrimonio.fecha_sacramento}}</td>
+			<td>{{matrimonio.parroquia}}</td>
+			<td>{{matrimonio.iglesia}}</td>
 		</tr>
-		{%endif%}
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
 
-		{% if object.matrimonios_mujer.all %}
+		{% with matrimonios=object.matrimonios_mujer.all %}
+		{% if  matrimonios %}
+		{% for matrimonio in matrimonios %}
 		<tr>
-			<td><a href="{% url 'matrimonio_update' pk=object.matrimonio_mujer.id%}">Matrimonio</a></td>
-			<td>{{object.matrimonio_mujer.fecha_sacramento}}</td>
-			<td>{{object.matrimonio_mujer.parroquia}}</td>
-			<td>{{object.matrimonio_mujer.iglesia}}</td>
+			<td><a href="{% url 'matrimonio_update' pk=matrimonio.id%}">Matrimonio</a></td>
+			<td>{{matrimonio.fecha_sacramento}}</td>
+			<td>{{matrimonio.parroquia}}</td>
+			<td>{{matrimonio.iglesia}}</td>
 		</tr>
-		{%endif%}
-
-	</tbody>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+		</tbody>
 </table>
 
 

@@ -767,8 +767,7 @@ function crear_feligres(identificador, idpadre, idmodal){
 	$(identificador).on('submit', function(e){
 		$('span').remove();
 		$('.alert').remove();
-		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
-
+		$(identificador + ' #id_guardar').append(" <i id='id_spinner' class='icon-refresh icon-spin'></i> ");
 		e.preventDefault();
 		var url = '/api/crear/padre/';
 		var json = $(this).serialize();
