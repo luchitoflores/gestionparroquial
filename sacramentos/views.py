@@ -223,7 +223,7 @@ class UsuarioListView(BusquedaPersonaMixin, ListView):
 				Q(nombres_completos__icontains = name) | 
 				Q(dni=name)).order_by('user__last_name')
 		else:
-			return PerfilUsuario.objects.feligres().order_by('user__last_name')
+			return PerfilUsuario.objects.feligres()
 		
 
 class UsuarioDetailView(DetailView):

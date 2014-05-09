@@ -11,7 +11,9 @@ class Provincia(models.Model):
 		' Ej: LO')
 
 	class Meta:
-		ordering = ('nombre',)
+		verbose_name=u'Provincia'
+		verbose_name_plural = u'Provincias'
+		ordering = ['nombre']
 
 	def __unicode__(self):
 		return self.nombre
@@ -27,7 +29,9 @@ class Canton(models.Model):
 	provincia=models.ForeignKey(Provincia, verbose_name=u'Provincia *', related_name='provincia')
 
 	class Meta:
-		ordering = ('nombre',)
+		verbose_name=u'Cantón'
+		verbose_name_plural = u'Cantones'
+		ordering = ['nombre', 'provincia__nombre']
 
 	def __unicode__(self):
 		return u'%s - %s' % (self.nombre, self.provincia.nombre)
@@ -42,7 +46,9 @@ class Parroquia(models.Model):
 	canton=models.ForeignKey(Canton, verbose_name=u'Cantón *', related_name='canton')
 
 	class Meta:
-		ordering = ('nombre',)
+		verbose_name=u'Parroquia Civil'
+		verbose_name_plural = u'Prarroquias Civiles'
+		ordering = ['nombre', 'canton__nombre']
 
 	def __unicode__(self):
 		return u'%s - %s' % (self.nombre, self.canton.nombre)
@@ -56,6 +62,11 @@ class Direccion(models.Model):
 	canton=models.ForeignKey(Canton, verbose_name=u'Cantón *')
 	parroquia=models.ForeignKey(Parroquia, verbose_name=u'Parroquia *', related_name='parroquia_civil')
 	telefono=models.CharField('Teléfono', max_length=10, blank=True, null=True)
+
+	class Meta:
+		verbose_name=u'Dirección'
+		verbose_name_plural = u'Direcciones'
+		ordering = ['provincia__nombre', 'canton__nombre', 'parroquia__nombre']
 	
 	def __unicode__(self):
 		return u'%s' % (self.domicilio)

@@ -327,6 +327,10 @@ class PerfilUsuario(TimeStampedModel):
     objects = PersonaManager()
 
     class Meta:
+        verbose_name=u'Perfil'
+        verbose_name_plural = u'Perfiles'
+        get_latest_by = 'created'
+        ordering = ['user__last_name', 'user__first_name']
         permissions = (
             ('add_secretaria', 'Puede crear secretarias'),
             ('change_secretaria', 'Puede actualizar secretarias'),
@@ -440,6 +444,12 @@ class Parroquia(TimeStampedModel):
     nombre=models.CharField('Nombre de Parroquia *',max_length=50, help_text='Ingrese el nombre de la parroquia Ej: El Cisne')
     direccion=models.ForeignKey(Direccion, related_name='direccion_parroquia')
 
+    class Meta:
+        verbose_name=u'Parroquia'
+        verbose_name_plural = u'Parroquias'
+        get_latest_by = 'created'
+        ordering = ['nombre']
+
     def __unicode__(self):
         return u'%s' % (self.nombre)
 
@@ -452,8 +462,10 @@ class Iglesia(TimeStampedModel):
     principal = models.BooleanField('Es la Iglesia Matriz?')
 
     class Meta:
-        verbose_name_plural=u'Iglesias'
-        ordering = ('nombre',)
+       verbose_name=u'Iglesia'
+       verbose_name_plural = u'Iglesias'
+       get_latest_by = 'created'
+       ordering = ['nombre']
 
     def __unicode__(self):
         return self.nombre
@@ -484,6 +496,12 @@ class Libro(TimeStampedModel):
     primera_acta = models.PositiveIntegerField()
 
     objects=LibroManager()
+
+    class Meta:
+        verbose_name=u'Libro'
+        verbose_name_plural = u'Libros'
+        get_latest_by = 'created'
+        ordering = ['principal', 'nombre', 'numero_libro', 'tipo_libro', '-fecha_apertura']
 
     def __unicode__(self):
         return '%s.- %s %s' %(self.numero_libro, self.get_tipo_libro_display(), self.fecha_apertura.year)
@@ -559,6 +577,12 @@ class Bautismo(Sacramento):
     vecinos_maternos = models.CharField(u'Residencia Abuelos Maternos', max_length=70,null=True,blank=True,
 	help_text='Residencia de abuelos maternos ej: Malacatos')
        
+    class Meta:
+        verbose_name=u'Bautismo'
+        verbose_name_plural = u'Bautismos'
+        get_latest_by = 'created'
+        ordering = ['bautizado__user__last_name', 'bautizado__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
+
     def __unicode__(self):
         return '%s %s' %(self.bautizado.user.first_name,self.bautizado.user.last_name)
 
@@ -570,6 +594,8 @@ class Eucaristia(Sacramento):
     class Meta:
         verbose_name=u'Primera Comunión'
         verbose_name_plural=u'Primera Comunión'
+        get_latest_by = 'created'
+        ordering = ['feligres__user__last_name', 'feligres__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
 
     def __unicode__(self):
         return '%s %s' %(self.feligres.user.first_name, self.feligres.user.last_name)
@@ -601,6 +627,12 @@ class Matrimonio(Sacramento):
     tipo_matrimonio=models.CharField(u'Tipo Matrimonio *', max_length=100,choices=TIPO_MATRIMONIO_CHOICES, default=TIPO_MATRIMONIO_CHOICES[1][1],
                                     help_text='Elija tipo de matrimonio Ej: Catolico o Mixto')
 
+    class Meta:
+        verbose_name=u'Matrimonio'
+        verbose_name_plural = u'Matrimonios'
+        get_latest_by = 'created'
+        ordering = ['novio__user__last_name', 'novio__user__first_name', 'novia__user__last_name', 'novia__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
+
     def __unicode__(self):
         return u'%s %s' %(self.novio.user.last_name, self.novia.user.last_name )
 
@@ -610,6 +642,13 @@ class NotaMarginal(TimeStampedModel):
     bautismo= models.ForeignKey('Bautismo',related_name='bautismo',null=True,blank=True)
     matrimonio=models.ForeignKey('Matrimonio',related_name='matrimonio',null=True,
 	blank=True)
+
+    class Meta:
+        verbose_name=u'Nota Marginal'
+        verbose_name_plural = u'Notas Marginales'
+        get_latest_by = 'created'
+        ordering = ['-fecha']
+
 
     def __unicode__(self):
         return self.descripcion
@@ -630,7 +669,11 @@ class Intenciones(TimeStampedModel):
     iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
 
     class Meta:
-        ordering = ['fecha','hora']
+        verbose_name=u'Intencion de Misa'
+        verbose_name_plural = u'Intenciones de Misa'
+        get_latest_by = 'created'
+        ordering = ['iglesia__principal', '-fecha', '-hora', 'iglesia__nombre', 'oferente']
+
 
     def __unicode__(self):
         return self.oferente
@@ -644,6 +687,10 @@ class AsignacionParroquia(TimeStampedModel):
     parroquia = models.ForeignKey('Parroquia')
 
     class Meta:
+        verbose_name=u'Asignacion de Parroquia'
+        verbose_name_plural=u'Asignaciones de Parroquias'
+        get_latest_by = 'created'
+        ordering = ['persona__user__last_name', 'parroquia__nombre']
         permissions = (
             ('add_asignarsecretaria', 'Puede asignar secretarias'),
             ('change_asignarsecretaria', 'Puede actualizar asignacion secretarias'),
@@ -667,6 +714,12 @@ class PeriodoAsignacionParroquia(TimeStampedModel):
     asignacion = models.ForeignKey('AsignacionParroquia', related_name='periodos')
     objects = PeriodoAsignacionManager()
 
+    class Meta:
+        verbose_name=u'Periodo'
+        verbose_name_plural=u'Periodos'
+        get_latest_by = 'created'
+        ordering = ['estado', '-inicio']
+
     def __unicode__(self):
         return u'%s - %s : %s' % (self.asignacion.persona, self.asignacion.parroquia, self.estado)
      
@@ -676,6 +729,12 @@ class ParametrizaDiocesis(TimeStampedModel):
     obispo=models.CharField('Obispo',max_length=50,
         help_text='Ingrese el nombre del Obispo Ej: Julio Parrilla')
     direccion=models.ForeignKey(Direccion,related_name='direccion_diocesis')
+
+    class Meta:
+        verbose_name=u'Parámetro de la Diócesis'
+        verbose_name_plural=u'Parámetros de la Diócesis'
+        get_latest_by = 'created'
+        
  
     def __unicode__(self):
         return 'Parametros-Diocesis: %s'%(self.diocesis)
@@ -685,6 +744,11 @@ class ParametrizaParroquia(TimeStampedModel):
     pagina=models.PositiveIntegerField(help_text='Ingrese el numero de la página Ej: 1 - 17')
     parroquia=models.OneToOneField('Parroquia')
     libro = models.OneToOneField(Libro, null=True, blank=True)
+
+    class Meta:
+        verbose_name=u'Parámetro de la Parroquia'
+        verbose_name_plural=u'Parámetros de la Parroquia'
+        get_latest_by = 'created'
 
     def __unicode__(self):
         return 'Parametros-Parroquia: %s' %(self.parroquia.nombre)
