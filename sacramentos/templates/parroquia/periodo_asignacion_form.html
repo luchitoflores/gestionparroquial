@@ -1,20 +1,8 @@
 {% extends 'base.html'%}
 
-{%block title%}
-{%if periodo.id%}
-Editar Periodo de Asignacion 
-{%else%}
-Nuevo Periodo de Asignación 
-{%endif%}
-{%endblock%}
-
-{%block content_title%}
-{%if periodo.id%}
-Editar Periodo de Asignacion 
-{%else%}
-Nuevo Periodo de Asignación  
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if periodo.id%}Editar Periodo de Asignacion{%else%}Nuevo Periodo de Asignación{%endif%}
+{%endblock%}{%endblock%}
 
 {%block content%}
 

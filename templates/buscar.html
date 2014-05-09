@@ -1,10 +1,8 @@
 {% extends 'base.html'%}
-{%block title%}
-Búsqueda de Sacramentos
-{%endblock%}
-{%block content_title%}
+{%block title%}{%block content_title%}
 Búsqueda de Sacramentos de Feligreses
-{%endblock%}
+{%endblock%}{%endblock%}
+
 {%block content%}
 <form action="." class="form-search" method='GET'>
 	<input id='id_buscar_sacramentos' type="text" class="input-medium search-query" name="q" required placeholder='Cedula/Pasaporte'>

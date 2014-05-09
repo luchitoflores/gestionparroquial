@@ -1,14 +1,9 @@
 {% extends 'base.html'%}
 {%load tags_html%}
 
-{%block title%}{%if object.id%}Editar Parámetros{%else%}Agregar Parámetros{%endif%}{%endblock%}
-{%block content_title%}
-{%if object.id%} 
-Editar Parámetros
-{%else%}
-Agregar Parámetros
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if object.id%}Editar Parámetros{%else%}Agregar Parámetros{%endif%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

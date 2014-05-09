@@ -1,9 +1,8 @@
 {% extends 'base.html'%}
 
-{%block content_title%}
-{% block title %}{%if object.id%}Editar Libro{%else%}Agregar Libro{%endif%}
-{% endblock %}
-{%endblock%}
+{% block title %}{%block content_title%}
+{%if object.id%}Editar Libro{%else%}Agregar Libro{%endif%}
+{% endblock %}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

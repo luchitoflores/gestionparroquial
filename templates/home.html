@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
-{% block title %} Escritorio {% endblock %}
-{% block content_title %} Escritorio {% endblock %}
+{% block title %}{% block content_title %} Escritorio {% endblock %}{% endblock %}
 
 {%block content%}
 		<ul class='thumbnails'>

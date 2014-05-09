@@ -1,19 +1,7 @@
 {% extends 'base.html'%}
-
-
-{% block title%}
-{%if object.id%} 
-Editar Provincia
-{%else%}
-Agregar Provincia
-{%endif%}{%endblock%}
-{%block content_title%}
-{%if object.id%} 
-Editar Provincia
-{%else%}
-Agregar Provincia
-{%endif%}
-{%endblock%}
+{% block title%}{%block content_title%}
+{%if object.id%}Editar Provincia{%else%}Agregar Provincia{%endif%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

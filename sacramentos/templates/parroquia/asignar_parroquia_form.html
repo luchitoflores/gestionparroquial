@@ -1,21 +1,10 @@
 {% extends 'base.html'%}
 {% load sacramentos_tags%}
 
-{%block title%}
-{%if object.id%}
-Editar Asignación - {{object}}
-{%else%}
-Agregar Asignación de una Parroquia 
-{%endif%}
-{%endblock%}
-
-{%block content_title%}
-{%if object.id%} 
-Asignar un párroco - {{object}}
-{%else%}
-Agregar Asignación - {{object}} 
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if object.id%}Asignar un párroco - {{object}}
+{%else%}Agregar Asignación - {{object}}{%endif%}
+{%endblock%}{%endblock%}
 
 
 {%block content%}

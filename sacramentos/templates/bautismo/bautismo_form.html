@@ -3,18 +3,9 @@
 
 
 {%block title%}
-{%if object.id%}
-Editar Bautismo 
-{%else%}
-Agregar Bautismo
-{%endif%}
-{%endblock%}
 {%block content_title%}
-{%if object.id%} 
-Editar Bautismo
-{%else%}
-Agregar Bautismo
-{%endif%}
+{%if object.id%}Editar Bautismo {%else%}Agregar Bautismo{%endif%}
+{%endblock%}
 {%endblock%}
 
 {% block breadcrumbs %}

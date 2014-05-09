@@ -1,9 +1,6 @@
 {% extends 'base.html'%}
-{%block head%}{%load tags%}{%endblock%}
-{% block title%} Lista de Parroquias Civiles {% endblock %}
-{%block content_title%}
-Lista de Parroquias Civiles
-{%endblock%}
+{%load tags%}
+{% block title%}{%block content_title%}Lista de Parroquias Civiles{% endblock %}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

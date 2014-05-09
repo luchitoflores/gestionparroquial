@@ -1,22 +1,11 @@
 {%extends 'base.html'%}
 {%load tags sacramentos_tags%}
 
-{%block title%}
-{%if object.id%}
-Editar Matrimonio 
-{%else%}
-Agregar Matrimonio
-{%endif%}
-{%endblock%}
-{%block content_title%}
-{%if object.id%} 
-Editar Matrimonio 
-{%else%}
-Agregar Matrimonio 
-{%endif%}
-{%endblock%}
-{%block extrascript%}
+{%block title%}{%block content_title%}
+{%if object.id%}Editar Matrimonio {%else%}Agregar Matrimonio{%endif%}
+{%endblock%}{%endblock%}
 
+{%block extrascript%}
 <script>
 // funcion para obtener los nombres de los novios t¿y mostrarlos en el modal
 $(document).on('ready',function(){
@@ -38,7 +27,6 @@ $(document).on('ready',function(){
 	});		
 
 });
-
 </script>
 
 <script>

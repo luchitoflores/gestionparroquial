@@ -143,15 +143,24 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'sacramentos',
-    'ciudades',
-    'core',
     'django.contrib.admindocs',
+)
+
+THIRD_PARTY_APPS = ( 
     'django_extensions',
     'mockups',
-    # 'south'
-
+     # 'south'
     )
+
+LOCAL_APPS = (
+    'ciudades',
+    'core',
+    'home',
+    'sacramentos',
+    'usuarios',
+    )
+
+INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -236,5 +245,6 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "sacramentos.context_processors.parametros_diocesis",
+    "sacramentos.context_processors.menu",
     'django.core.context_processors.request',
     )

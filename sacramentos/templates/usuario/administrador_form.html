@@ -1,20 +1,8 @@
 {%extends 'base.html'%}
 {%load core_tags sacramentos_tags %}
-{%block title%}
-{%if object.id%}
-Editar Administrador
-{%else%}
-Agregar Administrador
-{%endif%}
-{%endblock%}
-
-{%block content_title%}
-{%if object.id%} 
-Editar Administrador
-{%else%}
-Agregar Administrador
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if object.id%}Editar Administrador{%else%}Agregar Administrador{%endif%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

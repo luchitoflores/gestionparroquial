@@ -4,21 +4,9 @@
 {%load tags_direccion core_tags%}
 {%load tags_html%}
 
-{%block title%}
-{%if perfil.id%}
-Editar Feligrés
-{%else%}
-Agregar Feligrés
-{%endif%}
-{%endblock%}
-
-{%block content_title%}
-{%if perfil.id%} 
-Editar Feligres
-{%else%}
-Agregar Feligrés
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if perfil.id%}Editar Feligrés{%else%}Agregar Feligrés{%endif%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

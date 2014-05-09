@@ -19,7 +19,7 @@ from sacramentos.views import (
 	bautismo_acta,bautismo_certificado,
 	eucaristia_create_view,eucaristia_update_view,EucaristiaListView,eucaristia_reporte,
 	confirmacion_create_view,confirmacion_update_view,ConfirmacionListView,confirmacion_reporte,
-	parroquia_create_view, parroquia_update_view, ParroquiaListView,
+	parroquia_create_view, parroquia_update_view, ParroquiaListView, DirectorioParroquiasListView, 
 	IglesiaListView, IglesiaCreateView, IglesiaUpdateView,
 	# AsignarParroquiaCreate, AsignarParroquiaUpdate, AsignarParroquiaList,
 	asignar_parroquia_create, asignar_parroco_a_parroquia, asignar_parroquia_update, asignar_parroco_list, parroco_periodos_asignacion_list, parroco_periodos_asignacion_update, nuevo_periodo_asignacion,
@@ -145,6 +145,7 @@ urlpatterns = patterns('',
 	url(r'^parroquia/(?P<pk>\d+)/$', parroquia_update_view, name='parroquia_update'),
 	url(r'^reporte/parroquia/(?P<pk>\d+)/$', reporte_parroquias_sacerdotes, 
 		name='reporte_parroquias_sacerdotes'),
+	url(r'^directorio/parroquias/$', DirectorioParroquiasListView.as_view(), name='directorio_parroquias'),
 
 	#urls para Iglesias
 	url(r'^iglesia/$', IglesiaListView.as_view(), name='iglesia_list'),

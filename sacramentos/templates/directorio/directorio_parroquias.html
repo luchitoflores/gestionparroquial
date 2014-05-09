@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+{%block title%}{%block content_title%}
+Directorio telefónico de las Parroquias
+{%endblock%}{%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Directorio Parroquias</li>
+{% endblock %}
+
+{%block content%}
+{% include 'includes/busqueda_form.html' %} 
+
+<table id='id_table_parroquia' class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Teléfono</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for nombre, telefono in object_list %}
+		<tr>			
+			<td>{{nombre}}</td>
+			<td>{{telefono}}</td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>
+
+{% include 'includes/paginacion.html' %}
+
+{% for cat in menu%}
+{% if cat.submenu%}
+{% for s in cat.submenu%}
+<a href="{{s.menu}}">{{s.nombre}}</a>
+{%endfor%}
+{%else%}
+<a href="{{cat.menu}}">{{cat.nombre}}</a>
+{% endif %}
+{% endfor %}
+
+
+
+{%endblock%}

@@ -12,8 +12,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sessions.models import Session
-from django.db.models import Sum
+from django.db.models import Count
 from django.db.models import Q
+from django.db.models import Sum
 from django.forms.util import ErrorList
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
@@ -1366,6 +1367,20 @@ class ParroquiaListView(BusquedaMixin, ListView):
 		raise_exception=permission_required))
 	def dispatch(self, *args, **kwargs):
 		return super(ParroquiaListView, self).dispatch(*args, **kwargs)
+
+
+class DirectorioParroquiasListView(BusquedaMixin, ListView):
+	model= Parroquia
+	template_name = 'directorio/directorio_parroquias.html'
+	paginate_by = 10
+
+	@method_decorator(login_required(login_url='/login/'))
+	def dispatch(self, *args, **kwargs):
+		return super(DirectorioParroquiasListView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		return Parroquia.objects.values_list('nombre', 'direccion__telefono')
+
 
 
 @login_required(login_url='/login/')

@@ -1,11 +1,6 @@
 {%extends 'base.html'%}
-
-{%load sacramentos_tags%}
-{%load tags_direccion%}
-{%load tags_html%}
-
-{%block title%}Detalle Feligrés{%endblock%}
-{%block content_title%}Detalle Feligrés{%endblock%}
+{%load sacramentos_tags tags_html%}
+{%block title%}{%block content_title%}Detalle Feligrés{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

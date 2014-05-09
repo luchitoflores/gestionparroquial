@@ -4,10 +4,9 @@ import unicodedata
 from datetime import datetime
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
-# from django.contrib.auth.signals import user_logged_in
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import six
@@ -35,7 +34,6 @@ def permissions_new_unicode(self):
 
     return u'%s - %s' % ( nombre_clase.title(), nombre_permiso)
 
-# Replace the __unicode__ method in the User class with out new implementation
 User.__unicode__ = user_new_unicode 
 Permission.__unicode__ = permissions_new_unicode
 
@@ -372,10 +370,7 @@ class PerfilUsuario(TimeStampedModel):
         apellidos = ''.join((c for c in unicodedata.normalize('NFD', unicode(apellidos)) if unicodedata.category(c) != 'Mn'))
         nombres = nombres.lower().split()
         apellidos = apellidos.lower().split()
-        # s = ''.join((c for c in unicodedata.normalize('NFD',unicode(cadena)) if unicodedata.category(c) != 'Mn'))
         username = u'%s%s'% (nombres[0][0],apellidos[0])
-            # username = u'%s%s'% (nombres,apellidos)
-        print username
         user_name = PerfilUsuario.objects.username_disponible(username)
 
         if user_name == True:
@@ -652,8 +647,7 @@ class AsignacionParroquia(TimeStampedModel):
         permissions = (
             ('add_asignarsecretaria', 'Puede asignar secretarias'),
             ('change_asignarsecretaria', 'Puede actualizar asignacion secretarias'),
-            ('delete_asignarsecretaria', 'Puede eliminar asignacion secretarias'),
-            
+            ('delete_asignarsecretaria', 'Puede eliminar asignacion secretarias'),            
             ('add_asignarsacerdote', 'Puede asignar sacerdotes'),
             ('change_asignarsacerdote', 'Puede actualizar asignacion sacerdotes'),
             ('delete_asignarsacerdote', 'Puede eliminar asignacion sacerdotes'),

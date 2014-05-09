@@ -1,12 +1,9 @@
 {%extends 'base.html'%}
 {% load sacramentos_tags %}
 
-{%block title%}
+{%block title%}{%block content_title%}
 Reporte de Permisos Sacramentales
-{%endblock%}
-{%block content_title%}
-Reporte de Permisos Sacramentales
-{%endblock%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}

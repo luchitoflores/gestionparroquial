@@ -1,20 +1,8 @@
 {%extends 'base.html'%}
 {%load tags_html%}
-{%block title%}
-{%if object.id%}
-Editar Sacerdote
-{%else%}
-Agregar Sacerdote
-{%endif%}
-{%endblock%}
-
-{%block content_title%}
-{%if object.id%} 
-Editar Sacerdote
-{%else%}
-Agregar Sacerdote
-{%endif%}
-{%endblock%}
+{%block title%}{%block content_title%}
+{%if object.id%}Editar Sacerdote{%else%}Agregar Sacerdote{%endif%}
+{%endblock%}{%endblock%}
 
 {% block breadcrumbs %}
 {{ block.super }}
