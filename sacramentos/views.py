@@ -166,7 +166,7 @@ def edit_usuario_view(request,pk):
             	object_repr=unicode(perfil),
             	action_flag=CHANGE,
             	change_message="Usuario actualizado")
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect('/usuario')
 		else:
 			id_padre = request.POST.get('padre')
@@ -302,7 +302,7 @@ def administrador_create_view(request):
             	object_repr=unicode(perfil),
             	action_flag=ADDITION,
             	change_message="Creo un administrador")
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
@@ -345,7 +345,7 @@ def administrador_update_view(request, pk):
            		object_repr=unicode(perfil),
            		action_flag=CHANGE,
            		change_message="Administrador actualizado")
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
@@ -453,7 +453,7 @@ def sacerdote_create_view(request):
             	object_repr=unicode(sacerdote),
             	action_flag=ADDITION,
             	change_message="Creo un sacerdote")
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(success_url)
 
 		else:
@@ -492,7 +492,7 @@ def sacerdote_update_view(request, pk):
             		object_repr=unicode(sacerdote),
             		action_flag=CHANGE,
             		change_message="Sacerdote actualizado")
-				messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+				messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 				return HttpResponseRedirect(success_url)
 
 			else:
@@ -559,7 +559,7 @@ def libro_create_view(request):
         		object_repr=unicode(libro),
         		action_flag=ADDITION,
         		change_message="Creo un libro")
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('libro_list'))
 		else:
 			ctx={'form_libro':form_libro}
@@ -592,7 +592,7 @@ def libro_update_view(request,pk):
 				object_repr=unicode(libro.tipo_libro),
 				action_flag=CHANGE,
 				change_message="Libro actualizado")
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('libro_list'))
 				
 		else:
@@ -806,7 +806,7 @@ def eucaristia_create_view(request):
 					object_repr=unicode(eucaristia),
 					action_flag=ADDITION,
 					change_message='Se creo eucaristia')
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
 		
 		else:
@@ -847,7 +847,7 @@ def eucaristia_update_view(request,pk):
         		object_repr=unicode(eucaristia),
         		action_flag=CHANGE,
         		change_message='Primera Comunión actualizada')
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('eucaristia_list'))
 		else:
 			id_feligres = request.POST.get('feligres')
@@ -940,7 +940,7 @@ def confirmacion_create_view(request):
 				object_repr=unicode(confirmacion),
 				action_flag=ADDITION,
 				change_message='Se creo bautismo')
-			messages.succes(request, MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_CREACION)
 			return HttpResponseRedirect('/confirmacion')
 
 		else:
@@ -986,7 +986,7 @@ def confirmacion_update_view(request,pk):
         		object_repr=unicode(confirmacion),
         		action_flag=CHANGE,
         		change_message='Confirmacion actualizado')
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('confirmacion_list'))
 		else:
 			id_confirmado = request.POST.get('confirmado')
@@ -1143,7 +1143,7 @@ def matrimonio_update_view(request,pk):
         		object_repr=unicode(matrimonio),
         		action_flag=CHANGE,
         		change_message='Matrimonio actualizado')
-			messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 			return HttpResponseRedirect(reverse_lazy('matrimonio_list'))
 		else:
 			id_novio = request.POST.get('novio')
@@ -1229,7 +1229,6 @@ class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
 	raise_exception=permission_required)
 def matrimonio_vigencia_view(request,pk):
 	matrimonio= get_object_or_404(Matrimonio, pk= pk)	
-	1/0
 	if request.method == 'POST':
 		novio=matrimonio.novio
 		novia=matrimonio.novia
@@ -1422,7 +1421,7 @@ def intencion_create_view(request):
             	object_repr=unicode(intencion),
             	action_flag=ADDITION,
             	change_message="Creo una intencion")
-				messages.succes(request, MENSAJE_EXITO_CREACION)
+				messages.success(request, MENSAJE_EXITO_CREACION)
 				return HttpResponseRedirect(success_url)
 		
 		else:
@@ -1483,7 +1482,7 @@ def intencion_edit_view(request, pk):
 	            object_repr=unicode(intencion),
 	            action_flag=ADDITION,
 	            change_message="Creo una intencion")
-				messages.succes(request, MENSAJE_EXITO_ACTUALIZACION)
+				messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
 				return HttpResponseRedirect(success_url)
 		else:
 			messages.error(request, MENSAJE_ERROR )
@@ -2066,79 +2065,57 @@ class SecretariaListView(ListView):
 	def dispatch(self, *args, **kwargs):
 		return super(SecretariaListView, self).dispatch(*args, **kwargs)
 
-
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_parametrizadiocesis', login_url='/login/', 
 	raise_exception=permission_required)
 @permission_required('sacramentos.change_parametrizadiocesis', login_url='/login/', 
 	raise_exception=permission_required)		
 def parametriza_diocesis_create(request):
-	p=ParametrizaDiocesis.objects.all()
-	if p:
-		for e in p:
-			of=e
-		direccion = of.direccion
-		if request.method=='POST':
-			
-			form_parametriza = ParametrizaDiocesisForm(request.POST, instance=of)
-			canton = Canton.objects.all()
-			parroquia_civil = ParroquiaCivil.objects.all()
-			form_direccion = DireccionForm(canton, parroquia_civil, request.POST, instance=direccion)
-			if form_parametriza.is_valid() and form_direccion.is_valid():
-				form_parametriza.save()
-				form_direccion.save()
-				LogEntry.objects.log_action(
-	            	user_id=request.user.id,
-	            	content_type_id=ContentType.objects.get_for_model(of).pk,
-	            	object_id=of.id,
-	            	object_repr=unicode(of),
-	            	action_flag=CHANGE,
-	            	change_message="Parametriza Diocesis actualizada")
-				
-				return HttpResponseRedirect('/home/')
-			else:
-				ctx = {'form_parametriza':form_parametriza, 'form_direccion':form_direccion}
-				messages.error(request, MENSAJE_ERROR )
-				return render(request, 'parametriza/parametriza_form.html', ctx)
+	try:
+		objeto = ParametrizaDiocesis.objects.get(pk=1)
+	except ObjectDoesNotExist:
+		objeto = False
+
+	if request.method=='POST':
+		if objeto:
+			form_parametriza = ParametrizaDiocesisForm(request.POST, instance=objeto)
+			form_direccion = DireccionForm(request.POST, instance=objeto.direccion)
 		else:
-			canton = Canton.objects.filter(provincia=of.direccion.provincia)
-			parroquia_civil = ParroquiaCivil.objects.filter(canton=of.direccion.canton)
-			form_parametriza = ParametrizaDiocesisForm(instance=of)
-			form_direccion = DireccionForm(instance=direccion, canton = canton, parroquia=parroquia_civil)
-			ctx = {'form_parametriza': form_parametriza, 'form_direccion':form_direccion,'object':of}
-			return render(request, 'parametriza/parametriza_form.html', ctx)
-
-
-	else:
-		if(request.method=='POST'):
 			form_parametriza=ParametrizaDiocesisForm(request.POST)
-			canton=Canton.objects.all()
-			parroquia_civil=ParroquiaCivil.objects.all()
-			form_direccion=DireccionForm(canton,parroquia_civil,request.POST)
-			if form_parametriza.is_valid() and form_direccion.is_valid():
-				parametriza=form_parametriza.save(commit=False)
-				direccion=form_direccion.save()
-				parametriza.direccion=direccion
-				parametriza.save()
-				LogEntry.objects.log_action(
+			form_direccion=DireccionForm(request.POST)
+		form_direccion.fields['canton'].queryset = Canton.objects.all()
+		form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
+		
+		if form_parametriza.is_valid() and form_direccion.is_valid():
+			parametriza=form_parametriza.save(commit=False)
+			direccion=form_direccion.save()
+			parametriza.direccion=direccion
+			parametriza.save()
+			LogEntry.objects.log_action(
 					user_id=request.user.id,
 					content_type_id=ContentType.objects.get_for_model(parametriza).pk,
 					object_id=parametriza.id,
 					object_repr=unicode(parametriza),
-					action_flag=ADDITION,
-					change_message="Creo una parametriza diocesis"
-					)
-				return HttpResponseRedirect('/home/')
-			else:
-				ctx={'form_parametriza':form_parametriza,'form_direccion':form_direccion}
-				messages.error(request, MENSAJE_ERROR )
-				return render(request,'parametriza/parametriza_form.html',ctx)
+					action_flag= CHANGE if objeto else ADDITION,
+                    change_message= MENSAJE_EXITO_ACTUALIZACION if objeto else MENSAJE_EXITO_CREACION)
+			messages.success(request, MENSAJE_EXITO_ACTUALIZACION if objeto else MENSAJE_EXITO_CREACION)
+			return HttpResponseRedirect(reverse_lazy('home'))
+		else:
+			ctx = {'form_parametriza':form_parametriza, 'form_direccion':form_direccion}
+			messages.error(request, MENSAJE_ERROR )
+			return render(request, 'parametriza/parametriza_form.html', ctx)
+	else:
+		if objeto:
+			form_parametriza = ParametrizaDiocesisForm(instance=objeto)
+			form_direccion = DireccionForm(instance=objeto.direccion)
+			form_direccion.fields['canton'].queryset = Canton.objects.filter(provincia=objeto.direccion.provincia)
+			form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.filter(canton=objeto.direccion.canton)
 		else:
 			form_parametriza = ParametrizaDiocesisForm()
 			form_direccion = DireccionForm()
-			ctx = {'form_parametriza': form_parametriza, 'form_direccion':form_direccion}
-			return render(request, 'parametriza/parametriza_form.html', ctx)
-			
+		ctx = {'form_parametriza': form_parametriza, 'form_direccion':form_direccion, 'object': objeto}
+		return render(request, 'parametriza/parametriza_form.html', ctx)
+		
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_parametrizaparroquia', login_url='/login/', 
 	raise_exception=permission_required)
@@ -2206,19 +2183,10 @@ def parametriza_parroquia_create(request):
 
 
 # views para los LOGS del ekklesia
-
 class LogListView(PaginacionMixin, ListView):
 	model=LogEntry
 	template_name='log/log_list.html'
 	paginate_by = 10
-
-	# def get_queryset(self):
-	# 	try:
-	# 		if self.request.user.is_superuser:
-	# 			queryset = LogEntry.objects.all()
-	# 			return queryset
-	# 	except: 
-	# 		return [];
 
 	def get_queryset(self):		
 		name = self.request.GET.get('q', '')		

@@ -724,9 +724,9 @@ class PeriodoAsignacionParroquia(TimeStampedModel):
         return u'%s - %s : %s' % (self.asignacion.persona, self.asignacion.parroquia, self.estado)
      
 class ParametrizaDiocesis(TimeStampedModel):
-    diocesis=models.CharField('Nombre Diócesis',max_length=50,
+    diocesis=models.CharField('Nombre Diócesis *',max_length=50,
         help_text='Nombre de la Diócesis Ej:Diócesis de Loja')
-    obispo=models.CharField('Obispo',max_length=50,
+    obispo=models.CharField('Obispo *',max_length=50,
         help_text='Ingrese el nombre del Obispo Ej: Julio Parrilla')
     direccion=models.ForeignKey(Direccion,related_name='direccion_diocesis')
 
