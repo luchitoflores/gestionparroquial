@@ -95,8 +95,6 @@ function mostrar_nota_marginal(idFieldSet){
 
 }  
 
-
-
 function campo_no_requerido(identificador){
 	$(identificador).removeAttr('required');
 }
@@ -608,43 +606,6 @@ function asignar_padre(){
 
 	});
 }
-
-function autocomplete(identificador){
-	var labels = [];
-	var datos = {};
-	$(identificador).typeahead({
-		source: function(query, process){
-			labels = [];
-			datos = {};
-			var ctx = {'q': query};
-			var url = '/api/usuario/';
-			$.get(url, ctx, function(data){
-				$.each(data.perfiles, function(index, element){
-
-					labels.push(element.nombres);
-					console.log(element.nombres);
-					datos[element.nombres] = element;
-					console.log(datos);
-				});
-				process(labels);
-			});
-
-		},
-		minLength:3,
-		highlighter: function(item){
-			var p = datos[item];
-			var itm = ''
-			+ "<div class='typeahead_wrapper'>"
-			+ "<div class='typeahead_labels'>"
-			+ "<div class='typeahead_primary'>" + p.nombres + ' '+ p.apellidos +"</div>"
-			+ "<div class='typeahead_secondary'>" + p.dni + '/' + p.lugar_nacimiento + "</div>"
-			+ "</div>"
-			+ "</div>";
-			return itm;
-		}
-	});
-}
-
 
 function cancelar_modal(){
 	var cancelar = $('.cancelar-modal').on('click', function(e){
