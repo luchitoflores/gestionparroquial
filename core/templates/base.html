@@ -1,134 +1,141 @@
 <!DOCTYPE html>
+{% load static from staticfiles %}
 <html lang="es">
 <head>
-	<title>{% block title %}{% endblock %}</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<!-- Siempre se cargan los css y después el javascript -->
-	<link rel="stylesheet" href="/static/css/normalize.css">
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css" media='screen'>
-	<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css">
-	<link rel="stylesheet" href="/static/css/datepicker.css">
-	<link rel="stylesheet" href="/static/css/bootstrap-timepicker.min.css">
-	<link rel="stylesheet" href="/static/css/jquery-ui.min.css">
-	<link rel="stylesheet" href="/static/css/estilos.css">
-	<link rel="stylesheet" href="/static/css/multi-select.css">
-	<link rel="stylesheet" href="/static/css/modelo-tablas.css">
-	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/static/css/footable.core.min.css"/>
-	{% block extrastyle %}{% endblock %}
-	<link rel="icon" type="image/vnd.microsoft.icon" href="/static/img/favicon.ico" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!-- Siempre se cargan los css y después el javascript -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" media='screen'>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/multi-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modelo-tablas.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footable.core.min.css' %}"/>
+    {% block extrastyle %}{% endblock %}
+    <link rel="icon" type="image/vnd.microsoft.icon" href="{% static 'img/favicon.ico' %}"/>
 
-	
+
 </head>
 <body>
-	{%load tags_html%}
-	<header>
-		<nav>
-			{%include 'includes/menubar.html'%}
-		</nav>
-		<div id='id_title' class="container">
-			<ul class="breadcrumb">
-				{% block breadcrumbs %}
-				<li><a href="{% url 'home' %}">Inicio</a></li>
-				{% endblock %}
-			</ul> 
-			<div class="row-fluid">
-				<div class="span10 offset1">
-					<h1>{% block content_title %}{% endblock %}</h1>
-					<h3>{% block content_subtitle %}{% endblock %}</h3>
-				</div>
-			</div>
-		</div>
-	</header>
+{% load tags_html %}
+<header>
+    <nav>
+        {% include 'includes/menubar.html' %}
+    </nav>
+    <ul class="breadcrumb">
+            {% block breadcrumbs %}
+                <li><a href="{% url 'home' %}">Inicio</a></li>
+            {% endblock %}
+        </ul>
+    </header>
 
 
+<div class="container" id='id_container'>
 
-	<div class="container" id='id_container'>
+    <div class="row">
+        <div class="span3">
+            {% include 'includes/menu.html' %}
+        </div>
 
-		<div class="row">
-			<div class="offset1 span10">
+        <div class="span8">
+         <div class="row-fluid">
 
-				<!-- Para mostrar mensajes del sistema-->
-				<div id="id_messages">
-					<aside>
-						<div>
-							{%block messages%}
-							{% if messages%}
-							{%for message in messages%}
-							<div {% if message.tags %}class="alert alert-{{message.tags}}"{% endif %}>
-								<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
-								<img {% if message.tags %}src="/static/img/{{message.tags}}.png" {% endif %} alt=""> {{message}}
-							</div>
-							{%endfor%}
-							{%endif%}
-							{%endblock%}
-						</div>
-					</aside>
-				</div>
+            <div id='id_title' class="container">
+                <h1>{% block content_title %}{% endblock %}</h1>
+                <h3>{% block content_subtitle %}{% endblock %}</h3>
+            </div>
+
+        </div>
+
+                    <!-- Para mostrar mensajes del sistema-->
+            <div id="id_messages">
+                <aside>
+                    <div>
+                        {% block messages %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}>
+                                        <button type="button" class="close" data-dismiss="alert"><i
+                                                class="icon-remove"></i></button>
+                                        <img {% if message.tags %}src="/static/img/{{ message.tags }}.png" {% endif %}
+                                             alt=""> {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </aside>
+            </div>
 
 
-				<div id='id_content'>
-					<article>
-						<div class="container-fluid">
-							{%block content%}
-							{%endblock%}
-						</div>
-					</article>
-				</div>
-			</div>
-		</div>
-		<!-- Footer -->
-		<div id='id_footer'>
-			<footer>
-				{%block footer%}
-				
+            <div id='id_content'>
+                <article>
+                    <div class="container-fluid">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div id='id_footer'>
+        <footer>
+            {% block footer %}
 
-				<!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es"><img alt="Licencia Apache 2.0" style="border-width:0" src="/static/img/apache.png" /></a>				
+
+                <!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es"><img alt="Licencia Apache 2.0" style="border-width:0" src="/static/img/apache.png" /></a>
 				<p><a href="{% url 'accesibilidad'%}">Accesibilidad</a></p> -->
 
-				{% if parametros %}
-				<h5>{{parametros.diocesis}}</h5>
-				<p> {{parametros.direccion.domicilio}} | {{parametros.direccion.parroquia.nombre}} - ECUADOR | Teléfono: {{parametros.direccion.telefono}}</p>
-				{% endif %}
+                {% if parametros %}
+                    <h5>{{ parametros.diocesis }}</h5>
+                    <p> {{ parametros.direccion.domicilio }} | {{ parametros.direccion.parroquia.nombre }} - ECUADOR |
+                        Teléfono: {{ parametros.direccion.telefono }}</p>
+                {% endif %}
 
-			<!--<div style='text-align: right'>
-				<i class='icon-facebook-sign icon-2x' style='color: #ddd'></i>
-				<i class='icon-twitter-sign icon-2x' style='color: #ddd'></i>
-				<i class='icon-youtube icon-2x' style='color: #ddd'></i>
-				
-			</div>-->
-			{%endblock%}
-		</footer>	
-	</div>
+                <!--<div style='text-align: right'>
+                    <i class='icon-facebook-sign icon-2x' style='color: #ddd'></i>
+                    <i class='icon-twitter-sign icon-2x' style='color: #ddd'></i>
+                    <i class='icon-youtube icon-2x' style='color: #ddd'></i>
+
+                </div>-->
+            {% endblock %}
+        </footer>
+    </div>
 </div>
 
 
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
-	window.jQuery || document.write('<script src="/static/js/jquery.min.js">x3C/cript>');
+    window.jQuery || document.write('<script src="/static/js/jquery.min.js">x3C/cript>');
 </script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src='/static/js/bootstrap-datepicker.js'></script>
-<script src='/static/js/bootstrap-timepicker.min.js'></script>
-<script src='/static/js/jquery.alphanumeric.js'></script>
-<script src='/static/js/jquery.dataTables.min.js'></script>
-<script src='/static/js/jquery.multi-select.js'></script>
-<script src='/static/js/sacramentos.js'></script>
-<script src="/static/js/footable.js"></script>
-<script src='/static/js/modernizr.js'></script>
-<script src='/static/js/mousetrap.min.js'></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'js/bootstrap-timepicker.min.js' %}"></script>
+<script src="{% static 'js/jquery.alphanumeric.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/jquery.multi-select.js' %}"></script>
+<script src="{% static 'js/sacramentos.js' %}"></script>
+<script src="{% static 'js/footable.js' %}"></script>
+<script src="{% static 'js/modernizr.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
-	$.ajaxSetup({
-		beforeSend: function(xhr, settings) {
-			if(settings.type == "POST"){
-				xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
-			}
-		}
-	});
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (settings.type == "POST") {
+                xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
+            }
+        }
+    });
 </script>
 
-{%block extrascript%}{%endblock%}
+{% block extrascript %}{% endblock %}
 </body>
 </html>

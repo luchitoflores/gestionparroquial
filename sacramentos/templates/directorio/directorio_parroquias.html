@@ -30,17 +30,4 @@ Directorio telefónico de las Parroquias
 </table>
 
 {% include 'includes/paginacion.html' %}
-
-{% for cat in menu%}
-{% if cat.submenu%}
-{% for s in cat.submenu%}
-<a href="{{s.menu}}">{{s.nombre}}</a>
-{%endfor%}
-{%else%}
-<a href="{{cat.menu}}">{{cat.nombre}}</a>
-{% endif %}
-{% endfor %}
-
-
-
 {%endblock%}

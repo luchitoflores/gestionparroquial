@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django import forms
 from django import template
 from django.contrib.auth.models import Group, User
 
@@ -6,7 +7,8 @@ from sacramentos.forms import (
 	UsuarioPadreForm, PadreForm,PerfilUsuarioForm,
 	UsuarioSecretariaForm, SecretariaForm,
 	SacerdoteForm, UsuarioSacerdoteForm,
-	LibroBaseForm, IglesiaForm, LibroForm,
+	IglesiaForm, 
+	LibroBaseForm, LibroBautismoForm, LibroEucaristiaForm, LibroConfirmacionForm, LibroMatrimonioForm, 
 	NotaMarginalForm,
 	)
 register = template.Library()
@@ -63,6 +65,34 @@ def sacerdote(context):
 def libro(context):
 	request = context['request']
 	form_libro = LibroBaseForm(request=request)
+	ctx = {'form_libro': form_libro}
+	return ctx
+
+@register.inclusion_tag('includes/libro_bautismo_form.html', takes_context=True)
+def libro_bautismo(context):
+	request = context['request']
+	form_libro = LibroBautismoForm(request=request)
+	ctx = {'form_libro': form_libro}
+	return ctx
+
+@register.inclusion_tag('includes/libro_eucaristia_form.html', takes_context=True)
+def libro_eucaristia(context):
+	request = context['request']
+	form_libro = LibroEucaristiaForm(request=request)
+	ctx = {'form_libro': form_libro}
+	return ctx
+
+@register.inclusion_tag('includes/libro_confirmacion_form.html', takes_context=True)
+def libro_confirmacion(context):
+	request = context['request']
+	form_libro = LibroConfirmacionForm(request=request)
+	ctx = {'form_libro': form_libro}
+	return ctx
+
+@register.inclusion_tag('includes/libro_matrimonio_form.html', takes_context=True)
+def libro_matrimonio(context):
+	request = context['request']
+	form_libro = LibroMatrimonioForm(request=request)
 	ctx = {'form_libro': form_libro}
 	return ctx
 

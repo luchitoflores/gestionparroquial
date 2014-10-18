@@ -1,156 +1,164 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
-{% block title %}{%block content_title%}
-{%if object.id%}Editar Libro{%else%}Agregar Libro{%endif%}
-{% endblock %}{%endblock%}
+{% block title %}{% block content_title %}
+    {% if object.id %}Editar Libro{% else %}Agregar Libro{% endif %}
+{% endblock %}{% endblock %}
 
 {% block breadcrumbs %}
-{{ block.super }}
-<span class="divider">»</span>
-<li><a href="{% url 'libro_list' %}">Libros</a></li>
-<span class="divider">»</span>
-{%if object.id%}<li class='active'>{{object}}</li>{%else%}<li class='active'>Nuevo</li>{%endif%}
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li><a href="{% url 'libro_list' %}">Libros</a></li>
+    <span class="divider">»</span>
+    {% if object.id %}
+        <li class='active'>{{ object }}</li>{% else %}
+    <li class='active'>Nuevo
+    </li>{% endif %}
 {% endblock %}
 
-{%block content%}
-<form id='id_form_libro' action="." method='POST' class='form-horizontal'>
-	{% csrf_token%}
-	<div class='row'>
-		<div class='span10'>
-			<fieldset class='scheduler-border'>
-				<legend class='scheduler-border'>Datos del Libro</legend>
-				<div class='row'>
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.tipo_libro.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.tipo_libro}}
-						</div>
-						<div class="controls help-text">
-							{{form_libro.tipo_libro.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.tipo_libro.errors}}
-						</div>
-					</div>
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.principal.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.principal}}
-						</div>
-						<div class="controls">
-							<div class="help-text">
-								{{form_libro.principal.help_text}}
-							</div>
-						</div>
-						<div class="controls">
-							<div class="errors">							
-								{{form_libro.principal.errors}}
-							</div>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.fecha_apertura.label}} *
-						</label>
-						<div class="controls">
-							{{form_libro.fecha_apertura}}
+{% block content %}
+    <form id='id_form_libro' action="." method='POST' class='form-horizontal'>
+        {% csrf_token %}
+        <div class='row'>
+            <div class='span8'>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Datos del libro</div>
+                    <div class="panel-body">
+                        <div class='row'>
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.tipo_libro.label }}
+                                </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form_libro.fecha_apertura.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.fecha_apertura.errors}}
-						</div>
-					</div>
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.fecha_cierre.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.fecha_cierre}}
+                                <div class="controls">
+                                    {{ form_libro.tipo_libro }}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_libro.tipo_libro.help_text }}
+                                </div>
+                                <div class="controls errors">
+                                    {{ form_libro.tipo_libro.errors }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.principal.label }}
+                                </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form_libro.fecha_cierre.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.fecha_cierre.errors}}
-						</div>
-					</div>
+                                <div class="controls">
+                                    {{ form_libro.principal }}
+                                </div>
+                                <div class="controls">
+                                    <div class="help-text">
+                                        {{ form_libro.principal.help_text }}
+                                    </div>
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_libro.principal.errors }}
+                                    </div>
+                                </div>
+                            </div>
 
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.primera_pagina.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.primera_pagina}}
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.fecha_apertura.label }}
+                                </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form_libro.primera_pagina.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.primera_pagina.errors}}
-						</div>
-					</div>
+                                <div class="controls">
+                                    {{ form_libro.fecha_apertura }}
 
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.primera_acta.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.primera_acta}}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_libro.fecha_apertura.help_text }}
+                                </div>
+                                <div class="controls errors">
+                                    {{ form_libro.fecha_apertura.errors }}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.fecha_cierre.label }}
+                                </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form_libro.primera_acta.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.primera_acta.errors}}
-						</div>
-					</div>
+                                <div class="controls">
+                                    {{ form_libro.fecha_cierre }}
 
-					{% if form_libro.es_activo.is_hidden%}
-					{{form_libro.es_activo}}
-					{%else%}
-					<div class="control-group">
-						<label for="" class="control-label">
-							{{form_libro.es_activo.label}}
-						</label>
-						<div class="controls">
-							{{form_libro.es_activo}}
-						</div>
-						<div class="controls help-text">
-							{{form_libro.es_activo.help_text}}
-						</div>
-						<div class="controls errors">
-							{{form_libro.es_activo.errors}}
-						</div>
-					</div>
-					{% endif %}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_libro.fecha_cierre.help_text }}
+                                </div>
+                                <div class="controls errors">
+                                    {{ form_libro.fecha_cierre.errors }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.primera_pagina.label }}
+                                </label>
+
+                                <div class="controls">
+                                    {{ form_libro.primera_pagina }}
+
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_libro.primera_pagina.help_text }}
+                                </div>
+                                <div class="controls errors">
+                                    {{ form_libro.primera_pagina.errors }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ form_libro.primera_acta.label }}
+                                </label>
+
+                                <div class="controls">
+                                    {{ form_libro.primera_acta }}
+
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_libro.primera_acta.help_text }}
+                                </div>
+                                <div class="controls errors">
+                                    {{ form_libro.primera_acta.errors }}
+                                </div>
+                            </div>
+
+                            {% if form_libro.es_activo.is_hidden %}
+                                {{ form_libro.es_activo }}
+                            {% else %}
+                                <div class="control-group">
+                                    <label for="" class="control-label">
+                                        {{ form_libro.es_activo.label }}
+                                    </label>
+
+                                    <div class="controls">
+                                        {{ form_libro.es_activo }}
+                                    </div>
+                                    <div class="controls help-text">
+                                        {{ form_libro.es_activo.help_text }}
+                                    </div>
+                                    <div class="controls errors">
+                                        {{ form_libro.es_activo.errors }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class='btn btn-primary'> Guardar</button>
+                <a href="{% url 'libro_list' %}" class='btn btn-danger'>Cancelar</a>
+
+            </div>
 
 
-				</div>
-			</fieldset>
-			<div class="form-actions">
-
-				<button type="submit" class='btn btn-primary'> Guardar </button>
-				<a href="{%url 'libro_list'%}" class='btn btn-danger'>Cancelar</a>
-
-			</div>
-		</div>
-	</div>
-
-	
+    </form>
 
 
-</form>
-
-
-{%endblock%}
+{% endblock %}
