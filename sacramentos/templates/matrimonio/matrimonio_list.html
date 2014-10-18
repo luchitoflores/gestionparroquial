@@ -48,7 +48,6 @@ $(document).ready(function(){
 			<th>Novio</th>
 			<th>Novia</th>
 			<th>Fecha Sacramento</th>
-			<th>Es vigente?</th>
 			<th data-hide='phone, tablet'>Testigo</th>
 			<th data-hide='phone, tablet'>Testiga</th>
 			<th>Acciones</th>
@@ -61,10 +60,6 @@ $(document).ready(function(){
 			<td>{{o.novio.nombres_completos}}</td>
 			<td>{{o.novia.nombres_completos}}</td>
 			<td id='id_fecha_sacramento'>{{o.fecha_sacramento}}</td>
-			<td>
-			{% if o.vigente %}<i class="icon-check"></i>
-			{% else %}<i class="icon-check-minus"></i>{% endif %}
-			</td>
 			<td>{{o.testigo_novio}}</td>
 			<td>{{o.testigo_novia}}</td>
 			<td><a href="{%url 'matrimonio_update' pk=o.id%}"><i class="icon-pencil"></i></a></td>

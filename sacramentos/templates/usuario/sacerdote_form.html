@@ -33,7 +33,7 @@
 	{% csrf_token%}
 
 	<div class="row">
-		<div class="span8">
+		<div class="span10">
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Personales</legend>
 				<div class="control-group">
@@ -74,6 +74,25 @@
 
 				<div class="row">
 					<div class="span4">
+						<div class="control-group">
+							<div class="control-label">
+								{{form_sacerdote.nacionalidad.label}} 
+							</div>
+							
+							<div class="controls">
+								{{form_sacerdote.nacionalidad}}
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_sacerdote.nacionalidad.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_sacerdote.nacionalidad.errors}}
+								</div>
+							</div>
+						</div>
 						<div class="control-group">
 							<div class="control-label">
 								{{form_sacerdote.dni.label}} 
@@ -121,25 +140,6 @@
 						</div>
 					</div>
 				</div>
-                <div class="control-group">
-							<div class="control-label">
-								{{form_sacerdote.nacionalidad.label}}
-							</div>
-
-							<div class="controls">
-								{{form_sacerdote.nacionalidad}}
-							</div>
-							<div class="controls">
-								<div class='help-text'>
-									{{form_sacerdote.nacionalidad.help_text}}
-								</div>
-							</div>
-							<div class="controls">
-								<div class='errors'>
-									{{form_sacerdote.nacionalidad.errors}}
-								</div>
-							</div>
-						</div>
 				<div class="control-group">
 					<label for="id_lugar_nacimiento" class='control-label'>
 						{{form_sacerdote.lugar_nacimiento.label}} 

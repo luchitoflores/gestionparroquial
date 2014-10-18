@@ -41,10 +41,11 @@
 	{% csrf_token%}
 	
 	<div class='row'>
-		<div class='span8'>
+		<div class='span10'>
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos del Sacramento</legend>
-
+				<div class="row">
+					<div class="span8">
 						<div class='control-group'>
 							<label for="id_libro" class='control-label'>{{form_confirmacion.libro.label}}</label>
 							<div class='controls'>
@@ -141,10 +142,19 @@
 								</div>
 							</div>
 						</div>
+
+					</div>
+					
+
+
+
+				</div>
 			</fieldset>
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
-										<div class='control-group'>
+				<div class="row">
+					<div class="span8">
+						<div class='control-group'>
 							<label for="id_padrino" class='control-label'>{{form_confirmacion.padrino.label}}</label>
 							<div class='controls'>
 								{{form_confirmacion.padrino}}
@@ -172,6 +182,9 @@
 								</div>
 							</div>
 						</div>
+
+					</div>
+				</div>
 			</fieldset>
 			<div class="form-actions">
 				<button type="submit" class='btn btn-primary'> Guardar </button>

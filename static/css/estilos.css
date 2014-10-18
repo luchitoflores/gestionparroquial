@@ -27,20 +27,22 @@ body
 	/*padding: 40px;*/
 }
 
+
+
 h1{
 	font-family: 'Open Sans',Helvetica,Arial,sans-serif;
-    font-size:2em;
- }
+	/*color: #666666;*/
+}
 
 h2{
 	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
 }
 
+
 .help-text {
 	font-size: 9px;
 	color: #808080;
 }
-
 div.errors ul {
 	color: red;
 	font-size: 9px;
@@ -128,7 +130,7 @@ table{
 	margin: 0 auto;
 	clear: both;
 	border-collapse: separate;
-	overflow: hidden;
+	overflow: 'hidden';
 }
 
 /*@media (min-width:481px){ 
@@ -164,7 +166,7 @@ table{
 }
 
 .breadcrumb{
-	margin-bottom: 0;
+	margin-bottom: 1em;
 	margin-top: 0;
 }
 
@@ -181,13 +183,14 @@ table{
 		-webkit-background-size: 100%;
 		-moz-background-size: cover;
 		-o-background-size: cover;
+		font-size: 1em;
 		max-height: 100%;
 		max-width: 100%;
-		margin-top: 0em;
-        margin-bottom: 3em;
+		padding-top: 1em;
+		margin-top: 0em; 
+		padding-bottom: 2em; 
 		text-transform: uppercase;
 		text-rendering: optimizelegibility;
-        padding-left: 4em;
 		/*border-style: none none solid none;*/
 	}
 }
@@ -313,129 +316,5 @@ Estilos para las configuraciones iniciales
   border-radius: 15px;
 }
 
-div.accordion> .accordion-group>.accordion-heading{
-    color: #333;
-    /*background-color: #f5f5ff;*/
-    background-color: #b0c9ff;
-    border: 1px solid #aaaaaa;
-}
-
-div.accordion> .accordion-group>.accordion-heading>a{
-    color: rgb(0, 0, 0);
-}
-
-div.accordion> .accordion-group>.accordion-body.collapse
->.accordion-inner>a{
-    color: rgb(0, 0, 0);
-}
-
-.btn-primary {
-	color: #000000;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #8EB0CC;
-	*background-color: #8EB0CC;
-	background-image: -moz-linear-gradient(top, #DFE6F5, #8EB0CC);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#DFE6F5), to(#8EB0CC));
-	background-image: -webkit-linear-gradient(top, #DFE6F5, #8EB0CC);
-	background-image: -o-linear-gradient(top, #DFE6F5, #8EB0CC);
-	background-image: linear-gradient(to bottom, #DFE6F5, #8EB0CC);
-	background-repeat: repeat-x;
-	border-color: #8EB0CC;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DFE6F5', endColorstr='#8EB0CC', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-	color: #121212;
-	background-color: #8EB0CC;
-	*background-color: #003bb3;
-}
-
-
-/*Anadir paneles*/
-.panel {
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-}
-
-.panel-heading {
-  padding: 10px 15px;
-  margin: -15px -15px 15px;
-  font-size: 17.5px;
-  font-weight: 500;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #dddddd;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-}
-
-.panel-footer {
-  padding: 10px 15px;
-  margin: 15px -15px -15px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #dddddd;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-.panel-primary {
-  border-color: #428bca;
-}
-
-.panel-primary .panel-heading {
-  color: #ffffff;
-  background-color: #428bca;
-  border-color: #428bca;
-}
-
-.panel-success {
-  border-color: #d6e9c6;
-}
-
-.panel-success .panel-heading {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
-
-.panel-warning {
-  border-color: #fbeed5;
-}
-
-.panel-warning .panel-heading {
-  color: #c09853;
-  background-color: #fcf8e3;
-  border-color: #fbeed5;
-}
-
-.panel-danger {
-  border-color: #eed3d7;
-}
-
-.panel-danger .panel-heading {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
-
-.panel-info {
-  border-color: #bce8f1;
-}
-
-.panel-info .panel-heading {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
 /*Fin de las configuraciones iniciales*/
 

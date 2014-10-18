@@ -1,79 +1,137 @@
 {%extends 'base.html'%}
-{%load core_tags sacramentos_tags %}
+{%load tags%}
 
-{% block breadcrumbs %}
-{{ block.super }}
-<span class="divider">»</span>
-<li class='active'>Configuración Inicial</li>
-{% endblock %}
-
-{%block title%}{%block content_title%}
+{%block title%}
+{%if object.id%}
+Configuraciones de la Parroquia 
+{%else%}
 Configuraciones de la Parroquia
-{%endblock%}{%endblock%}
+{%endif%}
+{%endblock%}
+{%block content_title%}
+{%if object.id%} 
+Configuraciones de la Parroquia
+{%else%}
+Configuraciones de la Parroquia
+{%endif%}
+{%endblock%}
 
 {%block content%}
 
-<div id="errores"></div>
 
-<div id='bautismo'>
-	{% if not libro_bautismo %}
-	<strong>Libro de Bautismos</strong><span class="pull-right">2%</span>
-	<div class="progress">
-		<div class="bar bar-danger" style="width: 2%;"></div>
-	</div>
-	{% libro_bautismo %}
-	{% else %}
-	<strong>Libro de Bautismos</strong><span class="pull-right">100%</span>
-	<div class="progress">
-		<div class="bar bar-success" style="width: 100%;"></div>
-	</div>
-	{% endif %}
-</div>
-<div id='eucaristia'>
-	{% if not libro_eucaristia %}	
-	<strong>Libro de Primeras Comuniones</strong><span class="pull-right">2%</span>
-	<div class="progress">
-		<div class="bar bar-danger" style="width: 2%;"></div>
-	</div>
-	{% libro_eucaristia %}	
-	{% else %}
-	<strong>Libro de Primeras Comuniones</strong><span class="pull-right">100%</span>
-	<div class="progress">
-		<div class="bar bar-success" style="width: 100%;"></div>
-	</div>
-	{% endif %}
-</div>
-<div id='confirmacion'>
-	{% if not libro_confirmacion %}	
-	<strong>Libro de Confirmaciones</strong><span class="pull-right">2%</span>
-	<div class="progress">
-		<div class="bar bar-danger" style="width: 2%;"></div>
-	</div>
-	{% libro_confirmacion %}
-	{% else %}
-	<strong>Libro de Confirmaciones</strong><span class="pull-right">100%</span>
-	<div class="progress">
-		<div class="bar bar-success" style="width: 100%;"></div>
-	</div>
-	{% endif %}
-</div>
-<div id='matrimonio'>
-	{% if not libro_matrimonio %}
-	<strong>Libro de Matrimonios</strong><span class="pull-right">2%</span>
-	<div class="progress">
-		<div class="bar bar-danger" style="width: 2%;"></div>
-	</div>	
-	{% libro_matrimonio %}	
-	{% else %}
-	<strong>Libro de Matrimonios</strong><span class="pull-right">100%</span>
-	<div class="progress">
-		<div class="bar bar-success" style="width: 100%;"></div>
-	</div>
-	{% endif %}
-</div>
+<div class="tabbable tabs-left">
+	<ul class="nav nav-tabs">
+		<li  class="active"><a data-toggle="pill" href="#informacion">Informacion</a></li>
+		<li><a data-toggle="pill" href="#iglesia">Paso 1</a></li>
+		<li><a data-toggle="pill" href="#bautismo">Paso 2</a></li>
+		<li><a data-toggle="pill" href="#primeracomunion">Paso 3</a></li>
+		<li><a data-toggle="pill" href="#confirmacion">Paso 4</a></li>
+		<li><a data-toggle="pill" href="#matrimonio">Paso 5</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class='tab-pane active' id='información'>
+			<h2>Información</h2>		
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, deserunt velit id ad fugiat quia quod ut nemo cupiditate magni dicta sint officiis at rem excepturi repellat quidem placeat eius?
+			</p>
+		</div>
+		<div class='tab-pane' id='iglesia'>
+			<h2>Iglesia Matriz</h2>
+			<form action="" class="form-horizontal">
+				{%for f in form_iglesia%}
+				<div class="control-group">
+					<label class='control-label'>{{f.label_tag}}</label>
+					<div class="controls">
+						{{f}}
+					</div>
+				</div>
 
-	<!--</div>
-</div> -->
+				{%endfor%}
+				
+				<div class="form-actions">
+					<button class="btn btn-primary">Siguiente</button>
+				</div>
+			</form>
+		</div>
+		<div class='tab-pane' id='bautismo'>
+			<h2>Libro de Bautismos</h2>
+			<form action="" class="form-horizontal">
+				{%for f in form_libro_bautismo%}
+				<div class="control-group">
+					<label class='control-label'>{{f.label_tag}}</label>
+					<div class="controls">
+						{{f}}
+					</div>
+				</div>
+
+				{%endfor%}
+				
+				<div class="form-actions">
+					<button class="btn btn-primary">Siguiente</button>
+				</div>
+			</form>
+		</div>
+		<div class='tab-pane' id='primeracomunion'>
+			<h2>Libro de Primeras Comuniones</h2>
+			<form action="" class="form-horizontal">
+				{%for f in form_libro_pcomunion%}
+				<div class="control-group">
+					<label class='control-label'>{{f.label_tag}}</label>
+					<div class="controls">
+						{{f}}
+					</div>
+				</div>
+
+				{%endfor%}
+
+				<div class="form-actions">
+					<button class="btn btn-primary">Siguiente</button>
+				</div>
+			</form>			
+		</div>
+		<div class='tab-pane' id='confirmacion'>
+			<h2>Libro de Confirmaciones</h2>
+			<form action="" class="form-horizontal">
+				{%for f in form_libro_confirmacion%}
+				<div class="control-group">
+					<label class='control-label'>{{f.label_tag}}</label>
+					<div class="controls">
+						{{f}}
+					</div>
+				</div>
+
+				{%endfor%}
+
+				<div class="form-actions">
+					<button class="btn btn-primary">Siguiente</button>
+				</div>
+			</form>			
+		</div>
+		<div class='tab-pane' id='matrimonio'>
+			
+				<div class="form-actions">
+					<h2>Libro de Matrimonios</h2>
+				</div>
+			
+			<form action="" class="form-horizontal">
+				{%for f in form_libro_matrimonio%}
+				<div class="control-group">
+					<label class='control-label'>{{f.label_tag}}</label>
+					<div class="controls">
+						{{f}}
+					</div>
+				</div>
+
+				{%endfor%}
+
+				<div class="form-actions">
+					<button class="btn btn-primary">Siguiente</button>
+				</div>
+			</form>		
+		</div>
+
+	</div>
+</div>
 
 {% endblock%}
 

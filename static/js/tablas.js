@@ -61,7 +61,7 @@ function tablas_estilo_bootstrap(){
 	$.extend( $.fn.dataTableExt.oStdClasses, {
 		"sSortAsc": "header headerSortDown",
 		"sSortDesc": "header headerSortUp",
-		"sSortable": "header"
+		"sSortable": "header",
 	});
 
 	/* Bootstrap style pagination control */

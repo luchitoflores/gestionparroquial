@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
-    <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="" />
+    <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -603,7 +605,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="1" width="1300" height="766" extended-state="0" />
+    <frame x="65" y="1" width="1300" height="766" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />

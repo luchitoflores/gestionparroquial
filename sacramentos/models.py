@@ -312,8 +312,8 @@ class PerfilUsuario(TimeStampedModel):
     nombres_completos = models.CharField(max_length=100)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True, help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador', choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
-    padre = models.ForeignKey('self', related_name='+', null=True, blank=True, limit_choices_to={'sexo':'m'}, help_text='Presione buscar, si no está en la lista, presione crear')
-    madre = models.ForeignKey('self', related_name='+', null=True, blank=True, limit_choices_to={'sexo':'f'}, help_text='Presione buscar, si no está en la lista, presione crear')
+    padre = models.ForeignKey('PerfilUsuario', related_name='papa', null=True, blank=True, limit_choices_to={'sexo':'m'}, help_text='Presione buscar, si no está en la lista, presione crear')
+    madre = models.ForeignKey('PerfilUsuario', related_name='mama', null=True, blank=True, limit_choices_to={'sexo':'f'}, help_text='Presione buscar, si no está en la lista, presione crear')
     fecha_nacimiento = models.DateField(null=True, blank=True, 
         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
     lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True, help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
@@ -459,7 +459,7 @@ class Parroquia(TimeStampedModel):
 class Iglesia(TimeStampedModel):
     nombre = models.CharField(max_length=100)
     parroquia = models.ForeignKey(Parroquia, related_name='iglesias')
-    principal = models.BooleanField('Es la Iglesia Matriz?', default=False)
+    principal = models.BooleanField('Es la Iglesia Matriz?')
 
     class Meta:
        verbose_name=u'Iglesia'
@@ -488,12 +488,12 @@ class Libro(TimeStampedModel):
     numero_libro = models.PositiveIntegerField()
     tipo_libro=models.CharField(u'Tipo de Libro *', max_length=200, choices=TIPO_LIBRO_CHOICES, 
                                 help_text='Seleccione un tipo de libro Ej: Bautismo', default=TIPO_LIBRO_CHOICES[0][0])
-    fecha_apertura=models.DateField(u'Fecha apertura *',help_text='Ingrese una fecha Ej:22/07/2010')
+    fecha_apertura=models.DateField(help_text='Ingrese una fecha Ej:22/07/2010')
     fecha_cierre=models.DateField(null=True,blank=True,help_text='Ingrese una fecha Ej:22/07/2010')
     principal=models.BooleanField(u'Es principal', default=False)
     parroquia = models.ForeignKey('Parroquia', related_name='libros', help_text='Seleccione una parroquia')
-    primera_pagina = models.PositiveIntegerField(u'Primera página *')
-    primera_acta = models.PositiveIntegerField(u'Primera acta *')
+    primera_pagina = models.PositiveIntegerField()
+    primera_acta = models.PositiveIntegerField()
 
     objects=LibroManager()
 
@@ -623,7 +623,7 @@ class Matrimonio(Sacramento):
     testigo_novio = models.CharField(u'Testigo novio *',max_length=70,
 		help_text='Nombre de testigo ej: Pablo Robles')
     testigo_novia = models.CharField(u'Testigo novia *',max_length=70,help_text='Nombre de testiga ej:Fernanda Pincay')
-    vigente=models.BooleanField(default=None)
+    vigente=models.BooleanField()
     tipo_matrimonio=models.CharField(u'Tipo Matrimonio *', max_length=100,choices=TIPO_MATRIMONIO_CHOICES, default=TIPO_MATRIMONIO_CHOICES[1][1],
                                     help_text='Elija tipo de matrimonio Ej: Catolico o Mixto')
 
@@ -631,7 +631,7 @@ class Matrimonio(Sacramento):
         verbose_name=u'Matrimonio'
         verbose_name_plural = u'Matrimonios'
         get_latest_by = 'created'
-        ordering = ['-vigente','novio__user__last_name', 'novio__user__first_name', 'novia__user__last_name', 'novia__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
+        ordering = ['novio__user__last_name', 'novio__user__first_name', 'novia__user__last_name', 'novia__user__first_name', 'fecha_sacramento', 'lugar_sacramento']
 
     def __unicode__(self):
         return u'%s - %s' %(self.novio.user.last_name, self.novia.user.last_name )
@@ -664,7 +664,7 @@ class Intenciones(TimeStampedModel):
     ofrenda = models.DecimalField(decimal_places=2, max_digits=7,
         help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
     parroquia = models.ForeignKey('Parroquia')
-    individual = models.BooleanField('Es única?', default=None,
+    individual = models.BooleanField('Es única?', 
         help_text='Marque para indicar que la intención será la única en la misa')
     iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
 
@@ -710,7 +710,7 @@ class AsignacionParroquia(TimeStampedModel):
 class PeriodoAsignacionParroquia(TimeStampedModel):
     inicio = models.DateField(help_text='Ingrese la fecha de inicial de asignación Ej: dd/mm/aaaa')
     fin = models.DateField(null=True, blank=True, help_text='Ingrese la fecha final de asignación  Ej: dd/mm/aaaa') 
-    estado = models.BooleanField('Es administrador?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema', default=None)
+    estado = models.BooleanField('Es administrador?', help_text='Marque la casilla activo para indicar que el usuario puede acceder al sistema')
     asignacion = models.ForeignKey('AsignacionParroquia', related_name='periodos')
     objects = PeriodoAsignacionManager()
 
@@ -752,12 +752,4 @@ class ParametrizaParroquia(TimeStampedModel):
 
     def __unicode__(self):
         return 'Parametros-Parroquia: %s' %(self.parroquia.nombre)
-
-class Configuracion(TimeStampedModel):
-    diocesis = models.BooleanField(default=False)
-    iglesia = models.BooleanField(default=False)
-    libro_bautismo = models.BooleanField(default=False)    
-    libro_eucaristia = models.BooleanField(default=False)
-    libro_confirmacion = models.BooleanField(default=False)
-    libro_matrimonio = models.BooleanField(default=False)
     

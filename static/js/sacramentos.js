@@ -16,16 +16,13 @@ function inicio(){
 	crear_feligres('#id_crear_confirmado', '#id_confirmado','#id_modal_feligres');
 	crear_sacerdote('#id_crear_sacerdote');
 	crear_iglesia('#id_crear_iglesia');
-	crear_libro_sacramental('#id_libro_bautismo');
-	crear_libro_sacramental('#id_libro_eucaristia');
-	crear_libro_sacramental('#id_libro_confirmacion');
-	crear_libro_sacramental('#id_libro_matrimonio');
 	crear_libro('#id_crear_libro');
 	crear_secretaria('#id_form_crear_secretaria', '#id_persona','#id_crear_secretaria');
+	
 	asignar_padre();
 	asignar_email();
-	crear_nota_marginal('#id_form_crear_nota','#id_crear_nota','/api/crear/nota/');
-	crear_nota_marginal('#id_form_crear_nota_matrimonio','#id_crear_nota_matrimonio','/api/crear/nota_matrimonio/');
+	crear_nota_marginal($('#id_form_crear_nota'),'#id_crear_nota','/api/crear/nota/');
+	crear_nota_marginal($('#id_form_crear_nota_matrimonio'),'#id_crear_nota_matrimonio','/api/crear/nota_matrimonio/');
 	tablas_estilo_bootstrap();
 	ocultar_tablas_aceptar('#id_buscar_feligreses');
 	ocultar_tablas_aceptar('#id_buscar_hombres');
@@ -52,29 +49,12 @@ function inicio(){
 	controles_reportes();
 	controles_intenciones();
 	controles_provincias();
-    acordeon();
-	$(".dateinput").datepicker();
 
 	/*campo_no_requerido('#id_bautizado, #id_feligres, #id_confirmado');*/
 	/*modelo_tablas('#id_table_asignar_parroquia');*/
 
 }
 
-//Mantener la eleccion del acordeon
-function acordeon(){
-    var last=$.cookie('activeAccordionGroup');
-    if (last!=null) {
-        //remove default collapse settings
-        $("#accordion .collapse").removeClass('in');
-        //show the last visible group
-        $("#"+last).collapse("show");
-    }
-
-    $("#accordion").bind('shown', function() {
-    var active=$("#accordion .in").attr('id');
-    $.cookie('activeAccordionGroup', active)
-});
-}
 
 
 //Función para verificar si una tabla está vacía
@@ -383,6 +363,7 @@ function cargar_tabla_mujeres_en_modal(){
 
 
 function cargar_tabla_sacerdotes_en_modal(){
+	console.log('entre a cargar sacerdotes');
 	$('#id_form_busqueda_sacerdotes').on('submit', function(e){
 		e.preventDefault();
 		var url= '/api/sacerdote/';
@@ -637,10 +618,12 @@ function cancelar_modal(){
 }
 
 function crear_nota_marginal(id_form,id_modal,url_rest){
-    $(id_form).on('submit', function(e){
-    	$(id_form + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
-        e.preventDefault();
-        var id=$('#id_hidden').val();
+	$(id_form).on('submit', function(e){
+		// $('.alert').remove();
+		// $('span').remove();
+		$(id_form + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
+		e.preventDefault();
+		var id=$('#id_hidden').val();
 		var url = url_rest;
 		var json = $(this).serialize()+"&id="+id+"";
 		$.post(url, json, function(data){
@@ -704,7 +687,7 @@ function crear_iglesia(identificador){
 	});
 }
 
-// Función para crear un Libro de cualquier tipo de sacramento via Ajax
+// Función para crear un Libro via Ajax
 function crear_libro(identificador){
 	$(identificador).on('submit',function(e){
 		$('span').remove();
@@ -738,52 +721,6 @@ function crear_libro(identificador){
 		});
 
 	});
-}
-
-
-// Función para crear un Libro de cualquier tipo de sacramento via Ajax
-function crear_libro_sacramental(identificador){
-	$(identificador).on('submit',function(e){
-		$('span').remove();
-		$('.alert').remove();
-		$(identificador + ' #id_guardar').append("<i id='id_spinner' class='icon-refresh icon-spin'></i> ");
-		e.preventDefault();
-		var url = "/api/crear/libro/";
-		var json = $(this).serialize();
-		console.log(json);
-		$.post(url, json, function(data){
-			if(!data.respuesta){
-				var error = '<div class="alert alert-error">' + 
-				'<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				'<img src="/static/img/error.png" alt=""> Los datos del formulario son incorrectos </div>';
-				$('#errores').append(error);
-				$.each(data.errores, function(index, element){
-					var mensajes_error = '<span class="errors">' + element+ '</span>';
-					$(identificador + " #id_errors_"+index).append(mensajes_error);
-				});
-				$(identificador +' #id_spinner').remove();
-			}else{
-				sacramento = $(identificador + ' #id_tipo_libro').val();
-				console.log(sacramento)
-				/*$(identificador).remove();*/
-				switch(sacramento){
-					case 'bautismo': 
-					$('#'+sacramento).html('<div><strong>Libro de Bautismos</strong><span class="pull-right">100%</span><div class="progress"><div class="bar bar-success" style="width: 100%;"></div></div></div>');
-					break;
-					case 'eucaristia': 
-					$('#'+sacramento).html('<div><strong>Libro de Primeras Comuniones</strong><span class="pull-right">100%</span><div class="progress"><div class="bar bar-success" style="width: 100%;"></div></div></div>');
-					break;
-					case 'confirmacion': 
-					$('#'+sacramento).html('<div><strong>Libro de Confirmaciones</strong><span class="pull-right">100%</span><div class="progress"><div class="bar bar-success" style="width: 100%;"></div></div></div>');
-					break;
-					case 'matrimonio': 
-					$('#'+sacramento).html('<div><strong>Libro de Matrimonios</strong><span class="pull-right">100%</span><div class="progress"><div class="bar bar-success" style="width: 100%;"></div></div></div>');
-					break;
-				}
-			}
-		});
-
-});
 }
 
 //  Esta función llama a un modal para crear un padre para un feligrés
