@@ -49,9 +49,25 @@
 	{%csrf_token%}
 	
 	<div class="row">
-		<div class="span10">
+		<div class="span8">
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Personales</legend>
+                <div class="control-group">
+							{{form_perfil.dni|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.dni}}
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_perfil.dni.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_perfil.dni.errors}}
+								</div>
+							</div>
+						</div>
 				<div class="control-group">
 					{{form_usuario.first_name|label_with_classes:'control-label'}}
 					<div class="controls">
@@ -105,39 +121,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="control-group">
-							{{form_perfil.nacionalidad|label_with_classes:'control-label'}}
-							<div class="controls">
-								{{form_perfil.nacionalidad}}
-							</div>
-							<div class="controls">
-								<div class='help-text'>
-									{{form_perfil.nacionalidad.help_text}}
-								</div>
-							</div>
-							<div class="controls">
-								<div class='errors'>
-									{{form_perfil.nacionalidad.errors}}
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							{{form_perfil.dni|label_with_classes:'control-label'}}
-							<div class="controls">
-								{{form_perfil.dni}}
-							</div>
-							<div class="controls">
-								<div class='help-text'>
-									{{form_perfil.dni.help_text}}
-								</div>
-							</div>
-							<div class="controls">
-								<div class='errors'>
-									{{form_perfil.dni.errors}}
-								</div>
-							</div>
-						</div>
-
 					</div>
 					<div class="span4">
 						<div class="control-group">
@@ -194,6 +177,22 @@
 							{{form_perfil.fecha_nacimiento.errors}}
 						</div>
 					</div>
+				</div>
+                <div class="control-group">
+							{{form_perfil.nacionalidad|label_with_classes:'control-label'}}
+							<div class="controls">
+								{{form_perfil.nacionalidad}}
+							</div>
+							<div class="controls">
+								<div class='help-text'>
+									{{form_perfil.nacionalidad.help_text}}
+								</div>
+							</div>
+							<div class="controls">
+								<div class='errors'>
+									{{form_perfil.nacionalidad.errors}}
+								</div>
+							</div>
 				</div>
 				<div class="control-group">
 					{{form_perfil.lugar_nacimiento|label_with_classes:'control-label'}}

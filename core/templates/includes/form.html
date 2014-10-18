@@ -1,17 +1,17 @@
-	{% csrf_token %}
-	{% for f in form %}
-	<div class="control-group">
-		<div class="control-label">{{f.label}}</div>
-		<div class="controls">{{f}}</div>
-		<div class="controls">
-			<div class="help-text">
-				{{f.help_text}}
-			</div>
+{% csrf_token %}
+{% for f in form %}
+<div class="control-group">
+	<div class="control-label">{{f.label}}</div>
+	<div class="controls">{{f}}</div>
+	<div class="controls">
+		<div class="help-text">
+			{{f.help_text}}
 		</div>
-		<div class="controls">
-			<div id="id_errors_{{f.html_name}}" class="errors">
-				{{f.errors}}
-			</div>
+	</div>
+	<div class="controls">
+		<div id="id_errors_{{f.html_name}}" class="errors">
+			{{f.errors}}
 		</div>
-	</div>	
-	{% endfor %}
+	</div>
+</div>	
+{% endfor %}
