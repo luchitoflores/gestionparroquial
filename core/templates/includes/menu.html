@@ -1,0 +1,23 @@
+{% if user.is_authenticated %}
+      {% if menuvar %}
+        <div class="accordion" id="accordion">
+            {% for m in menuvar.menu %}
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse{{ m.id }}">
+                            {{ m.nombre }} <span class="pull-right">»</span>
+                        </a>
+                    </div>
+                    <div id="collapse{{ m.id }}" class="accordion-body collapse in">
+                        {% for s in m.submenu %}
+                            <div class="accordion-inner">
+                                <a href="{{ s.url }}">{{ s.nombre }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}

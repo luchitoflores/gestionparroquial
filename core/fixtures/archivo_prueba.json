@@ -1,0 +1,641 @@
+[
+{
+    "fields": {
+        "padre": null,
+        "editable": false,
+        "descripcion": "Genero",
+        "nombre": "Genero",
+        "codigo": "GEN",
+        "estado": 1
+    },
+    "model": "core.catalogo",
+    "pk": 1
+},
+{
+    "fields": {
+        "padre": null,
+        "editable": false,
+        "descripcion": "Estado",
+        "nombre": "Estado",
+        "codigo": "EST",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 2
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Masculino",
+        "valor": "M",
+        "catalogo": 1,
+        "nombre": "Masculino",
+        "codigo": "M",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 1
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Femenino",
+        "valor": "F",
+        "catalogo": 1,
+        "nombre": "Femenino",
+        "codigo": "F",
+        "estado": 1,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 2
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Activo",
+        "valor": "A",
+        "catalogo": 2,
+        "nombre": "Activo",
+        "codigo": "A",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 3
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Inactivo",
+        "valor": "I",
+        "catalogo": 2,
+        "nombre": "Inactivo",
+        "codigo": "I",
+        "estado": 1,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 4
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Administrar parroquias",
+        "codigo": "FUN_ID",
+        "estado": true,
+        "eliminada": false
+    },
+    "model": "core.funcion",
+    "pk": 1
+},
+{
+    "fields": {
+        "orden": 3,
+        "modulo": 1,
+        "url": "confirmacion_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "es para administrar ",
+        "nombre": "Confirmaciones",
+        "icono": "bbb",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 1
+},
+{
+    "fields": {
+        "orden": 4,
+        "modulo": 1,
+        "url": "matrimonio_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Matrimonio",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 2
+},
+{
+    "fields": {
+        "orden": 1,
+        "modulo": 1,
+        "url": "bautismo_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Bautismo",
+        "icono": "sas",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 3
+},
+{
+    "fields": {
+        "orden": 2,
+        "modulo": 1,
+        "url": "eucaristia_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "assa",
+        "nombre": "Primera comunion",
+        "icono": "sassa",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 4
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 3,
+        "url": "provincia_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Provincia",
+        "icono": "wqwwq",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 5
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 3,
+        "url": "canton_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Canton",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 6
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 3,
+        "url": "parroquiacivil_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Parroquia Civil",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 7
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 4,
+        "url": "configuracion_inicial",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Configuraciones Iniciales",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 8
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 4,
+        "url": "log_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Logs del sistema",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 9
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 4,
+        "url": "group_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Grupos y permisos",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 10
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 5,
+        "url": "iglesia_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Iglesias",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 11
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 5,
+        "url": "libro_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Libros",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 12
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 5,
+        "url": "intencion_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Intenciones",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 13
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 5,
+        "url": "directorio_parroquias",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Directorio de Parroquias",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 14
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 5,
+        "url": "parroquia_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Parroquia Eclesiastica",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 15
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 6,
+        "url": "reporte_anual",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte Anual de Sacramentos",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 16
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 6,
+        "url": "reporte_intenciones",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte de Intenciones",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 17
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 6,
+        "url": "reporte_permiso",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte de Permisos",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 18
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 7,
+        "url": "usuario_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ],
+            [
+                "Feligres"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Feligres",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 19
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 7,
+        "url": "sacerdote_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Sacerdote",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 20
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 7,
+        "url": "asignar_secretaria_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "secretaria",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 21
+},
+{
+    "fields": {
+        "orden": null,
+        "modulo": 7,
+        "url": "administrador_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Administrador",
+        "icono": "",
+        "estado": true
+    },
+    "model": "core.funcionalidad",
+    "pk": 22
+},
+{
+    "fields": {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        "descripcion": "Sirve para administrar sacramentos",
+        "nombre": "Administrar Sacramentos",
+        "codigo": "adm_sacramentos",
+        "estado": true,
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 1
+},
+{
+    "fields": {
+        "descripcion": "Sirve para adminsitrar las ciudades",
+        "nombre": "Ciudades",
+        "codigo": "CIUDDS",
+        "estado": true,
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 3
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Seguridad",
+        "codigo": "Seguridad",
+        "estado": true,
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 4
+},
+{
+    "fields": {
+        "descripcion": "Parroquia",
+        "nombre": "Parroquia",
+        "codigo": "Parroquia",
+        "estado": true,
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 5
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Reportes",
+        "codigo": "REPORT",
+        "estado": true,
+        "orden": null
+    },
+    "model": "core.modulo",
+    "pk": 6
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Personas",
+        "codigo": "Person",
+        "estado": true,
+        "orden": null
+    },
+    "model": "core.modulo",
+    "pk": 7
+}
+]

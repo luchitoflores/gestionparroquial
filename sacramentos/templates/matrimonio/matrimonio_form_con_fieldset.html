@@ -1,0 +1,437 @@
+{% extends 'base.html' %}
+{% load tags sacramentos_tags %}
+
+{% block title %}{% block content_title %}
+    {% if object.id %}Editar Matrimonio {% else %}Agregar Matrimonio{% endif %}
+{% endblock %}{% endblock %}
+
+{% block extrascript %}
+    <script>
+        $(document).on('ready', function () {
+            $('#id_eliminar').on('click', function (e) {
+                $('#id_eliminar').append(" <i id='id_spinner' class='icon-refresh icon-spin'></i>");
+                e.preventDefault();
+                $.post('/matrimonio/{{object.id}}/vigencia/', function (data) {
+                    if (data.respuesta) {
+                        $('#id_vigencia').hide();
+                        $(location).attr('href', '/matrimonio/no_vigentes/');
+                        $('#id_spinner').remove();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li><a href="{% url 'matrimonio_list' %}">Matrimonios</a></li>
+    <span class="divider">»</span>
+    {% if object.id %}
+        <li class='active'>{{ object }}</li>{% else %}
+    <li class='active'>Nuevo
+    </li>{% endif %}
+{% endblock %}
+
+{% block content %}
+    <input id='id_hidden_sacramento' type="hidden" value="{{ tipo_sacramento }}">
+    <!-- Div para manejar mensajes de error -->
+    <div id="id_mensaje"></div>
+    {% if object.id %}
+        <div class="btn-toolbar pull-right">
+            <div class="btn-group">
+                <button data-toggle="dropdown" class=" btn btn-primary dropdown-toggle">
+                    <i class='icon-print'></i> Reportes <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="{% url 'matrimonio_certificado' pk=object.id %}" target="_blank"><i
+                                class='icon-file-text-alt'></i> Partida Matrimonial</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    <!-- Pestañas para datos del feligres, y del bautizo -->
+    <input id='id_hidden' type="hidden" value='{{ object.id }}'>
+    <form id='id_form_matrimonio' action="." method='POST' class='form-horizontal'>
+    {% csrf_token %}
+
+    <div class='row'>
+        <div class='span8'>
+            <div class="panel panel-default">
+                <div class="panel-heading">Datos de los Novios</div>
+                <div class="panel-body">
+                    <fieldset class='scheduler-border'>
+                        <legend class='scheduler-border'>Datos de los Novios</legend>
+                        <div class='control-group'>
+                            <label for="id_novio" class='control-label'>{{ form_matrimonio.novio.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.novio }}
+                                <a href="#id_buscar_hombres" class='btn btn-primary' data-toggle='modal'><i
+                                        class='icon-search'></i></a>
+                                <a href="#id_modal_padre" class='btn btn-primary' data-toggle='modal'><i
+                                        class='icon-plus'></i></a>
+                            </div>
+                            <div class="controls">
+                                <div class="help-text">
+                                    {{ form_matrimonio.novio.help_text }}
+                                </div>
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.novio.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='control-group'>
+                            <label for="id_novia" class='control-label'>{{ form_matrimonio.novia.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.novia }}
+                                <a href="#id_buscar_mujeres" class='btn btn-primary' data-toggle='modal'><i
+                                        class='icon-search'></i></a>
+                                <a href="#id_modal_madre" class='btn btn-primary' data-toggle='modal'><i
+                                        class='icon-plus'></i></a>
+                            </div>
+                            <div class="controls">
+                                <div class="help-text">
+                                    {{ form_matrimonio.novia.help_text }}
+                                </div>
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.novia.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Datos del Sacramento</div>
+            <div class="panel-body">
+                <fieldset class='scheduler-border'>
+                    <legend class='scheduler-border'>Datos del Sacramento</legend>
+                                            <div class='control-group'>
+                                <label for="id_libro" class='control-label'>{{ form_matrimonio.libro.label }}</label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.libro }}
+                                    <a href="#id_modal_libro" class='btn btn-primary' data-toggle='modal'><i
+                                            class='icon-plus'></i></a>
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.libro.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.libro.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='control-group'>
+                                <label for="id_tipo_matrimonio"
+                                       class='control-label'>{{ form_matrimonio.tipo_matrimonio.label }}</label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.tipo_matrimonio }}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.tipo_matrimonio.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.tipo_matrimonio.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='control-group'>
+                                <label for="id_fecha_sacramento"
+                                       class='control-label'>{{ form_matrimonio.fecha_sacramento.label }} *</label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.fecha_sacramento }}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.fecha_sacramento.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.fecha_sacramento.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='control-group'>
+                                <label for="id_lugar_sacramento"
+                                       class='control-label'>{{ form_matrimonio.lugar_sacramento.label }}</label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.lugar_sacramento }}
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.lugar_sacramento.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.lugar_sacramento.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='control-group'>
+                                <label for="id_iglesia"
+                                       class='control-label'>{{ form_matrimonio.iglesia.label }}</label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.iglesia }}
+                                    <a class='btn btn-primary' href="#id_modal_iglesia" data-toggle='modal'><i
+                                            class='icon-plus'></i></a>
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.iglesia.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.iglesia.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='control-group'>
+                                <label for="id_celebrante" class='control-label'>
+                                    {{ form_matrimonio.celebrante.label }}
+                                </label>
+
+                                <div class='controls'>
+                                    {{ form_matrimonio.celebrante }}
+                                    <a href="#id_buscar_sacerdotes" class='btn btn-primary' data-toggle='modal'><i
+                                            class='icon-search'></i></a>
+                                    <a href="#id_modal_sacerdote" class='btn btn-primary' data-toggle='modal'><i
+                                            class='icon-plus'></i></a>
+                                </div>
+                                <div class="controls help-text">
+                                    {{ form_matrimonio.celebrante.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ form_matrimonio.celebrante.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                                       </fieldset>
+            </div>
+        </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Datos de Testigos y Padrinos</div>
+        <div class="panel-body">
+
+            <fieldset class='scheduler-border'>
+                <legend class='scheduler-border'>Datos de Testigos y Padrinos</legend>
+                <div class="row">
+                    <div class='span4'>
+
+                        <div class='control-group'>
+                            <label for="id_testigo_novio"
+                                   class='control-label'>{{ form_matrimonio.testigo_novio.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.testigo_novio }}
+                            </div>
+                            <div class="controls help-text">
+                                {{ form_matrimonio.testigo_novio.help_text }}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.testigo_novio.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class='control-group'>
+                            <label for="id_testigo_novia"
+                                   class='control-label'>{{ form_matrimonio.testigo_novia.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.testigo_novia }}
+                            </div>
+                            <div class="controls help-text">
+                                {{ form_matrimonio.testigo_novia.help_text }}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.testigo_novia.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+
+                        <div class='control-group'>
+                            <label for="id_padrino" class='control-label'>{{ form_matrimonio.padrino.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.padrino }}
+                            </div>
+                            <div class="controls help-text">
+                                {{ form_matrimonio.padrino.help_text }}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.padrino.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class='control-group'>
+                            <label for="id_madrina" class='control-label'>{{ form_matrimonio.madrina.label }}</label>
+
+                            <div class='controls'>
+                                {{ form_matrimonio.madrina }}
+                            </div>
+                            <div class="controls help-text">
+                                {{ form_matrimonio.madrina.help_text }}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form_matrimonio.madrina.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+
+
+    {% if object.id %}
+        <div class="panel panel-default">
+  <div class="panel-heading">
+      {% if perms.sacramentos.add_notamarginal %}
+                    <a id='#id_crear_nota' class='btn btn-primary' href="#id_crear_nota_matrimonio" data-toggle='modal'>Agregar
+                        Nota Marginal</a>
+                {% endif %}
+  </div>
+  <div class="panel-body">
+        <fieldset id='id_fielset_tabla' class='scheduler-border'>
+            <legend class='scheduler-border'>
+                {% if perms.sacramentos.add_notamarginal %}
+                    <a id='#id_crear_nota' class='btn btn-primary' href="#id_crear_nota_matrimonio" data-toggle='modal'>Agregar
+                        Nota Marginal</a>
+                {% endif %}
+            </legend>
+            <table id='id_table_nota_matrimonio' class='table table-bordered table-striped'>
+                <thead>
+                <tr class='alert alert-info'>
+                    <th>Fecha</th>
+                    <th>Descripcion</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {% if notas %}
+                    {% for o in notas %}
+                        <tr>
+                            <td> {{ o.fecha }}</td>
+                            <td>{{ o.descripcion }}</td>
+                        </tr>
+
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2">{{ "No existen notas marginales" }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </fieldset>
+      </div>
+</div>
+    {% endif %}
+    <div class="form-actions">
+
+        <button type="submit" class='btn btn-primary'> Guardar</button>
+
+        {% if perms.sacramentos.delete_matrimonio %}
+            {% if object.vigente %}
+                <a id='id_delete' class='btn btn-success' href="#id_vigencia" role="button" data-toggle="modal">Quitar
+                    Vigencia
+                </a>
+            {% endif %}
+        {% endif %}
+        <a href="{% url 'matrimonio_list' %}" class='btn btn-danger'>Cancelar</a>
+
+    </div>
+    </div>
+    </div>
+    </form>
+
+    <!--Modal para crear Notas Marginales -->
+    <div id="id_crear_nota_matrimonio" class="modal hide fade" data-backdrop='static'>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h3>Crear Nota Marginal</h3>
+        </div>
+        <div id='id_mensaje_nota'>
+
+        </div>
+        <div class="modal-body">
+            <form id='id_form_crear_nota_matrimonio' class='form-horizontal' method='POST'>
+                {% nota_marginal %}
+
+                <div class="control-group">
+                    <div class='controls'>
+                        <input id='id_guardar' type="submit" value='Guardar' class='btn btn-primary'>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <a id='id_cancelar_nota' href="." class="btn btn-primary" data-dismiss="modal">Cancelar</a>
+        </div>
+    </div>
+
+    <!-- Modal para quitar la vigencia de un matrimonio-->
+    <div id="id_vigencia" class="modal hide fade" tabindex="5">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h3>Eliminar Vigencia del Matrimonio</h3>
+        </div>
+        <div class="modal-body">
+            <p>Está seguro de querer eliminar la vigencia del matrimonio de:</p>
+
+            <p><strong>{{ object.novio }}</strong> y <strong>{{ object.novia }}</strong></p>
+        </div>
+        <div class="modal-footer">
+            <a id='id_eliminar' href="." class="btn btn-primary">Eliminar Vigencia </a>
+            <a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+        </div>
+    </div>
+
+
+    {% include 'includes/buscar_hombres_ajax.html' %}
+    {% include 'includes/buscar_mujeres_ajax.html' %}
+    {% include 'includes/buscar_sacerdotes_ajax.html' %}
+
+    <!-- Inclusion Tags-->
+    {% libro %}
+    {% feligres %}
+    {% sacerdote %}
+    {% iglesia %}
+    {% hombre %}
+    {% mujer %}
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<form id='id_libro_eucaristia' class='form-horizontal' action="." method="POST">
+	{% csrf_token %}
+	
+	{% for f in form_libro %}
+	{% ifequal f.label form_libro.tipo_libro.label %}
+	{{ f.as_hidden }}
+	{% else %}
+	<div class="control-group">
+		<div class="control-label">{{f.label}}</div>
+		<div class="controls">{{f}}</div>
+		<div class="controls">
+			<div class="help-text">
+				{{f.help_text}}
+			</div>
+		</div>
+		<div class="controls">
+			<div id="id_errors_{{f.html_name}}" class="errors">
+				{{f.errors}}
+			</div>
+		</div>
+	</div>	
+	{% endifequal %}
+	{% endfor %}
+
+	<div class="form-actions">
+		<button id='id_guardar' class="btn btn-primary" type="submit"> Guardar </button>
+	</div>
+	
+</form>
