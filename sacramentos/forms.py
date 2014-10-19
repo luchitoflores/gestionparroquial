@@ -434,10 +434,10 @@ class SacramentosForm(ModelForm):
         self.fields['libro'].empty_label = '-- Seleccione --'
         self.fields['iglesia'].empty_label = '-- Seleccione --'
         self.fields['iglesia'].queryset = Iglesia.objects.filter(parroquia=parroquia)
-        try:
-            self.fields['iglesia'].initial = Iglesia.objects.get(principal=True, parroquia=parroquia)
-        except ObjectDoesNotExist:
-            messages.info(request, 'No tiene configurada una Iglesia principal')
+        # try:
+        #     self.fields['iglesia'].initial = Iglesia.objects.get(principal=True, parroquia=parroquia)
+        # except ObjectDoesNotExist:
+        #     messages.info(request, 'No tiene configurada una Iglesia principal')
 
         if not self.instance.id:
             self.fields['celebrante'].queryset = PerfilUsuario.objects.parroco(parroquia)
@@ -464,11 +464,11 @@ class BautismoForm(SacramentosForm):
         parroquia = request.session.get('parroquia')
         super(BautismoForm, self).__init__(request, *args, **kwargs)
         self.fields['libro'].queryset = Libro.objects.filter(tipo_libro='bautismo', parroquia=parroquia, es_activo=True)
-        try:
-            self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='bautismo', parroquia=parroquia,
-                                                             es_activo=True)
-        except ObjectDoesNotExist:
-            messages.info(request, 'No tiene configurado un Libro de bautismos principal')
+        # try:
+        #     self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='bautismo', parroquia=parroquia,
+        #                                                      es_activo=True)
+        # except ObjectDoesNotExist:
+        #     messages.info(request, 'No tiene configurado un Libro de bautismos principal')
 
         if not self.instance.id:
             self.fields['bautizado'] = forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
@@ -514,11 +514,11 @@ class EucaristiaForm(SacramentosForm):
         parroquia = request.session.get('parroquia')
         self.fields['libro'].queryset = Libro.objects.filter(tipo_libro='eucaristia', parroquia=parroquia,
                                                              es_activo=True)
-        try:
-            self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='eucaristia',
-                                                             parroquia=parroquia, es_activo=True)
-        except ObjectDoesNotExist:
-            messages.info(request, 'No tiene configurado un Libro principal de primeras comuniones')
+        # try:
+        #     self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='eucaristia',
+        #                                                      parroquia=parroquia, es_activo=True)
+        # except ObjectDoesNotExist:
+        #     messages.info(request, 'No tiene configurado un Libro principal de primeras comuniones')
 
         if not self.instance.id:
             self.fields['feligres'] = forms.ModelChoiceField(required=True, queryset=Bautismo.objects.none(),
@@ -566,11 +566,11 @@ class ConfirmacionForm(SacramentosForm):
         parroquia = request.session.get('parroquia')
         self.fields['libro'].queryset = Libro.objects.filter(tipo_libro='confirmacion', parroquia=parroquia,
                                                              es_activo=True)
-        try:
-            self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='confirmacion',
-                                                             parroquia=parroquia, es_activo=True)
-        except ObjectDoesNotExist:
-            messages.info(request, 'No tiene configurado un Libro principal de confirmaciones')
+        # try:
+        #     self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='confirmacion',
+        #                                                      parroquia=parroquia, es_activo=True)
+        # except ObjectDoesNotExist:
+        #     messages.info(request, 'No tiene configurado un Libro principal de confirmaciones')
 
         if not self.instance.id:
             self.fields['confirmado'] = forms.ModelChoiceField(required=True, queryset=Confirmacion.objects.none(),
@@ -622,11 +622,11 @@ class MatrimonioForm(SacramentosForm):
         self.fields['tipo_matrimonio'].empty_label = "-- Seleccione --"
         self.fields['libro'].queryset = Libro.objects.filter(tipo_libro='matrimonio', parroquia=parroquia,
                                                              es_activo=True)
-        try:
-            self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='matrimonio',
-                                                             parroquia=parroquia, es_activo=True)
-        except ObjectDoesNotExist:
-            messages.info(request, 'No tiene configurado un Libro principal de matrimonios')
+        # try:
+        #     self.fields['libro'].initial = Libro.objects.get(principal=True, tipo_libro='matrimonio',
+        #                                                      parroquia=parroquia, es_activo=True)
+        # except ObjectDoesNotExist:
+        #     messages.info(request, 'No tiene configurado un Libro principal de matrimonios')
 
         self.fields['tipo_matrimonio'].widget = forms.Select(attrs={'required': ''},
                                                              choices=Matrimonio.TIPO_MATRIMONIO_CHOICES)
