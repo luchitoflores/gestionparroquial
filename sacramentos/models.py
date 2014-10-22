@@ -15,6 +15,7 @@ from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
 
 from ciudades.models import Direccion
+from core.models import Item
 from sacramentos.managers import PersonaManager, LibroManager, PeriodoAsignacionManager
 
 
@@ -674,7 +675,7 @@ class NotaMarginal(TimeStampedModel):
         return self.descripcion
 
 
-class Intenciones(TimeStampedModel):
+class Intencion(TimeStampedModel):
     intencion = models.TextField(max_length=500,
                                  help_text='Ingrese la intención. Ej: Aniversario de fallecimiento')
     fecha = models.DateField(help_text=
@@ -685,8 +686,8 @@ class Intenciones(TimeStampedModel):
     ofrenda = models.DecimalField(decimal_places=2, max_digits=7,
                                   help_text='Ingrese el valor de la ofrenda por la intención. Ej: 5')
     parroquia = models.ForeignKey('Parroquia')
-    individual = models.BooleanField('Es única?', default=None,
-                                     help_text='Marque para indicar que la intención será la única en la misa')
+    #tipo_intencion = models.ForeignKey(Item, related_name='tipo_intencion', help_text='Elija el tipo de intencion')
+    individual = models.BooleanField('Es unica?', help_text='Elija el tipo de intencion', default=None)
     iglesia = models.ForeignKey('Iglesia', help_text='Escoja la iglesia en donde se celebrará la intención')
 
     class Meta:

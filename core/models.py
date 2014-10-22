@@ -24,6 +24,7 @@ class Catalogo(models.Model):
     def __unicode__(self):
         return self.nombre
 
+
 class Item(models.Model):
     catalogo = models.ForeignKey(Catalogo)
     codigo = models.CharField(max_length=50)
@@ -39,10 +40,9 @@ class Item(models.Model):
         unique_together = ('catalogo', 'codigo',)
         verbose_name_plural = 'Items'
 
-
-
     def __unicode__(self):
         return self.nombre
+
 
 class Funcion(models.Model):
     codigo = models.CharField(max_length=50)
@@ -81,8 +81,7 @@ class Parametro(models.Model):
     valor = models.CharField(max_length=50)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
-    tipo_parametro =  models.ForeignKey(Item, related_name='tipo_parametro')
-
+    tipo_parametro = models.ForeignKey(Item, related_name='tipo_parametro')
 
     class Meta:
         verbose_name_plural = u'Parametros'

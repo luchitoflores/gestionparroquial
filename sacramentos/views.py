@@ -36,7 +36,7 @@ import reportlab
 
 from sacramentos.models import (PerfilUsuario,
                                 Libro, Matrimonio, Bautismo, Eucaristia, Confirmacion, NotaMarginal,
-                                Parroquia, Intenciones,
+                                Parroquia, Intencion,
                                 AsignacionParroquia, PeriodoAsignacionParroquia,
                                 ParametrizaDiocesis, ParametrizaParroquia,
                                 Iglesia
@@ -1395,7 +1395,7 @@ class DirectorioParroquiasListView(BusquedaMixin, ListView):
 
 
 @login_required(login_url='/login/')
-@permission_required('sacramentos.add_intenciones', login_url='/login/',
+@permission_required('sacramentos.add_intencion', login_url='/login/',
                      raise_exception=permission_required)
 def intencion_create_view(request):
     template_name = 'intencion/intencion_form.html'
@@ -1414,8 +1414,8 @@ def intencion_create_view(request):
             individual = request.POST.get('individual')
             intencion = form_intencion.save(commit=False)
 
-            intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
-            intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
+            intencion_unica = Intencion.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia, individual=True)
+            intenciones_colectivas = Intencion.objects.filter(fecha=fecha, hora=hora, parroquia=parroquia)
             if intencion_unica:
                 messages.error(request, MENSAJE_ERROR)
                 form_intencion.errors['individual'] = ErrorList([
@@ -1461,14 +1461,14 @@ def intencion_create_view(request):
 
 
 @login_required(login_url='/login/')
-@permission_required('sacramentos.change_intenciones', login_url='/login/',
+@permission_required('sacramentos.change_intencion', login_url='/login/',
                      raise_exception=permission_required)
 def intencion_edit_view(request, pk):
     parroquia = request.session.get('parroquia')
     if not parroquia:
         raise PermissionDenied
 
-    intencion = get_object_or_404(Intenciones, pk=pk)
+    intencion = get_object_or_404(Intencion, pk=pk)
 
     template_name = 'intencion/intencion_form.html'
     success_url = '/intencion/'
@@ -1480,9 +1480,9 @@ def intencion_edit_view(request, pk):
             fecha = request.POST.get('fecha')
             hora = request.POST.get('hora')
             individual = request.POST.get('individual')
-            intencion_unica = Intenciones.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia,
+            intencion_unica = Intencion.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia,
                                                          individual=True).exclude(pk=pk)
-            intenciones_colectivas = Intenciones.objects.filter(fecha=fecha, hora=hora,
+            intenciones_colectivas = Intencion.objects.filter(fecha=fecha, hora=hora,
                                                                 parroquia=intencion.parroquia).exclude(pk=pk)
             if intencion_unica:
                 messages.error(request, MENSAJE_ERROR)
@@ -1519,7 +1519,7 @@ def intencion_edit_view(request, pk):
 
 
 class IntencionListView(BusquedaMixin, ListView):
-    model = Intenciones
+    model = Intencion
     template_name = 'intencion/intencion_list.html'
     paginate_by = 10
 
@@ -1528,15 +1528,15 @@ class IntencionListView(BusquedaMixin, ListView):
         if parroquia:
             name = self.request.GET.get('q', '')
             if (name != ''):
-                return Intenciones.objects.filter(oferente__icontains=name, parroquia=parroquia).order_by('-fecha',
+                return Intencion.objects.filter(oferente__icontains=name, parroquia=parroquia).order_by('-fecha',
                                                                                                           'hora')
             else:
-                return Intenciones.objects.filter(parroquia=parroquia).order_by('-fecha', 'hora')
+                return Intencion.objects.filter(parroquia=parroquia).order_by('-fecha', 'hora')
         else:
             raise PermissionDenied
 
     @method_decorator(login_required(login_url='/login/'))
-    @method_decorator(permission_required('sacramentos.change_intenciones', login_url='/login/',
+    @method_decorator(permission_required('sacramentos.change_intencion', login_url='/login/',
                                           raise_exception=permission_required))
     def dispatch(self, *args, **kwargs):
         return super(IntencionListView, self).dispatch(*args, **kwargs)
@@ -2483,9 +2483,9 @@ def reporte_anual_sacramentos(request):
 
 
 @login_required(login_url='/login/')
-@permission_required('sacramentos.add_intenciones', login_url='/login/',
+@permission_required('sacramentos.add_intencion', login_url='/login/',
                      raise_exception=permission_required)
-@permission_required('sacramentos.change_intenciones', login_url='/login/',
+@permission_required('sacramentos.change_intencion', login_url='/login/',
                      raise_exception=permission_required)
 def reporte_intenciones(request):
     parroquia = request.session.get('parroquia')
@@ -2499,13 +2499,13 @@ def reporte_intenciones(request):
     if tipo == 'd':
         if fecha and not hora:
             p = ParametrizaDiocesis.objects.all()
-            intenciones = Intenciones.objects.filter(fecha=fecha, parroquia=parroquia).order_by('hora')
-            suma = Intenciones.objects.filter(fecha=fecha, parroquia=parroquia).aggregate(Sum('ofrenda'))[
+            intenciones = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).order_by('hora')
+            suma = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).aggregate(Sum('ofrenda'))[
                 'ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
+            if intenciones:
 
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_intenciones.html',
@@ -2531,9 +2531,9 @@ def reporte_intenciones(request):
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
-            intenciones = Intenciones.objects.filter(fecha=fecha, hora=hora,
+            intenciones = Intencion.objects.filter(fecha=fecha, hora=hora,
                                                      parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intenciones.objects.filter(fecha=fecha, hora=hora,
+            suma = Intencion.objects.filter(fecha=fecha, hora=hora,
                                               parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=asignacion.parroquia, periodos__estado=True)
@@ -2568,9 +2568,9 @@ def reporte_intenciones(request):
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
-            intenciones = Intenciones.objects.filter(fecha__year=anio, fecha__month=mes,
+            intenciones = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
                                                      parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intenciones.objects.filter(fecha__year=anio, fecha__month=mes,
+            suma = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
                                               parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=asignacion.parroquia, periodos__estado=True)
@@ -2602,9 +2602,9 @@ def reporte_intenciones(request):
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
-            intenciones = Intenciones.objects.filter(fecha__year=anio,
+            intenciones = Intencion.objects.filter(fecha__year=anio,
                                                      parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intenciones.objects.filter(fecha__year=anio,
+            suma = Intencion.objects.filter(fecha__year=anio,
                                               parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=asignacion.parroquia, periodos__estado=True)

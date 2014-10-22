@@ -15,7 +15,7 @@ from django.utils.html import format_html, mark_safe
 
 from .models import (PerfilUsuario,
                      Libro, Sacramento, Matrimonio, Bautismo, Eucaristia, Confirmacion, Bautismo,
-                     Direccion, Intenciones, NotaMarginal, Parroquia, Iglesia, AsignacionParroquia,
+                     Direccion, Intencion, NotaMarginal, Parroquia, Iglesia, AsignacionParroquia,
                      PeriodoAsignacionParroquia,
                      ParametrizaDiocesis, ParametrizaParroquia, )
 from .validators import validate_cedula
@@ -734,7 +734,7 @@ class NotaMarginalForm(ModelForm):
 #Form para Intenciones de Misa - Funcionando
 class IntencionForm(ModelForm):
     class Meta:
-        model = Intenciones
+        model = Intencion
         fields = ('oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'individual', 'iglesia')
         widgets = {
             'intencion': forms.Textarea(attrs={'required': '', 'title': 'intencion'}),

@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('core', '0017_auto_20141019_2318'),
         ('ciudades', '__first__'),
     ]
 
@@ -68,7 +69,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Intenciones',
+            name='Intencion',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
@@ -79,7 +80,6 @@ class Migration(migrations.Migration):
                 ('hora', models.TimeField(help_text=b'Ingrese la hora de celebraci\xc3\xb3n de la intenci\xc3\xb3n Ej: 17:00')),
                 ('oferente', models.CharField(help_text=b'Ingrese quien ofrece la intenci\xc3\xb3n. Ej: La Flia Flores', max_length=70)),
                 ('ofrenda', models.DecimalField(help_text=b'Ingrese el valor de la ofrenda por la intenci\xc3\xb3n. Ej: 5', max_digits=7, decimal_places=2)),
-                ('individual', models.BooleanField(help_text=b'Marque para indicar que la intenci\xc3\xb3n ser\xc3\xa1 la \xc3\xbanica en la misa', verbose_name=b'Es \xc3\xbanica?')),
                 ('iglesia', models.ForeignKey(help_text=b'Escoja la iglesia en donde se celebrar\xc3\xa1 la intenci\xc3\xb3n', to='sacramentos.Iglesia')),
             ],
             options={
@@ -225,7 +225,7 @@ class Migration(migrations.Migration):
                 ('es_activo', models.BooleanField(default=True, verbose_name=b'Est\xc3\xa1 activo?')),
                 ('inicio', models.DateField(help_text=b'Ingrese la fecha de inicial de asignaci\xc3\xb3n Ej: dd/mm/aaaa')),
                 ('fin', models.DateField(help_text=b'Ingrese la fecha final de asignaci\xc3\xb3n  Ej: dd/mm/aaaa', null=True, blank=True)),
-                ('estado', models.BooleanField(help_text=b'Marque la casilla activo para indicar que el usuario puede acceder al sistema', verbose_name=b'Es administrador?')),
+                ('estado', models.BooleanField(default=None, help_text=b'Marque la casilla activo para indicar que el usuario puede acceder al sistema', verbose_name=b'Es administrador?')),
                 ('asignacion', models.ForeignKey(related_name=b'periodos', to='sacramentos.AsignacionParroquia')),
             ],
             options={
@@ -261,7 +261,7 @@ class Migration(migrations.Migration):
                 ('sacramento_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='sacramentos.Sacramento')),
                 ('testigo_novio', models.CharField(help_text=b'Nombre de testigo ej: Pablo Robles', max_length=70, verbose_name='Testigo novio *')),
                 ('testigo_novia', models.CharField(help_text=b'Nombre de testiga ej:Fernanda Pincay', max_length=70, verbose_name='Testigo novia *')),
-                ('vigente', models.BooleanField()),
+                ('vigente', models.BooleanField(default=None)),
                 ('tipo_matrimonio', models.CharField(default=b'Catolico', help_text=b'Elija tipo de matrimonio Ej: Catolico o Mixto', max_length=100, verbose_name='Tipo Matrimonio *', choices=[(b'', b'-- Seleccione --'), (b'Catolico', b'Catolico'), (b'Mixto', b'Mixto')])),
                 ('novia', models.ForeignKey(related_name=b'matrimonios_mujer', to='sacramentos.PerfilUsuario', help_text=b'Seleccione una novia')),
                 ('novio', models.ForeignKey(related_name=b'matrimonios_hombre', to='sacramentos.PerfilUsuario', help_text=b'Seleccione un novio')),
@@ -368,9 +368,15 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='intenciones',
+            model_name='intencion',
             name='parroquia',
             field=models.ForeignKey(to='sacramentos.Parroquia'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='intencion',
+            name='tipo_intencion',
+            field=models.ForeignKey(related_name=b'tipo_intencion', to='core.Item', help_text=b'Elija el tipo de intencion'),
             preserve_default=True,
         ),
         migrations.AddField(

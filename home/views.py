@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
 from sacramentos.models import (PerfilUsuario,
 	Libro,Matrimonio,Bautismo,Eucaristia,Confirmacion,NotaMarginal,
-	Parroquia, Intenciones,
+	Parroquia, Intencion,
 	AsignacionParroquia, PeriodoAsignacionParroquia,
 	ParametrizaDiocesis,ParametrizaParroquia,
 	)

@@ -9,7 +9,7 @@
 
 {%block content%}
 {% include 'includes/busqueda_form.html' %} 
-{%if perms.sacramentos.add_intenciones %}
+{%if perms.sacramentos.add_intencion %}
 <a href="{%url 'intencion_create'%}" class='btn btn-primary'>Nueva Intención</a>
 {%endif%}
 

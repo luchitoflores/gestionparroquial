@@ -8,7 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import (
 PerfilUsuario,
 Libro, Bautismo, Eucaristia, Confirmacion, Matrimonio, NotaMarginal,
-Intenciones,
+Intencion,
 Parroquia, Iglesia, Direccion, 
 AsignacionParroquia,
 PeriodoAsignacionParroquia,
@@ -33,7 +33,7 @@ admin.site.register(AsignacionParroquia)
 admin.site.register(Bautismo)
 admin.site.register(Confirmacion)
 admin.site.register(Eucaristia)
-admin.site.register(Intenciones)
+admin.site.register(Intencion)
 admin.site.register(Libro, LibroAdmin)
 admin.site.register(Matrimonio)
 admin.site.register(NotaMarginal)
