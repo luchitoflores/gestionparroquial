@@ -429,8 +429,9 @@ function devolver_campos_de_lista(map,id_male,id_female){
 		var id =  $(this).parents('tr').attr('id');
 		console.log('id: ' + id);
 		var objeto = map[id];
-		console.log('objeto: ' + objeto);
-		if(objeto.sexo =='m'){
+		console.log('objeto prueba: ' + objeto);
+		if(objeto.sexo =='M'){
+            console.log('entre aqui')
 			$(id_male+' option').remove();
 			$(id_male).append('<option value=""> -- Seleccione --</option><option value='+objeto.id+' selected>'+ objeto.full_name+'</option>');
 			limpiar_campos('#id_query_nombres, #id_query_apellidos','#id_query_cedula');
@@ -444,7 +445,7 @@ function devolver_campos_de_lista(map,id_male,id_female){
 			ocultar_bottom('.bottom');
 
 		} 
-		if (objeto.sexo =='f') {
+		if (objeto.sexo =='F') {
 			$(id_female+' option').remove();
 			$(id_female).append('<option value=""> -- Seleccione --</option><option value='+objeto.id+' selected>'+ objeto.full_name+'</option>');
 			limpiar_campos('#id_query_nombres, #id_query_apellidos','#id_query_cedula');
@@ -474,7 +475,7 @@ function prueba2(id){
 	console.log('id: ' + id);
 	var objeto = map[id];
 	console.log('objeto: ' + objeto);
-	if(objeto.sexo =='m'){
+	if(objeto.sexo =='M'){
 		$('#id_padre option').remove();
 		$('#id_padre').append('<option value=""> -- Seleccione --</option><option value='+objeto.id+' selected>'+ objeto.full_name+'</option>');	
 		$('#id_novio option').remove();
@@ -500,7 +501,7 @@ function prueba2(id){
 		ocultar_bottom('.bottom');
 		
 	}
-	if(objeto.sexo =='f'){
+	if(objeto.sexo =='F'){
 		$('#id_madre option').remove();
 		$('#id_madre').append('<option value=""> -- Seleccione --</option><option value='+objeto.id+' selected>'+ objeto.full_name+'</option>');
 		$('#id_novia option').remove();
@@ -935,13 +936,10 @@ function seleccionar_cantones(identificador){
 		$('#id_parroquia').prop('disabled', true);
 
 		var url = '/api/ciudades/select/';
-		var provincia = $(identificador + ' option:selected').text();
-		var ctx = {'provincia': provincia}
-
+		var provincia = $(identificador + ' option:selected').val();
+        var ctx = {'provincia': provincia}
 		$.get(url, ctx, function(data){
-			console.log(data.cantones)
 			$.each(data.cantones, function(index, element){
-				console.log(element);
 				$('#id_canton').prop('disabled', false);
 				$('#id_canton').append(element.option)
 			});
@@ -956,11 +954,9 @@ function seleccionar_parroquias(identificador){
 		$('#id_parroquia').prop('disabled', true);
 		e.preventDefault();
 		var url = '/api/ciudades/select/';
-		var canton = $(identificador + ' option:selected').text();
-		var ctx = {'canton': canton}
-
+		var canton = $(identificador + ' option:selected').val();
+        var ctx = {'canton': canton}
 		$.get(url, ctx, function(data){
-			console.log(data.parroquias)
 			$.each(data.parroquias, function(index, element){
 				$('#id_parroquia').prop('disabled', false);
 				$('#id_parroquia').append(element.option)

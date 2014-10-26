@@ -1,120 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'base_site.html' %}
+{% load static from staticfiles %}
 {% block title %}{%block content_title%} 
 Sistema de Gestión Sacramental Ekklesia
 {% endblock %}{% endblock %}
 
 {%block content%}
-<table>
-	<tbody>
-		<tr>
-			<td>
-				<h2 style="text-align: center;">Ekklesia, el software para las Diócesis</h2>
-				<p style="text-align: justify;">&nbsp;</p>
-				<p style="text-align: justify;">
-					Ekklesia es un software que permite gestionar los procesos que se llevan a cabo en un parroquia eclesiástica. 
-				</p>
-				<p style="text-align: justify;">
-					Ekklesia es una solución para la Gestión Integral de las Diócesis. Dispone de diversas funcionalidades que permiten administrar cada una de las Parroquias que pertenecen a la Diócesis.
-				</p>
-				<p style="text-align: justify;">Las parroquias, además de continuar llevando los libros sacramentales tradicionales, gracias a Ekklesia pueden registrar digitalmente los bautismos, confirmaciones, matrimonios e intenciones, de esta forma se dispone de una copia informatizada de los archivos parroquiales. 
-				</p>
-			</td>
-		</tr>
-	</tbody>
-</table>
 
-<div class="row-fluid">
-	<div class="span10 offset1">
-		<ul class="thumbnails">
-			<li class="span4">
-				<div>
-					<div style='text-align: center'>
-						<img src="/static/img/administrator-icon.png" alt="">
-						<h2 class='inicio'>Administrador</h2>
-					</div>
-					<ul>
-					<li class='item'>
-							Administrar Usuarios: Feligreses, Sacerdotes, Secretarias y Administradores
-						</li>
-						<li class='item'>	Administrar Ciudades: Provincias, Cantones y Parroquias Civiles
-						</li>
-						<li class='item'>Administrar Parroquias: Parroquias Eclesiásticas
-						</li>
-						<li class='item'>
-							Administrar Parámetros: Parámetros de la Diócesis
-						</li>
-						<li class='item'>
-							Asignación: Asignar un Párroco a una Parroquia Eclesiástica
-						</li>
-						<li class='item'>
-							Administrar Grupos y Permisos: Grupos de Usuario y Permisos
-						</li>
-						<li class='item'>
-							Visualizar Logs: Exporta los Logs del Sistema
-						</li>
-					</ul>
-				</div>
-			</li>
-			<li class="span4">
-				<div>
-					<div style='text-align: center'>
-						<img src="/static/img/priest-icon.png" alt="">
-						<h2 class='inicio'>Sacerdote</h2>
-					</div>
-					<ul>
-					<li class='item'>
-							Crear Usuarios: Feligreses y Secretarias
-						</li>
+  <img class="background-image" src="{% static 'img/espiritu-santo.jpg' %}" id="bg" alt="">
 
-						<li class='item'>
-							Administrar Parámetros: Parámetros de la Parroquia
-						</li>
-						<li class='item'>
-							Asignación: Asignar un (a) Secretari@ a una Parroquia Eclesiástica
-						</li>
-						<li class='item'>
-							Administrar Libros: Libros de la Parroquia
-						</li>
-					</ul>
-				</div>
-			</li>
 
-			<li class="span4">
-				<div>
-					<div style='text-align: center'>
-						<img src="/static/img/book-open-icon.png" alt="">
-						<h2 class='inicio'>Secretaria</h2>
-					</div>
-					<ul>
-					<li class='item'>
-							Administrar Usuarios: Feligreses y Certificado de Honorabilidad
-						</li>
-
-						<li class='item'>
-							Administrar Bautismos: Sacramento de Bautismo y Certificado
-						</li>
-						<li class='item'>
-							Administrar Eucaristía: Sacramento de Eucaristía y Certificado
-						</li>
-						<li class='item'>
-							Administrar Confirmación: Sacramento de Confirmación y Certificado
-						</li>
-						<li class='item'>
-							Administrar Matrimonios: Sacramento de Matrimonio y Certificado
-						</li>
-						<li class='item'>
-							Administrar Intenciones de Misa: Intenciones de misa de cada Parroquia Eclesiástica
-						</li>
-						<li class='item'>
-							Reportes: Reporte Anual de Sacramentos, Intenciones y Permisos
-						</li>
-					</ul>
-
-				</div>
-			</li>
-
-		</ul>
-	</div>
-</div>
 
 {%endblock%}

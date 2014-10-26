@@ -64,269 +64,27 @@ class TimeStampedModel(models.Model):
 class PerfilUsuario(TimeStampedModel):
     # p.f00_size
     # p.get_foo_size_display()
-    ESTADO_CIVIL_CHOICES = (
-        ('', '-- Seleccione --'),
-        ('s', 'Soltero/a'),
-        ('c', 'Casado/a'),
-        ('d', 'Divorciado/a'),
-        ('v', 'Viudo/a')
-    )
-
     SEXO_CHOICES = (
         ('', '-- Seleccione --'),
         ('m', 'Masculino'),
         ('f', 'Femenino')
     )
-
-    NACIONALIDAD_CHOICES = (
-        ('', '-- Seleccione --'),
-        ('EC', 'Ecuador'),
-        ('AF', 'Afganistán'),
-        ('AL', 'Albania'),
-        ('DE', 'Alemania'),
-        ('AD', 'Andorra'),
-        ('AO', 'Angola'),
-        ('AI', 'Anguilla'),
-        ('AQ', 'Antártida'),
-        ('AG', 'Antigua y Barbuda'),
-        ('AN', 'Antillas Holandesas'),
-        ('SA', 'Arabia Saudí'),
-        ('DZ', 'Argelia'),
-        ('AR', 'Argentina'),
-        ('AM', 'Armenia'),
-        ('AW', 'Aruba'),
-        ('AU', 'Australia'),
-        ('AT', 'Austria'),
-        ('AZ', 'Azerbaiyán'),
-        ('BS', 'Bahamas'),
-        ('BH', 'Bahrein'),
-        ('BD', 'Bangladesh'),
-        ('BB', 'Barbados'),
-        ('BE', 'Bélgica'),
-        ('BZ', 'Belice'),
-        ('BJ', 'Benin'),
-        ('BM', 'Bermudas'),
-        ('BY', 'Bielorrusia'),
-        ('MM', 'Birmania'),
-        ('BO', 'Bolivia'),
-        ('BA', 'Bosnia y Herzegovina'),
-        ('BW', 'Botswana'),
-        ('BR', 'Brasil'),
-        ('BN', 'Brunei'),
-        ('BG', 'Bulgaria'),
-        ('BF', 'Burkina Faso'),
-        ('BI', 'Burundi'),
-        ('BT', 'Bután'),
-        ('CV', 'Cabo Verde'),
-        ('KH', 'Camboya'),
-        ('CM', 'Camerún'),
-        ('CA', 'Canadá'),
-        ('TD', 'Chad'),
-        ('CL', 'Chile'),
-        ('CN', 'China'),
-        ('CY', 'Chipre'),
-        ('VA', 'Ciudad del Vaticano (Santa Sede)'),
-        ('CO', 'Colombia'),
-        ('KM', 'Comores'),
-        ('CG', 'Congo'),
-        ('CD', 'Congo, República Democrática del'),
-        ('KR', 'Corea'),
-        ('KP', 'Corea del Norte'),
-        ('CI', 'Costa de Marfíl'),
-        ('CR', 'Costa Rica'),
-        ('HR', 'Croacia (Hrvatska)'),
-        ('CU', 'Cuba'),
-        ('DK', 'Dinamarca'),
-        ('DJ', 'Djibouti'),
-        ('DM', 'Dominica'),
-        ('EG', 'Egipto'),
-        ('SV', 'El Salvador'),
-        ('AE', 'Emiratos Árabes Unidos'),
-        ('ER', 'Eritrea'),
-        ('SI', 'Eslovenia'),
-        ('ES', 'España'),
-        ('GM', 'Gambia'),
-        ('GE', 'Georgia'),
-        ('GH', 'Ghana'),
-        ('GI', 'Gibraltar'),
-        ('GD', 'Granada'),
-        ('GR', 'Grecia'),
-        ('GL', 'Groenlandia'),
-        ('GP', 'Guadalupe'),
-        ('GU', 'Guam'),
-        ('GT', 'Guatemala'),
-        ('GY', 'Guayana'),
-        ('GF', 'Guayana Francesa'),
-        ('GN', 'Guinea'),
-        ('GQ', 'Guinea Ecuatorial'),
-        ('GW', 'Guinea-Bissau'),
-        ('HT', 'Haití'),
-        ('HN', 'Honduras'),
-        ('HU', 'Hungría'),
-        ('IN', 'India'),
-        ('ID', 'Indonesia'),
-        ('IQ', 'Irak'),
-        ('IR', 'Irán'),
-        ('IE', 'Irlanda'),
-        ('BV', 'Isla Bouvet'),
-        ('CX', 'Isla de Christmas'),
-        ('IS', 'Islandia'),
-        ('KY', 'Islas Caimán'),
-        ('CK', 'Islas Cook'),
-        ('CC', 'Islas de Cocos o Keeling'),
-        ('FO', 'Islas Faroe'),
-        ('HM', 'Islas Heard y McDonald'),
-        ('FK', 'Islas Malvinas'),
-        ('MP', 'Islas Marianas del Norte'),
-        ('MH', 'Islas Marshall'),
-        ('UM', 'Islas menores de Estados Unidos'),
-        ('PW', 'Islas Palau'),
-        ('SB', 'Islas Salomón'),
-        ('SJ', 'Islas Svalbard y Jan Mayen'),
-        ('TK', 'Islas Tokelau'),
-        ('TC', 'Islas Turks y Caicos'),
-        ('VI', 'Islas Vírgenes (EE.UU.)'),
-        ('VG', 'Islas Vírgenes (Reino Unido)'),
-        ('WF', 'Islas Wallis y Futuna'),
-        ('IL', 'Israel'),
-        ('IT', 'Italia'),
-        ('JM', 'Jamaica'),
-        ('JP', 'Japón'),
-        ('JO', 'Jordania'),
-        ('KZ', 'Kazajistán'),
-        ('KE', 'Kenia'),
-        ('KG', 'Kirguizistán'),
-        ('KI', 'Kiribati'),
-        ('KW', 'Kuwait'),
-        ('LA', 'Laos'),
-        ('LS', 'Lesotho'),
-        ('LV', 'Letonia'),
-        ('LB', 'Líbano'),
-        ('LR', 'Liberia'),
-        ('LY', 'Libia'),
-        ('LI', 'Liechtenstein'),
-        ('LT', 'Lituania'),
-        ('LU', 'Luxemburgo'),
-        ('MK', 'Macedonia'),
-        ('MG', 'Madagascar'),
-        ('MY', 'Malasia'),
-        ('MW', 'Malawi'),
-        ('MV', 'Maldivas'),
-        ('ML', 'Malí'),
-        ('MT', 'Malta'),
-        ('MA', 'Marruecos'),
-        ('MQ', 'Martinica'),
-        ('MU', 'Mauricio'),
-        ('MR', 'Mauritania'),
-        ('YT', 'Mayotte'),
-        ('MX', 'México'),
-        ('FM', 'Micronesia'),
-        ('MD', 'Moldavia'),
-        ('MC', 'Mónaco'),
-        ('MN', 'Mongolia'),
-        ('MS', 'Montserrat'),
-        ('MZ', 'Mozambique'),
-        ('NA', 'Namibia'),
-        ('NR', 'Nauru'),
-        ('NP', 'Nepal'),
-        ('NI', 'Nicaragua'),
-        ('NE', 'Níger'),
-        ('NG', 'Nigeria'),
-        ('NU', 'Niue'),
-        ('NF', 'Norfolk'),
-        ('NO', 'Noruega'),
-        ('NC', 'Nueva Caledonia'),
-        ('NZ', 'Nueva Zelanda'),
-        ('OM', 'Omán'),
-        ('NL', 'Países Bajos'),
-        ('PA', 'Panamá'),
-        ('PG', 'Papúa Nueva Guinea'),
-        ('PK', 'Paquistán'),
-        ('PY', 'Paraguay'),
-        ('PE', 'Perú'),
-        ('PN', 'Pitcairn'),
-        ('PF', 'Polinesia Francesa'),
-        ('PL', 'Polonia'),
-        ('PT', 'Portugal'),
-        ('PR', 'Puerto Rico'),
-        ('QA', 'Qatar'),
-        ('UK', 'Reino Unido'),
-        ('CF', 'República Centroafricana'),
-        ('CZ', 'República Checa'),
-        ('ZA', 'República de Sudáfrica'),
-        ('DO', 'República Dominicana'),
-        ('SK', 'República Eslovaca'),
-        ('RE', 'Reunión'),
-        ('RW', 'Ruanda'),
-        ('RO', 'Rumania'),
-        ('RU', 'Rusia'),
-        ('EH', 'Sahara Occidental'),
-        ('KN', 'Saint Kitts y Nevis'),
-        ('WS', 'Samoa'),
-        ('AS', 'Samoa Americana'),
-        ('SM', 'San Marino'),
-        ('VC', 'San Vicente y Granadinas'),
-        ('SH', 'Santa Helena'),
-        ('LC', 'Santa Lucía'),
-        ('ST', 'Santo Tomé y Príncipe'),
-        ('SN', 'Senegal'),
-        ('SC', 'Seychelles'),
-        ('SL', 'Sierra Leona'),
-        ('SG', 'Singapur'),
-        ('SY', 'Siria'),
-        ('SO', 'Somalia'),
-        ('LK', 'Sri Lanka'),
-        ('PM', 'St. Pierre y Miquelon'),
-        ('SZ', 'Suazilandia'),
-        ('SD', 'Sudán'),
-        ('SE', 'Suecia'),
-        ('CH', 'Suiza'),
-        ('SR', 'Surinam'),
-        ('TH', 'Tailandia'),
-        ('TW', 'Taiwán'),
-        ('TZ', 'Tanzania'),
-        ('TJ', 'Tayikistán'),
-        ('TF', 'Territorios franceses del Sur'),
-        ('TP', 'Timor Oriental'),
-        ('TG', 'Togo'),
-        ('TO', 'Tonga'),
-        ('TT', 'Trinidad y Tobago'),
-        ('TN', 'Túnez'),
-        ('TM', 'Turkmenistán'),
-        ('TR', 'Turquía'),
-        ('TV', 'Tuvalu'),
-        ('UA', 'Ucrania'),
-        ('UG', 'Uganda'),
-        ('UY', 'Uruguay'),
-        ('UZ', 'Uzbekistán'),
-        ('VU', 'Vanuatu'),
-        ('VE', 'Venezuela'),
-        ('VN', 'Vietnam'),
-        ('YE', 'Yemen'),
-        ('YU', 'Yugoslavia'),
-        ('ZM', 'Zambia'),
-        ('ZW', 'Zimbabue')
-    )
-
     # se lo puede llamar con related_name usuario o con el método get_profile
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='usuario', null=True, blank=True)
     nombres_completos = models.CharField(max_length=100)
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True,
                            help_text='Ingrese un numero de cedula ej:1101980561')
-    nacionalidad = models.CharField(max_length=2, help_text='Escoja la nacionalidad. Ej: Ecuador',
-                                    choices=NACIONALIDAD_CHOICES, default=NACIONALIDAD_CHOICES[0][0])
-    padre = models.ForeignKey('self', related_name='+', null=True, blank=True, limit_choices_to={'sexo': 'm'},
-                              help_text='Presione buscar, si no está en la lista, presione crear')
-    madre = models.ForeignKey('self', related_name='+', null=True, blank=True, limit_choices_to={'sexo': 'f'},
-                              help_text='Presione buscar, si no está en la lista, presione crear')
+    nacionalidad = models.ForeignKey(Item, related_name='persona', help_text='Escoja la nacionalidad. Ej: Ecuador')
+    padre = models.ForeignKey('self', related_name='+', null=True, blank=True, help_text='Presione buscar, si no está en la lista, presione crear')
+    madre = models.ForeignKey('self', related_name='+', null=True, blank=True, help_text='Presione buscar, si no está en la lista, presione crear')
     fecha_nacimiento = models.DateField(null=True, blank=True,
                                         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
     lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True,
                                         help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
-    sexo = models.CharField(max_length=10, choices=SEXO_CHOICES, default=SEXO_CHOICES[0][0],
-                            help_text='Elija el sexo de la persona. Ej: Masculino')
-    estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0],
-                                    help_text='Elija el estado civil. Ej: Soltero/a')
+    sexo = models.ForeignKey(Item, related_name='genero', help_text='Elija el sexo de la persona. Ej: Masculino')
+    estado_civil = models.ForeignKey(Item, related_name='estado_civil', help_text='Elija el estado civil. Ej: Soltero/a')
+    # estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0],
+    #                                 help_text='Elija el estado civil. Ej: Soltero/a')
     profesion = models.CharField(max_length=40, null=True, blank=True, help_text='Ingrese la profesión de la persona')
     celular = models.CharField(max_length=10, blank=True, null=True,
                                help_text='Ingrese su número celular. Ej: 0986522754')
@@ -389,7 +147,7 @@ class PerfilUsuario(TimeStampedModel):
         username = u'%s%s' % (nombres[0][0], apellidos[0])
         user_name = PerfilUsuario.objects.username_disponible(username)
 
-        if user_name == True:
+        if user_name:
             return username
         else:
             personas = PerfilUsuario.objects.filter(user__username__startswith=username).latest('user__date_joined')
@@ -400,10 +158,10 @@ class PerfilUsuario(TimeStampedModel):
                     digitos += d
 
             if digitos == '':
-                username = username + str(1)
+                username += str(1)
             else:
                 digitos = int(digitos) + 1
-                username = username + str(digitos)
+                username += str(digitos)
             return username
 
     def es_casado(self):
@@ -412,14 +170,14 @@ class PerfilUsuario(TimeStampedModel):
         else:
             return False
 
-    def es_hombre(self):
-        if self.sexo == 'm':
+    def es_mujer(self):
+        if self.sexo == Item.objects.femenino():
             return True
         else:
             return False
 
-    def es_mujer(self):
-        if self.sexo == 'f':
+    def es_hombre(self):
+        if self.sexo == Item.objects.masculino():
             return True
         else:
             return False
@@ -559,7 +317,7 @@ class Sacramento(TimeStampedModel):
     libro = models.ForeignKey(Libro, verbose_name='Libro *', related_name='%(class)s_libro',
                               help_text='Seleccione un libro')
     parroquia = models.ForeignKey('Parroquia', related_name='%(class)s_parroquia')
-
+    #padrinos = models.ManyToOneRel('Padrino', related_name='padrinos')
 
     def ultimo_libro(self, libro):
         return self.__class__.objects.filter(libro=libro).latest('created')
@@ -785,4 +543,7 @@ class Configuracion(TimeStampedModel):
     libro_eucaristia = models.BooleanField(default=False)
     libro_confirmacion = models.BooleanField(default=False)
     libro_matrimonio = models.BooleanField(default=False)
-    
+
+
+class Padrino(models.Model):
+    nombre = models.CharField('nombre', max_length=50)

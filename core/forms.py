@@ -10,7 +10,15 @@ class ItemForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
-        self.fields['estado'].queryset = Item.objects.ItemsPorCatalogoCodigo('EST')
+        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')
+        if self.instance.id:
+            if self.instance.catalogo.padre:
+                self.fields['padre'].queryset = Item.objects.filter(catalogo=self.instance.catalogo.padre)
+            else:
+                self.fields['padre'].queryset = Item.objects.none()
+        else:
+            self.fields['padre'].queryset = Item.objects.none()
+
 
 class CatalogoForm(ModelForm):
     class Meta:
@@ -19,7 +27,14 @@ class CatalogoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CatalogoForm, self).__init__(*args, **kwargs)
-        self.fields['estado'].queryset = Item.objects.ItemsPorCatalogoCodigo('EST')
+        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')
+        if self.instance.id:
+            if self.instance.padre:
+                self.fields['padre'].queryset = Catalogo.objects.filter(id=self.instance.padre.id)
+            else:
+                self.fields['padre'].queryset = Catalogo.objects.all()
+        else:
+            self.fields['padre'].queryset = Catalogo.objects.all()
 
 class ParametroForm(ModelForm):
     class Meta:
@@ -28,4 +43,4 @@ class ParametroForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ParametroForm, self).__init__(*args, **kwargs)
-        self.fields['estado'].queryset = Item.objects.ItemsPorCatalogoCodigo('EST')
+        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')

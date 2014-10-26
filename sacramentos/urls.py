@@ -37,12 +37,15 @@ from sacramentos.views import (
 )
 
 # from sacramentos.rest import ParroquiaResource
-from .serializer import IntencionViewSet
+from .serializer import IntencionViewSet, PerfilUsuarioViewSet
 
 # entry_resource = ParroquiaResource()
 
 router = routers.DefaultRouter()
 router.register(r'intencion', IntencionViewSet)
+router.register(r'usuario', PerfilUsuarioViewSet)
+
+
 urlpatterns = patterns('',
                        url(r'^api-auth/', include(router.urls)),
                        url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

@@ -65,7 +65,7 @@ from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
 from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
-
+from core.models import Item
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
     raise ImportError("Reportlab Version 2.1+ is needed!")
@@ -456,9 +456,9 @@ def sacerdote_create_view(request):
             usuario.save()
             usuario.groups.add(sacerdotes)
             sacerdote.user = usuario
-            sacerdote.sexo = 'm'
+            sacerdote.sexo = Item.objects.masculino()
             sacerdote.profesion = 'Sacerdote'
-            sacerdote.estado_civil = 's'
+            sacerdote.estado_civil = Item.objects.soltero()
             sacerdote.save()
             LogEntry.objects.log_action(
                 user_id=request.user.id,
@@ -1076,8 +1076,8 @@ def matrimonio_create_view(request):
                 matrimonio.pagina = pagina + 1
                 matrimonio.numero_acta = num + 1
 
-            novio.estado_civil = 'c'
-            novia.estado_civil = 'c'
+            novio.estado_civil = Item.objects.casado()
+            novia.estado_civil = Item.objects.casado()
             novio.save()
             novia.save()
             matrimonio.novio = novio
@@ -1137,8 +1137,8 @@ def matrimonio_update_view(request, pk):
             matrimonio = form_matrimonio.save(commit=False)
             novio = matrimonio.novio
             novia = matrimonio.novia
-            novio.estado_civil = 'c'
-            novia.estado_civil = 'c'
+            novio.estado_civil = Item.objects.casado()
+            novia.estado_civil = Item.objects.casado()
             novio.save()
             novia.save()
             matrimonio.novio = novio
@@ -1247,8 +1247,8 @@ def matrimonio_vigencia_view(request, pk):
     if request.method == 'POST':
         novio = matrimonio.novio
         novia = matrimonio.novia
-        novio.estado_civil = 'v'
-        novia.estado_civil = 'v'
+        novio.estado_civil = Item.objects.viudo()
+        novia.estado_civil = Item.objects.viudo()
         novio.save()
         novia.save()
         matrimonio.vigente = False
@@ -1298,8 +1298,8 @@ def parroquia_create_view(request):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST)
         form_direccion = DireccionForm(request.POST)
-        form_direccion.fields['canton'].queryset = Canton.objects.all()
-        form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
         if form_parroquia.is_valid() and form_direccion.is_valid():
             parroquia = form_parroquia.save(commit=False)
             direccion = form_direccion.save()
@@ -1338,8 +1338,8 @@ def parroquia_update_view(request, pk):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
         form_direccion = DireccionForm(request.POST, instance=direccion)
-        form_direccion.fields['canton'].queryset = Canton.objects.all()
-        form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
         if form_parroquia.is_valid() and form_direccion.is_valid():
             form_parroquia.save()
             form_direccion.save()
@@ -1363,8 +1363,8 @@ def parroquia_update_view(request, pk):
     else:
         form_parroquia = ParroquiaForm(instance=parroquia)
         form_direccion = DireccionForm(instance=direccion)
-        form_direccion.fields['canton'].queryset = Canton.objects.filter(provincia=direccion.provincia)
-        form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.filter(canton=direccion.canton)
+        form_direccion.fields['canton'].queryset = Item.objects.cantones().filter(padre=direccion.provincia)
+        form_direccion.fields['parroquia'].queryset = Item.objects.parroquias().filter(padre=direccion.canton)
         ctx = {'form_parroquia': form_parroquia, 'form_direccion': form_direccion, 'object': parroquia}
         return render(request, template_name, ctx)
 
@@ -2257,7 +2257,7 @@ def generar_pdf(html):
     result = StringIO.StringIO()
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)
     if not pdf.err:
-        return HttpResponse(result.getvalue(), mimetype='application/pdf')
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
     return HttpResponse('Error al generar el PDF: %s' % cgi.escape(html))
 
 
@@ -2743,7 +2743,7 @@ def reporte_permisos(request):
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=asignacion.parroquia, periodos__estado=True)
 
-            if feligres.sexo == 'm':
+            if feligres.sexo == Item.objects.masculino():
                 if Matrimonio.objects.filter(novio=feligres, vigente=True):
                     messages.error(request, 'El feligres tiene registrado un matrimonio vigente')
                     queryset = PerfilUsuario.objects.filter(pk=feligres.pk)

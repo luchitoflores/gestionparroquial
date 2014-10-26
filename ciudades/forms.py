@@ -2,6 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Provincia, Canton, Parroquia, Direccion
+from core.models import Item
 
 
 class ProvinciaForm(ModelForm):
@@ -56,12 +57,12 @@ class DireccionForm(ModelForm):
             'parroquia': forms.Select(attrs={'required': '', 'disabled': ''}),
         }
 
-        def __init__(self, *args, **kwargs):
-            super(DireccionForm, self).__init__(*args, **kwargs)
-            self.fields['provincia'].empty_label = '-- Seleccione --'
-            self.fields['provincia'].queryset = Provincia.objects.all()
-            self.fields['canton'].queryset = Canton.objects.none()
-            self.fields['canton'].empty_label = '-- Seleccione --'
-            self.fields['parroquia'].queryset = Parroquia.objects.none()
-            self.fields['parroquia'].empty_label = '-- Seleccione --'
+    def __init__(self, *args, **kwargs):
+        super(DireccionForm, self).__init__(*args, **kwargs)
+        self.fields['provincia'].empty_label = '-- Seleccione --'
+        self.fields['provincia'].queryset = Item.objects.provincias()
+        self.fields['canton'].queryset = Item.objects.none()
+        self.fields['canton'].empty_label = '-- Seleccione --'
+        self.fields['parroquia'].queryset = Item.objects.none()
+        self.fields['parroquia'].empty_label = '-- Seleccione --'
  

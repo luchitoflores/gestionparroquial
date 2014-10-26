@@ -18,6 +18,7 @@ from .models import (PerfilUsuario,
                      Direccion, Intencion, NotaMarginal, Parroquia, Iglesia, AsignacionParroquia,
                      PeriodoAsignacionParroquia,
                      ParametrizaDiocesis, ParametrizaParroquia, )
+from core.models import Item
 from .validators import validate_cedula
 
 
@@ -35,7 +36,7 @@ class DivErrorList(ErrorList):
 
 # def add_control_label(f):
 # def control_label_tag(self, contents=None, attrs=None):
-#         if attrs is None: 
+#         if attrs is None:
 #         	attrs = {}
 #         	attrs['class'] = 'control-label'
 #         	return f(self, contents, attrs)
@@ -162,13 +163,17 @@ class PersonaBaseForm(ModelForm):
         self.fields['fecha_nacimiento'].label = 'Fecha Nacimiento *'
         self.fields['lugar_nacimiento'].label = 'Lugar Nacimiento *'
         self.fields['nacionalidad'].label = 'Nacionalidad *'
+        self.fields['nacionalidad'].queryset = Item.objects.items_nacionalidad()
+        self.fields['nacionalidad'].empty_label = '-- Seleccione --'
         self.fields['dni'].label = "Cédula/Pasaporte *"
         self.fields['dni'].widget = forms.TextInput(attrs={'required': ''})
         self.fields['sexo'].label = 'Sexo *'
-        self.fields['sexo'].widget = forms.Select(attrs={'required': ''}, choices=PerfilUsuario.SEXO_CHOICES)
+        #self.fields['sexo'].widget = forms.Select(attrs={'required': ''}, choices=PerfilUsuario.SEXO_CHOICES)
+        self.fields['sexo'].queryset = Item.objects.items_genero()
+        self.fields['sexo'].empty_label = '-- Seleccione --'
         self.fields['estado_civil'].label = 'Estado Civil *'
-        self.fields['estado_civil'].widget = forms.Select(attrs={'required': ''},
-                                                          choices=PerfilUsuario.ESTADO_CIVIL_CHOICES)
+        self.fields['estado_civil'].queryset = Item.objects.items_estado_civil()
+        self.fields['estado_civil'].empty_label = '-- Seleccione --'
 
 
     def clean_fecha_nacimiento(self):
@@ -182,7 +187,7 @@ class PersonaBaseForm(ModelForm):
         nacionalidad = self.cleaned_data.get('nacionalidad')
 
         if cedula:
-            if nacionalidad == 'EC':
+            if nacionalidad == 'ECU':
                 if not cedula.isdigit():
                     raise forms.ValidationError('El número de cédula no debe contener letras')
                     return cedula
@@ -271,8 +276,8 @@ class SacerdoteForm(PersonaBaseForm):
 
     def __init__(self, *args, **kwargs):
         super(SacerdoteForm, self).__init__(*args, **kwargs)
-        self.fields['sexo'].initial = 'm'
-        self.fields['estado_civil'].initial = 's'
+        self.fields['sexo'].initial = Item.objects.masculino()
+        self.fields['estado_civil'].initial = Item.objects.soltero()
 
 
 class AdministradorForm(PersonaBaseForm):
@@ -683,7 +688,6 @@ class MatrimonioForm(SacramentosForm):
         else:
             msg = u'El feligrés seleccionado no pertenece al género masculino'
             self._errors['novio'] = self.error_class([msg])
-
 
         # Comprobación de la novia
         if novia.es_mujer():

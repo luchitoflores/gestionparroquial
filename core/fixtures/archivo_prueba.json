@@ -6,7 +6,7 @@
         "descripcion": "Genero",
         "nombre": "Genero",
         "codigo": "GEN",
-        "estado": 1
+        "estado": 3
     },
     "model": "core.catalogo",
     "pk": 1
@@ -22,6 +22,66 @@
     },
     "model": "core.catalogo",
     "pk": 2
+},
+{
+    "fields": {
+        "padre": null,
+        "editable": false,
+        "descripcion": "Estado Civil",
+        "nombre": "Estado Civil",
+        "codigo": "EST_CIVIL",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 3
+},
+{
+    "fields": {
+        "padre": null,
+        "editable": false,
+        "descripcion": "Nacionalidad",
+        "nombre": "Nacionalidad",
+        "codigo": "NACIONALIDAD",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 4
+},
+{
+    "fields": {
+        "padre": null,
+        "editable": false,
+        "descripcion": "PROVINCIAS",
+        "nombre": "PROVINCIAS",
+        "codigo": "PROVINCIAS",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 5
+},
+{
+    "fields": {
+        "padre": 5,
+        "editable": false,
+        "descripcion": "CANTONES",
+        "nombre": "CANTONES",
+        "codigo": "CANTONES",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 6
+},
+{
+    "fields": {
+        "padre": 6,
+        "editable": false,
+        "descripcion": "PARROQUIAS",
+        "nombre": "PARROQUIAS",
+        "codigo": "PARROQUIAS",
+        "estado": 3
+    },
+    "model": "core.catalogo",
+    "pk": 7
 },
 {
     "fields": {
@@ -45,7 +105,7 @@
         "catalogo": 1,
         "nombre": "Femenino",
         "codigo": "F",
-        "estado": 1,
+        "estado": 3,
         "principal": false
     },
     "model": "core.item",
@@ -73,11 +133,179 @@
         "catalogo": 2,
         "nombre": "Inactivo",
         "codigo": "I",
-        "estado": 1,
+        "estado": 3,
         "principal": false
     },
     "model": "core.item",
     "pk": 4
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Soltero/a",
+        "valor": "SOLT",
+        "catalogo": 3,
+        "nombre": "Soltero/a",
+        "codigo": "SOLT",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 6
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Casado/a",
+        "valor": "CAS",
+        "catalogo": 3,
+        "nombre": "Casado/a",
+        "codigo": "CAS",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 7
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Union Libre",
+        "valor": "UNION_LIBR",
+        "catalogo": 3,
+        "nombre": "Union Libre",
+        "codigo": "UNION_LIBR",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 8
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Viudo/a",
+        "valor": "VIU",
+        "catalogo": 3,
+        "nombre": "Viudo/a",
+        "codigo": "VIU",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 9
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Divorciado/a",
+        "valor": "DIV",
+        "catalogo": 3,
+        "nombre": "Divorciado/a",
+        "codigo": "DIV",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 10
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Ecuador",
+        "valor": "ECU",
+        "catalogo": 4,
+        "nombre": "Ecuador",
+        "codigo": "ECU",
+        "estado": 3,
+        "principal": true
+    },
+    "model": "core.item",
+    "pk": 11
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "Espa\u00f1a",
+        "valor": "ESP",
+        "catalogo": 4,
+        "nombre": "Espa\u00f1a",
+        "codigo": "ESP",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 12
+},
+{
+    "fields": {
+        "padre": null,
+        "descripcion": "LOJA",
+        "valor": "LOJA",
+        "catalogo": 5,
+        "nombre": "LOJA",
+        "codigo": "LOJA",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 13
+},
+{
+    "fields": {
+        "padre": 13,
+        "descripcion": "ESPINDOLA",
+        "valor": "ESPINDOLA",
+        "catalogo": 6,
+        "nombre": "ESPINDOLA",
+        "codigo": "ESP",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 14
+},
+{
+    "fields": {
+        "padre": 14,
+        "descripcion": "AMALUZA",
+        "valor": "AMALUZA",
+        "catalogo": 7,
+        "nombre": "AMALUZA",
+        "codigo": "AMALUZA",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 15
+},
+{
+    "fields": {
+        "padre": 13,
+        "descripcion": "catamayo",
+        "valor": "cat",
+        "catalogo": 6,
+        "nombre": "Catamayo",
+        "codigo": "cat",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 16
+},
+{
+    "fields": {
+        "padre": 13,
+        "descripcion": "CALVAS",
+        "valor": "CALVAS",
+        "catalogo": 6,
+        "nombre": "CALVAS",
+        "codigo": "CALVAS",
+        "estado": 3,
+        "principal": false
+    },
+    "model": "core.item",
+    "pk": 17
 },
 {
     "fields": {
@@ -557,27 +785,22 @@
 },
 {
     "fields": {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        "tipo_parametro": 3,
+        "valor": "10",
+        "descripcion": "Maximo numero de elementos de una lista",
+        "nombre": "Maximo numero de elementos de una lista",
+        "codigo": "MAX_NUN_LISTA",
+        "estado": 3
+    },
+    "model": "core.parametro",
+    "pk": 1
+},
+{
+    "fields": {
         "descripcion": "Sirve para administrar sacramentos",
         "nombre": "Administrar Sacramentos",
         "codigo": "adm_sacramentos",
-        "estado": true,
+        "estado": 3,
         "orden": 1
     },
     "model": "core.modulo",
@@ -588,7 +811,7 @@
         "descripcion": "Sirve para adminsitrar las ciudades",
         "nombre": "Ciudades",
         "codigo": "CIUDDS",
-        "estado": true,
+        "estado": 4,
         "orden": 1
     },
     "model": "core.modulo",
@@ -599,7 +822,7 @@
         "descripcion": "",
         "nombre": "Seguridad",
         "codigo": "Seguridad",
-        "estado": true,
+        "estado": 3,
         "orden": 1
     },
     "model": "core.modulo",
@@ -610,7 +833,7 @@
         "descripcion": "Parroquia",
         "nombre": "Parroquia",
         "codigo": "Parroquia",
-        "estado": true,
+        "estado": 3,
         "orden": 1
     },
     "model": "core.modulo",
@@ -621,7 +844,7 @@
         "descripcion": "",
         "nombre": "Reportes",
         "codigo": "REPORT",
-        "estado": true,
+        "estado": 3,
         "orden": null
     },
     "model": "core.modulo",
@@ -632,7 +855,7 @@
         "descripcion": "",
         "nombre": "Personas",
         "codigo": "Person",
-        "estado": true,
+        "estado": 3,
         "orden": null
     },
     "model": "core.modulo",

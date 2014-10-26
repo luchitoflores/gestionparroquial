@@ -13,7 +13,7 @@ def menu(request):
         listSubmenuAux = list()
         modulos = Modulo.objects.ModulosPorUsuario(request.user)
         for m in modulos:
-            funcionalidades = Funcionalidad.objects.FuncionalidadesPorModulo(m,request.user )
+            funcionalidades = Funcionalidad.objects.funcionalidades_por_modulo(m,request.user )
             listSubmenus = list()
             if funcionalidades:
                 for f in funcionalidades:

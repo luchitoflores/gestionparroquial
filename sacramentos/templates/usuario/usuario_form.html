@@ -20,7 +20,7 @@
 
 <!-- Div para manejar mensajes de error -->
 <div id="id_mensaje">
-	
+
 </div>
 
 
@@ -45,17 +45,20 @@
 
 <input id='id_hidden' type="hidden" value='{{perfil.id}}'>
 <!--<div id='id_datos_personales' class='tab-pane active'>-->
-<form id='id_form_usuario_create' method='POST' class='form-horizontal'>
+<form name="form_usuario_create" id='id_form_usuario_create' method='POST' class='form-horizontal'>
 	{%csrf_token%}
-	
-	<div class="row">
-		<div class="span8">
+
+	<div class="row" ng-app='app'>
+		<div class="span8" ng-controller='primerControl'>
+
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Personales</legend>
                 <div class="control-group">
 							{{form_perfil.dni|label_with_classes:'control-label'}}
 							<div class="controls">
-								{{form_perfil.dni}}
+                                <input type="number" id="id_dni" name="dni" type="text" ng-model="dni">
+                                <button class="btn btn-primary" type="button" ng-click="BuscarFeligresPorId()">Consultar</button>
+                            {#{{form_perfil.dni}}#}
 							</div>
 							<div class="controls">
 								<div class='help-text'>
@@ -63,8 +66,8 @@
 								</div>
 							</div>
 							<div class="controls">
-								<div class='errors'>
-									{{form_perfil.dni.errors}}
+                                <div class='errors'>
+                                    {{form_perfil.dni.errors}}
 								</div>
 							</div>
 						</div>
@@ -74,12 +77,12 @@
 						{{form_usuario.first_name}}
 					</div>
 					<div class="controls">
-						<div class="help-text">								
+						<div class="help-text">
 							{{form_usuario.first_name.help_text}}
 						</div>
 					</div>
 					<div class="controls">
-						<div class="errors">								
+						<div class="errors">
 							{{form_usuario.first_name.errors}}
 						</div>
 					</div>
@@ -269,7 +272,7 @@
 						</div>
 					</div>
 
-				</div> 
+				</div>
 
 				<div class="control-group">
 					{{form_perfil.celular|label_with_classes:'control-label'}}
@@ -309,7 +312,7 @@
 						</div>
 					</div>
 
-				</div> 
+				</div>
 			</fieldset>
 			{%endif%}
 			{%else%}
@@ -331,7 +334,7 @@
 						</div>
 					</div>
 
-				</div> 
+				</div>
 			</fieldset>
 
 			{%endif%}
@@ -353,16 +356,5 @@
 <!-- Inclusion tags -->
 {% hombre %}
 {% mujer %}
-
-
-<!-- codigo copiado de twitter, aun no funciona, es para alert
-<div class="alert-messages" id="message-drawer" style="opacity: 1;">
-	<div class="message ">
-		<div class="message-inside">
-			<span class="message-text">Error interno del servidor.</span><a class="dismiss" href="#">×</a>
-		</div>
-	</div>
-</div>
--->
 
 {% endblock%}

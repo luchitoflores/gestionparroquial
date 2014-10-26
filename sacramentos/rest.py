@@ -12,7 +12,7 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from datetime import datetime, date
 # Librerías de terceros
-# from tastypie.resources import ModelResource
+
 
 # Librerías del proyecto
 from sacramentos.forms import (
@@ -30,6 +30,7 @@ from sacramentos.models import (
     Configuracion
 )
 
+from core.models import Item
 logger = logging.getLogger(__name__)
 
 
@@ -155,8 +156,8 @@ def sacerdote_create_ajax(request):
                 usuario.save()
                 usuario.groups.add(feligres)
                 perfil.user = usuario
-                perfil.sexo = 'm'
-                perfil.estado_civil = 's'
+                perfil.sexo = Item.objects.masculino()
+                perfil.estado_civil = Item.objects.soltero()
                 perfil.profesion = 'Sacerdote'
                 perfil.save()
                 respuesta = True
@@ -352,7 +353,7 @@ def nota_create_matrimonio_ajax(request):
 @login_required(login_url='/login/')
 def buscar_usuarios(request):
     if request.is_ajax():
-        logger.error('Probando logging')
+        #logger.error('Probando logging')
         nombres = request.GET.get('nombres')
         apellidos = request.GET.get('apellidos')
         cedula = request.GET.get('cedula')
@@ -379,7 +380,8 @@ def buscar_usuarios(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2()">%s</a>' % full_name,
                                       'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion': perfil.profesion,
-                                      'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                       "DT_RowId": perfil.id,
+                                       'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
@@ -411,8 +413,8 @@ def buscar_usuarios(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2('"'%s'"')">%s</a>' % (
                                           perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento,
-                                      'profesion': perfil.profesion, 'estado_civil': perfil.estado_civil,
-                                      'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                      'profesion': perfil.profesion, "DT_RowId": perfil.id,
+                                      'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
@@ -460,7 +462,7 @@ def buscar_hombres(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2()">%s</a>' % full_name,
                                       'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion': perfil.profesion,
-                                      'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                       "DT_RowId": perfil.id, 'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
@@ -476,11 +478,11 @@ def buscar_hombres(request):
                 bandera = True
                 if id_perfil:
                     perfiles = PerfilUsuario.objects.filter(user__last_name__icontains=apellidos,
-                                                            user__first_name__icontains=nombres, sexo='m').exclude(
+                                                            user__first_name__icontains=nombres, sexo=Item.objects.masculino()).exclude(
                         user__groups__name='Sacerdote').exclude(pk=id_perfil)
                 else:
                     perfiles = PerfilUsuario.objects.filter(user__last_name__icontains=apellidos,
-                                                            user__first_name__icontains=nombres, sexo='m').exclude(
+                                                            user__first_name__icontains=nombres, sexo=Item.objects.masculino()).exclude(
                         user__groups__name='Sacerdote')
                 if len(perfiles) > 0:
                     perfiles.distinct().order_by('user__last_name', 'user__first_name')
@@ -491,8 +493,9 @@ def buscar_hombres(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2('"'%s'"')">%s</a>' % (
                                           perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento,
-                                      'profesion': perfil.profesion, 'estado_civil': perfil.estado_civil,
-                                      'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                      'profesion': perfil.profesion,
+                                      'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
+                                      "DT_RowId": perfil.id,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
@@ -540,7 +543,8 @@ def buscar_mujeres(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2()">%s</a>' % full_name,
                                       'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion': perfil.profesion,
-                                      'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                      'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
+                                      "DT_RowId": perfil.id,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
@@ -556,11 +560,11 @@ def buscar_mujeres(request):
                 bandera = True
                 if id_perfil:
                     perfiles = PerfilUsuario.objects.filter(user__last_name__icontains=apellidos,
-                                                            user__first_name__icontains=nombres, sexo='f').exclude(
+                                                            user__first_name__icontains=nombres, sexo=Item.objects.femenino()).exclude(
                         user__groups__name='Sacerdote').exclude(pk=id_perfil)
                 else:
                     perfiles = PerfilUsuario.objects.filter(user__last_name__icontains=apellidos,
-                                                            user__first_name__icontains=nombres, sexo='f').exclude(
+                                                            user__first_name__icontains=nombres, sexo=Item.objects.femenino()).exclude(
                         user__groups__name='Sacerdote')
                 if len(perfiles) > 0:
                     perfiles.distinct().order_by('user__last_name', 'user__first_name')
@@ -572,8 +576,8 @@ def buscar_mujeres(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba2('"'%s'"')">%s</a>' % (
                                           perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento,
-                                      'profesion': perfil.profesion, 'estado_civil': perfil.estado_civil,
-                                      'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                      'profesion': perfil.profesion, "DT_RowId": perfil.id,
+                                      'estado_civil': perfil.estado_civil.codigo, 'sexo': perfil.sexo.codigo,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:

@@ -7,6 +7,7 @@ from ciudades.models import (
 	Provincia,Canton,Parroquia
 	)
 from ciudades.forms import DireccionForm
+from core.models import Item
 
 
 class ProvinciaCreateRead(ListCreateAPIView):
@@ -36,7 +37,7 @@ def seleccionar_ciudades(request):
 	if request.is_ajax():
 		if request.method == 'GET':
 			if request.GET.get('provincia'):
-				cantones = Canton.objects.filter(provincia__nombre=provincia)
+				cantones = Item.objects.cantones().filter(padre=provincia)
 				lista.append({'option': u'<option value="">--Seleccione--</option>'})
 				for canton in cantones:
 					lista.append({'option':u'<option value="%s">%s</option>'%(canton.id, canton.nombre)})
@@ -44,7 +45,7 @@ def seleccionar_ciudades(request):
 				return HttpResponse(json.dumps(ctx), content_type='application/json')
 
 			if request.GET.get('canton'):
-				parroquias = Parroquia.objects.filter(canton__nombre=canton)
+				parroquias = Item.objects.parroquias().filter(padre=canton)
 				lista.append({'option': u'<option value="">--Seleccione--</option>'})
 				for parroquia in parroquias:
 					lista.append({'option':u'<option value="%s">%s</option>'%(parroquia.id, parroquia.nombre)})
