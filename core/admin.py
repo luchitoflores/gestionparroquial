@@ -73,7 +73,7 @@ class FuncionalidadAdmin(admin.ModelAdmin):
 
 @admin.register(Modulo)
 class ModuloAdmin(admin.ModelAdmin):
-    list_display = ('codigo','nombre','descripcion', 'estado',)
+    list_display = ('codigo','nombre','descripcion', 'estado', 'orden')
     search_fields = ('nombre', 'codigo',)
 
 

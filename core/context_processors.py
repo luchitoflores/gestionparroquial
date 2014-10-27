@@ -11,7 +11,7 @@ def menu(request):
         #listSubmenus= list()
         listMenus= list()
         listSubmenuAux = list()
-        modulos = Modulo.objects.ModulosPorUsuario(request.user)
+        modulos = Modulo.objects.modulos_por_usuario(request.user)
         for m in modulos:
             funcionalidades = Funcionalidad.objects.funcionalidades_por_modulo(m,request.user )
             listSubmenus = list()

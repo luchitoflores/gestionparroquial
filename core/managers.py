@@ -3,12 +3,18 @@ from django.core.exceptions import ObjectDoesNotExist
 import core.models
 
 
+class ModuloManager(models.Manager):
+    def modulos_por_usuario(self, user):
+        return self.model.objects.filter(funcionalidad__grupos__user=user,
+                                         estado=core.models.Item.objects.get(codigo='A')).order_by('orden').distinct()
+
+
 class FuncionalidadManager(models.Manager):
     def funcionalidades_por_usuario(self, user):
         return self.model.objects.filter(grupos__user=user).order_by('orden, modulo__id')
 
     def funcionalidades_por_modulo(self, modulo, user):
-        return self.model.objects.filter(modulo=modulo, grupos__user=user, estado=True).order_by('orden', 'modulo__id')
+        return self.model.objects.filter(modulo=modulo, grupos__user=user, estado=True).order_by('orden').distinct()
 
 
 class ItemManager(models.Manager):
@@ -67,9 +73,3 @@ class ItemManager(models.Manager):
         return self.model.objects.filter(catalogo__codigo='PARROQUIAS')
 
 
-
-
-class ModuloManager(models.Manager):
-    def ModulosPorUsuario(self, user):
-        return self.model.objects.filter(funcionalidad__grupos__user=user,
-                                         estado=core.models.Item.objects.get(codigo='A')).order_by('id').distinct()

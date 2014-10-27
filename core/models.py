@@ -57,6 +57,7 @@ class Funcion(models.Model):
     def __unicode__(self):
         return self.nombre
 
+
 class Funcionalidad(models.Model):
     nombre = models.CharField(max_length=50)
     url = models.CharField(max_length=50)  # tiene que ser el mismo nombre de la url
@@ -70,6 +71,20 @@ class Funcionalidad(models.Model):
 
     class Meta:
         verbose_name_plural = u'Funcionalidades'
+
+    def save(self, *args, **kwargs):
+        if self.orden:
+            if Funcionalidad.objects.filter(orden=self.orden, modulo=self.modulo):
+                funcionalidad = Funcionalidad.objects.get(orden=self.orden,modulo=self.modulo)
+                funcionalidad.orden = self.orden+1
+                funcionalidad.save()
+                print 'algo'
+                self.save(*args, **kwargs)
+        super(Funcionalidad, self).save(*args, **kwargs)
+
+    def actualizar_orden(self):
+        if Funcionalidad.objects.filter(orden=self.orden):
+            Funcionalidad.objects.get(orden=1).update(orden=self.orden+1)
 
     def __unicode__(self):
         return u'%s.- %s' % (self.modulo.id, self.nombre)
@@ -100,6 +115,16 @@ class Modulo(models.Model):
 
     class Meta:
         verbose_name_plural = u'Modulos'
+
+    def save(self, *args, **kwargs):
+        if self.orden:
+            if Modulo.objects.filter(orden=self.orden):
+                modulo = Modulo.objects.get(orden=self.orden)
+                modulo.orden = self.orden+1
+                modulo.save()
+                print 'algo'
+                self.save(*args, **kwargs)
+        super(Modulo, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.nombre
