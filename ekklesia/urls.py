@@ -6,12 +6,24 @@ from sacramentos import urls as sacramentos_urls
 from home import urls as home_urls
 from usuarios import urls as usuarios_urls
 from ciudades import urls as ciudades_urls
+from core import urls as core_urls
 from django.utils.functional import curry
 from django.views.defaults import *
 
+from rest_framework import routers
+
+from core.serializers import CatalogoViewSet, ItemViewSet, ParametroViewSet
 admin.autodiscover()
+router = routers.DefaultRouter()
+router.register(r'catalogo', CatalogoViewSet)
+router.register(r'item', ItemViewSet)
+router.register(r'parametro', ParametroViewSet)
+
+
 
 urlpatterns = patterns('',
+    url(r'^api-auth/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     #url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
@@ -20,6 +32,7 @@ urlpatterns = patterns('',
     url(r'^', include(home_urls)),
     url(r'^', include(usuarios_urls)),
     url(r'^', include(ciudades_urls)),
+    url(r'^', include(core_urls)),
 )
 
 handler500 = curry(server_error, template_name='500.html')

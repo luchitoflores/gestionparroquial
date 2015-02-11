@@ -7,12 +7,14 @@ from django.db import models
 
 # Create your models here.
 
+
 def get_limit_choices_to():
     return {'catalogo': Catalogo.objects.get(codigo="EST").id}
 
+
 class Catalogo(models.Model):
     nombre = models.CharField(max_length=50)
-    codigo = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=50, unique=True)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     estado = models.ForeignKey('Item', related_name='estado_item', limit_choices_to=get_limit_choices_to)
     padre = models.ForeignKey('self', blank=True, null=True)

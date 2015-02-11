@@ -12,6 +12,7 @@ admin.AdminSite.site_header = 'Administrador de la Aplicacion'
 admin.AdminSite.site_title = 'Sitio de Administracion'
 admin.site.disable_action('delete_selected')
 
+
 class ItemInline(admin.StackedInline):
     model = Item
     form = ItemForm
@@ -27,6 +28,7 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'codigo',)
     list_filter = ('catalogo', )
     change_list_filter_template = "admin/filter_listing.html"
+    list_per_page = 20
 
 
 @admin.register(Catalogo)
@@ -35,6 +37,7 @@ class CatalogoAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nombre','descripcion', 'estado', 'padre', 'editable', 'items')
     inlines = [ItemInline, ]
     search_fields = ('nombre', 'codigo',)
+    list_per_page = 20
 
     def items(self, obj):
         redirect_url = reverse('admin:core_item_changelist')
@@ -64,16 +67,19 @@ class ParametroAdmin(admin.ModelAdmin):
     list_display = ('codigo','nombre', 'valor', 'estado', 'tipo_parametro')
     search_fields = ('nombre', 'codigo', 'valor')
     list_filter = ('tipo_parametro',)
+    list_per_page = 20
 
 @admin.register(Funcionalidad)
 class FuncionalidadAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'url', 'modulo','estado','orden')
     search_fields = ('nombre', 'modulo')
     list_filter = ('modulo',)
+    list_per_page = 20
 
 @admin.register(Modulo)
 class ModuloAdmin(admin.ModelAdmin):
-    list_display = ('codigo','nombre','descripcion', 'estado', 'orden')
+    list_display = ('codigo','nombre', 'descripcion', 'estado', 'orden')
     search_fields = ('nombre', 'codigo',)
+    list_per_page = 20
 
 

@@ -39,8 +39,6 @@ from sacramentos.views import (
 # from sacramentos.rest import ParroquiaResource
 from .serializer import IntencionViewSet, PerfilUsuarioViewSet
 
-# entry_resource = ParroquiaResource()
-
 router = routers.DefaultRouter()
 router.register(r'intencion', IntencionViewSet)
 router.register(r'usuario', PerfilUsuarioViewSet)

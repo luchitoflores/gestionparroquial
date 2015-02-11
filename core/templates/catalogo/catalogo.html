@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}{% block content_title %} Catálogos {% endblock %}{% endblock %}
+{% block content %}
+
+    <div ng-app="app">
+        <div class="row" ng-controller="catalogoControl">
+            <div class="span2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Catálogos</div>
+                    <div class="panel-body">
+
+                        <div ng-repeat="catalogo in catalogos">
+                            <ul>
+                                <li ng-click="MostrarInfoCatalogo(catalogo.codigo)">{[{ catalogo.nombre }]}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información del Catálogo</div>
+                    <div class="panel-body">
+                        <form action="" method="POST" class="form-horizontal" ng-submit="submit()">
+                            <input type="hidden" ng-model="catalogo"/>
+                            <label for="">Nombre</label>
+                            <input type="text" ng-model="nombre"/>
+                            <label for="">Código</label>
+                            <input type="text" ng-model="codigo"/>
+                            <label for="">Descripción</label>
+                            <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
+                            <label for="">Es editable?</label>
+                            <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}"/>
+                            <label for="">Estado</label>
+                            <select name="" id="" ng-model="estado"
+                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                                <option value="">-- Seleccione --</option>
+                            </select>
+
+                            <div class="form-actions">
+                                <button class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<div ng-repeat="c in cat">
+                <label for="">Nombre</label>
+                <input type="text" value="{[{ c.nombre }]}"/>
+                <label for="">Código</label>
+                <input type="text" value="{[{ c.codigo }]}"/>
+                <label for="">Descripción</label>
+                <textarea name="" id="" cols="30" rows="10">{[{ c.descripcion }]}</textarea>
+                <input type="checkbox" value="{[{ c.editable }]}"/>
+            </div> -->
+
+        </div>
+    </div>
+
+
+{% endblock %}

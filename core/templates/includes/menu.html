@@ -1,12 +1,16 @@
 {% if user.is_authenticated %}
       {% if menuvar %}
-        <div class="accordion" id="accordion">
+        <div>
+            <div ng-controller="primerControl">
+             <div class="accordion" id="accordion">
             {% for m in menuvar.menu %}
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
                            href="#collapse{{ m.id }}">
-                            {{ m.nombre }} <span class="pull-right">»</span>
+                            {{ m.nombre }}
+                            <span ng-show="click1" ng-click="show()" class="pull-right"><i class="icon-double-angle-down"></i></span>
+                            <span ng-hide="click2" ng-click="hide()" class="pull-right"><i class="icon-double-angle-up"></i></span>
                         </a>
                     </div>
                     <div id="collapse{{ m.id }}" class="accordion-body collapse in">
@@ -19,5 +23,7 @@
                 </div>
             {% endfor %}
         </div>
+        </div></div>
+
     {% endif %}
 {% endif %}

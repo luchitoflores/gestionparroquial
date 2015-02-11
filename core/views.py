@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+from django.http import HttpResponse, HttpResponseRedirect
+
 class PaginacionMixin(object):
 
 	def get_context_data(self, **kwargs):
@@ -152,7 +154,8 @@ def consulta_paginada(pagina_actual):
 	return page_obj
 
 	
-	
+def catalogo_view(request):
+	return HttpResponseRedirect('/catalogo/')
 
 
 

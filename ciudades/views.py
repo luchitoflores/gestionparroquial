@@ -18,7 +18,7 @@ from django.core.urlresolvers import reverse_lazy
 from .forms import ProvinciaForm, CantonForm, ParroquiaForm
 from .models import Provincia, Canton, Parroquia
 from core.views import BusquedaMixin
-from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
+from core.constants import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 
 logger = logging.getLogger(__name__)
 

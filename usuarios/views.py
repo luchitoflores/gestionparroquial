@@ -21,7 +21,7 @@ from django.views.generic import ListView
 from .forms import SendEmailForm, GruposForm
 from sacramentos.models import PeriodoAsignacionParroquia
 from core.views import BusquedaMixin
-from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
+from core.constants import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 
 #Login con AthenticateForm	
 def login_view(request):

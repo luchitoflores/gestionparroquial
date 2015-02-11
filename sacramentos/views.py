@@ -64,7 +64,7 @@ ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
 from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
-from core.variables import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
+from core.constants import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
 from core.models import Item
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
