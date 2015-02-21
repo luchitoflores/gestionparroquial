@@ -10,7 +10,7 @@ from django.forms.models import BaseInlineFormSet
 
 admin.AdminSite.site_header = 'Administrador de la Aplicacion'
 admin.AdminSite.site_title = 'Sitio de Administracion'
-admin.site.disable_action('delete_selected')
+# admin.site.disable_action('delete_selected')
 
 
 class ItemInline(admin.StackedInline):

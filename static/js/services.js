@@ -4,7 +4,7 @@ app.factory("administrarCatalogos", ['$http', function($http){
             return $http.get('http://127.0.0.1:666/api-auth/catalogo/');
         };
 
-        catalogos.getItemPorCatalogo = function(codCatalogo){
+        catalogos.getItemsPorCatalogo = function(codCatalogo){
             return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo='+codCatalogo);
         };
 
@@ -18,7 +18,7 @@ app.factory("administrarCatalogos", ['$http', function($http){
 app.factory("administrarItems", ['$http', function($http){
     var items = {};
 
-        items.getItemPorCatalogo = function(codCatalogo){
+        items.getItemsPorCatalogo = function(codCatalogo){
             return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo='+codCatalogo);
         };
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Group
+from django.contrib.admin.models import LogEntry
 from core.managers import ModuloManager, FuncionalidadManager, ItemManager
 
 # Create your models here.
@@ -98,7 +99,7 @@ class Parametro(models.Model):
     valor = models.CharField(max_length=50)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
-    tipo_parametro = models.ForeignKey(Item, related_name='tipo_parametro')
+    tipo_parametro = models.ForeignKey(Item, related_name='tipo_parametro', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = u'Parametros'
@@ -130,3 +131,6 @@ class Modulo(models.Model):
 
     def __unicode__(self):
         return self.nombre
+
+class LogDetail(models.Model):
+    log = models.ForeignKey(LogEntry)

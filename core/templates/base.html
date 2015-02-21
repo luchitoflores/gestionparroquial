@@ -17,12 +17,13 @@
     <link rel="stylesheet" href="{% static 'css/modelo-tablas.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/footable.core.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/django-admin-widgets.css' %}"/>
     {% block extrastyle %}{% endblock %}
     <link rel="icon" type="image/vnd.microsoft.icon" href="{% static 'img/favicon.ico' %}"/>
 
 
 </head>
-<body>
+<body ng-app="app">
 {% load tags_html %}
 <header>
     <nav>
@@ -122,6 +123,7 @@
 <script src="{% static 'js/jquery.alphanumeric.js' %}"></script>
 <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'js/jquery.multi-select.js' %}"></script>
+<script src="{% static 'js/django-admin.multiselect.js' %}"></script>
 <script src="{% static 'js/sacramentos.js' %}"></script>
 <script src="{% static 'js/footable.js' %}"></script>
 <script src="{% static 'js/modernizr.js' %}"></script>

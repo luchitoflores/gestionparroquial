@@ -1,22 +1,26 @@
 {% if user.is_authenticated %}
       {% if menuvar %}
         <div>
-            <div ng-controller="primerControl">
+            <div ng-controller="menuControl">
              <div class="accordion" id="accordion">
             {% for m in menuvar.menu %}
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
-                           href="#collapse{{ m.id }}">
+                           href="#collapse{{ m.id }}"> <!-- ng-click="aClick($event)" -->
                             {{ m.nombre }}
-                            <span ng-show="click1" ng-click="show()" class="pull-right"><i class="icon-double-angle-down"></i></span>
-                            <span ng-hide="click2" ng-click="hide()" class="pull-right"><i class="icon-double-angle-up"></i></span>
+                            <span class="pull-right"></span>
+                            {% comment %}<span class="pull-right"><i class="icon-double-angle-down"></i></span>
+                            <span ng-hide="click2" ng-click="click2 = true" class="pull-right"><i class="icon-double-angle-up"></i></span>{% endcomment %}
                         </a>
                     </div>
-                    <div id="collapse{{ m.id }}" class="accordion-body collapse in">
+                    <div id="collapse{{ m.id }}" class="accordion-body in collapse">
                         {% for s in m.submenu %}
                             <div class="accordion-inner">
-                                <a href="{{ s.url }}">{{ s.nombre }}</a>
+                                <span class="icon-stack menu-icons">
+                                  <i class="{{ s.icon }}"></i>
+                                </span>
+                                <a href="{{ s.url }}"> {{ s.nombre }}</a>
                             </div>
                         {% endfor %}
                     </div>

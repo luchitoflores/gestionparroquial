@@ -17,7 +17,7 @@ def menu(request):
             listSubmenus = list()
             if funcionalidades:
                 for f in funcionalidades:
-                    submenu = {'nombre': f.nombre, 'url': reverse_lazy(f.url)}#'url': reverse_lazy(f.url)}
+                    submenu = {'nombre': f.nombre, 'url': reverse_lazy(f.url), 'icon': f.icono}#'url': reverse_lazy(f.url)}
                     listSubmenus.append(submenu)
 
                 menu["nombre"] = m.nombre

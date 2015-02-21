@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}{% block content_title %} Funcionalidades {% endblock %}{% endblock %}
+{% block content %}
+
+    <div>
+        <div class="row" ng-controller="funcionalidadControl">
+            <div class="span2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Módulos</div>
+                    <div class="panel-body" ng-controller="moduloControl">
+
+                        <div ng-repeat="modulo in modulos">
+                            <ul>
+                                <li ng-click="MostrarFuncionalidadesDelModulo(modulo)">{[{ modulo.nombre }]}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información de la Funcionalidad</div>
+                    <div class="panel-body">
+                        <form action="" method="POST" class="form-horizontal" ng-submit="submit()">
+                            <input type="hidden" ng-model="id"/>
+                            <input type="hidden" ng-model="idModulo"/>
+                            <label for="">Nombre</label>
+                            <input type="text" ng-model="nombre"/>
+                            <label for="">Url</label>
+                            <input type="text" ng-model="url"/>
+                            <label for="">Grupos</label>
+                            <select name="" id="" ng-model="grupo"
+                                    ng-options="grupo.name for grupo in grupos track by grupo.id">
+                                <option value="">-- Seleccione --</option>
+                            </select>
+                            <label for="">Descripción</label>
+                            <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
+                            <label for="">Orden</label>
+                            <input type="text" ng-model="orden"/>
+                            <label for="">Icono</label>
+                            <input type="text" ng-model="icono"/>
+
+                            <select multiple id="prueba">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+
+                            <div class="form-actions">
+                                <button class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</button>
+                                <button class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                 <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Url</th>
+                        <th>Módulo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-if="funcionalidades.length == 0">
+                        <td colspan="5">No existen registros disponibles</td>
+                    </tr>
+                    </thead>
+
+                    <tbody ng-repeat="funcionalidad in funcionalidades">
+                    <tr>
+                        <td>{[{ funcionalidad.nombre }]}</td>
+                        <td>{[{ funcionalidad.url }]}</td>
+                        <td>{[{ funcionalidad.modulo }]}</td>
+                        <td><i ng-class="funcionalidad.estado == true ? 'icon-check' : 'icon-check-minus'"></i></td>
+                        <td><a ng-click="CargarFuncionalidad(funcionalidad.id)"><i class="icon-pencil"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+       </div>
+    </div>
+
+
+{% endblock %}

@@ -20,18 +20,25 @@ app.config([
             $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         }]);
 
+
+/////////------------------------------- FACTORIAS------------------------------------/////////////
+
 app.factory("administrarCatalogos", ['$http', function ($http) {
     var catalogos = {};
     catalogos.getCatalogos = function () {
         return $http.get('http://127.0.0.1:666/api-auth/catalogo/');
     };
 
-    catalogos.getItemPorCatalogo = function (codCatalogo) {
+    catalogos.getItemsPorCatalogo = function (codCatalogo) {
         return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codCatalogo);
     };
 
     catalogos.setCatalogo = function (data) {
         return $http.post('http://127.0.0.1:666/api-auth/catalogo/', data);
+    };
+
+    catalogos.updateCatalogo = function (id, data) {
+        return $http.put('http://127.0.0.1:666/api-auth/catalogo/' + id, data);
     };
 
     return catalogos;
@@ -40,7 +47,7 @@ app.factory("administrarCatalogos", ['$http', function ($http) {
 app.factory("administrarItems", ['$http', function ($http) {
     var items = {};
 
-    items.getItemPorCatalogo = function (codCatalogo) {
+    items.getItemsPorCatalogo = function (codCatalogo) {
         return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codCatalogo);
     };
 
@@ -48,22 +55,107 @@ app.factory("administrarItems", ['$http', function ($http) {
         return $http.post('http://127.0.0.1:666/api-auth/item/', data);
     };
 
+    items.updateItem = function (id, data) {
+        return $http.put('http://127.0.0.1:666/api-auth/item/' + id, data);
+    };
+
     return items;
 }]);
 
-app.controller('primerControl', function ($scope, $http, $log) {
-    $scope.click1 = true;
-    $scope.click2 = true;
+app.factory("administrarParametros", ['$http', function ($http) {
+    var parametros = {};
 
-    $scope.show = function () {
-        $scope.click1 = false;
-        $scope.click2 = false;
+    parametros.getParametros = function () {
+        return $http.get('http://127.0.0.1:666/api-auth/parametro/');
     };
 
-    $scope.hide = function () {
-        $scope.click1 = true;
-        $scope.click2 = true;
+    parametros.setParametro = function (data) {
+        return $http.post('http://127.0.0.1:666/api-auth/parametro/', data);
     };
+
+    parametros.updateParametro = function (id, data) {
+        return $http.put('http://127.0.0.1:666/api-auth/parametro/' + id, data);
+    };
+
+    return parametros;
+}]);
+
+app.factory("administrarModulos", ['$http', function ($http) {
+    var modulos = {};
+
+    modulos.getModulos = function () {
+        return $http.get('http://127.0.0.1:666/api-auth/modulo/');
+    };
+
+    modulos.setModulo = function (data) {
+        return $http.post('http://127.0.0.1:666/api-auth/modulo/', data);
+    };
+
+    modulos.updateModulo = function (id, data) {
+        return $http.put('http://127.0.0.1:666/api-auth/modulo/' + id, data);
+    };
+
+    return modulos;
+}]);
+
+app.factory("administrarFuncionalidades", ['$http', function ($http) {
+    var funcionalidades = {};
+
+    funcionalidades.getFuncionalidades = function () {
+        return $http.get('http://127.0.0.1:666/api-auth/funcionalidad/');
+    };
+
+    funcionalidades.setFuncionalidad = function (data) {
+        return $http.post('http://127.0.0.1:666/api-auth/funcionalidad/', data);
+    };
+
+    funcionalidades.updateFuncionalidad = function (id, data) {
+        return $http.put('http://127.0.0.1:666/api-auth/funcionalidad/' + id, data);
+    };
+
+    funcionalidades.getFuncionalidadesPorModulo = function (codModulo) {
+        return $http.get('http://127.0.0.1:666/api-auth/funcionalidad/?modulo=' + codModulo);
+    };
+
+    funcionalidades.getGrupos = function () {
+        return $http.get('http://127.0.0.1:666/api-auth/grupo/');
+    };
+
+    funcionalidades.getModulos = function () {
+        return $http.get('http://127.0.0.1:666/api-auth/modulo/');
+    };
+
+    return funcionalidades;
+}]);
+
+/////////------------------------------- CONTROLADORES ------------------------------------/////////////
+
+app.controller('menuControl', function ($scope) {
+
+    $scope.aClick = function (event) {
+
+        if ($(event.target).attr("class") == "accordion-toggle collapsed") {
+            $(event.target).html('<span class="pull-right"><i class="icon-double-angle-down"></i></span>');
+        } else {
+            $(event.target).html('<span class="pull-right"><i class="icon-double-angle-up"></i></span>');
+
+        }
+    };
+
+    /*$scope.click1 = true;
+     $scope.click2 = true;*/
+
+    /*$scope.show = function (self) {
+     cosole.log(self);
+     $scope.click1 = false;
+     $scope.click2 = false;
+     };
+
+     $scope.hide = function (self) {
+     cosole.log(self);
+     $scope.click1 = true;
+     $scope.click2 = true;
+     };*/
 
     $scope.variable = "Hello";
 
@@ -88,31 +180,63 @@ app.controller('primerControl', function ($scope, $http, $log) {
 app.controller('catalogoControl', function ($scope, $http, administrarCatalogos) {
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
+    $scope.catalogoActual = "";
+    function limpiarCampos() {
+        $scope.id = "";
+        $scope.codigo = "";
+        $scope.nombre = "";
+        $scope.descripcion = "";
+        $scope.editable = false;
+        $scope.estado = $scope.estadosGenerales;
+    };
 
 
     $scope.submit = function () {
-        console.log($scope.estado.id);
-        var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
-        administrarCatalogos.setCatalogo(data)
-            .success(function (data) {
-                console.log("insertar catalogos");
-                $scope.codigo = "";
-                $scope.nombre = "";
-                $scope.descripcion = "";
-                $scope.editable = false;
 
-                console.log(data);
-            })
-            .error(function (error) {
-                console.log("error al insertar catálogos");
-                console.log(error);
-            });
+        if ($scope.id) {
+            var data = {"id": $scope.id, "codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            administrarCatalogos.updateCatalogo($scope.id, data)
+                .success(function (data) {
+                    console.log("catalogo actualizado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarCatalogos.getCatalogos()
+                        .success(function (data) {
+                            $scope.catalogos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar catálogos");
+                    console.log(error);
+                });
+        } else {
+            var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            administrarCatalogos.setCatalogo(data)
+                .success(function (data) {
+                    console.log("catalogo insertado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarCatalogos.getCatalogos()
+                        .success(function (data) {
+                            $scope.catalogos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar catálogos");
+                    console.log(error);
+                });
+        }
     };
 
-    administrarCatalogos.getItemPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo("EST")
         .success(function (data) {
             $scope.estadosGenerales = data;
-            console.log(data);
         })
         .error(function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -126,18 +250,13 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
-    $scope.initialize = function (data) {
-        $log.log('initialize', data);
-        $scope.initData = data;
-    };
-
     $scope.MostrarInfoCatalogo = function (codigo) {
-        console.log($scope.estadosGenerales);
         $scope.cat = $scope.catalogos.filter(function (el) {
             return el.codigo == codigo;
         });
 
         $scope.cat.forEach(function (c, posicion) {
+            $scope.id = c.id;
             $scope.nombre = c.nombre;
             $scope.codigo = c.codigo;
             $scope.descripcion = c.descripcion;
@@ -166,8 +285,20 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
     $scope.items = [];
+    $scope.catalogoActual = "";
+    $scope.itemActual = "";
 
-    administrarCatalogos.getItemPorCatalogo("EST")
+    function limpiarCampos() {
+        $scope.id = "";
+        $scope.codigo = "";
+        $scope.nombre = "";
+        $scope.valor = "";
+        $scope.descripcion = "";
+        $scope.principal = false;
+        $scope.estado = $scope.estadosGenerales;
+    };
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -183,17 +314,13 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
-    $scope.MostrarItemsDelCatalogo = function (codigo) {
-        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
+    $scope.MostrarItemsDelCatalogo = function (catalogo) {
+        administrarCatalogos.getItemsPorCatalogo(catalogo.codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data;
-                $scope.catalogo = "";
-                $scope.codigo = "";
-                $scope.nombre = "";
-                $scope.valor = "";
-                $scope.descripcion = "";
-                $scope.principal = false;
-                $scope.estado = $scope.estadosGenerales;
+                $scope.catalogoActual = catalogo;
+                $scope.catalogo = $scope.catalogoActual.id;
+                $scope.reset = limpiarCampos();
             }).
             error(function (data, status, headers, config) {
                 console.log(data);
@@ -203,6 +330,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     $scope.CargarItem = function (id) {
         $scope.items.forEach(function (e, i) {
             if (e.id == id) {
+                $scope.id = e.id;
                 $scope.catalogo = e.catalogo;
                 $scope.codigo = e.codigo;
                 $scope.nombre = e.nombre;
@@ -219,7 +347,6 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     };
 
     $scope.guardarItem = function () {
-        console.log("estado" + $scope.estado.id);
         var data = {
             "catalogo": $scope.catalogo,
             "nombre": $scope.nombre,
@@ -228,25 +355,331 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             "descripcion": $scope.descripcion,
             "principal": $scope.principal,
             "estado": $scope.estado.id
+        };
+
+        if ($scope.id) {
+            data["id"] = $scope.id;
+            administrarItems.updateItem($scope.id, data).
+                success(function (data, status, headers, config) {
+                    console.log("Actualizado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.items = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (data, status, headers, config) {
+                    console.log(data);
+                });
+
+        } else {
+            administrarItems.setItem(data).
+                success(function (data, status, headers, config) {
+                    console.log("Creado correctamente");
+                    $scope.reset = limpiarCampos();
+                    administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.items = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (data, status, headers, config) {
+                    console.log(data);
+                });
         }
 
-        administrarItems.setItem(data).
+    };
+});
+
+app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos) {
+    $scope.parametros = [];
+    $scope.estadosGenerales = [];
+    $scope.parametroActual = "";
+
+    function limpiarCampos() {
+        $scope.id = "";
+        $scope.codigo = "";
+        $scope.nombre = "";
+        $scope.descripcion = "";
+        $scope.valor = "";
+        $scope.estado = $scope.estadosGenerales;
+    }
+
+    $scope.submit = function () {
+        var data = {
+            "codigo": $scope.codigo,
+            "nombre": $scope.nombre,
+            "valor": $scope.valor,
+            "descripcion": $scope.descripcion,
+            "estado": $scope.estado.id
+        }
+
+        if ($scope.id) {
+            data["id"] = $scope.id;
+            administrarParametros.updateParametro($scope.id, data)
+                .success(function (data) {
+                    console.log("parámetro actualizado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarParametros.getParametros()
+                        .success(function (data) {
+                            $scope.parametros = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar parametros");
+                    console.log(error);
+                });
+
+        } else {
+            administrarParametros.setParametro(data)
+                .success(function (data) {
+                    console.log("parámetro insertado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarParametros.getParametros()
+                        .success(function (data) {
+                            $scope.parametros = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar parametros");
+                    console.log(error);
+                });
+        }
+
+    };
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
+        .success(function (data) {
+            $scope.estadosGenerales = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarParametros.getParametros()
+        .success(function (data) {
+            $scope.parametros = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    $scope.MostrarInfoParametro = function (codigo) {
+        $scope.cat = $scope.parametros.filter(function (el) {
+            return el.codigo == codigo;
+        });
+
+        $scope.cat.forEach(function (c, posicion) {
+            $scope.id = c.id;
+            $scope.nombre = c.nombre;
+            $scope.codigo = c.codigo;
+            $scope.valor = c.valor;
+            $scope.descripcion = c.descripcion;
+
+            $scope.estadosGenerales.forEach(function (ele, ident) {
+                if (ele.id == c.estado) {
+                    $scope.estado = $scope.estadosGenerales[ident];
+                }
+            });
+        });
+
+        $scope.items = [];
+        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
             success(function (data, status, headers, config) {
-                console.log(data);
-                $scope.catalogo = "";
-                $scope.codigo = "";
-                $scope.nombre = "";
-                $scope.valor = "";
-                $scope.descripcion = "";
-                $scope.principal = false;
-                $scope.estado = $scope.estadosGenerales;
-
-
+                $scope.items = data;
             }).
             error(function (data, status, headers, config) {
                 console.log(data);
             });
+    }
+
+});
+
+
+app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades) {
+    $scope.funcionalidades = [];
+    $scope.grupos = [];
+    $scope.estadosGenerales = [];
+    $scope.funcionalidadActual = "";
+    function limpiarCampos() {
+        $scope.id = "";
+        $scope.nombre = "";
+        $scope.descripcion = "";
+        $scope.url = "";
+        $scope.modulo = "";
+        $scope.grupos = "";
+        $scope.orden = "";
+        $scope.icono = "";
+        $scope.estado = $scope.estadosGenerales;
     };
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
+        .success(function (data) {
+            $scope.estadosGenerales = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarFuncionalidades.getGrupos()
+        .success(function (data) {
+            $scope.grupos = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    $scope.MostrarFuncionalidadesDelModulo = function(modulo){
+        administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
+        .success(function (data) {
+            $scope.funcionalidades = data;
+            $scope.idModulo = modulo.id;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+    };
+
+});
+
+app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos) {
+    $scope.modulos = [];
+    $scope.estadosGenerales = [];
+    $scope.moduloActual = "";
+    function limpiarCampos() {
+        $scope.id = "";
+        $scope.nombre = "";
+        $scope.codigo = "";
+        $scope.descripcion = "";
+        $scope.orden = "";
+        $scope.estado = $scope.estadosGenerales;
+    };
+
+
+    $scope.save = function () {
+
+        var data = {
+                "nombre": $scope.nombre,
+                "codigo": $scope.codigo,
+                "descripcion": $scope.descripcion,
+                "orden": $scope.orden,
+                "estado": $scope.estado.id
+            }
+
+        if ($scope.id) {
+            data["id"]=  $scope.id;
+            administrarModulos.updateModulo($scope.id, data)
+                .success(function (data) {
+                    console.log("módulo actualizado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarModulos.getModulos()
+                        .success(function (data) {
+                            $scope.modulos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar modulo");
+                    console.log(error);
+                });
+        } else {
+            var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            administrarModulos.setModulo(data)
+                .success(function (data) {
+                    console.log("modulo insertado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarModulos.getModulos()
+                        .success(function (data) {
+                            $scope.modulos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (error) {
+                    console.log("error al insertar modulo");
+                    console.log(error);
+                });
+        }
+    };
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
+        .success(function (data) {
+            $scope.estadosGenerales = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarModulos.getModulos()
+        .success(function (data) {
+            $scope.modulos = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    $scope.MostrarInfoModulo = function (id) {
+        $scope.moduloActual = $scope.modulos.filter(function (m) {
+            return m.id == id;
+        });
+
+        $scope.id = $scope.moduloActual[0].id;
+        $scope.nombre = $scope.moduloActual[0].nombre;
+        $scope.codigo = $scope.moduloActual[0].codigo;
+        $scope.descripcion = $scope.moduloActual[0].descripcion;
+        $scope.orden = $scope.moduloActual[0].orden;
+        $scope.estadosGenerales.forEach(function (ele, ident) {
+            if (ele.id == $scope.moduloActual[0].estado) {
+                $scope.estado = $scope.estadosGenerales[ident];
+            }
+        });
+    }
+});
+
+
+
+///////////////////////------------------------- DIRECTIVAS
+app.directive("isActive", function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            scope.$watch(function () {
+                //console.log("antiguo valor: "+element.attr('id'));
+                return element.attr('class');
+            }, function (newValue, oldValue) {
+                if(newValue === "accordion-body in collapse"){
+                    //console.log(">>");
+                } else {
+                    //console.log("<<");
+                }
+                //console.log("nuevo valor: "+newValue);
+                // console.log("viejo valor: "+oldValue);
+            });
+        }
+
+        //template: '<div></div>',
+        //replace: true
+    };
+
 });
 
 

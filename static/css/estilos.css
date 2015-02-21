@@ -30,7 +30,28 @@ body
 h1{
 	font-family: 'Open Sans',Helvetica,Arial,sans-serif;
     font-size:2em;
+    text-align: center;
  }
+
+
+h1:after {
+    display: inline-block;
+    margin: 0 0 8px 20px;
+    height: 3px;
+    content: " ";
+    text-shadow: none;
+    background-color: #999;
+    width: 140px;
+}
+h1:before {
+    display: inline-block;
+    margin: 0 20px 8px 0;
+    height: 3px;
+    content: " ";
+    text-shadow: none;
+    background-color: #999;
+    width: 140px;
+}
 
 h2{
 	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
@@ -94,10 +115,7 @@ li.item{
 
 #id_footer 
 {
-	background: white;
-	background-image: url(../img/texturapie.jpg);
-	background-position:center;
-	background-repeat:no-repeat;
+	background: -webkit-linear-gradient(#009afd, #1446fc);
 	background-size:100%;
 	-webkit-background-size: 100%;
 	-moz-background-size: cover;
@@ -466,3 +484,58 @@ div.accordion> .accordion-group>.accordion-body.collapse
 a [class^="icon-"], a [class*=" icon-"] {
     text-decoration: blink;
 }
+
+.menu-icons{
+   /* color: #ffc402;*/
+    color: #ffc402;
+    font-size: 1em;
+    text-align: -webkit-match-parent;
+    margin: auto;
+    padding-right: 10px;
+}
+
+/*.submenu-icons{
+   *//* color: #ffc402;*//*
+    color: #14c724;
+    font-size: 0.40em;
+    text-align: -webkit-match-parent;
+    margin: auto;
+    padding-right: 10px;
+}
+*/
+.remove-decoration{
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 10px 10px 5px;
+    align-content: center;
+}
+
+.remove-decoration > li:before {
+    content: '\f111';
+    font-family: FontAwesome;
+    color: #14c724;
+    display: block;
+    width: 15px;
+    height: 10px;
+    float: left;
+    margin:0 1px 0 -5px;
+    font-size: 0.7em ;
+     /*background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#ccc));
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: transparent;*/
+    /*background: -webkit-linear-gradient(#b0c9ff, #e8efff);*/
+}
+
+.accordion-group > .accordion-heading > a > span:after {
+  content: '\f102';
+  font-family: FontAwesome;
+  position: relative;
+
+}
+.accordion-group > .accordion-heading > a.collapsed >span:after {
+  font-family: FontAwesome;
+  content: '\f103';
+  position: relative;
+}
+
+

@@ -2,7 +2,7 @@
 {% block title %}{% block content_title %} Items de Catálogos {% endblock %}{% endblock %}
 {% block content %}
 
-    <div ng-app="app">
+    <div>
         <div class="row" ng-controller="itemControl">
             <div class="span2">
                 <div class="panel panel-default">
@@ -11,7 +11,7 @@
 
                         <div ng-repeat="catalogo in catalogos">
                             <ul>
-                                <li ng-click="MostrarItemsDelCatalogo(catalogo.codigo)">{[{ catalogo.nombre }]}</li>
+                                <li ng-click="MostrarItemsDelCatalogo(catalogo)">{[{ catalogo.nombre }]}</li>
                             </ul>
                         </div>
                     </div>
@@ -20,6 +20,8 @@
             <div class="span5">
 
                 <form class="form-horizontal" ng-submit="guardarItem()" action="" method="POST">
+                    <input type="hidden" ng-model="catalogo"/>
+                    <input type="hidden" ng-model="id"/>
                     <label for="">Código</label>
                     <input type="text" ng-model="codigo"/>
                     <label for="">Nombre</label>
@@ -38,6 +40,7 @@
                     <input type="checkbox" ng-model="principal" value="principal"/>
 
                     <div class="form-actions">
+                        <button class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</button>
                         <button class="btn btn-primary">Guardar</button>
                     </div>
 
@@ -49,27 +52,22 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Padre</th>
-                        <th>Orden</th>
-                        <th>Estado</th>
+                        <th>Principal</th>
                         <th>Acciones</th>
                     </tr>
-
+                    <tr ng-if="items.length == 0">
+                        <td colspan="5">No existen registros disponibles</td>
+                    </tr>
                     </thead>
 
                     <tbody ng-repeat="item in items">
-
                     <tr>
                         <td>{[{ item.codigo }]}</td>
                         <td>{[{ item.nombre }]}</td>
                         <td>{[{ item.descripcion }]}</td>
-                        <td>{[{ item.padre }]}</td>
-                        <td>{[{ item.orden }]}</td>
-                        <td>{[{ item.editable }]}</td>
+                        <td><i ng-class="item.principal == true ? 'icon-check' : 'icon-check-minus'"></i></td>
                         <td><a ng-click="CargarItem(item.id)"><i class="icon-pencil"></i></a></td>
                     </tr>
-
-
                     </tbody>
                 </table>
             </div>
