@@ -114,14 +114,14 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'sacramentos.middleware.ConfiguracionMiddleware',
     'sacramentos.middleware.ParroquiaSessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # 'sacramentos.middleware.AdminLocaleURLMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'ekklesia.urls'

@@ -55,10 +55,10 @@ function inicio() {
     acordeon();
     $(".dateinput").datepicker();
 
-    jQuery.each($("select[multiple]"), function () {
+    /*jQuery.each($("select[multiple]"), function () {
         // "Locations" can be any label you want
         SelectFilter.init(this.id, "Locations", 0, "/media/");
-    });
+    })*/
 
     /*campo_no_requerido('#id_bautizado, #id_feligres, #id_confirmado');*/
     /*modelo_tablas('#id_table_asignar_parroquia');*/
