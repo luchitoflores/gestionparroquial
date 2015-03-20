@@ -535,16 +535,16 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
 app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades) {
     $scope.funcionalidades = [];
-    $scope.grupos = [];
+    $scope.gruposUsuarios = [];
     $scope.estadosGenerales = [];
-    $scope.funcionalidadActual = "";
+    $scope.moduloActual = "";
     function limpiarCampos() {
         $scope.id = "";
+        $scope.codigo = "",
         $scope.nombre = "";
         $scope.descripcion = "";
         $scope.url = "";
-        $scope.modulo = "";
-        $scope.grupos = "";
+        $scope.grupos = $scope.gruposUsuarios;
         $scope.orden = "";
         $scope.icono = "";
         $scope.estado = $scope.estadosGenerales;
@@ -560,7 +560,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
 
     administrarFuncionalidades.getGrupos()
         .success(function (data) {
-            $scope.grupos = data;
+            $scope.gruposUsuarios = data;
         })
         .error(function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -569,11 +569,91 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     $scope.MostrarFuncionalidadesDelModulo = function(modulo){
         administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
         .success(function (data) {
+            console.log(data);
             $scope.funcionalidades = data;
+            $scope.moduloActual = modulo;
             $scope.idModulo = modulo.id;
+            $scope.reset = limpiarCampos();
         })
         .error(function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+    };
+
+    $scope.save = function () {
+        var data = {
+            "modulo": $scope.idModulo,
+            "nombre": $scope.nombre,
+            "codigo": $scope.codigo,
+            "url": $scope.url,
+            "descripcion": $scope.descripcion,
+            "grupos": $scope.grupos.id,
+            "estado": $scope.estado.id,
+            "orden": $scope.orden,
+            "icono": $scope.icono
+        };
+        console.log(data);
+        if ($scope.id) {
+            data["id"] = $scope.id;
+            administrarFuncionalidades.updateFuncionalidad($scope.id, data).
+                success(function (data, status, headers, config) {
+                    console.log("Actualizado correctamente");
+                    $scope.reset = limpiarCampos();
+
+                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.funcionalidades = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (data, status, headers, config) {
+                    console.log(data);
+                });
+
+        } else {
+            administrarFuncionalidades.setFuncionalidad(data).
+                success(function (data, status, headers, config) {
+                    console.log("Creado correctamente");
+                    $scope.reset = limpiarCampos();
+                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.funcionalidades = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (data, status, headers, config) {
+                    console.log(data);
+                });
+        }
+
+    };
+
+
+    $scope.CargarFuncionalidad = function (id) {
+        $scope.funcionalidades.forEach(function (e, i) {
+            if (e.id == id) {
+                $scope.id = e.id;
+                $scope.codigo = e.codigo;
+                $scope.nombre = e.nombre;
+                $scope.url = e.url;
+                $scope.descripcion = e.descripcion;
+                $scope.orden = e.orden;
+                $scope.icono = e.icono;
+                $scope.estadosGenerales.forEach(function (ele, ident) {
+                    if (ele.id == e.estado) {
+                        $scope.estado = $scope.estadosGenerales[ident];
+                    }
+                });
+                $scope.gruposUsuarios.forEach(function (ele, ident) {
+                    if (ele.id == e.grupo) {
+                        $scope.grupos = $scope.grupos[ident];
+                    }
+                });
+            }
         });
     };
 

@@ -21,31 +21,32 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Información de la Funcionalidad</div>
                     <div class="panel-body">
-                        <form action="" method="POST" class="form-horizontal" ng-submit="submit()">
+                        <form action="" method="POST" class="form-horizontal" ng-submit="save()">
                             <input type="hidden" ng-model="id"/>
                             <input type="hidden" ng-model="idModulo"/>
                             <label for="">Nombre</label>
                             <input type="text" ng-model="nombre"/>
+                            <label for="">Código</label>
+                            <input type="text" ng-model="codigo"/>
                             <label for="">Url</label>
                             <input type="text" ng-model="url"/>
                             <label for="">Grupos</label>
-                            <select name="" id="" ng-model="grupo"
-                                    ng-options="grupo.name for grupo in grupos track by grupo.id">
+                            <select multiple name="" id="" ng-model="grupos"
+                                    ng-options="grupo.name for grupo in gruposUsuarios track by grupo.id">
                                 <option value="">-- Seleccione --</option>
                             </select>
+
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
+                            <label for="">Estado</label>
+                            <select name="" id="" ng-model="estado"
+                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                                <option value="">-- Seleccione --</option>
+                            </select>
                             <label for="">Orden</label>
                             <input type="text" ng-model="orden"/>
                             <label for="">Icono</label>
                             <input type="text" ng-model="icono"/>
-
-                            <select multiple id="prueba">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select>
 
                             <div class="form-actions">
                                 <button class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</button>
@@ -74,9 +75,11 @@
                         <td>{[{ funcionalidad.nombre }]}</td>
                         <td>{[{ funcionalidad.url }]}</td>
                         <td>{[{ funcionalidad.modulo }]}</td>
-                        <td><i ng-class="funcionalidad.estado == true ? 'icon-check' : 'icon-check-minus'"></i></td>
+                        <td><i ng-class="funcionalidad.estado.codigo == 'A' ? 'icon-check' : 'icon-check-minus'"></i></td>
                         <td><a ng-click="CargarFuncionalidad(funcionalidad.id)"><i class="icon-pencil"></i></a></td>
+                           {[{funcionalidad.estado}]}
                     </tr>
+
                     </tbody>
                 </table>
 
