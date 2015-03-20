@@ -31,6 +31,11 @@
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Es editable?</label>
                             <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}"/>
+                            <label for="">Padre</label>
+                            <select name="" id="" ng-model="padre"
+                                    ng-options="padre.nombre for padre in catalogos track by padre.id">
+                                <option value="">-- Seleccione --</option>
+                            </select>
                             <label for="">Estado</label>
                             <select name="" id="" ng-model="estado"
                                     ng-options="estado.nombre for estado in estadosGenerales track by estado.id">

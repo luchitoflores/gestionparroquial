@@ -178,15 +178,18 @@ app.controller('menuControl', function ($scope) {
 });
 
 app.controller('catalogoControl', function ($scope, $http, administrarCatalogos) {
+
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
     $scope.catalogoActual = "";
+
     function limpiarCampos() {
         $scope.id = "";
         $scope.codigo = "";
         $scope.nombre = "";
         $scope.descripcion = "";
         $scope.editable = false;
+        $scope.padre = $scope.catalogos;
         $scope.estado = $scope.estadosGenerales;
     };
 
@@ -194,7 +197,15 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
     $scope.submit = function () {
 
         if ($scope.id) {
-            var data = {"id": $scope.id, "codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            var data = {"id": $scope.id,
+                "codigo": $scope.codigo,
+                "nombre": $scope.nombre,
+                "editable": $scope.editable,
+                "estado": $scope.estado.id,
+                "descripcion": $scope.descripcion,
+                "padre": $scope.padre.id
+            }
+
             administrarCatalogos.updateCatalogo($scope.id, data)
                 .success(function (data) {
                     console.log("catalogo actualizado correctamente");
@@ -213,7 +224,14 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
                     console.log(error);
                 });
         } else {
-            var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            var data = {"codigo": $scope.codigo,
+                "nombre": $scope.nombre,
+                "editable": $scope.editable,
+                "estado": $scope.estado.id,
+                "descripcion": $scope.descripcion,
+                "padre": $scope.padre.id
+            }
+
             administrarCatalogos.setCatalogo(data)
                 .success(function (data) {
                     console.log("catalogo insertado correctamente");
@@ -262,6 +280,11 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
             $scope.descripcion = c.descripcion;
             $scope.padre = c.padre;
             $scope.editable = c.editable;
+            $scope.catalogos.forEach(function (ele, ident) {
+                if (ele.id == c.padre) {
+                    $scope.padre = $scope.catalogos[ident];
+                }
+            });
             $scope.estadosGenerales.forEach(function (ele, ident) {
                 if (ele.id == c.estado) {
                     $scope.estado = $scope.estadosGenerales[ident];
