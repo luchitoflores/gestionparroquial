@@ -71,7 +71,7 @@ class ParametroAdmin(admin.ModelAdmin):
 
 @admin.register(Funcionalidad)
 class FuncionalidadAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'url', 'modulo','estado','orden')
+    list_display = ('nombre', 'codigo','url', 'modulo','estado','orden')
     search_fields = ('nombre', 'modulo')
     list_filter = ('modulo',)
     list_per_page = 20

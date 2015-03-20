@@ -60,13 +60,14 @@ class Funcion(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
 class Funcionalidad(models.Model):
     nombre = models.CharField(max_length=50)
     url = models.CharField(max_length=50)  # tiene que ser el mismo nombre de la url
+    codigo = models.CharField(max_length=20, unique=True)
     modulo = models.ForeignKey('Modulo')
     grupos = models.ManyToManyField(Group)
-    estado = models.BooleanField(default=False)
+    #estado = models.BooleanField(default=False)
+    estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     orden = models.PositiveIntegerField(null=True, blank=True)
     icono = models.CharField(max_length=20, null=True, blank=True)
