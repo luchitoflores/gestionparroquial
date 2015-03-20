@@ -32,7 +32,7 @@ class Item(models.Model):
     catalogo = models.ForeignKey(Catalogo)
     codigo = models.CharField(max_length=50)
     nombre = models.CharField(max_length=50)
-    valor = models.CharField(max_length=50)
+    valor = models.CharField(max_length=50, null=True, blank=True)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     estado = models.ForeignKey('self')
     padre = models.ForeignKey('self',related_name='item_padre', blank=True, null=True)

@@ -14,7 +14,8 @@ class FuncionalidadManager(models.Manager):
         return self.model.objects.filter(grupos__user=user).order_by('orden, modulo__id')
 
     def funcionalidades_por_modulo(self, modulo, user):
-        return self.model.objects.filter(modulo=modulo, grupos__user=user, estado=True).order_by('orden').distinct()
+        return self.model.objects.filter(modulo=modulo, grupos__user=user,
+                                         estado=core.models.Item.objects.get(codigo='A')).order_by('orden').distinct()
 
 
 class ItemManager(models.Manager):
