@@ -109,7 +109,7 @@ class Parametro(models.Model):
 
 
 class Modulo(models.Model):
-    codigo = models.CharField(max_length=20)
+    codigo = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
