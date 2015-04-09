@@ -15,12 +15,20 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Catalogo, Item, Parametro, Modulo, Funcionalidad
 
 class GroupSerializer(serializers.ModelSerializer):
+
+    # def __init__(self, *args, **kwargs):
+    #     many = kwargs.pop('many', True)
+    #     super(GroupSerializer, self).__init__(many=many, *args, **kwargs)
+
     class Meta:
         model = Group
+        fields = ('id', 'name',)
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+
 
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -117,10 +125,10 @@ class ModuloViewSet(viewsets.ModelViewSet):
     queryset = Modulo.objects.all()
 
 class FuncionalidadSerializer(serializers.ModelSerializer):
-    grupos_usuario = GroupSerializer(many=True)
+    grupos = GroupSerializer(many=True, read_only=True)
     class Meta:
         model = Funcionalidad
-        fields = ('id', 'nombre','url','codigo','modulo','estado','descripcion','orden','icono','grupos_usuario')
+        fields = ('id', 'nombre', 'url', 'codigo', 'modulo', 'estado', 'descripcion', 'orden', 'icono', 'grupos')
 
 class FuncionalidadViewSet(viewsets.ModelViewSet):
     serializer_class = FuncionalidadSerializer

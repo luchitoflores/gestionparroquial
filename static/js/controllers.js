@@ -606,13 +606,18 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     };
 
     $scope.save = function () {
+
+        console.log('grupos: ');
+        console.log($scope.grupos);
+
         var data = {
             "modulo": $scope.idModulo,
             "nombre": $scope.nombre,
             "codigo": $scope.codigo,
             "url": $scope.url,
             "descripcion": $scope.descripcion,
-            "grupos": $scope.grupos.id,
+            //"grupos": $scope.grupos,
+            "grupos": [{id:1}],
             "estado": $scope.estado.id,
             "orden": $scope.orden,
             "icono": $scope.icono
