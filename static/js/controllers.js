@@ -196,15 +196,24 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
 
     $scope.submit = function () {
 
-        if ($scope.id) {
-            var data = {"id": $scope.id,
+        console.log('catPadre: ' + $scope.padre);
+        var data = {
                 "codigo": $scope.codigo,
                 "nombre": $scope.nombre,
                 "editable": $scope.editable,
                 "estado": $scope.estado.id,
-                "descripcion": $scope.descripcion,
-                "padre": $scope.padre.id
+                "descripcion": $scope.descripcion
+                //"padre": $scope.padre.id
+            };
+
+        if( $scope.padre != null){
+                 data["padre"] = $scope.padre.id;
             }
+
+        if ($scope.id) {
+            data["id"] = $scope.id;
+
+
 
             administrarCatalogos.updateCatalogo($scope.id, data)
                 .success(function (data) {
@@ -224,13 +233,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
                     console.log(error);
                 });
         } else {
-            var data = {"codigo": $scope.codigo,
-                "nombre": $scope.nombre,
-                "editable": $scope.editable,
-                "estado": $scope.estado.id,
-                "descripcion": $scope.descripcion,
-                "padre": $scope.padre.id
-            }
+
 
             administrarCatalogos.setCatalogo(data)
                 .success(function (data) {
@@ -310,6 +313,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     $scope.items = [];
     $scope.catalogoActual = "";
     $scope.itemActual = "";
+    $scope.itemsPadre = [];
 
     function limpiarCampos() {
         $scope.id = "";
@@ -319,6 +323,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
         $scope.descripcion = "";
         $scope.principal = false;
         $scope.estado = $scope.estadosGenerales;
+        $scope.padre = $scope.itemsPadre;
     };
 
     administrarCatalogos.getItemsPorCatalogo("EST")
@@ -343,7 +348,17 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                 $scope.items = data;
                 $scope.catalogoActual = catalogo;
                 $scope.catalogo = $scope.catalogoActual.id;
+                $scope.padreCodigo = $scope.catalogoActual.padreCodigo;
                 $scope.reset = limpiarCampos();
+
+                console.log('padre codigo: ' + $scope.padreCodigo);
+                administrarCatalogos.getItemsPorCatalogo($scope.padreCodigo)
+                    .success(function (data) {
+                        $scope.itemsPadre = data;
+                    })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load customer data: ' + error.message;
+                    });
             }).
             error(function (data, status, headers, config) {
                 console.log(data);
@@ -365,6 +380,12 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                         $scope.estado = $scope.estadosGenerales[ident];
                     }
                 });
+
+                $scope.itemsPadre.forEach(function (ele, ident) {
+                if (ele.id == e.padre) {
+                    $scope.padre = $scope.itemsPadre[ident];
+                }
+            });
             }
         });
     };
@@ -379,6 +400,10 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             "principal": $scope.principal,
             "estado": $scope.estado.id
         };
+
+        if( $scope.padre != null){
+                 data["padre"] = $scope.padre.id;
+            };
 
         if ($scope.id) {
             data["id"] = $scope.id;

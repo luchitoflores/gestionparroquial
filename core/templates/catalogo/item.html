@@ -22,6 +22,7 @@
                 <form class="form-horizontal" ng-submit="guardarItem()" action="" method="POST">
                     <input type="hidden" ng-model="catalogo"/>
                     <input type="hidden" ng-model="id"/>
+                    <input type="hidden" ng-model="padreCodigo"/>
                     <label for="">Código</label>
                     <input type="text" ng-model="codigo"/>
                     <label for="">Nombre</label>
@@ -36,6 +37,10 @@
                         <option value="">-- Seleccione --</option>
                     </select>
                     <label for="">Padre</label>
+                    <select name="" id="" ng-model="padre"
+                                    ng-options="padre.nombre for padre in itemsPadre track by padre.id">
+                                <option value="">-- Seleccione --</option>
+                    </select>
                     <label for="">Principal</label>
                     <input type="checkbox" ng-model="principal" value="principal"/>
 
