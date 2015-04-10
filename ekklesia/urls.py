@@ -12,11 +12,12 @@ from django.views.defaults import *
 
 from rest_framework import routers
 
-from core.serializers import CatalogoViewSet, ItemViewSet, ParametroViewSet, FuncionalidadViewSet, ModuloViewSet, GroupViewSet, PermissionViewSet
+from core.serializers import CatalogoViewSet, ItemViewSet, ItemsPaginatedViewSet, ParametroViewSet, FuncionalidadViewSet, ModuloViewSet, GroupViewSet, PermissionViewSet
 admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'catalogo', CatalogoViewSet)
 router.register(r'item', ItemViewSet)
+router.register(r'itemspaginados', ItemsPaginatedViewSet)
 router.register(r'parametro', ParametroViewSet)
 router.register(r'modulo', ModuloViewSet)
 router.register(r'funcionalidad', FuncionalidadViewSet)

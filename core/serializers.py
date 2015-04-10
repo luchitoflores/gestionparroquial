@@ -1,6 +1,7 @@
 from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.pagination import PaginationSerializer
 
 __author__ = 'LFL'
 
@@ -13,6 +14,10 @@ from rest_framework.permissions import IsAuthenticated
 
 
 from .models import Catalogo, Item, Parametro, Modulo, Funcionalidad
+
+
+class LargeResultsSetPagination(PaginationSerializer):
+    page_size = 1000
 
 class GroupSerializer(serializers.ModelSerializer):
 
@@ -77,17 +82,23 @@ class CatalogoViewSet(viewsets.ModelViewSet):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
+
         #fields = ['id', 'oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'parroquia', 'iglesia', 'individual']
 
+
+class ItemsPaginatedViewSet(viewsets.ModelViewSet):
+    serializer_class = ItemSerializer
+    queryset = Item.objects.all().order_by('nombre')
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = ItemsPadreFilter
+    paginate_by = 10
 
 class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     queryset = Item.objects.all().order_by('nombre')
     filter_backends = (filters.DjangoFilterBackend,)
-    #filter_fields = ('codigo',)
     #filter_class = ItemFilter
     filter_class = ItemsPadreFilter
-
 
     def get_queryset(self):
         query = self.request.QUERY_PARAMS

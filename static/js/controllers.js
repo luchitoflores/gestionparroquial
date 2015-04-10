@@ -51,6 +51,10 @@ app.factory("administrarItems", ['$http', function ($http) {
         return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codCatalogo);
     };
 
+    items.getItemsPaginadosPorCatalogo = function (codCatalogo) {
+        return $http.get('http://127.0.0.1:666/api-auth/itemspaginados/?catalogo=' + codCatalogo);
+    };
+
     items.setItem = function (data) {
         return $http.post('http://127.0.0.1:666/api-auth/item/', data);
     };
@@ -343,9 +347,9 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
         });
 
     $scope.MostrarItemsDelCatalogo = function (catalogo) {
-        administrarCatalogos.getItemsPorCatalogo(catalogo.codigo).
+        administrarItems.getItemsPaginadosPorCatalogo(catalogo.codigo).
             success(function (data, status, headers, config) {
-                $scope.items = data;
+                $scope.items = data.results;
                 $scope.catalogoActual = catalogo;
                 $scope.catalogo = $scope.catalogoActual.id;
                 $scope.padreCodigo = $scope.catalogoActual.padreCodigo;
