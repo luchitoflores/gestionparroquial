@@ -76,6 +76,18 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <ul>
+                        <li ng-if="pageprevious" class="previous"><a ng-click="CambiarPagina(pageprevious)">← Anterior</a></li>
+                        <li ng-if="pagenext" class="next"><a ng-click="CambiarPagina(pagenext)">Siguiente →</a></li>
+                        <li class="next">{[{ pagecount }]} items</li>
+                    </ul>
+                     <p></p>
+                </div>
+                <div>
+
+                </div>
+
             </div>
 
         </div>

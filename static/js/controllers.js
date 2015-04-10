@@ -346,10 +346,26 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
+    $scope.CambiarPagina = function(pagina){
+         $http.get(pagina).
+            success(function (data, status, headers, config) {
+                $scope.items = data.results;
+                $scope.pageprevious = data.previous;
+                $scope.pagenext = data.next;
+                $scope.pagecount = data.count;
+            }).
+            error(function (data, status, headers, config) {
+                console.log(data);
+            });
+    };
+
     $scope.MostrarItemsDelCatalogo = function (catalogo) {
         administrarItems.getItemsPaginadosPorCatalogo(catalogo.codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data.results;
+                $scope.pageprevious = data.previous;
+                $scope.pagenext = data.next;
+                $scope.pagecount = data.count;
                 $scope.catalogoActual = catalogo;
                 $scope.catalogo = $scope.catalogoActual.id;
                 $scope.padreCodigo = $scope.catalogoActual.padreCodigo;
