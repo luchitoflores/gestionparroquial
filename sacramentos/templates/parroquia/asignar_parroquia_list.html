@@ -22,7 +22,7 @@
 		<tr>
 			<td>{{o.persona}}</td>
 			<td>{{o.parroquia}}</td>
-			<td><a href="{%url 'parroco_periodos_asignacion_list' pk=o.id%}">Ver Asignaciones</a></td>
+			<td><a href="{%url 'parroco_periodos_asignacion_list' pk=o.id%}" data-toggle="tooltip" data-placement="top" title="Visualizar periodos en los que estuvo asignado el párroco a esta parroquia"><i class="icon-eye-open"></i></a></td>
 		</tr>
 		{%endfor%}
 	</tbody>

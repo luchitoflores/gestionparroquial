@@ -22,7 +22,7 @@ Lista de Parroquias Eclesiásticas
 			<th data-hide='phone'>Lugar</th>
 			<th data-hide='phone, tablet'>Direccion</th>
 			<th data-hide='phone, tablet'>Teléfono</th>
-			<th>Historial Párrocos</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,16 +35,14 @@ Lista de Parroquias Eclesiásticas
 
 		{%for o in object_list%}
 		<tr>
-			<td>
-				<a href="{{o.get_absolute_url}}">{{o}}</a>
-			</td>
+			<td>{{o}}</td>
 			<td>{{o.direccion.parroquia}}</td>
 			<td>{{o.direccion.domicilio}}</td>
 			<td>{{o.direccion.telefono}}</td>
 			<td>
-				<a href="{%url 'asignar_parroco_list' pk=o.id%}">
-					Párrocos
-				</a>
+                <a href="{{o.get_absolute_url}}" data-toggle="tooltip" data-placement="top" title="Editar parroquia"><i class="icon-pencil"></i></a>
+				|
+                <a href="{%url 'asignar_parroco_list' pk=o.id%}" data-toggle="tooltip" data-placement="top" title="Ver párrocos"><i class="icon-user"></i></a>
 			</td>
 			
 		</tr>

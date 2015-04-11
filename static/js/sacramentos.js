@@ -54,6 +54,9 @@ function inicio() {
     controles_provincias();
     acordeon();
     $(".dateinput").datepicker();
+    //Inicializar todos los tooltips
+    console.log('prueba');
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
 
     /*jQuery.each($("select[multiple]"), function () {
         // "Locations" can be any label you want

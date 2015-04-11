@@ -14,14 +14,16 @@
 			<th>Fecha de Inicio</th>
 			<th>Fecha de Finalización</th>
 			<th>Estado</th>
+            <th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
 		{%for o in object_list%}
 		<tr>
-			<td><a href="{%url 'parroco_periodos_asignacion_update' pk=o.id%}">{{o.inicio}}</a></td>
+			<td>{{o.inicio}}</td>
 			<td>{%if o.fin%}{{o.fin}}{%else%}No se ha especificado aún{%endif%}</td>
-			<td>{%if o.estado%}Activo{%else%}Desactivo{%endif%} </td>
+			<td>{%if o.estado%}<i class="icon-check"></i>{%else%}<i class="icon-check-minus"></i>{%endif%} </td>
+            <td><a href="{%url 'parroco_periodos_asignacion_update' pk=o.id%}"><i class='icon-pencil'></i></a></td>
 		</tr>
 		{%endfor%}
 	</tbody>
