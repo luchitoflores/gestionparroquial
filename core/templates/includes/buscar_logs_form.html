@@ -1,0 +1,24 @@
+<form id='id_form_buscar' class="form-horizontal">
+    <div class="panel panel-default">
+        <div class="panel-heading">Criterios de Búsqueda</div>
+        <div class="panel-body">
+
+            <label for="">Usuario</label>
+            <select name="" id="" ng-model="estado" ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                <option value="">-- Seleccione --</option>
+            </select>
+            <label for="">Transacción</label>
+            <select name="" id="" ng-model="estado" ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                <option value="">-- Seleccione --</option>
+            </select>
+            <label for="">Fecha Inicial</label>
+            <input type='date'/>
+            <label for="">Fecha Final</label>
+            <input type='date'/>
+
+            <button class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+	<!--<input type='submit' value='Buscar' class="btn btn-primary" />-->
+</form>
+<!--<a href="/crear/{{modelo}}" class='btn btn-primary'>Nueva Provincia</a>-->

@@ -1,7 +1,10 @@
 __author__ = 'lucho'
 
+from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django import forms
 from .models import Catalogo, Item, Parametro
+from .constants import CAT_TRANSACCIONES
 
 class ItemForm(ModelForm):
     class Meta:
@@ -44,3 +47,10 @@ class ParametroForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ParametroForm, self).__init__(*args, **kwargs)
         self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')
+
+
+class SearchLogsForm(forms.Form):
+    usuarios = forms.ModelChoiceField(queryset=User.objects.all())
+    fecha_inicial = forms.DateField()
+    fecha_final = forms.DateField()
+    transaccion = forms.ModelChoiceField(queryset=Item.objects.items_por_catalogo_cod(CAT_TRANSACCIONES))

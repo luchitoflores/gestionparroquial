@@ -1,23 +1,14 @@
-from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.pagination import PaginationSerializer
-
 __author__ = 'LFL'
-
 from django.contrib.auth.models import Group, User, Permission
+
 
 from rest_framework import serializers, viewsets, filters
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 
-
-
+from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter
 from .models import Catalogo, Item, Parametro, Modulo, Funcionalidad
+from .constants import CAT_TRANSACCIONES
 
-
-class LargeResultsSetPagination(PaginationSerializer):
-    page_size = 1000
 
 class GroupSerializer(serializers.ModelSerializer):
 
@@ -135,17 +126,31 @@ class ModuloViewSet(viewsets.ModelViewSet):
     serializer_class = ModuloSerializer
     queryset = Modulo.objects.all()
 
+
 class FuncionalidadSerializer(serializers.ModelSerializer):
     grupos = GroupSerializer(many=True, read_only=True)
     class Meta:
         model = Funcionalidad
         fields = ('id', 'nombre', 'url', 'codigo', 'modulo', 'estado', 'descripcion', 'orden', 'icono', 'grupos')
 
+
 class FuncionalidadViewSet(viewsets.ModelViewSet):
     serializer_class = FuncionalidadSerializer
     queryset = Funcionalidad.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = FuncionalidadFilter
+
+
+class LogsSearchSerializer(serializers.ListSerializer):
+    usuarios = serializers.ChoiceField(queryset=User.objects.all())
+    fecha_inicial = serializers.DateField()
+    fecha_final = serializers.DateField()
+    transaccion = serializers.ChoiceField(queryset=Item.objects.items_por_catalogo_cod(CAT_TRANSACCIONES))
+
+
+class LogsSearchViewSet(viewsets.GenericViewSet):
+    serializer_class = LogsSearchSerializer
+
 
 
 

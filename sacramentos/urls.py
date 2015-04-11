@@ -186,7 +186,7 @@ urlpatterns = patterns('',
                        url(r'^api/datatables/$', 'sacramentos.rest.data_tables'),
                        url(r'^datatables/$', TemplateView.as_view(template_name="data_tables.html")),
                        # urls de los logs de ekklesia
-                       url(r'^log/$', LogListView.as_view(), name='log_list'),
+                       #url(r'^log/$', LogListView.as_view(), name='log_list'),
                        url(r'^log/csv/$', exportar_csv_logs, name='logs_csv'),  #reportes
 
                        url(r'^reporte/anual/$', reporte_anual_sacramentos, name='reporte_anual'),
