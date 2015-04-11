@@ -32,7 +32,7 @@
 		{% for o in object_list %}
 		<tr>
 			<td>{{o.user.get_full_name}}</td>
-			<td> {{o.dni}}</td>
+			<td>{% if not o.dni %}  <i class='icon-ellipsis-horizontal'></i> {% else %} {{o.dni}} {% endif %}</td>
 			<td id='id_fecha_nacimiento'>{{o.fecha_nacimiento}}</td>
 			<td>{{o.lugar_nacimiento}}</td>
 			<td>

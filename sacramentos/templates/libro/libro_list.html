@@ -44,14 +44,16 @@
 			{%if o.fecha_cierre%}
 			<td id='id_fecha_cierre'>{{o.fecha_cierre}}</td>
 			{%else%}
-			<td id='id_fecha_cierre'>{{'No hay fecha'}}</td>
+			<td id='id_fecha_cierre'><i class='icon-ellipsis-horizontal'></i></td>
 			{%endif%}
 			{%if o.principal%}
 			<td><i class="icon-check"></i></td>
 			{%else%}
 			<td><i class="icon-check-minus"></i></td>
 			{%endif%}
-			<td ><a href="{%url 'libro_update' pk=o.id%}"><i class="icon-pencil"></i></a> </td>
+			<td >
+                <a href="{%url 'libro_update' pk=o.id%}"><i class="icon-pencil"></i></a>
+            </td>
 			
 		</tr>
 		{% endfor %}
