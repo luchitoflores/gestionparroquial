@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import Group
 from django.contrib.admin.models import LogEntry
 from core.managers import ModuloManager, FuncionalidadManager, ItemManager
+from .validators import validate_url, validate_url_name
 
 # Create your models here.
 from django.db import models
@@ -62,7 +63,7 @@ class Funcion(models.Model):
 
 class Funcionalidad(models.Model):
     nombre = models.CharField(max_length=50)
-    url = models.CharField(max_length=50)  # tiene que ser el mismo nombre de la url
+    url = models.CharField(max_length=50, validators=[validate_url_name])  # tiene que ser el mismo nombre de la url
     codigo = models.CharField(max_length=20, unique=True)
     modulo = models.ForeignKey('Modulo')
     grupos = models.ManyToManyField(Group)
