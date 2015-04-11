@@ -1,13 +1,17 @@
 __author__ = 'LFL'
 from django.contrib.auth.models import Group, User, Permission
+from django.contrib.admin.models import LogEntry
 
 
-from rest_framework import serializers, viewsets, filters
+from rest_framework import serializers, viewsets, filters, generics
+from rest_framework import views
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
-from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter
+from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter, LogEntryFilter
 from .models import Catalogo, Item, Parametro, Modulo, Funcionalidad
 from .constants import COD_CAT_TRANSACCIONES
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -48,7 +52,7 @@ class CatalogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Catalogo
         fields = ('id', 'nombre', 'codigo', 'descripcion', 'estado', 'padre', 'padreCodigo', 'editable',)
-        extra_kwargs = {'padre': {'prueba': 'nombre'}}
+        #extra_kwargs = {'padre': {'write_only': True}}
         #read_only_fields = ('codigo',)
 
     def get_padre_codigo(self, obj):
@@ -141,15 +145,20 @@ class FuncionalidadViewSet(viewsets.ModelViewSet):
     filter_class = FuncionalidadFilter
 
 
-class LogsSearchSerializer(serializers.ListSerializer):
-    #usuarios = serializers.ChoiceField(queryset=User.objects.all(), )
-    fecha_inicial = serializers.DateField()
-    fecha_final = serializers.DateField()
-    #transaccion = serializers.ChoiceField(queryset=Item.objects.items_por_catalogo_cod(CAT_TRANSACCIONES))
+class LogsSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEntry
 
 
-class LogsSearchViewSet(viewsets.GenericViewSet):
+class LogsSearchListAPIView(generics.ListAPIView):
     serializer_class = LogsSearchSerializer
+    queryset = LogEntry.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = LogEntryFilter
+    paginate_by = 10
+
+
+
 
 
 

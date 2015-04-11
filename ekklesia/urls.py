@@ -12,7 +12,9 @@ from django.views.defaults import *
 
 from rest_framework import routers
 
-from core.serializers import CatalogoViewSet, ItemViewSet, ItemsPaginatedViewSet, ParametroViewSet, FuncionalidadViewSet, ModuloViewSet, GroupViewSet, PermissionViewSet
+from core.serializers import (CatalogoViewSet, ItemViewSet, ItemsPaginatedViewSet, ParametroViewSet,
+                              FuncionalidadViewSet, ModuloViewSet, GroupViewSet, PermissionViewSet, LogsSearchListAPIView)
+
 admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'catalogo', CatalogoViewSet)
@@ -25,8 +27,8 @@ router.register(r'grupo', GroupViewSet)
 router.register(r'permiso', PermissionViewSet)
 
 
-
 urlpatterns = patterns('',
+    url(r'^api-auth/log/', LogsSearchListAPIView.as_view()),
     url(r'^api-auth/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
