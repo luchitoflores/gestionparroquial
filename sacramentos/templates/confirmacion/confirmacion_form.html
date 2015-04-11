@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load tags sacramentos_tags%}
+{%load sacramentos_tags%}
 
 {%block title%}{%block content_title%}
 {%if object.id%}Editar Confirmacion {%else%}Agregar Confirmacion{%endif%}
@@ -143,7 +143,7 @@
 						</div>
 			</fieldset>
 			<fieldset class='scheduler-border'>
-				<legend class='scheduler-border'>Mas Datos del Sacramento</legend>
+				<legend class='scheduler-border'>Padrinos</legend>
 										<div class='control-group'>
 							<label for="id_padrino" class='control-label'>{{form_confirmacion.padrino.label}}</label>
 							<div class='controls'>

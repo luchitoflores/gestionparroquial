@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load tags sacramentos_tags %}
+{% load sacramentos_tags %}
 
 {% block title %}{% block content_title %}
     {% if object.id %}Editar Primera Comunión {% else %}Agregar Primera Comunión{% endif %}
@@ -167,7 +167,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class='control-group'>
+
+                </fieldset>
+                 <fieldset class='scheduler-border'>
+                    <legend class='scheduler-border'>Padrinos</legend>
+                     <div class='control-group'>
                         <label for="id_padrino" class='control-label'>
                             {{ form_eucaristia.padrino.label }}
                         </label>

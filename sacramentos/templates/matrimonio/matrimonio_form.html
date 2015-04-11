@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load tags sacramentos_tags %}
+{% load sacramentos_tags %}
 
 {% block title %}{% block content_title %}
     {% if object.id %}Editar Matrimonio {% else %}Agregar Matrimonio{% endif %}
@@ -315,19 +315,17 @@
     {% if object.id %}
         <div class="panel panel-default">
             <div class="panel-heading"> Notas Marginales
-                {% if perms.sacramentos.add_notamarginal %}
-                    <span>
-                    <div class="pull-right">
-                        <a id='#id_crear_nota' class='btn btn-primary' href="#id_crear_nota_matrimonio"
-                           data-toggle='modal'>Agregar
-                            Nota Marginal</a>
-                    </div>  </span>
-                {% endif %}
             </div>
             <div class="panel-body">
+                <fieldset id='id_fielset_tabla' class='scheduler-border'>
+                    <legend class='scheduler-border'>
+                        <a id='#id_crear_nota' class='btn btn-primary' href="#id_crear_nota_matrimonio"
+                           data-toggle='modal'> Agregar Nota Marginal</a>
+                    </legend>
+
                 <table id='id_table_nota_matrimonio' class='table table-bordered table-striped'>
                     <thead>
-                    <tr class='alert alert-info'>
+                    <tr>
                         <th>Fecha</th>
                         <th>Descripcion</th>
                     </tr>
@@ -349,7 +347,7 @@
                     {% endif %}
                     </tbody>
                 </table>
-
+            </fieldset>
             </div>
         </div>
     {% endif %}
