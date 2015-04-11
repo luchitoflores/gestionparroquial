@@ -45,32 +45,30 @@
 
 <input id='id_hidden' type="hidden" value='{{perfil.id}}'>
 <!--<div id='id_datos_personales' class='tab-pane active'>-->
-<form name="form_usuario_create" id='id_form_usuario_create' method='POST' class='form-horizontal'>
+<form name="form_usuario_create" id='id_form_usuario_create' method='POST' class='form-horizontal' action=".">
 	{%csrf_token%}
 
-	<div class="row" ng-app='app'>
-		<div class="span8" ng-controller='primerControl'>
+	<div class="row">
+		<div class="span8">
 
 			<fieldset class='scheduler-border'>
 				<legend class='scheduler-border'>Datos Personales</legend>
                 <div class="control-group">
-							{{form_perfil.dni|label_with_classes:'control-label'}}
-							<div class="controls">
-                                <input type="number" id="id_dni" name="dni" type="text" ng-model="dni">
-                                <button class="btn btn-primary" type="button" ng-click="BuscarFeligresPorId()">Consultar</button>
-                            {#{{form_perfil.dni}}#}
-							</div>
-							<div class="controls">
-								<div class='help-text'>
-									{{form_perfil.dni.help_text}}
-								</div>
-							</div>
-							<div class="controls">
-                                <div class='errors'>
-                                    {{form_perfil.dni.errors}}
-								</div>
-							</div>
-						</div>
+                    {{form_perfil.dni|label_with_classes:'control-label'}}
+                    <div class="controls">
+                       {{form_perfil.dni}}
+                    </div>
+                    <div class="controls">
+                        <div class='help-text'>
+                            {{form_perfil.dni.help_text}}
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div class='errors'>
+                            {{form_perfil.dni.errors}}
+                        </div>
+                    </div>
+                </div>
 				<div class="control-group">
 					{{form_usuario.first_name|label_with_classes:'control-label'}}
 					<div class="controls">

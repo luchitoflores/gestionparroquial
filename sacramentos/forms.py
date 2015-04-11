@@ -19,6 +19,7 @@ from .models import (PerfilUsuario,
                      PeriodoAsignacionParroquia,
                      ParametrizaDiocesis, ParametrizaParroquia, )
 from core.models import Item
+from core.constants import COD_CAT_NACIONALIDAD, COD_ITC_ECUADOR
 from .validators import validate_cedula
 
 
@@ -187,7 +188,7 @@ class PersonaBaseForm(ModelForm):
         nacionalidad = self.cleaned_data.get('nacionalidad')
 
         if cedula:
-            if nacionalidad == 'ECU':
+            if nacionalidad == Item.objects.item_por_item_cod(COD_CAT_NACIONALIDAD, COD_ITC_ECUADOR):
                 if not cedula.isdigit():
                     raise forms.ValidationError('El número de cédula no debe contener letras')
                     return cedula

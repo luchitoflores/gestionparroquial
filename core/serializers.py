@@ -7,7 +7,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 
 from core.filters import ItemFilter, FuncionalidadFilter, ItemsPadreFilter
 from .models import Catalogo, Item, Parametro, Modulo, Funcionalidad
-from .constants import CAT_TRANSACCIONES
+from .constants import COD_CAT_TRANSACCIONES
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -142,10 +142,10 @@ class FuncionalidadViewSet(viewsets.ModelViewSet):
 
 
 class LogsSearchSerializer(serializers.ListSerializer):
-    usuarios = serializers.ChoiceField(queryset=User.objects.all())
+    #usuarios = serializers.ChoiceField(queryset=User.objects.all(), )
     fecha_inicial = serializers.DateField()
     fecha_final = serializers.DateField()
-    transaccion = serializers.ChoiceField(queryset=Item.objects.items_por_catalogo_cod(CAT_TRANSACCIONES))
+    #transaccion = serializers.ChoiceField(queryset=Item.objects.items_por_catalogo_cod(CAT_TRANSACCIONES))
 
 
 class LogsSearchViewSet(viewsets.GenericViewSet):
