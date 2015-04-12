@@ -510,7 +510,7 @@ a [class^="icon-"], a [class*=" icon-"] {
     align-content: center;
 }
 
-.remove-decoration > li:before {
+/*.remove-decoration > li:before {
     content: '\f111';
     font-family: FontAwesome;
     color: #14c724;
@@ -520,11 +520,7 @@ a [class^="icon-"], a [class*=" icon-"] {
     float: left;
     margin:0 1px 0 -5px;
     font-size: 0.7em ;
-     /*background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#ccc));
-    -webkit-background-clip: border-box;
-    -webkit-text-fill-color: transparent;*/
-    /*background: -webkit-linear-gradient(#b0c9ff, #e8efff);*/
-}
+}*/
 
 .accordion-group > .accordion-heading > a > span:after {
   content: '\f102';
@@ -536,6 +532,10 @@ a [class^="icon-"], a [class*=" icon-"] {
   font-family: FontAwesome;
   content: '\f103';
   position: relative;
+}
+
+.selected{
+    background: rgb(227, 229, 227);
 }
 
 

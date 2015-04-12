@@ -1,11 +1,4 @@
-/**
- * Created by lucho on 21/10/2014.
- */
-
 var app = angular.module('app');
-
-
-/////////------------------------------- CONTROLADORES ------------------------------------/////////////
 
 app.controller('menuControl', function ($scope) {
 
@@ -15,43 +8,8 @@ app.controller('menuControl', function ($scope) {
             $(event.target).html('<span class="pull-right"><i class="icon-double-angle-down"></i></span>');
         } else {
             $(event.target).html('<span class="pull-right"><i class="icon-double-angle-up"></i></span>');
-
         }
     };
-
-    /*$scope.click1 = true;
-     $scope.click2 = true;*/
-
-    /*$scope.show = function (self) {
-     cosole.log(self);
-     $scope.click1 = false;
-     $scope.click2 = false;
-     };
-
-     $scope.hide = function (self) {
-     cosole.log(self);
-     $scope.click1 = true;
-     $scope.click2 = true;
-     };*/
-
-    $scope.variable = "Hello";
-
-    $scope.initialize = function (data) {
-        $log.log('initialize', data);
-        $scope.initData = data;
-    };
-
-    $scope.BuscarFeligresPorId = function () {
-        $scope.feligres = $http({method: 'GET', url: '/api-auth/usuario/?dni=' + $scope.dni}).
-            success(function (data, status, headers, config) {
-                $scope.dni = data[0]["lugar_nacimiento"];
-                console.log(data);
-            }).
-            error(function (data, status, headers, config) {
-                console.log('error');
-            })
-    }
-
 });
 
 app.controller('catalogoControl', function ($scope, $http, administrarCatalogos, constants) {
@@ -151,6 +109,10 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
         });
 
     $scope.MostrarInfoCatalogo = function (codigo) {
+
+        $scope.codSelectedCatalogo = codigo;
+        console.log($scope.codSelectedCatalogo);
+
         $scope.cat = $scope.catalogos.filter(function (el) {
             return el.codigo == codigo;
         });
@@ -691,38 +653,6 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
     }
 });
 
-
-
-///////////////////////------------------------- DIRECTIVAS
-app.directive("isActive", function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            scope.$watch(function () {
-                //console.log("antiguo valor: "+element.attr('id'));
-                return element.attr('class');
-            }, function (newValue, oldValue) {
-                if(newValue === "accordion-body in collapse"){
-                    //console.log(">>");
-                } else {
-                    //console.log("<<");
-                }
-                //console.log("nuevo valor: "+newValue);
-                // console.log("viejo valor: "+oldValue);
-            });
-        }
-
-        //template: '<div></div>',
-        //replace: true
-    };
-
-});
-
-
-
-app.directive("message", function () {
-
-});
 
 
 
