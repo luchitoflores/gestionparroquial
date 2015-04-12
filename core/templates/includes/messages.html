@@ -1,0 +1,18 @@
+<div id="id_messages">
+    <aside>
+        <div ng-show="alert">
+            {% block messages %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}>
+                            <button type="button" class="close" data-dismiss="alert"><i
+                                    class="icon-remove"></i></button>
+                            <img {% if message.tags %}src="/static/img/{{ message.tags }}.png" {% endif %}
+                                 alt=""> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    </aside>
+</div>

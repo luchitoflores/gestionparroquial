@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = 'LFL'
 from django.contrib.auth.models import Group, User, Permission
 from django.contrib.admin.models import LogEntry
@@ -58,15 +59,15 @@ class CatalogoSerializer(serializers.ModelSerializer):
 
 class CatalogoViewSet(viewsets.ModelViewSet):
     serializer_class = CatalogoSerializer
-    queryset = Catalogo.objects.all().order_by('nombre')
-    ordering = ('nombre', 'codigo')
+    """
+    Ordenar ignorando mayúsculas y minúsculas
+    """
+    queryset = Catalogo.objects.all().extra(select={'lower_nombre': 'lower(nombre)'}).order_by('lower_nombre')
 
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-
-        #fields = ['id', 'oferente', 'intencion', 'ofrenda', 'fecha', 'hora', 'parroquia', 'iglesia', 'individual']
 
 
 class ItemsPaginatedViewSet(viewsets.ModelViewSet):
@@ -75,6 +76,7 @@ class ItemsPaginatedViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = ItemsPadreFilter
     paginate_by = 10
+
 
 class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
@@ -105,6 +107,7 @@ class ParametroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Parametro
 
+
 class ParametroViewSet(viewsets.ModelViewSet):
     serializer_class = ParametroSerializer
     queryset = Parametro.objects.all()
@@ -113,6 +116,7 @@ class ParametroViewSet(viewsets.ModelViewSet):
 class ModuloSerializer(serializers.ModelSerializer):
     class Meta:
         model = Modulo
+
 
 class ModuloViewSet(viewsets.ModelViewSet):
     serializer_class = ModuloSerializer

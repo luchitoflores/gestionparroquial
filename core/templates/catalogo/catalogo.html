@@ -2,13 +2,13 @@
 {% block title %}{% block content_title %} Catálogos {% endblock %}{% endblock %}
 {% block content %}
 
+
     <div>
         <div class="row" ng-controller="catalogoControl">
             <div class="span2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Catálogos</div>
                     <div class="panel-body">
-
                         <div ng-repeat="catalogo in catalogos">
                             <ul class="remove-decoration">
                                 <li  ng-click="MostrarInfoCatalogo(catalogo.codigo)">{[{ catalogo.nombre }]}</li>
@@ -17,7 +17,16 @@
                     </div>
                 </div>
             </div>
+
             <div class="span5">
+
+                <div ng-show="alert">
+                    <div class="alert alert-{[{status}]}">
+                        <button type="button" class="close"><i class="icon-remove"></i></button>
+                        <img src="/static/img/{[{status}]}.png" alt=""> {[{ message }]}
+                    </div>
+                </div>
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Información del Catálogo</div>
                     <div class="panel-body">

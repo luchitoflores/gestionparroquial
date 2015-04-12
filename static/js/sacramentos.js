@@ -55,7 +55,6 @@ function inicio() {
     acordeon();
     $(".dateinput").datepicker();
     //Inicializar todos los tooltips
-    console.log('prueba');
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
 
     /*jQuery.each($("select[multiple]"), function () {

@@ -2,135 +2,8 @@
  * Created by lucho on 21/10/2014.
  */
 
-var app = angular.module('app', ['ngCookies']);
-app.config([
-    '$httpProvider',
-    '$interpolateProvider',
-    function ($httpProvider, $interpolateProvider) {
-        $interpolateProvider.startSymbol('{[{');
-        $interpolateProvider.endSymbol('}]}');
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+var app = angular.module('app');
 
-    }]).
-    run([
-        '$http',
-        '$cookies',
-        function ($http, $cookies) {
-            $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-        }]);
-
-
-/////////------------------------------- FACTORIAS------------------------------------/////////////
-
-app.factory("administrarCatalogos", ['$http', function ($http) {
-    var catalogos = {};
-    catalogos.getCatalogos = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/catalogo/');
-    };
-
-    catalogos.getItemsPorCatalogo = function (codCatalogo) {
-        return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codCatalogo);
-    };
-
-    catalogos.setCatalogo = function (data) {
-        return $http.post('http://127.0.0.1:666/api-auth/catalogo/', data);
-    };
-
-    catalogos.updateCatalogo = function (id, data) {
-        return $http.put('http://127.0.0.1:666/api-auth/catalogo/' + id, data);
-    };
-
-    return catalogos;
-}]);
-
-app.factory("administrarItems", ['$http', function ($http) {
-    var items = {};
-
-    items.getItemsPorCatalogo = function (codCatalogo) {
-        return $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codCatalogo);
-    };
-
-    items.getItemsPaginadosPorCatalogo = function (codCatalogo) {
-        return $http.get('http://127.0.0.1:666/api-auth/itemspaginados/?catalogo=' + codCatalogo);
-    };
-
-    items.setItem = function (data) {
-        return $http.post('http://127.0.0.1:666/api-auth/item/', data);
-    };
-
-    items.updateItem = function (id, data) {
-        return $http.put('http://127.0.0.1:666/api-auth/item/' + id, data);
-    };
-
-    return items;
-}]);
-
-app.factory("administrarParametros", ['$http', function ($http) {
-    var parametros = {};
-
-    parametros.getParametros = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/parametro/');
-    };
-
-    parametros.setParametro = function (data) {
-        return $http.post('http://127.0.0.1:666/api-auth/parametro/', data);
-    };
-
-    parametros.updateParametro = function (id, data) {
-        return $http.put('http://127.0.0.1:666/api-auth/parametro/' + id, data);
-    };
-
-    return parametros;
-}]);
-
-app.factory("administrarModulos", ['$http', function ($http) {
-    var modulos = {};
-
-    modulos.getModulos = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/modulo/');
-    };
-
-    modulos.setModulo = function (data) {
-        return $http.post('http://127.0.0.1:666/api-auth/modulo/', data);
-    };
-
-    modulos.updateModulo = function (id, data) {
-        return $http.put('http://127.0.0.1:666/api-auth/modulo/' + id, data);
-    };
-
-    return modulos;
-}]);
-
-app.factory("administrarFuncionalidades", ['$http', function ($http) {
-    var funcionalidades = {};
-
-    funcionalidades.getFuncionalidades = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/funcionalidad/');
-    };
-
-    funcionalidades.setFuncionalidad = function (data) {
-        return $http.post('http://127.0.0.1:666/api-auth/funcionalidad/', data);
-    };
-
-    funcionalidades.updateFuncionalidad = function (id, data) {
-        return $http.put('http://127.0.0.1:666/api-auth/funcionalidad/' + id, data);
-    };
-
-    funcionalidades.getFuncionalidadesPorModulo = function (codModulo) {
-        return $http.get('http://127.0.0.1:666/api-auth/funcionalidad/?modulo=' + codModulo);
-    };
-
-    funcionalidades.getGrupos = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/grupo/');
-    };
-
-    funcionalidades.getModulos = function () {
-        return $http.get('http://127.0.0.1:666/api-auth/modulo/');
-    };
-
-    return funcionalidades;
-}]);
 
 /////////------------------------------- CONTROLADORES ------------------------------------/////////////
 
@@ -181,8 +54,8 @@ app.controller('menuControl', function ($scope) {
 
 });
 
-app.controller('catalogoControl', function ($scope, $http, administrarCatalogos) {
-
+app.controller('catalogoControl', function ($scope, $http, administrarCatalogos, constants) {
+    $scope.alert = false;
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
     $scope.catalogoActual = "";
@@ -199,16 +72,13 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
 
 
     $scope.submit = function () {
-
-        console.log('catPadre: ' + $scope.padre);
         var data = {
                 "codigo": $scope.codigo,
                 "nombre": $scope.nombre,
                 "editable": $scope.editable,
                 "estado": $scope.estado.id,
                 "descripcion": $scope.descripcion
-                //"padre": $scope.padre.id
-            };
+               };
 
         if( $scope.padre != null){
                  data["padre"] = $scope.padre.id;
@@ -216,9 +86,6 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
 
         if ($scope.id) {
             data["id"] = $scope.id;
-
-
-
             administrarCatalogos.updateCatalogo($scope.id, data)
                 .success(function (data) {
                     console.log("catalogo actualizado correctamente");
@@ -227,18 +94,21 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
                     administrarCatalogos.getCatalogos()
                         .success(function (data) {
                             $scope.catalogos = data;
+                            $scope.alert = true;
+                            $scope.status = constants.SUCCESS;
+                            $scope.message = constants.UPDATE_SUCCESS;
                         })
                         .error(function (error) {
-                            $scope.status = 'Unable to load customer data: ' + error.message;
+
                         });
                 })
                 .error(function (error) {
-                    console.log("error al insertar catálogos");
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
                     console.log(error);
                 });
         } else {
-
-
             administrarCatalogos.setCatalogo(data)
                 .success(function (data) {
                     console.log("catalogo insertado correctamente");
@@ -247,13 +117,18 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos)
                     administrarCatalogos.getCatalogos()
                         .success(function (data) {
                             $scope.catalogos = data;
+                            $scope.alert = true;
+                            $scope.status = constants.SUCCESS;
+                            $scope.message = constants.CREATE_SUCCESS;
                         })
                         .error(function (error) {
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
                 .error(function (error) {
-                    console.log("error al insertar catálogos");
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
                     console.log(error);
                 });
         }
@@ -845,7 +720,9 @@ app.directive("isActive", function () {
 
 
 
+app.directive("message", function () {
 
+});
 
 
 
