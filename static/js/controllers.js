@@ -581,6 +581,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades) {
     $scope.funcionalidades = [];
     $scope.gruposUsuarios = [];
+    $scope.gruposActuales = []
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
     function limpiarCampos() {
@@ -589,7 +590,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
         $scope.nombre = "";
         $scope.descripcion = "";
         $scope.url = "";
-        $scope.grupos = $scope.gruposUsuarios;
+        $scope.grupos = "";
         $scope.orden = "";
         $scope.icono = "";
         $scope.estado = $scope.estadosGenerales;
@@ -606,6 +607,8 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     administrarFuncionalidades.getGrupos()
         .success(function (data) {
             $scope.gruposUsuarios = data;
+            console.log('grupos de usuarios');
+            console.log(data);
         })
         .error(function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -614,7 +617,6 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     $scope.MostrarFuncionalidadesDelModulo = function(modulo){
         administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
         .success(function (data) {
-            console.log(data);
             $scope.funcionalidades = data;
             $scope.moduloActual = modulo;
             $scope.idModulo = modulo.id;
@@ -627,8 +629,12 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
 
     $scope.save = function () {
 
-        console.log('grupos: ');
-        console.log($scope.grupos);
+        $scope.grupos.forEach(function(ele, id){
+            $scope.gruposActuales.push(ele.id)
+        });
+
+        console.log('grupos actuales: ');
+        console.log($scope.gruposActuales);
 
         var data = {
             "modulo": $scope.idModulo,
@@ -637,7 +643,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
             "url": $scope.url,
             "descripcion": $scope.descripcion,
             //"grupos": $scope.grupos,
-            "grupos": [{id:1}],
+            "grupos": $scope.gruposActuales,
             "estado": $scope.estado.id,
             "orden": $scope.orden,
             "icono": $scope.icono
@@ -682,7 +688,6 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
 
     };
 
-
     $scope.CargarFuncionalidad = function (id) {
         $scope.funcionalidades.forEach(function (e, i) {
             if (e.id == id) {
@@ -698,11 +703,14 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                         $scope.estado = $scope.estadosGenerales[ident];
                     }
                 });
+                var array = []
                 $scope.gruposUsuarios.forEach(function (ele, ident) {
-                    if (ele.id == e.grupo) {
-                        $scope.grupos = $scope.grupos[ident];
+                    if (e.grupos.indexOf(ele.id) != -1) {
+                        console.log("llegue aqui 2");
+                        array.push(ele);
                     }
                 });
+                $scope.grupos = array
             }
         });
     };

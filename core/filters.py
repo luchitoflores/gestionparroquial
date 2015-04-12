@@ -48,12 +48,14 @@ class LogEntryFilter(django_filters.FilterSet):
     def filter_date_end(queryset, value):
         currentdate = datetime.datetime.strptime(value, "%d/%m/%Y")
         currentdatetime = datetime.datetime.combine(currentdate, datetime.time.max)
+        #raise ValueError('dsdd')
         return queryset.filter(action_time__lt=currentdatetime)
 
 
 
 class FuncionalidadFilter(django_filters.FilterSet):
     modulo = django_filters.CharFilter(name='modulo__codigo')
+
     class Meta:
         model = Funcionalidad
         fields = ('modulo',)

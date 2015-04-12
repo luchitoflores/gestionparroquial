@@ -39,14 +39,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
 
 
-class CatalogoPadreSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Catalogo
-        fields = ('id', 'nombre', 'codigo', 'descripcion', 'estado', 'padre', 'editable')
-
-
 class CatalogoSerializer(serializers.ModelSerializer):
-    #padre = CatalogoPadreSerializer()
     padreCodigo = serializers.SerializerMethodField('get_padre_codigo')
 
     class Meta:
@@ -62,17 +55,12 @@ class CatalogoSerializer(serializers.ModelSerializer):
         else:
             return obj.padre.codigo
 
-    # def validate_nombre(self, value):
-    #     if 'django' not in value.lower():
-    #         raise serializers.ValidationError("Blog post is not about Django")
-    #     return value
-
-
 
 class CatalogoViewSet(viewsets.ModelViewSet):
     serializer_class = CatalogoSerializer
     queryset = Catalogo.objects.all().order_by('nombre')
     ordering = ('nombre', 'codigo')
+
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -132,7 +120,8 @@ class ModuloViewSet(viewsets.ModelViewSet):
 
 
 class FuncionalidadSerializer(serializers.ModelSerializer):
-    grupos = GroupSerializer(many=True, read_only=True)
+    #grupos = GroupSerializer(many=True, read_only=True)
+
     class Meta:
         model = Funcionalidad
         fields = ('id', 'nombre', 'url', 'codigo', 'modulo', 'estado', 'descripcion', 'orden', 'icono', 'grupos')
