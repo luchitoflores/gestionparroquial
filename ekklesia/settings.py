@@ -208,8 +208,8 @@ LOGIN_REDIRECT_URL = '/home/'
 # Configuración para el envío de email
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'floysinternacional@gmail.com'
-EMAIL_HOST_PASSWORD = '13cordova'
+EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
+EMAIL_HOST_PASSWORD = '33BarFlouch$'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador
