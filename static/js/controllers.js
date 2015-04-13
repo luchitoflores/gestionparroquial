@@ -422,12 +422,13 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 });
 
 
-app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades) {
+app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos) {
     $scope.funcionalidades = [];
     $scope.gruposUsuarios = [];
     $scope.gruposActuales = []
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
+    $scope.modulos = [];
     function limpiarCampos() {
         $scope.id = "";
         $scope.codigo = "",
@@ -438,7 +439,16 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
         $scope.orden = "";
         $scope.icono = "";
         $scope.estado = $scope.estadosGenerales;
+        $scope.modulo = $scope.modulos;
     };
+
+    administrarModulos.getModulos()
+        .success(function (data) {
+            $scope.modulos = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
 
     administrarCatalogos.getItemsPorCatalogo("EST")
         .success(function (data) {
@@ -482,7 +492,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
         console.log($scope.gruposActuales);
 
         var data = {
-            "modulo": $scope.idModulo,
+            "modulo": $scope.modulo.id,
             "nombre": $scope.nombre,
             "codigo": $scope.codigo,
             "url": $scope.url,
@@ -546,6 +556,11 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                 $scope.estadosGenerales.forEach(function (ele, ident) {
                     if (ele.id == e.estado) {
                         $scope.estado = $scope.estadosGenerales[ident];
+                    }
+                });
+                $scope.modulos.forEach(function (ele, ident) {
+                    if (ele.id == e.modulo) {
+                        $scope.modulo = $scope.modulos[ident];
                     }
                 });
                 var array = []
