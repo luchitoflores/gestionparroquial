@@ -10,8 +10,8 @@
                     <div class="panel-body">
 
                         <div ng-repeat="parametro in parametros">
-                            <ul>
-                                <li ng-click="MostrarInfoParametro(parametro.codigo)">{[{ parametro.nombre }]}</li>
+                            <ul class="remove-decoration">
+                                <li ng-click="MostrarInfoParametro(parametro.codigo)" ng-class="{selected: parametro.codigo === codSelectedParametro}">{[{ parametro.nombre }]}</li>
                             </ul>
                         </div>
                     </div>

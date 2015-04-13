@@ -391,6 +391,9 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
         });
 
     $scope.MostrarInfoParametro = function (codigo) {
+
+        $scope.codSelectedParametro = codigo;
+
         $scope.cat = $scope.parametros.filter(function (el) {
             return el.codigo == codigo;
         });
