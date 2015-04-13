@@ -24,12 +24,21 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Información del Catálogo</div>
                     <div class="panel-body">
-                        <form action="" method="POST" class="form-horizontal" ng-submit="submit()">
+                        <form action="" name="catalogoForm" method="POST" class="form-horizontal" ng-submit="catalogoForm.$valid && submit()">
+
+
                             <input type="hidden" ng-model="id"/>
                             <label for="">Nombre</label>
-                            <input type="text" ng-model="nombre"/>
-                            <label for="">Código</label>
-                            <input type="text" ng-model="codigo"/>
+                            <input name="nombre" type="text" ng-model="nombre" required/>
+                            <span ng-show="catalogoForm.nombre.$invalid && !catalogoForm.nombre.$pristine" class="help-block">El nombre es requerido.</span>
+
+                            <div id="name-group" class="form-group" ng-class="{ 'error' : errorCodigo }">
+                                <label for="">Código</label>
+                                <input name="codigo" type="text" ng-model="codigo" required/>
+                                <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
+                                <span ng-show="catalogoForm.codigo.$invalid && !catalogoForm.codigo.$pristine" class="help-block">El código es requerido.</span>
+                            </div>
+
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Es editable?</label>
@@ -40,10 +49,12 @@
                                 <option value="">-- Seleccione --</option>
                             </select>
                             <label for="">Estado</label>
-                            <select name="" id="" ng-model="estado"
-                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                            <select name="estado" id="" ng-model="estado"
+                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id"
+                                    required>
                                 <option value="">-- Seleccione --</option>
                             </select>
+                            <span ng-show="catalogoForm.estado.$invalid && !catalogoForm.estado.$pristine" class="help-block">El estado es requerido.</span>
 
                             <div class="form-actions">
                                 <button class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</button>

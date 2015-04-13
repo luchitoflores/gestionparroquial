@@ -60,11 +60,12 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
 
                         });
                 })
-                .error(function (error) {
+                .error(function (errors) {
                     $scope.alert = true;
                     $scope.status = constants.ERROR;
                     $scope.message = constants.UPDATE_ERROR;
-                    console.log(error);
+                    $scope.errorCodigo = errors.codigo[0];
+                    console.log(errors);
                 });
         } else {
             administrarCatalogos.setCatalogo(data)
@@ -111,7 +112,6 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
     $scope.MostrarInfoCatalogo = function (codigo) {
 
         $scope.codSelectedCatalogo = codigo;
-        console.log($scope.codSelectedCatalogo);
 
         $scope.cat = $scope.catalogos.filter(function (el) {
             return el.codigo == codigo;
@@ -197,6 +197,10 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     };
 
     $scope.MostrarItemsDelCatalogo = function (catalogo) {
+
+        $scope.crud = false;
+        $scope.codSelectedCatalogo = catalogo.codigo;
+
         administrarItems.getItemsPaginadosPorCatalogo(catalogo.codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data.results;
@@ -225,6 +229,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
     $scope.CargarItem = function (id) {
         $scope.items.forEach(function (e, i) {
             if (e.id == id) {
+                $scope.crud = true;
                 $scope.id = e.id;
                 $scope.catalogo = e.catalogo;
                 $scope.codigo = e.codigo;
@@ -268,6 +273,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                 success(function (data, status, headers, config) {
                     console.log("Actualizado correctamente");
                     $scope.reset = limpiarCampos();
+                    $scope.crud = false;
 
                     administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
                         success(function (data, status, headers, config) {
@@ -285,6 +291,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             administrarItems.setItem(data).
                 success(function (data, status, headers, config) {
                     console.log("Creado correctamente");
+                    $scope.crud = false;
                     $scope.reset = limpiarCampos();
                     administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
                         success(function (data, status, headers, config) {
@@ -454,6 +461,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     $scope.MostrarFuncionalidadesDelModulo = function(modulo){
         administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
         .success(function (data) {
+            $scope.codSelectedModulo = modulo.codigo;
             $scope.funcionalidades = data;
             $scope.moduloActual = modulo;
             $scope.idModulo = modulo.id;
@@ -635,9 +643,10 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
-    $scope.MostrarInfoModulo = function (id) {
+    $scope.MostrarInfoModulo = function (modulo) {
+        $scope.codSelectedModulo = modulo.codigo;
         $scope.moduloActual = $scope.modulos.filter(function (m) {
-            return m.id == id;
+            return m.id == modulo.id;
         });
 
         $scope.id = $scope.moduloActual[0].id;

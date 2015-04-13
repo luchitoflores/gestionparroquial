@@ -10,8 +10,8 @@
                     <div class="panel-body">
 
                         <div ng-repeat="modulo in modulos">
-                            <ul>
-                                <li ng-click="MostrarInfoModulo(modulo.id)">{[{ modulo.nombre }]}</li>
+                            <ul class="remove-decoration">
+                                <li ng-click="MostrarInfoModulo(modulo)" ng-class="{selected: modulo.codigo === codSelectedModulo}">{[{ modulo.nombre }]}</li>
                             </ul>
                         </div>
                     </div>
