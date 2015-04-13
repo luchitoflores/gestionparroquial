@@ -49,7 +49,7 @@
     {% endif %}
 
     <input id='id_hidden' type="hidden" value='{{ object.id }}'>
-    <form id='id_form_bautismo' method='POST' class='form-horizontal'>
+    <form id='id_form_bautismo' method='POST' class='form-horizontal' action=".">
     {% csrf_token %}
 
     <div class='row'>
