@@ -196,12 +196,8 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             });
     };
 
-    $scope.MostrarItemsDelCatalogo = function (catalogo) {
-
-        $scope.crud = false;
-        $scope.codSelectedCatalogo = catalogo.codigo;
-
-        administrarItems.getItemsPaginadosPorCatalogo(catalogo.codigo).
+    $scope.getItemsPaginados = function(catalogo){
+            administrarItems.getItemsPaginadosPorCatalogo(catalogo.codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data.results;
                 $scope.pageprevious = data.previous;
@@ -212,6 +208,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                 $scope.padreCodigo = $scope.catalogoActual.padreCodigo;
                 $scope.reset = limpiarCampos();
 
+                console.log('catalogo codigo: ' + catalogo);
                 console.log('padre codigo: ' + $scope.padreCodigo);
                 administrarCatalogos.getItemsPorCatalogo($scope.padreCodigo)
                     .success(function (data) {
@@ -224,6 +221,13 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             error(function (data, status, headers, config) {
                 console.log(data);
             });
+        };
+
+    $scope.MostrarItemsDelCatalogo = function (catalogo) {
+        $scope.getItemsPaginados(catalogo);
+        $scope.crud = false;
+        $scope.codSelectedCatalogo = catalogo.codigo;
+
     };
 
     $scope.CargarItem = function (id) {
@@ -274,14 +278,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     console.log("Actualizado correctamente");
                     $scope.reset = limpiarCampos();
                     $scope.crud = false;
-
-                    administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
-                        success(function (data, status, headers, config) {
-                            $scope.items = data;
-                        }).
-                        error(function (data, status, headers, config) {
-                            console.log(data);
-                        });
+                    $scope.getItemsPaginados($scope.catalogoActual);
                 }).
                 error(function (data, status, headers, config) {
                     console.log(data);
@@ -293,13 +290,7 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     console.log("Creado correctamente");
                     $scope.crud = false;
                     $scope.reset = limpiarCampos();
-                    administrarItems.getItemsPorCatalogo($scope.catalogoActual.codigo).
-                        success(function (data, status, headers, config) {
-                            $scope.items = data;
-                        }).
-                        error(function (data, status, headers, config) {
-                            console.log(data);
-                        });
+                    $scope.getItemsPaginados($scope.catalogoActual);
                 }).
                 error(function (data, status, headers, config) {
                     console.log(data);
@@ -423,7 +414,6 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
     }
 
 });
-
 
 app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos) {
     $scope.funcionalidades = [];
