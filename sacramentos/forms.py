@@ -967,16 +967,25 @@ class ParametrizaParroquiaForm(ModelForm):
 class ReporteIntencionesForm(forms.Form):
     TIPO_REPORTE = (
         ('', '--- Seleccione ---'),
-        ('d', 'Diario'),
-        ('m', 'Mensual'),
         ('a', 'Anual'),
+        ('r', 'Rango de Fechas'),
+        ('h', 'Horas'),
     )
+
+    anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
+                           label='Año *', widget=forms.TextInput())
+
     tipo = forms.TypedChoiceField(label=u'Tipo Reporte *',
                                   help_text='Seleccione un tipo de reporte Ej: Diario', choices=TIPO_REPORTE,
                                   required=True, widget=forms.Select(attrs={'required': ''}))
 
     fecha = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
-                            required=True, label='Fecha *',
+                            label='Fecha Inicial *',
+                            widget=forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy',
+                                                          'type': 'date'}))
+
+    fecha_final = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
+                            label='Fecha Final *',
                             widget=forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 

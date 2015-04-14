@@ -36,7 +36,28 @@ Reporte Intenciones de Misa
 
 					</div>
 				</div>
-				<div class="span6">
+                 <div id="id_div_anio" class="span6" style="display: none;">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.anio.label}}
+						</label>
+						<div class='controls'>
+							{{form.anio}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.anio.help_text}}
+							<div class="controls">
+								<div class="errors">
+									{{form.anio.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div id="id_div_fecha_inicial" class="span6" style="display: none;">
 					<div class='control-group'>
 						<label class='control-label'>
 							{{form.fecha.label}}
@@ -50,6 +71,27 @@ Reporte Intenciones de Misa
 							<div class="controls">
 								<div class="errors">								
 									{{form.fecha.errors}}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+                <div id="id_div_fecha_final" class="span6" style="display: none;">
+					<div class='control-group'>
+						<label class='control-label'>
+							{{form.fecha_final.label}}
+						</label>
+						<div class='controls'>
+							{{form.fecha_final}}
+
+						</div>
+						<div class="controls help-text">
+							{{form.fecha_final.help_text}}
+							<div class="controls">
+								<div class="errors">
+									{{form.fecha_final.errors}}
 								</div>
 							</div>
 						</div>

@@ -26,7 +26,7 @@ class ItemAdmin(admin.ModelAdmin):
     form = ItemForm
     list_display = ('codigo','nombre','valor', 'estado', 'padre', 'principal')
     search_fields = ('nombre', 'codigo',)
-    list_filter = ('catalogo', )
+    list_filter = ('catalogo', 'estado', )
     change_list_filter_template = "admin/filter_listing.html"
     list_per_page = 20
 
