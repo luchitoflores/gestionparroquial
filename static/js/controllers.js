@@ -465,7 +465,8 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
 });
 
-app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants) {
+app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos', 'administrarFuncionalidades', 'administrarModulos', 'constants', '$anchorScroll', '$location',
+    function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants, $anchorScroll, $location) {
     $scope.funcionalidades = [];
     $scope.gruposUsuarios = [];
     $scope.gruposActuales = []
@@ -604,6 +605,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                 });
         }
 
+        $anchorScroll();
         $scope.crud = false;
 
     };
@@ -641,7 +643,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
         });
     };
 
-});
+}]);
 
 app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
     $scope.modulos = [];
