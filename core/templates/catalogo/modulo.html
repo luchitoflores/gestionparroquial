@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}{% block content_title %} Módulos {% endblock %}{% endblock %}
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'>Módulos</li>
+{% endblock %}
 {% block content %}
 
     <div>
