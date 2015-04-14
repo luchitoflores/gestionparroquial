@@ -21,7 +21,10 @@
                 </div>
             </div>
             <div class="span5">
-                <table class="table table-bordered table-striped">
+
+                <messages-alert></messages-alert>
+
+                <table id="idTable" class="table table-bordered table-striped">
                     <caption ng-if="catalogoActual.nombre">Items de {[{ catalogoActual.nombre }]}</caption>
                     <thead>
                     <tr>
@@ -56,7 +59,7 @@
                     <p></p>
                 </div>
 
-                <div class="panel panel-default" ng-show="crud">
+                <div id="idInfoItem" class="panel panel-default" ng-show="crud">
                     <div class="panel-heading">Información del Item</div>
                     <div class="panel-body">
                         <form class="form-horizontal" ng-submit="guardarItem()" action="" method="POST">

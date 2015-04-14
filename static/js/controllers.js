@@ -47,14 +47,15 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
             administrarCatalogos.updateCatalogo($scope.id, data)
                 .success(function (data) {
                     console.log("catalogo actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
                     $scope.reset = limpiarCampos();
+
 
                     administrarCatalogos.getCatalogos()
                         .success(function (data) {
                             $scope.catalogos = data;
-                            $scope.alert = true;
-                            $scope.status = constants.SUCCESS;
-                            $scope.message = constants.UPDATE_SUCCESS;
                         })
                         .error(function (error) {
 
@@ -71,14 +72,14 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
             administrarCatalogos.setCatalogo(data)
                 .success(function (data) {
                     console.log("catalogo insertado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarCatalogos.getCatalogos()
                         .success(function (data) {
                             $scope.catalogos = data;
-                            $scope.alert = true;
-                            $scope.status = constants.SUCCESS;
-                            $scope.message = constants.CREATE_SUCCESS;
                         })
                         .error(function (error) {
                             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -149,7 +150,11 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
 
 });
 
-app.controller('itemControl', function ($scope, $http, administrarCatalogos, administrarItems, constants) {
+app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'administrarItems', 'constants', '$anchorScroll', '$location',
+    function ($scope, $http, administrarCatalogos, administrarItems, constants, $anchorScroll, $location) {
+
+    var idInfoItem = "idInfoItem";
+    $scope.alert = false;
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
     $scope.items = [];
@@ -249,12 +254,14 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                 });
 
                 $scope.itemsPadre.forEach(function (ele, ident) {
-                if (ele.id == e.padre) {
-                    $scope.padre = $scope.itemsPadre[ident];
-                }
-            });
+                    if (ele.id == e.padre) {
+                        $scope.padre = $scope.itemsPadre[ident];
+                    }
+                });
             }
         });
+        console.log(idInfoItem);
+        //$location.hash(idInfoItem);
     };
 
     $scope.guardarItem = function () {
@@ -276,10 +283,20 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
             data["id"] = $scope.id;
             administrarItems.updateItem($scope.id, data).
                 success(function (data, status, headers, config) {
-                    console.log("Actualizado correctamente");
+                    console.log("Item Actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
                     $scope.reset = limpiarCampos();
                     $scope.crud = false;
                     $scope.getItemsPaginados($scope.catalogoActual);
+
+                    /*if ($location.hash() !== idInfoItem) {
+                       $anchorScroll();
+                    }*/
+
+                    $anchorScroll();
+
                 }).
                 error(function (errors)
                 {
@@ -289,16 +306,21 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     $scope.status = constants.ERROR;
                     $scope.message = constants.UPDATE_ERROR;
                     if(errors.non_field_errors) $scope.errorCodigo = errors.non_field_errors[0];
+                    $anchorScroll();
 
                 });
 
         } else {
             administrarItems.setItem(data).
                 success(function (data, status, headers, config) {
-                    console.log("Creado correctamente");
+                    console.log("Item Creado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
                     $scope.crud = false;
                     $scope.reset = limpiarCampos();
                     $scope.getItemsPaginados($scope.catalogoActual);
+                    $anchorScroll();
                 }).
                 error(function (errors) {
                     $scope.alert = true;
@@ -306,11 +328,12 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     $scope.message = constants.CREATE_ERROR;
                     if(errors.codigo)  $scope.errorCodigo = errors.codigo[0];
                     console.log(errors);
+                    $anchorScroll();
                 });
         }
 
     };
-});
+}]);
 
 app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
     $scope.parametros = [];
@@ -340,6 +363,9 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             administrarParametros.updateParametro($scope.id, data)
                 .success(function (data) {
                     console.log("parámetro actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarParametros.getParametros()
@@ -363,6 +389,9 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             administrarParametros.setParametro(data)
                 .success(function (data) {
                     console.log("parámetro insertado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarParametros.getParametros()
@@ -523,6 +552,9 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
             administrarFuncionalidades.updateFuncionalidad($scope.id, data).
                 success(function (data, status, headers, config) {
                     console.log("Actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
@@ -548,6 +580,9 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
             administrarFuncionalidades.setFuncionalidad(data).
                 success(function (data, status, headers, config) {
                     console.log("Creado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
                     $scope.reset = limpiarCampos();
                     administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
                         success(function (data, status, headers, config) {
@@ -633,6 +668,9 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
             administrarModulos.updateModulo($scope.id, data)
                 .success(function (data) {
                     console.log("módulo actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarModulos.getModulos()
@@ -657,6 +695,9 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
             administrarModulos.setModulo(data)
                 .success(function (data) {
                     console.log("modulo insertado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
                     $scope.reset = limpiarCampos();
 
                     administrarModulos.getModulos()
