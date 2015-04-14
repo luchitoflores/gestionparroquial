@@ -188,6 +188,11 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
          $scope.errorCodigo = "";
     }
 
+    $scope.nuevoItem = function(){
+       $scope.limpiarCampos();
+       $scope.crud = true;
+    }
+
     administrarCatalogos.getItemsPorCatalogo("EST")
         .success(function (data) {
             $scope.estadosGenerales = data;
@@ -504,6 +509,11 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
     $scope.limpiarErrores = function(){
          $scope.errorCodigo = "";
          $scope.errorUrl = "";
+    }
+
+    $scope.nuevaFuncionalidad = function(){
+       $scope.limpiarCampos();
+       $scope.crud = true;
     }
 
     administrarModulos.getModulos()

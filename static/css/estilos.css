@@ -558,4 +558,49 @@ a [class^="icon-"], a [class*=" icon-"] {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 
+caption {
+  background: -webkit-linear-gradient(#b0c9ff, #e8efff);
+  height: 1.75em;
+  padding-top: 10px;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+/*.btn-small {
+    padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+	color: #000000;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #8EB0CC;
+	*background-color: #8EB0CC;
+	background-image: -moz-linear-gradient(top, #DFE6F5, #8EB0CC);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#DFE6F5), to(#8EB0CC));
+	background-image: -webkit-linear-gradient(top, #DFE6F5, #8EB0CC);
+	background-image: -o-linear-gradient(top, #DFE6F5, #8EB0CC);
+	background-image: linear-gradient(to bottom, #DFE6F5, #8EB0CC);
+	background-repeat: repeat-x;
+	border-color: #8EB0CC;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DFE6F5', endColorstr='#8EB0CC', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.btn-small:hover,
+.btn-small:focus,
+.btn-small:active,
+.btn-small.active,
+.btn-small.disabled,
+.btn-small[disabled] {
+	color: #121212;
+	background-color: #8EB0CC;
+	*background-color: #003bb3;
+}*/
+
+
 

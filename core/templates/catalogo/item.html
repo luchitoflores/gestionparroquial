@@ -25,6 +25,9 @@
                 <messages-alert></messages-alert>
 
                 <div id="idInfoItems" ng-show="!crud">
+                     <div class="btn-toolbar pull-right">
+                         <a class="btn btn-small" ng_click="nuevoItem()" data-toggle="tooltip" title="Añadir un nuevo item"><i class="icon-plus"></i> Item</a>
+                     </div>
                    <table id="idTableItems" class="table table-bordered table-striped">
                     <caption ng-if="catalogoActual.nombre">Items de {[{ catalogoActual.nombre }]}</caption>
                     <thead>
@@ -94,6 +97,7 @@
                             <div class="form-actions">
                                 <a class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</a>
                                 <button class="btn btn-primary">Guardar</button>
+                                <a class="btn btn-danger" ng_click="crud=false">Cancelar</a>
                             </div>
 
                         </form>
