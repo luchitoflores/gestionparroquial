@@ -18,7 +18,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
     $scope.estadosGenerales = [];
     $scope.catalogoActual = "";
 
-    function limpiarCampos() {
+    $scope.limpiarCampos = function() {
         $scope.id = "";
         $scope.codigo = "";
         $scope.nombre = "";
@@ -50,7 +50,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
 
                     administrarCatalogos.getCatalogos()
@@ -75,7 +75,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarCatalogos.getCatalogos()
                         .success(function (data) {
@@ -162,7 +162,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
     $scope.itemActual = "";
     $scope.itemsPadre = [];
 
-    function limpiarCampos() {
+    $scope.limpiarCampos = function() {
         $scope.id = "";
         $scope.codigo = "";
         $scope.nombre = "";
@@ -212,7 +212,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                 $scope.catalogoActual = catalogo;
                 $scope.catalogo = $scope.catalogoActual.id;
                 $scope.padreCodigo = $scope.catalogoActual.padreCodigo;
-                $scope.reset = limpiarCampos();
+                $scope.reset = $scope.limpiarCampos();
 
                 console.log('catalogo codigo: ' + catalogo);
                 console.log('padre codigo: ' + $scope.padreCodigo);
@@ -287,7 +287,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
                     $scope.crud = false;
                     $scope.getItemsPaginados($scope.catalogoActual);
 
@@ -318,7 +318,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.CREATE_SUCCESS;
                     $scope.crud = false;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
                     $scope.getItemsPaginados($scope.catalogoActual);
                     $anchorScroll();
                 }).
@@ -340,7 +340,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
     $scope.estadosGenerales = [];
     $scope.parametroActual = "";
 
-    function limpiarCampos() {
+    $scope.limpiarCampos = function() {
         $scope.id = "";
         $scope.codigo = "";
         $scope.nombre = "";
@@ -366,7 +366,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarParametros.getParametros()
                         .success(function (data) {
@@ -392,7 +392,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarParametros.getParametros()
                         .success(function (data) {
@@ -472,7 +472,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
     $scope.modulos = [];
-    function limpiarCampos() {
+    $scope.limpiarCampos = function() {
         $scope.id = "";
         $scope.codigo = "",
         $scope.nombre = "";
@@ -518,7 +518,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
             $scope.funcionalidades = data;
             $scope.moduloActual = modulo;
             $scope.idModulo = modulo.id;
-            $scope.reset = limpiarCampos();
+            $scope.reset = $scope.limpiarCampos();
         })
         .error(function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -555,7 +555,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
                         success(function (data, status, headers, config) {
@@ -583,7 +583,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
                     administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
                         success(function (data, status, headers, config) {
                             $scope.funcionalidades = data;
@@ -643,7 +643,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
     $scope.modulos = [];
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
-    function limpiarCampos() {
+    $scope.limpiarCampos = function() {
         $scope.id = "";
         $scope.nombre = "";
         $scope.codigo = "";
@@ -671,7 +671,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarModulos.getModulos()
                         .success(function (data) {
@@ -698,7 +698,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = limpiarCampos();
+                    $scope.reset = $scope.limpiarCampos();
 
                     administrarModulos.getModulos()
                         .success(function (data) {

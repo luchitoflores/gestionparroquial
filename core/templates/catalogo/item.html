@@ -24,7 +24,8 @@
 
                 <messages-alert></messages-alert>
 
-                <table id="idTable" class="table table-bordered table-striped">
+                <div id="idInfoItems" ng-show="!crud">
+                   <table id="idTableItems" class="table table-bordered table-striped">
                     <caption ng-if="catalogoActual.nombre">Items de {[{ catalogoActual.nombre }]}</caption>
                     <thead>
                     <tr>
@@ -59,6 +60,8 @@
                     <p></p>
                 </div>
 
+                </div>
+
                 <div id="idInfoItem" class="panel panel-default" ng-show="crud">
                     <div class="panel-heading">Información del Item</div>
                     <div class="panel-body">
@@ -89,7 +92,7 @@
                             <input type="checkbox" ng-model="principal" value="principal"/>
 
                             <div class="form-actions">
-                                <button class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</button>
+                                <a class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</a>
                                 <button class="btn btn-primary">Guardar</button>
                             </div>
 
