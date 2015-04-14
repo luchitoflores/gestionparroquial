@@ -54,14 +54,14 @@
                             <input type="hidden" ng-model="id"/>
                             <input type="hidden" ng-model="idModulo"/>
                             <label for="">Nombre</label>
-                            <input type="text" ng-model="nombre"/>
+                            <input type="text" ng-model="nombre" required/>
                             <label for="">Código</label>
-                            <input type="text" ng-model="codigo"/>
+                            <input type="text" ng-model="codigo" required/>
                             <label for="">Url</label>
-                            <input type="text" ng-model="url"/>
+                            <input type="text" ng-model="url" required/>
                             <label for="">Grupos</label>
                             <select multiple name="" id="" ng-model="grupos"
-                                    ng-options="grupo.name for grupo in gruposUsuarios track by grupo.id">
+                                    ng-options="grupo.name for grupo in gruposUsuarios track by grupo.id" required>
                                 <option value="">-- Seleccione --</option>
                             </select>
 
@@ -69,12 +69,12 @@
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Estado</label>
                             <select name="" id="" ng-model="estado"
-                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id" required>
                                 <option value="">-- Seleccione --</option>
                             </select>
                             <label for="">Módulo</label>
                             <select name="" id="" ng-model="modulo"
-                                    ng-options="modulo.nombre for modulo in modulos track by modulo.id">
+                                    ng-options="modulo.nombre for modulo in modulos track by modulo.id" required>
                                 <option value="">-- Seleccione --</option>
                             </select>
                             <label for="">Orden</label>

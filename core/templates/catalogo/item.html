@@ -64,16 +64,16 @@
                             <input type="hidden" ng-model="id"/>
                             <input type="hidden" ng-model="padreCodigo"/>
                             <label for="">Código</label>
-                            <input type="text" ng-model="codigo"/>
+                            <input type="text" ng-model="codigo" required/>
                             <label for="">Nombre</label>
-                            <input type="text" ng-model="nombre"/>
+                            <input type="text" ng-model="nombre" required/>
                             <label for="">Valor</label>
                             <input type="text" ng-model="valor"/>
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="30" rows="10" ng-model="descripcion"></textarea>
                             <label for="">Estado</label>
-                            <select name="" id="" ng-model="estado"
-                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                            <select name="" id="" ng-model="estado" required
+                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id" >
                                 <option value="">-- Seleccione --</option>
                             </select>
                             <label for="">Padre</label>

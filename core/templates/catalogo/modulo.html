@@ -24,13 +24,13 @@
                         <form action="" method="POST" class="form-horizontal" ng-submit="save()">
                             <input type="hidden" ng-model="id"/>
                             <label for="">Nombre</label>
-                            <input type="text" ng-model="nombre"/>
+                            <input type="text" ng-model="nombre" required/>
                             <label for="">Código</label>
-                            <input type="text" ng-model="codigo"/>
+                            <input type="text" ng-model="codigo" required/>
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Estado</label>
-                            <select name="" id="" ng-model="estado"
+                            <select name="" id="" ng-model="estado" required
                                     ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
                                 <option value="">-- Seleccione --</option>
                             </select>
