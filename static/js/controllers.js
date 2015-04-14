@@ -64,7 +64,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                     $scope.alert = true;
                     $scope.status = constants.ERROR;
                     $scope.message = constants.UPDATE_ERROR;
-                    $scope.errorCodigo = errors.codigo[0];
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
                     console.log(errors);
                 });
         } else {
@@ -84,11 +84,12 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
-                .error(function (error) {
+                .error(function (errors) {
                     $scope.alert = true;
                     $scope.status = constants.ERROR;
                     $scope.message = constants.CREATE_ERROR;
-                    console.log(error);
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    console.log(errors);
                 });
         }
     };
@@ -148,7 +149,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
 
 });
 
-app.controller('itemControl', function ($scope, $http, administrarCatalogos, administrarItems) {
+app.controller('itemControl', function ($scope, $http, administrarCatalogos, administrarItems, constants) {
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
     $scope.items = [];
@@ -280,8 +281,15 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     $scope.crud = false;
                     $scope.getItemsPaginados($scope.catalogoActual);
                 }).
-                error(function (data, status, headers, config) {
-                    console.log(data);
+                error(function (errors)
+                {
+                    console.log("Error al actualizar el item");
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.non_field_errors) $scope.errorCodigo = errors.non_field_errors[0];
+
                 });
 
         } else {
@@ -292,15 +300,19 @@ app.controller('itemControl', function ($scope, $http, administrarCatalogos, adm
                     $scope.reset = limpiarCampos();
                     $scope.getItemsPaginados($scope.catalogoActual);
                 }).
-                error(function (data, status, headers, config) {
-                    console.log(data);
+                error(function (errors) {
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo)  $scope.errorCodigo = errors.codigo[0];
+                    console.log(errors);
                 });
         }
 
     };
 });
 
-app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos) {
+app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
     $scope.parametros = [];
     $scope.estadosGenerales = [];
     $scope.parametroActual = "";
@@ -338,9 +350,13 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
-                .error(function (error) {
-                    console.log("error al insertar parametros");
-                    console.log(error);
+                .error(function (errors) {
+                    console.log("error al actualizar parametros");
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    console.log(errors);
                 });
 
         } else {
@@ -357,9 +373,14 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
-                .error(function (error) {
+                .error(function (errors) {
                     console.log("error al insertar parametros");
-                    console.log(error);
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    console.log(errors);
                 });
         }
 
@@ -415,7 +436,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
 });
 
-app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos) {
+app.controller('funcionalidadControl', function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants) {
     $scope.funcionalidades = [];
     $scope.gruposUsuarios = [];
     $scope.gruposActuales = []
@@ -496,7 +517,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
             "orden": $scope.orden,
             "icono": $scope.icono
         };
-        console.log(data);
+
         if ($scope.id) {
             data["id"] = $scope.id;
             administrarFuncionalidades.updateFuncionalidad($scope.id, data).
@@ -512,8 +533,15 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                             console.log(data);
                         });
                 }).
-                error(function (data, status, headers, config) {
-                    console.log(data);
+                error(function (errors) {
+                    console.log("Error al actualizar el parámetro")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    if(errors.url) $scope.errorUrl = errors.url[0];
+
                 });
 
         } else {
@@ -529,8 +557,14 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                             console.log(data);
                         });
                 }).
-                error(function (data, status, headers, config) {
-                    console.log(data);
+                error(function (errors) {
+                    console.log("Error al insertar el parámetro")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    if(errors.url) $scope.errorUrl = errors.url[0];
                 });
         }
 
@@ -570,7 +604,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
 
 });
 
-app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos) {
+app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
     $scope.modulos = [];
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
@@ -609,9 +643,14 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
-                .error(function (error) {
-                    console.log("error al insertar modulo");
-                    console.log(error);
+                .error(function (errors) {
+                    console.log("Error al actualizar el módulo")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+
                 });
         } else {
             var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
@@ -628,9 +667,13 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
                             $scope.status = 'Unable to load customer data: ' + error.message;
                         });
                 })
-                .error(function (error) {
-                    console.log("error al insertar modulo");
-                    console.log(error);
+                .error(function (errors) {
+                    console.log("Error al insertar el módulo")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
                 });
         }
     };

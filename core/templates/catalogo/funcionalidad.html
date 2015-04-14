@@ -57,8 +57,10 @@
                             <input type="text" ng-model="nombre" required/>
                             <label for="">Código</label>
                             <input type="text" ng-model="codigo" required/>
+                            <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
                             <label for="">Url</label>
                             <input type="text" ng-model="url" required/>
+                            <span class="help-block" ng-show="errorUrl">{[{ errorUrl }]}</span>
                             <label for="">Grupos</label>
                             <select multiple name="" id="" ng-model="grupos"
                                     ng-options="grupo.name for grupo in gruposUsuarios track by grupo.id" required>

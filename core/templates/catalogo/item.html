@@ -65,6 +65,7 @@
                             <input type="hidden" ng-model="padreCodigo"/>
                             <label for="">Código</label>
                             <input type="text" ng-model="codigo" required/>
+                            <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
                             <label for="">Nombre</label>
                             <input type="text" ng-model="nombre" required/>
                             <label for="">Valor</label>

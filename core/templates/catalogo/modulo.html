@@ -27,6 +27,7 @@
                             <input type="text" ng-model="nombre" required/>
                             <label for="">Código</label>
                             <input type="text" ng-model="codigo" required/>
+                            <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Estado</label>
