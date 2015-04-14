@@ -512,6 +512,7 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
         });
 
     $scope.MostrarFuncionalidadesDelModulo = function(modulo){
+        $scope.crud = false;
         administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
         .success(function (data) {
             $scope.codSelectedModulo = modulo.codigo;
@@ -603,10 +604,13 @@ app.controller('funcionalidadControl', function ($scope, $http, administrarCatal
                 });
         }
 
+        $scope.crud = false;
+
     };
 
     $scope.CargarFuncionalidad = function (id) {
         $scope.funcionalidades.forEach(function (e, i) {
+            $scope.crud = true;
             if (e.id == id) {
                 $scope.id = e.id;
                 $scope.codigo = e.codigo;

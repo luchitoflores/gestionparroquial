@@ -20,7 +20,9 @@
             <div class="span5">
 
                 <messages-alert></messages-alert>
-                 <table class="table table-bordered table-striped">
+
+                <div id="idInfoItems" ng-show="!crud">
+                    <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Nombre</th>
@@ -46,8 +48,9 @@
 
                     </tbody>
                 </table>
+                 </div>
 
-                 <div class="panel panel-default">
+                 <div class="panel panel-default" ng-show="crud">
                     <div class="panel-heading">Información de la Funcionalidad</div>
                     <div class="panel-body">
                         <form action="" method="POST" class="form-horizontal" ng-submit="save()">
