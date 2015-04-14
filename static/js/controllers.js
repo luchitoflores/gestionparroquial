@@ -26,10 +26,18 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
         $scope.editable = false;
         $scope.padre = $scope.catalogos;
         $scope.estado = $scope.estadosGenerales;
+
+        //limpiar errores
+        $scope.limpiarErrores();
     };
+
+    $scope.limpiarErrores = function(){
+         $scope.errorCodigo = "";
+    }
 
 
     $scope.submit = function () {
+        $scope.limpiarErrores();
         var data = {
                 "codigo": $scope.codigo,
                 "nombre": $scope.nombre,
@@ -171,7 +179,14 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
         $scope.principal = false;
         $scope.estado = $scope.estadosGenerales;
         $scope.padre = $scope.itemsPadre;
+
+        //limpiar errores
+        $scope.limpiarErrores();
     };
+
+    $scope.limpiarErrores = function(){
+         $scope.errorCodigo = "";
+    }
 
     administrarCatalogos.getItemsPorCatalogo("EST")
         .success(function (data) {
@@ -265,6 +280,9 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
     };
 
     $scope.guardarItem = function () {
+
+        $scope.limpiarErrores();
+
         var data = {
             "catalogo": $scope.catalogo,
             "nombre": $scope.nombre,
@@ -326,13 +344,330 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                     $scope.alert = true;
                     $scope.status = constants.ERROR;
                     $scope.message = constants.CREATE_ERROR;
-                    if(errors.codigo)  $scope.errorCodigo = errors.codigo[0];
+                    if(errors.non_field_errors) $scope.errorCodigo = errors.non_field_errors[0];
                     console.log(errors);
                     $anchorScroll();
                 });
         }
 
     };
+}]);
+
+app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
+    $scope.modulos = [];
+    $scope.estadosGenerales = [];
+    $scope.moduloActual = "";
+    $scope.limpiarCampos = function() {
+        $scope.id = "";
+        $scope.nombre = "";
+        $scope.codigo = "";
+        $scope.descripcion = "";
+        $scope.orden = "";
+        $scope.estado = $scope.estadosGenerales;
+
+        //limpiar errores
+        $scope.limpiarErrores();
+    };
+
+    $scope.limpiarErrores = function(){
+         $scope.errorCodigo = "";
+    }
+
+
+    $scope.save = function () {
+
+        $scope.limpiarErrores();
+        var data = {
+                "nombre": $scope.nombre,
+                "codigo": $scope.codigo,
+                "descripcion": $scope.descripcion,
+                "orden": $scope.orden,
+                "estado": $scope.estado.id
+            }
+
+        if ($scope.id) {
+            data["id"]=  $scope.id;
+            administrarModulos.updateModulo($scope.id, data)
+                .success(function (data) {
+                    console.log("módulo actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
+                    $scope.reset = $scope.limpiarCampos();
+
+                    administrarModulos.getModulos()
+                        .success(function (data) {
+                            $scope.modulos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (errors) {
+                    console.log("Error al actualizar el módulo")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+
+                });
+        } else {
+            var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
+            administrarModulos.setModulo(data)
+                .success(function (data) {
+                    console.log("modulo insertado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
+                    $scope.reset = $scope.limpiarCampos();
+
+                    administrarModulos.getModulos()
+                        .success(function (data) {
+                            $scope.modulos = data;
+                        })
+                        .error(function (error) {
+                            $scope.status = 'Unable to load customer data: ' + error.message;
+                        });
+                })
+                .error(function (errors) {
+                    console.log("Error al insertar el módulo")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                });
+        }
+    };
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
+        .success(function (data) {
+            $scope.estadosGenerales = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarModulos.getModulos()
+        .success(function (data) {
+            $scope.modulos = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    $scope.MostrarInfoModulo = function (modulo) {
+        $scope.codSelectedModulo = modulo.codigo;
+        $scope.moduloActual = $scope.modulos.filter(function (m) {
+            return m.id == modulo.id;
+        });
+
+        $scope.id = $scope.moduloActual[0].id;
+        $scope.nombre = $scope.moduloActual[0].nombre;
+        $scope.codigo = $scope.moduloActual[0].codigo;
+        $scope.descripcion = $scope.moduloActual[0].descripcion;
+        $scope.orden = $scope.moduloActual[0].orden;
+        $scope.estadosGenerales.forEach(function (ele, ident) {
+            if (ele.id == $scope.moduloActual[0].estado) {
+                $scope.estado = $scope.estadosGenerales[ident];
+            }
+        });
+    }
+});
+
+app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos', 'administrarFuncionalidades', 'administrarModulos', 'constants', '$anchorScroll', '$location',
+    function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants, $anchorScroll, $location) {
+    $scope.funcionalidades = [];
+    $scope.gruposUsuarios = [];
+    $scope.gruposActuales = []
+    $scope.estadosGenerales = [];
+    $scope.moduloActual = "";
+    $scope.modulos = [];
+    $scope.limpiarCampos = function() {
+        $scope.id = "";
+        $scope.codigo = "",
+        $scope.nombre = "";
+        $scope.descripcion = "";
+        $scope.url = "";
+        $scope.grupos = "";
+        $scope.orden = null;
+        $scope.icono = null;
+        $scope.estado = $scope.estadosGenerales;
+        $scope.modulo = $scope.modulos;
+
+        //Limpiar errores
+        $scope.limpiarErrores();
+
+    };
+
+    $scope.limpiarErrores = function(){
+         $scope.errorCodigo = "";
+         $scope.errorUrl = "";
+    }
+
+    administrarModulos.getModulos()
+        .success(function (data) {
+            $scope.modulos = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarCatalogos.getItemsPorCatalogo("EST")
+        .success(function (data) {
+            $scope.estadosGenerales = data;
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    administrarFuncionalidades.getGrupos()
+        .success(function (data) {
+            $scope.gruposUsuarios = data;
+            console.log('grupos de usuarios');
+            console.log(data);
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+
+    $scope.MostrarFuncionalidadesDelModulo = function(modulo){
+        $scope.crud = false;
+        administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
+        .success(function (data) {
+            $scope.codSelectedModulo = modulo.codigo;
+            $scope.funcionalidades = data;
+            $scope.moduloActual = modulo;
+            $scope.idModulo = modulo.id;
+            $scope.reset = $scope.limpiarCampos();
+        })
+        .error(function (error) {
+            $scope.status = 'Unable to load customer data: ' + error.message;
+        });
+    };
+
+    $scope.save = function () {
+
+        $scope.limpiarErrores();
+        $scope.grupos.forEach(function(ele, id){
+            $scope.gruposActuales.push(ele.id)
+        });
+
+        var data = {
+            "modulo": $scope.modulo.id,
+            "nombre": $scope.nombre,
+            "codigo": $scope.codigo,
+            "url": $scope.url,
+            "descripcion": $scope.descripcion,
+            //"grupos": $scope.grupos,
+            "grupos": $scope.gruposActuales,
+            "estado": $scope.estado.id,
+            "orden": $scope.orden,
+            "icono": $scope.icono
+        };
+
+        console.log("orden");
+        console.log($scope.orden);
+
+        if ($scope.id) {
+            data["id"] = $scope.id;
+            administrarFuncionalidades.updateFuncionalidad($scope.id, data).
+                success(function (data, status, headers, config) {
+                    console.log("Actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
+                    $scope.reset = $scope.limpiarCampos();
+                    $scope.crud = false;
+
+                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.funcionalidades = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (errors) {
+                    console.log("Error al actualizar la funcionalidad")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    if(errors.url) $scope.errorUrl = errors.url[0];
+                    $scope.crud = true;
+
+                });
+
+        } else {
+            administrarFuncionalidades.setFuncionalidad(data).
+                success(function (data, status, headers, config) {
+                    console.log("Creado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
+                    $scope.reset = $scope.limpiarCampos();
+                    $scope.crud = false;
+                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
+                        success(function (data, status, headers, config) {
+                            $scope.funcionalidades = data;
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                }).
+                error(function (errors) {
+                    console.log("Error al insertar la funcionalidad")
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
+                    if(errors.url) $scope.errorUrl = errors.url[0];
+                    $scope.crud = true;
+                });
+        }
+
+        $anchorScroll();
+
+
+    };
+
+    $scope.CargarFuncionalidad = function (id) {
+        $scope.funcionalidades.forEach(function (e, i) {
+            $scope.crud = true;
+            if (e.id == id) {
+                $scope.id = e.id;
+                $scope.codigo = e.codigo;
+                $scope.nombre = e.nombre;
+                $scope.url = e.url;
+                $scope.descripcion = e.descripcion;
+                $scope.orden = e.orden;
+                $scope.icono = e.icono;
+                $scope.estadosGenerales.forEach(function (ele, ident) {
+                    if (ele.id == e.estado) {
+                        $scope.estado = $scope.estadosGenerales[ident];
+                    }
+                });
+                $scope.modulos.forEach(function (ele, ident) {
+                    if (ele.id == e.modulo) {
+                        $scope.modulo = $scope.modulos[ident];
+                    }
+                });
+                var array = []
+                $scope.gruposUsuarios.forEach(function (ele, ident) {
+                    if (e.grupos.indexOf(ele.id) != -1) {
+                        console.log("llegue aqui 2");
+                        array.push(ele);
+                    }
+                });
+                $scope.grupos = array
+            }
+        });
+    };
+
 }]);
 
 app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
@@ -347,9 +682,19 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
         $scope.descripcion = "";
         $scope.valor = "";
         $scope.estado = $scope.estadosGenerales;
+
+        //limpiar errores
+        $scope.limpiarErrores();
+    }
+
+    $scope.limpiarErrores = function(){
+         $scope.errorCodigo = "";
     }
 
     $scope.submit = function () {
+
+        $scope.limpiarErrores();
+
         var data = {
             "codigo": $scope.codigo,
             "nombre": $scope.nombre,
@@ -465,300 +810,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
 });
 
-app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos', 'administrarFuncionalidades', 'administrarModulos', 'constants', '$anchorScroll', '$location',
-    function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants, $anchorScroll, $location) {
-    $scope.funcionalidades = [];
-    $scope.gruposUsuarios = [];
-    $scope.gruposActuales = []
-    $scope.estadosGenerales = [];
-    $scope.moduloActual = "";
-    $scope.modulos = [];
-    $scope.limpiarCampos = function() {
-        $scope.id = "";
-        $scope.codigo = "",
-        $scope.nombre = "";
-        $scope.descripcion = "";
-        $scope.url = "";
-        $scope.grupos = "";
-        $scope.orden = "";
-        $scope.icono = "";
-        $scope.estado = $scope.estadosGenerales;
-        $scope.modulo = $scope.modulos;
-    };
 
-    administrarModulos.getModulos()
-        .success(function (data) {
-            $scope.modulos = data;
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-
-    administrarCatalogos.getItemsPorCatalogo("EST")
-        .success(function (data) {
-            $scope.estadosGenerales = data;
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-
-    administrarFuncionalidades.getGrupos()
-        .success(function (data) {
-            $scope.gruposUsuarios = data;
-            console.log('grupos de usuarios');
-            console.log(data);
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-
-    $scope.MostrarFuncionalidadesDelModulo = function(modulo){
-        $scope.crud = false;
-        administrarFuncionalidades.getFuncionalidadesPorModulo(modulo.codigo)
-        .success(function (data) {
-            $scope.codSelectedModulo = modulo.codigo;
-            $scope.funcionalidades = data;
-            $scope.moduloActual = modulo;
-            $scope.idModulo = modulo.id;
-            $scope.reset = $scope.limpiarCampos();
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-    };
-
-    $scope.save = function () {
-
-        $scope.grupos.forEach(function(ele, id){
-            $scope.gruposActuales.push(ele.id)
-        });
-
-        console.log('grupos actuales: ');
-        console.log($scope.gruposActuales);
-
-        var data = {
-            "modulo": $scope.modulo.id,
-            "nombre": $scope.nombre,
-            "codigo": $scope.codigo,
-            "url": $scope.url,
-            "descripcion": $scope.descripcion,
-            //"grupos": $scope.grupos,
-            "grupos": $scope.gruposActuales,
-            "estado": $scope.estado.id,
-            "orden": $scope.orden,
-            "icono": $scope.icono
-        };
-
-        if ($scope.id) {
-            data["id"] = $scope.id;
-            administrarFuncionalidades.updateFuncionalidad($scope.id, data).
-                success(function (data, status, headers, config) {
-                    console.log("Actualizado correctamente");
-                    $scope.alert = true;
-                    $scope.status = constants.SUCCESS;
-                    $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = $scope.limpiarCampos();
-
-                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
-                        success(function (data, status, headers, config) {
-                            $scope.funcionalidades = data;
-                        }).
-                        error(function (data, status, headers, config) {
-                            console.log(data);
-                        });
-                }).
-                error(function (errors) {
-                    console.log("Error al actualizar el parámetro")
-                    console.log(errors);
-                    $scope.alert = true;
-                    $scope.status = constants.ERROR;
-                    $scope.message = constants.UPDATE_ERROR;
-                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
-                    if(errors.url) $scope.errorUrl = errors.url[0];
-
-                });
-
-        } else {
-            administrarFuncionalidades.setFuncionalidad(data).
-                success(function (data, status, headers, config) {
-                    console.log("Creado correctamente");
-                    $scope.alert = true;
-                    $scope.status = constants.SUCCESS;
-                    $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = $scope.limpiarCampos();
-                    administrarFuncionalidades.getFuncionalidadesPorModulo($scope.moduloActual.codigo).
-                        success(function (data, status, headers, config) {
-                            $scope.funcionalidades = data;
-                        }).
-                        error(function (data, status, headers, config) {
-                            console.log(data);
-                        });
-                }).
-                error(function (errors) {
-                    console.log("Error al insertar el parámetro")
-                    console.log(errors);
-                    $scope.alert = true;
-                    $scope.status = constants.ERROR;
-                    $scope.message = constants.CREATE_ERROR;
-                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
-                    if(errors.url) $scope.errorUrl = errors.url[0];
-                });
-        }
-
-        $anchorScroll();
-        $scope.crud = false;
-
-    };
-
-    $scope.CargarFuncionalidad = function (id) {
-        $scope.funcionalidades.forEach(function (e, i) {
-            $scope.crud = true;
-            if (e.id == id) {
-                $scope.id = e.id;
-                $scope.codigo = e.codigo;
-                $scope.nombre = e.nombre;
-                $scope.url = e.url;
-                $scope.descripcion = e.descripcion;
-                $scope.orden = e.orden;
-                $scope.icono = e.icono;
-                $scope.estadosGenerales.forEach(function (ele, ident) {
-                    if (ele.id == e.estado) {
-                        $scope.estado = $scope.estadosGenerales[ident];
-                    }
-                });
-                $scope.modulos.forEach(function (ele, ident) {
-                    if (ele.id == e.modulo) {
-                        $scope.modulo = $scope.modulos[ident];
-                    }
-                });
-                var array = []
-                $scope.gruposUsuarios.forEach(function (ele, ident) {
-                    if (e.grupos.indexOf(ele.id) != -1) {
-                        console.log("llegue aqui 2");
-                        array.push(ele);
-                    }
-                });
-                $scope.grupos = array
-            }
-        });
-    };
-
-}]);
-
-app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
-    $scope.modulos = [];
-    $scope.estadosGenerales = [];
-    $scope.moduloActual = "";
-    $scope.limpiarCampos = function() {
-        $scope.id = "";
-        $scope.nombre = "";
-        $scope.codigo = "";
-        $scope.descripcion = "";
-        $scope.orden = "";
-        $scope.estado = $scope.estadosGenerales;
-    };
-
-
-    $scope.save = function () {
-
-        var data = {
-                "nombre": $scope.nombre,
-                "codigo": $scope.codigo,
-                "descripcion": $scope.descripcion,
-                "orden": $scope.orden,
-                "estado": $scope.estado.id
-            }
-
-        if ($scope.id) {
-            data["id"]=  $scope.id;
-            administrarModulos.updateModulo($scope.id, data)
-                .success(function (data) {
-                    console.log("módulo actualizado correctamente");
-                    $scope.alert = true;
-                    $scope.status = constants.SUCCESS;
-                    $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.reset = $scope.limpiarCampos();
-
-                    administrarModulos.getModulos()
-                        .success(function (data) {
-                            $scope.modulos = data;
-                        })
-                        .error(function (error) {
-                            $scope.status = 'Unable to load customer data: ' + error.message;
-                        });
-                })
-                .error(function (errors) {
-                    console.log("Error al actualizar el módulo")
-                    console.log(errors);
-                    $scope.alert = true;
-                    $scope.status = constants.ERROR;
-                    $scope.message = constants.UPDATE_ERROR;
-                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
-
-                });
-        } else {
-            var data = {"codigo": $scope.codigo, "nombre": $scope.nombre, "editable": $scope.editable, "estado": $scope.estado.id, "descripcion": $scope.descripcion  }
-            administrarModulos.setModulo(data)
-                .success(function (data) {
-                    console.log("modulo insertado correctamente");
-                    $scope.alert = true;
-                    $scope.status = constants.SUCCESS;
-                    $scope.message = constants.CREATE_SUCCESS;
-                    $scope.reset = $scope.limpiarCampos();
-
-                    administrarModulos.getModulos()
-                        .success(function (data) {
-                            $scope.modulos = data;
-                        })
-                        .error(function (error) {
-                            $scope.status = 'Unable to load customer data: ' + error.message;
-                        });
-                })
-                .error(function (errors) {
-                    console.log("Error al insertar el módulo")
-                    console.log(errors);
-                    $scope.alert = true;
-                    $scope.status = constants.ERROR;
-                    $scope.message = constants.CREATE_ERROR;
-                    if(errors.codigo) $scope.errorCodigo = errors.codigo[0];
-                });
-        }
-    };
-
-    administrarCatalogos.getItemsPorCatalogo("EST")
-        .success(function (data) {
-            $scope.estadosGenerales = data;
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-
-    administrarModulos.getModulos()
-        .success(function (data) {
-            $scope.modulos = data;
-        })
-        .error(function (error) {
-            $scope.status = 'Unable to load customer data: ' + error.message;
-        });
-
-    $scope.MostrarInfoModulo = function (modulo) {
-        $scope.codSelectedModulo = modulo.codigo;
-        $scope.moduloActual = $scope.modulos.filter(function (m) {
-            return m.id == modulo.id;
-        });
-
-        $scope.id = $scope.moduloActual[0].id;
-        $scope.nombre = $scope.moduloActual[0].nombre;
-        $scope.codigo = $scope.moduloActual[0].codigo;
-        $scope.descripcion = $scope.moduloActual[0].descripcion;
-        $scope.orden = $scope.moduloActual[0].orden;
-        $scope.estadosGenerales.forEach(function (ele, ident) {
-            if (ele.id == $scope.moduloActual[0].estado) {
-                $scope.estado = $scope.estadosGenerales[ident];
-            }
-        });
-    }
-});
 
 
 
