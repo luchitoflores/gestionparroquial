@@ -3,4 +3,4 @@ venv
 *.db
 *.idea
 staticfiles
-*.xml
+*.idea\workspace.xml
