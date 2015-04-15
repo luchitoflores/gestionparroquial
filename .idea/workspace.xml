@@ -6,10 +6,51 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ekklesialoja.iml" afterPath="$PROJECT_DIR$/.idea/ekklesialoja.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ekklesia/local.py" afterPath="$PROJECT_DIR$/ekklesia/local.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ekklesia/produccion.py" afterPath="$PROJECT_DIR$/ekklesia/produccion.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ekklesia/settings.py" afterPath="$PROJECT_DIR$/ekklesia/settings.py" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\ciudades\migrations\0001_initial.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\ciudades\migrations\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0001_initial.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0002_auto_20141004_1829.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0003_auto_20141004_1844.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0004_auto_20141004_1853.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0005_auto_20141004_1855.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0006_auto_20141004_1856.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0007_auto_20141004_1858.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0008_auto_20141004_1949.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0009_auto_20141005_0129.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0010_auto_20141005_0130.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0011_funcionalidad_orden.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0012_auto_20141005_0854.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0013_auto_20141005_0939.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0014_auto_20141005_1938.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0015_auto_20141005_2018.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0016_auto_20141014_2217.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0017_auto_20141019_2318.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0018_auto_20141026_0926.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0019_auto_20141026_0939.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0020_auto_20150205_1106.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0021_auto_20150213_1305.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0022_auto_20150320_1144.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0023_auto_20150320_1149.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0024_funcionalidad_codigo.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0025_auto_20150320_1236.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0026_auto_20150320_1240.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0027_auto_20150320_1243.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0028_auto_20150320_1245.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0029_auto_20150320_1315.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0030_auto_20150320_1632.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0031_auto_20150320_1634.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0032_auto_20150320_1635.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0033_auto_20150411_0620.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0034_auto_20150411_0655.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0001_initial.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0002_auto_20141020_0043.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0003_padrino.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0004_auto_20141025_1332.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0005_auto_20141025_1347.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0006_auto_20141026_1938.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0007_auto_20141026_1942.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\__init__.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ekklesialoja.iws" />
@@ -65,8 +106,8 @@
       <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ekklesia/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92608696" vertical-offset="3841" max-vertical-offset="4369">
-              <caret line="251" column="1" selection-start-line="251" selection-start-column="1" selection-end-line="251" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.29782608" vertical-offset="3841" max-vertical-offset="4369">
+              <caret line="234" column="48" selection-start-line="234" selection-start-column="48" selection-end-line="234" selection-end-column="48" />
               <folding>
                 <element signature="e#63#72#0" expanded="true" />
               </folding>
@@ -278,34 +319,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gestionparroquiasdiocesis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ekklesialoja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionparroquiasdiocesis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ekklesia" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ekklesialoja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionparroquiasdiocesis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -630,11 +643,11 @@
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580423" sideWeight="0.49965778" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930756" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25256673" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25256673" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3935065" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32463294" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32337663" sideWeight="0.50034225" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32337663" sideWeight="0.50034225" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816538" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1202,8 +1215,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ekklesia/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92608696" vertical-offset="3841" max-vertical-offset="4369">
-          <caret line="251" column="1" selection-start-line="251" selection-start-column="1" selection-end-line="251" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.29782608" vertical-offset="3841" max-vertical-offset="4369">
+          <caret line="234" column="48" selection-start-line="234" selection-start-column="48" selection-end-line="234" selection-end-column="48" />
           <folding>
             <element signature="e#63#72#0" expanded="true" />
           </folding>
