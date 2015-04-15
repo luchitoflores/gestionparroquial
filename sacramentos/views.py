@@ -2523,6 +2523,8 @@ def reporte_intenciones(request):
                     return render(request, template_name, ctx)
             else:
                 messages.error(request, 'No hay intenciones en la fecha ingresada')
+                form.fields['fecha'].widget = forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date',
+                                                                     'style': 'display:inline-block;'})
                 ctx = {'form': form}
                 return render(request, template_name, ctx)
 

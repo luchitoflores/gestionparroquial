@@ -47,8 +47,18 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="42138" max-vertical-offset="50337">
-              <caret line="2514" column="93" selection-start-line="2514" selection-start-column="93" selection-end-line="2514" selection-end-column="93" />
+            <state vertical-scroll-proportion="-3.8" vertical-offset="42405" max-vertical-offset="50371">
+              <caret line="2525" column="0" selection-start-line="2525" selection-start-column="0" selection-end-line="2525" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reporte_anual_sacramentos_form.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/reportes/reporte_anual_sacramentos_form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="765">
+              <caret line="12" column="75" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -57,8 +67,8 @@
       <file leaf-file-name="forms.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sacramentos/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30722892" vertical-offset="16048" max-vertical-offset="17697">
-              <caret line="971" column="37" selection-start-line="971" selection-start-column="37" selection-end-line="971" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.54662377" vertical-offset="15997" max-vertical-offset="17714">
+              <caret line="972" column="39" selection-start-line="972" selection-start-column="39" selection-end-line="972" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -68,8 +78,23 @@
         <entry file="file://$PROJECT_DIR$/static/js/sacramentos.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="16660" max-vertical-offset="19482">
-              <caret line="988" column="70" selection-start-line="988" selection-start-column="70" selection-end-line="988" selection-end-column="70" />
+              <caret line="992" column="69" selection-start-line="992" selection-start-column="57" selection-end-line="992" selection-end-column="69" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reporte_intenciones_form.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones_form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.5384617" vertical-offset="807" max-vertical-offset="2363">
+              <caret line="59" column="83" selection-start-line="59" selection-start-column="83" selection-end-line="59" selection-end-column="83" />
+              <folding>
+                <element signature="e#893#915#0#HTML" expanded="true" />
+                <element signature="e#1367#1389#0#HTML" expanded="true" />
+                <element signature="e#1863#1885#0#HTML" expanded="true" />
+                <element signature="e#2356#2378#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,7 +117,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sacramentos/templates/usuario/secretaria_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/parroquia_list.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/parroquia_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html" />
@@ -138,10 +162,11 @@
         <option value="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
         <option value="$PROJECT_DIR$/sacramentos/models.py" />
         <option value="$PROJECT_DIR$/core/admin.py" />
-        <option value="$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones.html" />
-        <option value="$PROJECT_DIR$/sacramentos/views.py" />
         <option value="$PROJECT_DIR$/static/js/sacramentos.js" />
+        <option value="$PROJECT_DIR$/sacramentos/views.py" />
+        <option value="$PROJECT_DIR$/sacramentos/templates/reportes/reporte_anual_sacramentos_form.html" />
+        <option value="$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/forms.py" />
       </list>
     </option>
@@ -239,6 +264,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sacramentos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ekklesialoja" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gestionparroquial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sacramentos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ekklesialoja" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gestionparroquial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sacramentos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reportes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -563,7 +628,7 @@
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580423" sideWeight="0.49965778" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930756" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19033232" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24848942" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39477977" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32463294" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -694,13 +759,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2577</line>
+          <line>2579</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2573</line>
+          <line>2575</line>
           <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
+          <line>2525</line>
+          <option name="timeStamp" value="87" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
@@ -741,17 +811,10 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="87" />
+      <option name="time" value="88" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/js/services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1989">
-          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/base_site.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5" vertical-offset="1964" max-vertical-offset="2533">
@@ -882,6 +945,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.269231" vertical-offset="609" max-vertical-offset="2669">
           <caret line="50" column="29" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -928,14 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1547">
           <caret line="28" column="41" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="2363">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -1094,14 +1150,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="42138" max-vertical-offset="50337">
-          <caret line="2514" column="93" selection-start-line="2514" selection-start-column="93" selection-end-line="2514" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/dj_static.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31304348" vertical-offset="1218" max-vertical-offset="1887">
@@ -1129,15 +1177,44 @@
     <entry file="file://$PROJECT_DIR$/static/js/sacramentos.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="16660" max-vertical-offset="19482">
-          <caret line="988" column="70" selection-start-line="988" selection-start-column="70" selection-end-line="988" selection-end-column="70" />
+          <caret line="992" column="69" selection-start-line="992" selection-start-column="57" selection-end-line="992" selection-end-column="69" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.8" vertical-offset="42405" max-vertical-offset="50371">
+          <caret line="2525" column="0" selection-start-line="2525" selection-start-column="0" selection-end-line="2525" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/reportes/reporte_anual_sacramentos_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="765">
+          <caret line="12" column="75" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/reportes/reporte_intenciones_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5384617" vertical-offset="807" max-vertical-offset="2363">
+          <caret line="59" column="83" selection-start-line="59" selection-start-column="83" selection-end-line="59" selection-end-column="83" />
+          <folding>
+            <element signature="e#893#915#0#HTML" expanded="true" />
+            <element signature="e#1367#1389#0#HTML" expanded="true" />
+            <element signature="e#1863#1885#0#HTML" expanded="true" />
+            <element signature="e#2356#2378#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30722892" vertical-offset="16048" max-vertical-offset="17697">
-          <caret line="971" column="37" selection-start-line="971" selection-start-column="37" selection-end-line="971" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.54662377" vertical-offset="15997" max-vertical-offset="17714">
+          <caret line="972" column="39" selection-start-line="972" selection-start-column="39" selection-end-line="972" selection-end-column="39" />
           <folding />
         </state>
       </provider>

@@ -968,9 +968,10 @@ class ReporteIntencionesForm(forms.Form):
     TIPO_REPORTE = (
         ('', '--- Seleccione ---'),
         ('a', 'Anual'),
+        ('d', 'Diario'),
         ('r', 'Rango de Fechas'),
-        ('h', 'Rango de Fechas y Hora'),
-        ('d', 'Diario')
+        ('h', 'Rango de Fechas y Hora')
+
     )
 
     anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
