@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="MOVED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\fixtures\initial_data.json" afterPath="$PROJECT_DIR$/sacramentos/fixtures/initial_dataN.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\ciudades\fixtures\initial_data.json" afterPath="$PROJECT_DIR$/ciudades/fixtures/initial_dataN.json" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -288,7 +287,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="ciudades" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
