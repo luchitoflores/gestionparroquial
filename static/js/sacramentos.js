@@ -3,6 +3,7 @@ document.write('<script src="/static/js/tablas.js" type="text/javascript"></scri
 
 function inicio() {
     detectar_navegador();
+    cargar_accion_logs();
     tabla_vacia();
     cancelar_modal();
     var map = '';
@@ -67,6 +68,12 @@ function inicio() {
     /*modelo_tablas('#id_table_asignar_parroquia');*/
 
 }
+
+function cargar_accion_logs(){
+    var action_flag = $('#id_hidden_action_flag').val();
+    $("#id_action_flag").val(action_flag);
+}
+
 
 //Mantener la eleccion del acordeon
 function acordeon() {

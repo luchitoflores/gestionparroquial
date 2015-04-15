@@ -2,12 +2,14 @@
     <div class="panel panel-default">
         <div class="panel-heading">Filtros de Búsqueda</div>
         <div class="panel-body">
+            <input id="id_hidden_action_flag" type="hidden" value="{{ action_flag }}">
             <input name="username" type='text' placeholder="Username"  data-toggle="tooltip" title="Filtrar por username" value="{{ username }}"/>
-            <select name="action_flag" id="" data-toggle="tooltip" title="Filtrar por transacción">
+            <select id="id_action_flag" name="action_flag" id="" data-toggle="tooltip" title="Filtrar por transacción">
                 <option value="">-- Seleccione --</option>
-                <option value="1" selected="{%  if action_flag == 1 %}true{% else %}false{% endif %}">Creación</option>
-                <option value="2" selected="{%  if action_flag == 2 %}true{% else %}false{% endif %}">Actualización</option>
-                <option value="3" selected="{%  if action_flag == 3 %}true{% else %}false{% endif %}">Dar de baja</option>
+                <option value="1">Creación</option>
+                <option value="2">Actualización</option>
+                <option value="3">Dar de baja</option>
+                <! --selected="{%  if action_flag == 3 %}true{% else %}false{% endif %}" -->
             </select>
             <input name="start_date" type='date' placeholder="Fecha Inicial"  data-toggle="tooltip" title="Filtrar por fecha inicial" value="{{ start_date }}" required/>
             <input name="end_date" type='date' placeholder="Fecha Final"  data-toggle="tooltip" title="Filtrar por fecha final" value="{{ end_date }}" required/>
