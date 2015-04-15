@@ -969,7 +969,8 @@ class ReporteIntencionesForm(forms.Form):
         ('', '--- Seleccione ---'),
         ('a', 'Anual'),
         ('r', 'Rango de Fechas'),
-        ('h', 'Horas'),
+        ('h', 'Rango de Fechas y Hora'),
+        ('d', 'Diario')
     )
 
     anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
@@ -980,13 +981,13 @@ class ReporteIntencionesForm(forms.Form):
                                   required=True, widget=forms.Select(attrs={'required': ''}))
 
     fecha = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
-                            label='Fecha Inicial *',
-                            widget=forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy',
+                            label='Fecha Inicial *', required=False,
+                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
     fecha_final = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
-                            label='Fecha Final *',
-                            widget=forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy',
+                            label='Fecha Final *', required=False,
+                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
     hora = forms.CharField(required=False, help_text='Ingrese una hora ej: 8:00 - 17:00',

@@ -983,18 +983,25 @@ function seleccionar_hora() {
         console.log('Change de tipo')
         if ($('#id_tipo option:selected').val() == 'h') {
             e.preventDefault();
-            console.log('Entre al If de cambio');
             ($('#id_div_hora')).css('display', 'inline-block');
+            ($('#id_div_anio')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'inline-block');
         } else if($('#id_tipo option:selected').val() == 'r') {
             ($('#id_div_hora')).css('display', 'none');
             ($('#id_div_anio')).css('display', 'none');
             ($('#id_div_fecha_inicial')).css('display', 'inline-block');
             ($('#id_div_fecha_final')).css('display', 'inline-block');
-        } else {
+        } else if($('#id_tipo option:selected').val() == 'a'){
             ($('#id_div_hora')).css('display', 'none');
             ($('#id_div_fecha_inicial')).css('display', 'none');
             ($('#id_div_fecha_final')).css('display', 'none');
             ($('#id_div_anio')).css('display', 'inline-block');
+        } else {
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_hora')).css('display', 'inline-block');
+            ($('#id_div_anio')).css('display', 'none');
         }
 
 

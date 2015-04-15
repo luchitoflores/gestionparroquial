@@ -49,15 +49,15 @@ body {
 			{%for d in p%}
 			{{d.diocesis|upper}}<br/>
 			{%endfor%}
-			Parroquia Eclesiastica {{asignacion.parroquia|title}} <br/>
-			{{asignacion.parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}<br/>
+			Parroquia Eclesiastica {{parroquia|title}} <br/>
+			{{parroquia.direccion.provincia.nombre|upper}} {{"- Ecuador"|upper}}<br/>
 			<hr style="margin-bottom: 1px;"/>
-			<small>{{"Direccion: "}}{{ asignacion.parroquia.direccion }} {{"Tel: "}}{{asignacion.parroquia.direccion.telefono}}</small><br/>
+			<small>{{"Direccion: "}}{{ parroquia.direccion }} {{"Tel: "}}{{parroquia.direccion.telefono}}</small><br/>
 		</h2>
 		
 	</center>
 	
-	<p align='right'> <strong>{{asignacion.parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
+	<p align='right'> <strong>{{parroquia.direccion.canton.nombre|title}}, {%now "d"%} de {%now "F"%} del {%now "Y"%}</strong></p><br/>
 	<center>	
 		<h2>
 			{{"Lista de Intenciones de Misa"}}
@@ -124,7 +124,7 @@ body {
 	<div id="footer">
 		<hr style="margin-bottom: 6px;"/>
 		<p>Sistema de Gestion Sacramental <strong>Ekklesia</strong> - Reporte generado por: <strong>
-			{{asignacion.persona.user.get_full_name}}
+			{{user.get_full_name}}
 		</p>
 
 	</div>

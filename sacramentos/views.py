@@ -2489,18 +2489,20 @@ def reporte_anual_sacramentos(request):
                      raise_exception=permission_required)
 def reporte_intenciones(request):
     parroquia = request.session.get('parroquia')
+    user = request.user
     if not parroquia:
         raise PermissionDenied
     tipo = request.GET.get('tipo')
-    fecha = request.GET.get('fecha')
-    # mes=request.GET.get('fecha')
+    fecha_inicial = request.GET.get('fecha')
+    fecha_final = request.GET.get('fecha_final')
+    anio = request.GET.get('anio')
     hora = request.GET.get('hora')
     template_name = "reportes/reporte_intenciones_form.html"
-    if tipo == 'd':
-        if fecha and not hora:
+    if tipo == 'd': #reporte diario
+        if fecha_inicial and not hora:
             p = ParametrizaDiocesis.objects.all()
-            intenciones = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).aggregate(Sum('ofrenda'))[
+            intenciones = Intencion.objects.filter(fecha=fecha_inicial, parroquia=parroquia).order_by('hora')
+            suma = Intencion.objects.filter(fecha=fecha_inicial, parroquia=parroquia).aggregate(Sum('ofrenda'))[
                 'ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
@@ -2509,8 +2511,8 @@ def reporte_intenciones(request):
 
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
                                             context_instance=RequestContext(request))
                     return generar_pdf(html)
 
@@ -2524,62 +2526,26 @@ def reporte_intenciones(request):
                 ctx = {'form': form}
                 return render(request, template_name, ctx)
 
-        if fecha and hora:
+        if fecha_inicial and hora:
             try:
                 asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
                                                              periodos__estado=True)
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
-            intenciones = Intencion.objects.filter(fecha=fecha, hora=hora,
+            intenciones = Intencion.objects.filter(fecha=fecha_inicial, hora=hora,
                                                      parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha=fecha, hora=hora,
+            suma = Intencion.objects.filter(fecha=fecha_inicial, hora=hora,
                                               parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=asignacion.parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
+            if intenciones:
 
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_intenciones.html',
                                             {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
-                                            context_instance=RequestContext(request))
-                    return generar_pdf(html)
-
-
-                else:
-                    messages.error(request, MENSAJE_ERROR)
-                    ctx = {'form': form}
-                    return render(request, template_name, ctx)
-            else:
-                messages.error(request, 'No hay intenciones en ha fecha ingresada')
-                ctx = {'form': form}
-                return render(request, template_name, ctx)
-
-    if tipo == 'm':
-
-        if fecha:
-            mes = fecha[5:7]
-            anio = fecha[:4]
-            try:
-                asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-                                                             periodos__estado=True)
-                p = ParametrizaDiocesis.objects.all()
-            except ObjectDoesNotExist:
-                raise PermissionDenied
-            intenciones = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
-                                                     parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
-                                              parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
-            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-                                                   parroquia=asignacion.parroquia, periodos__estado=True)
-            form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
-                if form.is_valid():
-                    html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
                                             context_instance=RequestContext(request))
                     return generar_pdf(html)
 
@@ -2592,31 +2558,96 @@ def reporte_intenciones(request):
                 ctx = {'form': form}
                 return render(request, template_name, ctx)
 
-    if tipo == 'a':
-        if fecha:
-            fecha = fecha
-            anio = fecha[:4]
+    if tipo == 'r':  # reporte por rango de fechas
+
+        if fecha_inicial and fecha_final:
             try:
-                asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-                                                             periodos__estado=True)
+                p = ParametrizaDiocesis.objects.all()
+            except ObjectDoesNotExist:
+                raise PermissionDenied
+
+            start_date = datetime.strptime(fecha_inicial, "%Y-%m-%d").date()
+            end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
+
+            intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date],
+                                                     parroquia=parroquia).order_by('hora')
+            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+                                                   parroquia=parroquia, periodos__estado=True)
+            form = ReporteIntencionesForm(request.GET)
+            if intenciones:
+                if form.is_valid():
+
+                    suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
+                    html = render_to_string('reportes/reporte_intenciones.html',
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
+                                            context_instance=RequestContext(request))
+                    return generar_pdf(html)
+
+                else:
+                    messages.error(request, MENSAJE_ERROR)
+                    ctx = {'form': form}
+                    return render(request, template_name, ctx)
+            else:
+                messages.error(request, 'No hay intenciones en ha fecha ingresada')
+                ctx = {'form': form}
+                return render(request, template_name, ctx)
+
+    if tipo == 'h':  # reporte por fecha y horas
+
+        if fecha_inicial and fecha_final and hora:
+            try:
+                p = ParametrizaDiocesis.objects.all()
+            except ObjectDoesNotExist:
+                raise PermissionDenied
+
+            start_date = datetime.strptime(fecha_inicial, "%Y-%m-%d").date()
+            end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
+
+            intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date], hora=hora,
+                                                     parroquia=parroquia).order_by('hora')
+            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+                                                   parroquia=parroquia, periodos__estado=True)
+            form = ReporteIntencionesForm(request.GET)
+            if intenciones:
+                if form.is_valid():
+
+                    suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
+                    html = render_to_string('reportes/reporte_intenciones.html',
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
+                                            context_instance=RequestContext(request))
+                    return generar_pdf(html)
+
+                else:
+                    messages.error(request, MENSAJE_ERROR)
+                    ctx = {'form': form}
+                    return render(request, template_name, ctx)
+            else:
+                messages.error(request, 'No hay intenciones en ha fecha ingresada')
+                ctx = {'form': form}
+                return render(request, template_name, ctx)
+
+    if tipo == 'a':  # reporte anual
+        if anio:
+            try:
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
             intenciones = Intencion.objects.filter(fecha__year=anio,
-                                                     parroquia=asignacion.parroquia).order_by('hora')
+                                                     parroquia=parroquia).order_by('hora')
             suma = Intencion.objects.filter(fecha__year=anio,
-                                              parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
+                                              parroquia=parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-                                                   parroquia=asignacion.parroquia, periodos__estado=True)
+                                                   parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
+            if intenciones:
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
                                              'cura': cura, 'suma': suma, 'p': p},
                                             context_instance=RequestContext(request))
                     return generar_pdf(html)
-
 
                 else:
                     messages.error(request, MENSAJE_ERROR)
