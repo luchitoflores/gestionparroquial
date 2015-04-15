@@ -7,25 +7,25 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    )
+)
 
 MANAGERS = ADMINS
 
 DATABASES = {
-'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ekklesia.db',                      # Or path to database file if using sqlite3.
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'ekklesia.db',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-        }
-        }
+        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',  # Set to empty string for default.
+    }
+}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
@@ -69,8 +69,9 @@ MEDIA_URL = ''
 
 
 
-import os 
+import os
 #STATIC_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]+['static'])
+#STATIC_ROOT = '/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -82,21 +83,20 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     'static',
-    )
+)
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-
-STATICFILES_STORAGE ='django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
 # STATICFILES_STORAGE = (
-#     'require.storage.OptimizedStaticFilesStorage',
+# 'require.storage.OptimizedStaticFilesStorage',
 #     )
 
 REQUIRE_BUILD_PROFILE = 'app.build.js'
@@ -108,7 +108,7 @@ SECRET_KEY = 'z4216vitey^y6957)&wytdee!6w4dmc-=x!9r4uh-#l2ua@8p)'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,8 +121,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # 'sacramentos.middleware.AdminLocaleURLMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
 
 ROOT_URLCONF = 'ekklesia.urls'
 
@@ -134,7 +134,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     'templates',
-    )
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -143,15 +143,16 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )
 
-THIRD_PARTY_APPS = ( 
+THIRD_PARTY_APPS = (
     'django_extensions',
+    'rest_framework',
     'mockups',
-     # 'south'
-    )
+)
 
 LOCAL_APPS = (
     'ciudades',
@@ -159,7 +160,7 @@ LOCAL_APPS = (
     'home',
     'sacramentos',
     'usuarios',
-    )
+)
 
 INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -169,27 +170,27 @@ INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
-'version': 1,
-'disable_existing_loggers': False,
-'filters': {
-'require_debug_false': {
-'()': 'django.utils.log.RequireDebugFalse'
-}
-},
-'handlers': {
-'mail_admins': {
-'level': 'ERROR',
-'filters': ['require_debug_false'],
-'class': 'django.utils.log.AdminEmailHandler'
-}
-},
-'loggers': {
-'django.request': {
-'handlers': ['mail_admins'],
-'level': 'ERROR',
-'propagate': True,
-},
-}
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
 }
 
 
@@ -199,7 +200,6 @@ LOGGING = {
 # Sirve para vincular el User con un Perfil de Usuario customizado
 # Se debe poner el nombre de la aplicacion donde esta el perfil 
 # mas la clase que administra el perfil
-
 AUTH_PROFILE_MODULE = 'sacramentos.PerfilUsuario'
 
 #Sirve para indicar a donde se debe redirigir cada vez que se logue
@@ -208,8 +208,8 @@ LOGIN_REDIRECT_URL = '/home/'
 # Configuración para el envío de email
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'floysinternacional@gmail.com'
-EMAIL_HOST_PASSWORD = '13cordova'
+EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
+EMAIL_HOST_PASSWORD = '33BarFlouch$'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador
@@ -249,7 +249,17 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "core.context_processors.menu",
     "sacramentos.context_processors.menu",
     'django.core.context_processors.request',
-    )
-
+)
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+#Habilita los tipos de authenticacion para django rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    #'PAGINATE_BY': 10
+}

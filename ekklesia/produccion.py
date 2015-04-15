@@ -129,47 +129,26 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
+    #'grappelli',
     'django.contrib.admin',
-    'sacramentos',
+    'django.contrib.admindocs',
+)
+
+THIRD_PARTY_APPS = (
+    'django_extensions',
+    'rest_framework',
+    'mockups',
+)
+
+LOCAL_APPS = (
     'ciudades',
     'core',
     'home',
+    'sacramentos',
     'usuarios',
-    # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
-    'django_extensions',
-    'gunicorn',
+)
 
-    )
-# DJANGO_APPS = (
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.sites',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     # Uncomment the next line to enable the admin:
-#     'django.contrib.admin',
-#     # Uncomment the next line to enable admin documentation:
-#     'django.contrib.admindocs',
-# )
-
-# THIRD_PARTY_APPS = (
-#     'django_extensions',
-#     'gunicorn',
-# )
-
-# LOCAL_APPS = (
-#     'ciudades',
-#     'home',
-#     'sacramentos',
-#     'usuarios',
-# )
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-# INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-########## END APP CONFIGURATION
+INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -245,3 +224,29 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 #     '%m/%d/%y %H:%M',        # '10/25/06 14:30'
 #     '%m/%d/%y',              # '10/25/06'
 #     )
+
+
+# El siguiente código permite añadir nuevos procesadores de contexto
+# a los que vienen por defecto en Django
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    "sacramentos.context_processors.parametros_diocesis",
+    "core.context_processors.menu",
+    "sacramentos.context_processors.menu",
+    'django.core.context_processors.request',
+)
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+#Habilita los tipos de authenticacion para django rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    #'PAGINATE_BY': 10
+}
