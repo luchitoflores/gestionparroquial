@@ -2853,7 +2853,7 @@ def reporte_sacerdotes_parroquias(request, pk):
 @permission_required('admin.change_logentry', login_url='/login/',
                      raise_exception=permission_required)
 def exportar_csv_logs(request):
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment;filename="logs.csv"'
     writer = csv.writer(response)
     logs = LogEntry.objects.all()

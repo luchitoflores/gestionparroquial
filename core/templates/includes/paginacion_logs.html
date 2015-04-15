@@ -1,0 +1,29 @@
+{% if object_list %}
+
+{% if is_paginated %}
+
+
+<div class="pagination">
+
+	<ul>
+		{% if page_obj.has_previous %}
+		<li class="prev"><a href="?page={{ page_obj.previous_page_number }}&username={{username}}&start_date={{ start_date }}&end_date={{ end_date }}&action_flag={{ action_flag }}">← Anterior</a></li>
+		{% endif %}
+
+		{% for pagina in rango%}
+
+		{% if page_obj.number == pagina %}
+		<li class="active"><a href="?page={{pagina}}&username={{username}}&start_date={{ start_date }}&end_date={{ end_date }}&action_flag={{ action_flag }}">{{ pagina }}</a></li>
+		{% else %}
+		<li><a href="?page={{pagina}}&username={{username}}&start_date={{ start_date }}&end_date={{ end_date }}&action_flag={{ action_flag }}">{{ pagina }}</a></li>
+		{% endif%}
+		{% endfor %}
+
+		{% if page_obj.has_next %}
+		<li class="next"> <a href="?page={{ page_obj.next_page_number }}&username={{username}}&start_date={{ start_date }}&end_date={{ end_date }}&action_flag={{ action_flag }}">Siguiente →</a></li>
+		{% endif %}
+	</ul>
+
+</div>
+{% endif %}
+{% endif %}

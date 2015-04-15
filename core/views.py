@@ -37,6 +37,33 @@ class PaginacionMixin(object):
         return context
 
 
+class PaginacionLogsMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(PaginacionLogsMixin, self).get_context_data(**kwargs)
+        numero_paginas = context['paginator'].num_pages
+        pagina_actual = context['page_obj'].number
+
+        if numero_paginas > 5 :
+            resta = numero_paginas - pagina_actual
+
+            if pagina_actual <= 2:
+                context['rango'] = [x for x in range(1,6)]
+            else:
+                if resta > 1:
+                    context['rango'] = [pagina_actual-2, pagina_actual-1, pagina_actual, pagina_actual+1, pagina_actual+2]
+                elif resta <= 1:
+                    context['rango'] = [x for x in range(numero_paginas-4,numero_paginas+1)]
+        elif numero_paginas <= 5:
+            context['rango'] = [x for x in range(1,numero_paginas+1)]
+
+        context['username'] = self.request.GET.get('username', '')
+        context['action_flag'] = self.request.GET.get('action_flag', '')
+        context['start_date'] = self.request.GET.get('start_date', '')
+        context['end_date'] = self.request.GET.get('end_date', '')
+        return context
+
+
 class BusquedaMixin(object):
 
     def get_context_data(self, **kwargs):
@@ -168,7 +195,7 @@ def catalogo_view(request):
     return HttpResponseRedirect('/catalogo/')
 
 
-class LogListView(PaginacionMixin, ListView):
+class LogListView(PaginacionLogsMixin, ListView):
     model = LogEntry
     template_name = 'seguridad/log_list.html'
     paginate_by = 10
@@ -202,3 +229,10 @@ class LogListView(PaginacionMixin, ListView):
                                           raise_exception=permission_required))
     def dispatch(self, *args, **kwargs):
         return super(LogListView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(LogListView, self).get_context_data(**kwargs)
+        # Add in the publisher
+        context['publisher'] = "prueba"
+        return context
