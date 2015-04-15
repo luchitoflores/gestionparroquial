@@ -2451,7 +2451,7 @@ def reporte_anual_sacramentos(request):
                                                parroquia=asignacion.parroquia).count()
             matrimonios = catolicos + mixtos
             form = ReporteSacramentosAnualForm(request.GET)
-            if (bautismos or eucaristias or confirmaciones or matrimonios):
+            if bautismos or eucaristias or confirmaciones or matrimonios:
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_anual_sacramentos.html',
                                             {'pagesize': 'A4', 'num_bautizos': num_bautizos, 'ninios1': ninios1,
