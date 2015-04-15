@@ -29,7 +29,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.contrib.contenttypes.models import ContentType
 
-from ho import pisa
+from xhtml2pdf import pisa
 import StringIO
 import cgi
 import reportlab
