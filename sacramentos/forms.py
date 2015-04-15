@@ -969,13 +969,14 @@ class ReporteIntencionesForm(forms.Form):
         ('', '--- Seleccione ---'),
         ('a', 'Anual'),
         ('d', 'Diario'),
+        ('dh', 'Diario por horas'),
         ('r', 'Rango de Fechas'),
         ('h', 'Rango de Fechas y Hora')
 
     )
 
     anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
-                           label='Año *', widget=forms.TextInput())
+                           label='Año *', widget=forms.TextInput(), max_length=4)
 
     tipo = forms.TypedChoiceField(label=u'Tipo Reporte *',
                                   help_text='Seleccione un tipo de reporte Ej: Diario', choices=TIPO_REPORTE,
