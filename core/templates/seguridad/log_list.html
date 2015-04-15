@@ -12,13 +12,11 @@
     {% include 'includes/buscar_logs_form.html' %}
 
     <div class="pull-right">
-        <a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a CSV</a>
+        <a href="{% url 'logs_csv' %}" class='btn'>Exportar a CSV</a>
     </div>
-    <p>
-        <br/>
-    </p>
-
-    <table id='id_table_log' class='table table-bordered table-striped'>
+    
+    <div style="margin-top: 3em">
+     <table id='id_table_log' class='table table-bordered table-striped'>
         <thead>
         <tr>
             <th>Usuario</th>
@@ -56,6 +54,9 @@
         </tbody>
     </table>
     {% include 'includes/paginacion_logs.html' %}
+    </div>
+
+
     <!--{%if user.is_superuser%}
 <a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a Csv</a>
 {%endif%}-->
