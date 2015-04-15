@@ -1,0 +1,1374 @@
+[
+{
+    "pk": 1, 
+    "fields": {
+        "codename": "add_permission", 
+        "name": "Puede agregar permisos", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 2, 
+    "fields": {
+        "codename": "change_permission", 
+        "name": "Puede actualizar permisos", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 3, 
+    "fields": {
+        "codename": "delete_permission", 
+        "name": "Puede eliminar permisos", 
+        "content_type": [
+            "auth", 
+            "permission"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 4, 
+    "fields": {
+        "codename": "add_group", 
+        "name": "Puede agregar grupos", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 5, 
+    "fields": {
+        "codename": "change_group", 
+        "name": "Puede actualizar grupos", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 6, 
+    "fields": {
+        "codename": "delete_group", 
+        "name": "Puede eliminar grupos", 
+        "content_type": [
+            "auth", 
+            "group"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 7, 
+    "fields": {
+        "codename": "add_user", 
+        "name": "Puede agregar usuarios", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 8, 
+    "fields": {
+        "codename": "change_user", 
+        "name": "Puede actualizar usuarios", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 9, 
+    "fields": {
+        "codename": "delete_user", 
+        "name": "Puede eliminar usuarios", 
+        "content_type": [
+            "auth", 
+            "user"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 10, 
+    "fields": {
+        "codename": "add_contenttype", 
+        "name": "Can add content type", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 11, 
+    "fields": {
+        "codename": "change_contenttype", 
+        "name": "Can change content type", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 12, 
+    "fields": {
+        "codename": "delete_contenttype", 
+        "name": "Can delete content type", 
+        "content_type": [
+            "contenttypes", 
+            "contenttype"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 13, 
+    "fields": {
+        "codename": "add_session", 
+        "name": "Can add session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 14, 
+    "fields": {
+        "codename": "change_session", 
+        "name": "Can change session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 15, 
+    "fields": {
+        "codename": "delete_session", 
+        "name": "Can delete session", 
+        "content_type": [
+            "sessions", 
+            "session"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 16, 
+    "fields": {
+        "codename": "add_site", 
+        "name": "Can add site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 17, 
+    "fields": {
+        "codename": "change_site", 
+        "name": "Can change site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 18, 
+    "fields": {
+        "codename": "delete_site", 
+        "name": "Can delete site", 
+        "content_type": [
+            "sites", 
+            "site"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 19, 
+    "fields": {
+        "codename": "add_logentry", 
+        "name": "Puede agregar logs", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 20, 
+    "fields": {
+        "codename": "change_logentry", 
+        "name": "Puede actualizar logs", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 21, 
+    "fields": {
+        "codename": "delete_logentry", 
+        "name": "Can delete log entry", 
+        "content_type": [
+            "admin", 
+            "logentry"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 22, 
+    "fields": {
+        "codename": "add_libro", 
+        "name": "Puede agregar libros", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 23, 
+    "fields": {
+        "codename": "change_libro", 
+        "name": "Puede actualizar libros", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 24, 
+    "fields": {
+        "codename": "delete_libro", 
+        "name": "Puede eliminar libros", 
+        "content_type": [
+            "sacramentos", 
+            "libro"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 25, 
+    "fields": {
+        "codename": "add_perfilusuario", 
+        "name": "Can add perfil usuario", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 26, 
+    "fields": {
+        "codename": "change_perfilusuario", 
+        "name": "Can change perfil usuario", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 27, 
+    "fields": {
+        "codename": "delete_perfilusuario", 
+        "name": "Can delete perfil usuario", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 28, 
+    "fields": {
+        "codename": "add_secretaria", 
+        "name": "Puede crear secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 29, 
+    "fields": {
+        "codename": "change_secretaria", 
+        "name": "Puede actualizar secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 30, 
+    "fields": {
+        "codename": "delete_secretaria", 
+        "name": "Puede eliminar secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 31, 
+    "fields": {
+        "codename": "add_feligres", 
+        "name": "Puede crear feligreses", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 32, 
+    "fields": {
+        "codename": "change_feligres", 
+        "name": "Puede actualizar feligreses", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 33, 
+    "fields": {
+        "codename": "delete_feligres", 
+        "name": "Puede eliminar feligreses", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 34, 
+    "fields": {
+        "codename": "add_sacerdote", 
+        "name": "Puede crear sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 35, 
+    "fields": {
+        "codename": "change_sacerdote", 
+        "name": "Puede actualizar sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 36, 
+    "fields": {
+        "codename": "delete_sacerdote", 
+        "name": "Puede eliminar sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 37, 
+    "fields": {
+        "codename": "add_administrador", 
+        "name": "Puede crear administradores", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 38, 
+    "fields": {
+        "codename": "change_administrador", 
+        "name": "Puede actualizar administradores", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 39, 
+    "fields": {
+        "codename": "delete_administrador", 
+        "name": "Puede eliminar administradores", 
+        "content_type": [
+            "sacramentos", 
+            "perfilusuario"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 40, 
+    "fields": {
+        "codename": "add_sacramento", 
+        "name": "Can add sacramento", 
+        "content_type": [
+            "sacramentos", 
+            "sacramento"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 41, 
+    "fields": {
+        "codename": "change_sacramento", 
+        "name": "Can change sacramento", 
+        "content_type": [
+            "sacramentos", 
+            "sacramento"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 42, 
+    "fields": {
+        "codename": "delete_sacramento", 
+        "name": "Can delete sacramento", 
+        "content_type": [
+            "sacramentos", 
+            "sacramento"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 43, 
+    "fields": {
+        "codename": "add_bautismo", 
+        "name": "Puede agregar bautismos", 
+        "content_type": [
+            "sacramentos", 
+            "bautismo"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 44, 
+    "fields": {
+        "codename": "change_bautismo", 
+        "name": "Puede actualizar bautismos", 
+        "content_type": [
+            "sacramentos", 
+            "bautismo"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 45, 
+    "fields": {
+        "codename": "delete_bautismo", 
+        "name": "Puede eliminar bautismos", 
+        "content_type": [
+            "sacramentos", 
+            "bautismo"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 46, 
+    "fields": {
+        "codename": "add_eucaristia", 
+        "name": "Puede agregar eucaristias", 
+        "content_type": [
+            "sacramentos", 
+            "eucaristia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 47, 
+    "fields": {
+        "codename": "change_eucaristia", 
+        "name": "Puede actualizar eucaristias", 
+        "content_type": [
+            "sacramentos", 
+            "eucaristia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 48, 
+    "fields": {
+        "codename": "delete_eucaristia", 
+        "name": "Puede eliminar eucaristias", 
+        "content_type": [
+            "sacramentos", 
+            "eucaristia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 49, 
+    "fields": {
+        "codename": "add_confirmacion", 
+        "name": "Puede agregar confirmaciones", 
+        "content_type": [
+            "sacramentos", 
+            "confirmacion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 50, 
+    "fields": {
+        "codename": "change_confirmacion", 
+        "name": "Puede actualizar confirmaciones", 
+        "content_type": [
+            "sacramentos", 
+            "confirmacion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 51, 
+    "fields": {
+        "codename": "delete_confirmacion", 
+        "name": "Puede eliminar confirmaciones", 
+        "content_type": [
+            "sacramentos", 
+            "confirmacion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 52, 
+    "fields": {
+        "codename": "add_matrimonio", 
+        "name": "Puede agregar matrimonios", 
+        "content_type": [
+            "sacramentos", 
+            "matrimonio"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 53, 
+    "fields": {
+        "codename": "change_matrimonio", 
+        "name": "Puede actualizar matrimonios", 
+        "content_type": [
+            "sacramentos", 
+            "matrimonio"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 54, 
+    "fields": {
+        "codename": "delete_matrimonio", 
+        "name": "Puede eliminar matrimonios", 
+        "content_type": [
+            "sacramentos", 
+            "matrimonio"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 55, 
+    "fields": {
+        "codename": "add_notamarginal", 
+        "name": "Puede agregar notas marginales", 
+        "content_type": [
+            "sacramentos", 
+            "notamarginal"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 56, 
+    "fields": {
+        "codename": "change_notamarginal", 
+        "name": "Puede actualizar notas marginales", 
+        "content_type": [
+            "sacramentos", 
+            "notamarginal"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 57, 
+    "fields": {
+        "codename": "delete_notamarginal", 
+        "name": "Puede eliminar notas marginales", 
+        "content_type": [
+            "sacramentos", 
+            "notamarginal"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 58, 
+    "fields": {
+        "codename": "add_asignacionparroquia", 
+        "name": "Can add asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 59, 
+    "fields": {
+        "codename": "change_asignacionparroquia", 
+        "name": "Can change asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 60, 
+    "fields": {
+        "codename": "delete_asignacionparroquia", 
+        "name": "Can delete asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 61, 
+    "fields": {
+        "codename": "add_asignarsecretaria", 
+        "name": "Puede asignar secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 62, 
+    "fields": {
+        "codename": "change_asignarsecretaria", 
+        "name": "Puede actualizar asignacion secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 63, 
+    "fields": {
+        "codename": "delete_asignarsecretaria", 
+        "name": "Puede eliminar asignacion secretarias", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 64, 
+    "fields": {
+        "codename": "add_asignarsacerdote", 
+        "name": "Puede asignar sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 65, 
+    "fields": {
+        "codename": "change_asignarsacerdote", 
+        "name": "Puede actualizar asignacion sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 66, 
+    "fields": {
+        "codename": "delete_asignarsacerdote", 
+        "name": "Puede eliminar asignacion sacerdotes", 
+        "content_type": [
+            "sacramentos", 
+            "asignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 67, 
+    "fields": {
+        "codename": "add_periodoasignacionparroquia", 
+        "name": "Can add periodo asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "periodoasignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 68, 
+    "fields": {
+        "codename": "change_periodoasignacionparroquia", 
+        "name": "Can change periodo asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "periodoasignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 69, 
+    "fields": {
+        "codename": "delete_periodoasignacionparroquia", 
+        "name": "Can delete periodo asignacion parroquia", 
+        "content_type": [
+            "sacramentos", 
+            "periodoasignacionparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 70, 
+    "fields": {
+        "codename": "add_intenciones", 
+        "name": "Puede agregar intenciones", 
+        "content_type": [
+            "sacramentos", 
+            "intenciones"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 71, 
+    "fields": {
+        "codename": "change_intenciones", 
+        "name": "Puede actualizar intenciones", 
+        "content_type": [
+            "sacramentos", 
+            "intenciones"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 72, 
+    "fields": {
+        "codename": "delete_intenciones", 
+        "name": "Puede eliminar intenciones", 
+        "content_type": [
+            "sacramentos", 
+            "intenciones"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 73, 
+    "fields": {
+        "codename": "add_parroquia", 
+        "name": "Puede agregar parroquias", 
+        "content_type": [
+            "sacramentos", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 74, 
+    "fields": {
+        "codename": "change_parroquia", 
+        "name": "Puede actualizar parroquias", 
+        "content_type": [
+            "sacramentos", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 75, 
+    "fields": {
+        "codename": "delete_parroquia", 
+        "name": "Puede eliminar parroquias", 
+        "content_type": [
+            "sacramentos", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 76, 
+    "fields": {
+        "codename": "add_parametrizadiocesis", 
+        "name": "Puede agregar parametros diocesis", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizadiocesis"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 77, 
+    "fields": {
+        "codename": "change_parametrizadiocesis", 
+        "name": "Puede actualizar parametros diocesis", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizadiocesis"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 78, 
+    "fields": {
+        "codename": "delete_parametrizadiocesis", 
+        "name": "Puede eliminar parametros diocesis", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizadiocesis"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 79, 
+    "fields": {
+        "codename": "add_parametrizaparroquia", 
+        "name": "Puede agregar parametros parroquiales", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizaparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 80, 
+    "fields": {
+        "codename": "change_parametrizaparroquia", 
+        "name": "Puede actualizar parametros parroquiales", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizaparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 81, 
+    "fields": {
+        "codename": "delete_parametrizaparroquia", 
+        "name": "Puede eliminar parametros parroquiales", 
+        "content_type": [
+            "sacramentos", 
+            "parametrizaparroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 82, 
+    "fields": {
+        "codename": "add_provincia", 
+        "name": "Puede agregar provincias", 
+        "content_type": [
+            "ciudades", 
+            "provincia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 83, 
+    "fields": {
+        "codename": "change_provincia", 
+        "name": "Puede actualizar provincias", 
+        "content_type": [
+            "ciudades", 
+            "provincia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 84, 
+    "fields": {
+        "codename": "delete_provincia", 
+        "name": "Puede eliminar provincias", 
+        "content_type": [
+            "ciudades", 
+            "provincia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 85, 
+    "fields": {
+        "codename": "add_canton", 
+        "name": "Puede agregar cantones", 
+        "content_type": [
+            "ciudades", 
+            "canton"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 86, 
+    "fields": {
+        "codename": "change_canton", 
+        "name": "Puede actualizar cantones", 
+        "content_type": [
+            "ciudades", 
+            "canton"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 87, 
+    "fields": {
+        "codename": "delete_canton", 
+        "name": "Puede eliminar cantones", 
+        "content_type": [
+            "ciudades", 
+            "canton"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 88, 
+    "fields": {
+        "codename": "add_parroquia", 
+        "name": "Puede agregar parroquias civiles", 
+        "content_type": [
+            "ciudades", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 89, 
+    "fields": {
+        "codename": "change_parroquia", 
+        "name": "Puede actualizar parroquias civiles", 
+        "content_type": [
+            "ciudades", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 90, 
+    "fields": {
+        "codename": "delete_parroquia", 
+        "name": "Puede eliminar parroquias civiles", 
+        "content_type": [
+            "ciudades", 
+            "parroquia"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 91, 
+    "fields": {
+        "codename": "add_direccion", 
+        "name": "Puede agregar direcciones", 
+        "content_type": [
+            "ciudades", 
+            "direccion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 92, 
+    "fields": {
+        "codename": "change_direccion", 
+        "name": "Puede cambiar direcciones", 
+        "content_type": [
+            "ciudades", 
+            "direccion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 93, 
+    "fields": {
+        "codename": "delete_direccion", 
+        "name": "Puede eliminar direcciones", 
+        "content_type": [
+            "ciudades", 
+            "direccion"
+        ]
+    }, 
+    "model": "auth.permission"
+},
+{
+    "pk": 1, 
+    "fields": {
+        "permissions": [
+            [
+                "change_asignarsecretaria", 
+                "sacramentos", 
+                "asignacionparroquia"
+            ], 
+            [
+                "add_libro", 
+                "sacramentos", 
+                "libro"
+            ], 
+            [
+                "change_libro", 
+                "sacramentos", 
+                "libro"
+            ], 
+            [
+                "add_parametrizaparroquia", 
+                "sacramentos", 
+                "parametrizaparroquia"
+            ], 
+            [
+                "change_parametrizaparroquia", 
+                "sacramentos", 
+                "parametrizaparroquia"
+            ], 
+            [
+                "add_secretaria", 
+                "sacramentos", 
+                "perfilusuario"
+            ]
+        ], 
+        "name": "Sacerdote"
+    }, 
+    "model": "auth.group"
+},
+{
+    "pk": 2, 
+    "fields": {
+        "permissions": [], 
+        "name": "Feligres"
+    }, 
+    "model": "auth.group"
+},
+{
+    "pk": 3, 
+    "fields": {
+        "permissions": [
+            [
+                "add_bautismo", 
+                "sacramentos", 
+                "bautismo"
+            ], 
+            [
+                "change_bautismo", 
+                "sacramentos", 
+                "bautismo"
+            ], 
+            [
+                "add_confirmacion", 
+                "sacramentos", 
+                "confirmacion"
+            ], 
+            [
+                "change_confirmacion", 
+                "sacramentos", 
+                "confirmacion"
+            ], 
+            [
+                "add_eucaristia", 
+                "sacramentos", 
+                "eucaristia"
+            ], 
+            [
+                "change_eucaristia", 
+                "sacramentos", 
+                "eucaristia"
+            ], 
+            [
+                "add_intenciones", 
+                "sacramentos", 
+                "intenciones"
+            ], 
+            [
+                "change_intenciones", 
+                "sacramentos", 
+                "intenciones"
+            ], 
+            [
+                "add_matrimonio", 
+                "sacramentos", 
+                "matrimonio"
+            ], 
+            [
+                "change_matrimonio", 
+                "sacramentos", 
+                "matrimonio"
+            ], 
+            [
+                "delete_matrimonio", 
+                "sacramentos", 
+                "matrimonio"
+            ], 
+            [
+                "add_notamarginal", 
+                "sacramentos", 
+                "notamarginal"
+            ], 
+            [
+                "add_feligres", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "change_feligres", 
+                "sacramentos", 
+                "perfilusuario"
+            ]
+        ], 
+        "name": "Secretaria"
+    }, 
+    "model": "auth.group"
+},
+{
+    "pk": 4, 
+    "fields": {
+        "permissions": [
+            [
+                "change_logentry", 
+                "admin", 
+                "logentry"
+            ], 
+            [
+                "add_group", 
+                "auth", 
+                "group"
+            ], 
+            [
+                "change_group", 
+                "auth", 
+                "group"
+            ], 
+            [
+                "add_permission", 
+                "auth", 
+                "permission"
+            ], 
+            [
+                "change_permission", 
+                "auth", 
+                "permission"
+            ], 
+            [
+                "add_canton", 
+                "ciudades", 
+                "canton"
+            ], 
+            [
+                "change_canton", 
+                "ciudades", 
+                "canton"
+            ], 
+            [
+                "add_parroquia", 
+                "ciudades", 
+                "parroquia"
+            ], 
+            [
+                "change_parroquia", 
+                "ciudades", 
+                "parroquia"
+            ], 
+            [
+                "add_provincia", 
+                "ciudades", 
+                "provincia"
+            ], 
+            [
+                "change_provincia", 
+                "ciudades", 
+                "provincia"
+            ], 
+            [
+                "add_asignarsacerdote", 
+                "sacramentos", 
+                "asignacionparroquia"
+            ], 
+            [
+                "change_asignarsacerdote", 
+                "sacramentos", 
+                "asignacionparroquia"
+            ], 
+            [
+                "add_parametrizadiocesis", 
+                "sacramentos", 
+                "parametrizadiocesis"
+            ], 
+            [
+                "change_parametrizadiocesis", 
+                "sacramentos", 
+                "parametrizadiocesis"
+            ], 
+            [
+                "add_parroquia", 
+                "sacramentos", 
+                "parroquia"
+            ], 
+            [
+                "change_parroquia", 
+                "sacramentos", 
+                "parroquia"
+            ], 
+            [
+                "add_administrador", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "add_feligres", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "add_sacerdote", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "change_administrador", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "change_feligres", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "change_sacerdote", 
+                "sacramentos", 
+                "perfilusuario"
+            ], 
+            [
+                "change_secretaria", 
+                "sacramentos", 
+                "perfilusuario"
+            ]
+        ], 
+        "name": "Administrador"
+    }, 
+    "model": "auth.group"
+}
+]
+

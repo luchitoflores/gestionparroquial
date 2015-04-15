@@ -6,51 +6,7 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\ciudades\migrations\0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\ciudades\migrations\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0002_auto_20141004_1829.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0003_auto_20141004_1844.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0004_auto_20141004_1853.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0005_auto_20141004_1855.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0006_auto_20141004_1856.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0007_auto_20141004_1858.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0008_auto_20141004_1949.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0009_auto_20141005_0129.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0010_auto_20141005_0130.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0011_funcionalidad_orden.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0012_auto_20141005_0854.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0013_auto_20141005_0939.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0014_auto_20141005_1938.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0015_auto_20141005_2018.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0016_auto_20141014_2217.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0017_auto_20141019_2318.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0018_auto_20141026_0926.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0019_auto_20141026_0939.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0020_auto_20150205_1106.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0021_auto_20150213_1305.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0022_auto_20150320_1144.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0023_auto_20150320_1149.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0024_funcionalidad_codigo.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0025_auto_20150320_1236.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0026_auto_20150320_1240.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0027_auto_20150320_1243.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0028_auto_20150320_1245.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0029_auto_20150320_1315.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0030_auto_20150320_1632.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0031_auto_20150320_1634.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0032_auto_20150320_1635.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0033_auto_20150411_0620.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0034_auto_20150411_0655.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0002_auto_20141020_0043.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0003_padrino.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0004_auto_20141025_1332.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0005_auto_20141025_1347.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0006_auto_20141026_1938.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\0007_auto_20141026_1942.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\migrations\__init__.py" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\sacramentos\fixtures\initial_data.json" afterPath="$PROJECT_DIR$/sacramentos/fixtures/initial_dataN.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ekklesialoja.iws" />
@@ -319,6 +275,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gestionparroquiasdiocesis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ekklesialoja" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gestionparroquiasdiocesis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
