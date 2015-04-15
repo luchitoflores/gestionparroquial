@@ -3,17 +3,18 @@
         <div class="panel-heading">Filtros de Búsqueda</div>
         <div class="panel-body">
             <input id="id_hidden_action_flag" type="hidden" value="{{ action_flag }}">
-            <input name="username" type='text' placeholder="Username"  data-toggle="tooltip" title="Filtrar por username" value="{{ username }}"/>
-            <select id="id_action_flag" name="action_flag" id="" data-toggle="tooltip" title="Filtrar por transacción">
+            <input name="username" type='text' placeholder="Username" title="Filtrar por username" value="{{ username }}"/>
+            <select id="id_action_flag" name="action_flag" id="" title="Filtrar por transacción">
                 <option value="">-- Seleccione --</option>
                 <option value="1">Creación</option>
                 <option value="2">Actualización</option>
                 <option value="3">Dar de baja</option>
                 <! --selected="{%  if action_flag == 3 %}true{% else %}false{% endif %}" -->
             </select>
-            <input name="start_date" type='date' placeholder="Fecha Inicial"  data-toggle="tooltip" title="Filtrar por fecha inicial" value="{{ start_date }}" required/>
-            <input name="end_date" type='date' placeholder="Fecha Final"  data-toggle="tooltip" title="Filtrar por fecha final" value="{{ end_date }}" required/>
+            <input name="start_date" type='date' placeholder="Fecha Inicial" title="Filtrar por fecha inicial" value="{{ start_date }}" required/>
+            <input name="end_date" type='date' placeholder="Fecha Final" title="Filtrar por fecha final" value="{{ end_date }}" required/>
             <button class="btn btn-primary">Buscar</button>
+            <button type="button" class="btn" data-toggle="popover" data-placement="top" title="Ayuda Filtros" data-content="Para una búsqueda más exacta es necesario ingresar un rango de fechas de manera obligatoria, la primera fecha corresponde a la fecha inicial y la segunda a la fecha final. ">Ayuda Filtro Fechas</button>
         </div>
     </div>
 

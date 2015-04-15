@@ -58,6 +58,7 @@ function inicio() {
     $(".dateinput").datepicker();
     //Inicializar todos los tooltips
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+    $('[data-toggle="popover"]').popover();
 
     /*jQuery.each($("select[multiple]"), function () {
         // "Locations" can be any label you want

@@ -7,9 +7,7 @@
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form.html" afterPath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/seguridad/log_list.html" afterPath="$PROJECT_DIR$/core/templates/seguridad/log_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/sacramentos.js" afterPath="$PROJECT_DIR$/static/js/sacramentos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,8 +52,8 @@
       <file leaf-file-name="buscar_logs_form.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/templates/includes/buscar_logs_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6025317" vertical-offset="0" max-vertical-offset="442">
-              <caret line="14" column="45" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.6886076" vertical-offset="0" max-vertical-offset="459">
+              <caret line="16" column="318" selection-start-line="16" selection-start-column="318" selection-end-line="16" selection-end-column="318" />
               <folding />
             </state>
           </provider>
@@ -66,7 +64,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1224">
               <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-              <folding />
+              <folding>
+                <marker date="1429118215812" expanded="true" signature="355:448" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="456:479" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="553:1477" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="569:796" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="582:779" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="812:1464" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="865:1426" placeholder="..." />
+                <marker date="1429118215812" expanded="true" signature="1537:1645" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,8 +81,8 @@
       <file leaf-file-name="sacramentos.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/sacramentos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="20604">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            <state vertical-scroll-proportion="-4.4242425" vertical-offset="874" max-vertical-offset="20621">
+              <caret line="60" column="38" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -147,8 +154,8 @@
         <option value="$PROJECT_DIR$/core/templates/includes/paginacion_logs.html" />
         <option value="$PROJECT_DIR$/sacramentos/views.py" />
         <option value="$PROJECT_DIR$/core/views.py" />
-        <option value="$PROJECT_DIR$/static/js/sacramentos.js" />
         <option value="$PROJECT_DIR$/core/templates/seguridad/log_list.html" />
+        <option value="$PROJECT_DIR$/static/js/sacramentos.js" />
         <option value="$PROJECT_DIR$/core/templates/includes/buscar_logs_form.html" />
       </list>
     </option>
@@ -750,37 +757,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>652</line>
+          <line>653</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>653</line>
+          <line>654</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>446</line>
+          <line>447</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>461</line>
+          <line>462</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>491</line>
+          <line>492</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>517</line>
+          <line>518</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
-          <line>951</line>
+          <line>952</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
@@ -1165,26 +1172,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/sacramentos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="20604">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/seguridad/log_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1224">
           <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <folding>
+            <marker date="1429118215812" expanded="true" signature="355:448" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="456:479" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="553:1477" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="569:796" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="582:779" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="812:1464" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="865:1426" placeholder="..." />
+            <marker date="1429118215812" expanded="true" signature="1537:1645" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/sacramentos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4242425" vertical-offset="874" max-vertical-offset="20621">
+          <caret line="60" column="38" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/includes/buscar_logs_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6025317" vertical-offset="0" max-vertical-offset="442">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.6886076" vertical-offset="0" max-vertical-offset="459">
+          <caret line="16" column="318" selection-start-line="16" selection-start-column="318" selection-end-line="16" selection-end-column="318" />
           <folding />
         </state>
       </provider>
