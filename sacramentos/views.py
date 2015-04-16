@@ -64,7 +64,7 @@ ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
 from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
-from core.constants import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
+from core.constants import *
 from core.models import Item
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
@@ -1298,8 +1298,8 @@ def parroquia_create_view(request):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST)
         form_direccion = DireccionForm(request.POST)
-        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
-        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
         if form_parroquia.is_valid() and form_direccion.is_valid():
             parroquia = form_parroquia.save(commit=False)
             direccion = form_direccion.save()
