@@ -3,6 +3,7 @@
 import json
 from smtplib import SMTPAuthenticationError
 import unicodedata
+import logging
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -23,6 +24,8 @@ from .forms import SendEmailForm, GruposForm
 from sacramentos.models import PeriodoAsignacionParroquia
 from core.views import BusquedaMixin
 from core.constants import *
+
+logger = logging.getLogger(__name__)
 
 # Login con AthenticateForm
 def login_view(request):
@@ -132,6 +135,7 @@ def send_email_view(request):
                 msg.send()
             except SMTPAuthenticationError:
                 messages.add_message(request, messages.ERROR, MENSAJE_ERROR_CORREO)
+                logger.error('Las credenciales del correo de soporte técnico son incorrectas')
 
             return HttpResponseRedirect(success_url)
 
