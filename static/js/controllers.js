@@ -25,7 +25,7 @@ app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'c
         $scope.descripcion = "";
         $scope.editable = false;
         $scope.padre = $scope.catalogos;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -42,7 +42,7 @@ app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'c
                 "codigo": $scope.codigo,
                 "nombre": $scope.nombre,
                 "editable": $scope.editable,
-                "estado": $scope.estado.id,
+                "estado": $scope.estado,
                 "descripcion": $scope.descripcion
                };
 
@@ -139,11 +139,9 @@ app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'c
                     $scope.padre = $scope.catalogos[ident];
                 }
             });
-            $scope.estadosGenerales.forEach(function (ele, ident) {
-                if (ele.id == c.estado) {
-                    $scope.estado = $scope.estadosGenerales[ident];
-                }
-            });
+
+            $scope.estado = c.estado;
+
         });
 
         $scope.items = [];
@@ -177,7 +175,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
         $scope.valor = "";
         $scope.descripcion = "";
         $scope.principal = false;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
         $scope.padre = $scope.itemsPadre;
 
         //limpiar errores
@@ -267,12 +265,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                 $scope.valor = e.valor;
                 $scope.descripcion = e.descripcion;
                 $scope.principal = e.principal;
-                $scope.estadosGenerales.forEach(function (ele, ident) {
-                    if (ele.id == e.estado) {
-                        $scope.estado = $scope.estadosGenerales[ident];
-                    }
-                });
-
+                $scope.estado = e.estado;
                 $scope.itemsPadre.forEach(function (ele, ident) {
                     if (ele.id == e.padre) {
                         $scope.padre = $scope.itemsPadre[ident];
@@ -295,7 +288,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
             "valor": $scope.valor,
             "descripcion": $scope.descripcion,
             "principal": $scope.principal,
-            "estado": $scope.estado.id
+            "estado": $scope.estado
         };
 
         if( $scope.padre != null){
@@ -368,7 +361,7 @@ app.controller('moduloControl', ['$scope', '$http', 'administrarCatalogos', 'adm
         $scope.codigo = "";
         $scope.descripcion = "";
         $scope.orden = "";
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -387,7 +380,7 @@ app.controller('moduloControl', ['$scope', '$http', 'administrarCatalogos', 'adm
                 "codigo": $scope.codigo,
                 "descripcion": $scope.descripcion,
                 "orden": $scope.orden,
-                "estado": $scope.estado.id
+                "estado": $scope.estado
             }
 
         if ($scope.id) {
@@ -473,11 +466,8 @@ app.controller('moduloControl', ['$scope', '$http', 'administrarCatalogos', 'adm
         $scope.codigo = $scope.moduloActual[0].codigo;
         $scope.descripcion = $scope.moduloActual[0].descripcion;
         $scope.orden = $scope.moduloActual[0].orden;
-        $scope.estadosGenerales.forEach(function (ele, ident) {
-            if (ele.id == $scope.moduloActual[0].estado) {
-                $scope.estado = $scope.estadosGenerales[ident];
-            }
-        });
+        $scope.estado = $scope.moduloActual[0].estado;
+
     }
 }]);
 
@@ -498,7 +488,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
         $scope.grupos = "";
         $scope.orden = null;
         $scope.icono = null;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
         $scope.modulo = $scope.modulos;
 
         //Limpiar errores
@@ -572,7 +562,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
             "descripcion": $scope.descripcion,
             //"grupos": $scope.grupos,
             "grupos": $scope.gruposActuales,
-            "estado": $scope.estado.id,
+            "estado": $scope.estado,
             "orden": $scope.orden,
             "icono": $scope.icono
         };
@@ -656,11 +646,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
                 $scope.descripcion = e.descripcion;
                 $scope.orden = e.orden;
                 $scope.icono = e.icono;
-                $scope.estadosGenerales.forEach(function (ele, ident) {
-                    if (ele.id == e.estado) {
-                        $scope.estado = $scope.estadosGenerales[ident];
-                    }
-                });
+                $scope.estado = e.estado;
                 $scope.modulos.forEach(function (ele, ident) {
                     if (ele.id == e.modulo) {
                         $scope.modulo = $scope.modulos[ident];
@@ -691,7 +677,7 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
         $scope.nombre = "";
         $scope.descripcion = "";
         $scope.valor = "";
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -710,7 +696,7 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
             "nombre": $scope.nombre,
             "valor": $scope.valor,
             "descripcion": $scope.descripcion,
-            "estado": $scope.estado.id
+            "estado": $scope.estado
         }
 
         if ($scope.id) {
@@ -800,12 +786,7 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
             $scope.codigo = c.codigo;
             $scope.valor = c.valor;
             $scope.descripcion = c.descripcion;
-
-            $scope.estadosGenerales.forEach(function (ele, ident) {
-                if (ele.id == c.estado) {
-                    $scope.estado = $scope.estadosGenerales[ident];
-                }
-            });
+            $scope.estado = c.estado;
         });
 
         $scope.items = [];

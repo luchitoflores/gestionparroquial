@@ -7,7 +7,7 @@ from .constants import *
 class ModuloManager(models.Manager):
     def modulos_por_usuario(self, user):
         return self.model.objects.filter(funcionalidad__grupos__user=user,
-                                         estado=core.models.Item.objects.get(codigo=COD_ITC_ACTIVO)).order_by('orden').distinct()
+                                         estado=COD_ITC_ACTIVO).order_by('orden').distinct()
 
 
 class FuncionalidadManager(models.Manager):
@@ -16,7 +16,7 @@ class FuncionalidadManager(models.Manager):
 
     def funcionalidades_por_modulo(self, modulo, user):
         return self.model.objects.filter(modulo=modulo, grupos__user=user,
-                                         estado=core.models.Item.objects.get(codigo=COD_ITC_ACTIVO)).order_by('orden').distinct()
+                                         estado=COD_ITC_ACTIVO).order_by('orden').distinct()
 
 
 class ItemManager(models.Manager):

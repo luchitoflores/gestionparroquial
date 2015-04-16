@@ -39,9 +39,10 @@
                             <label for="">Descripción</label>
                             <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
                             <label for="">Estado</label>
-                            <select name="" id="" ng-model="estado" required
-                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+                            <select name="estado" id="" ng-model="estado" required>
                                 <option value="">-- Seleccione --</option>
+                                <option value="A">Activo</option>
+                                <option value="I">Inactivo</option>
                             </select>
 
                             <div class="form-actions">
