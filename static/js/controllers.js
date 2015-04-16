@@ -12,7 +12,7 @@ app.controller('menuControl', function ($scope) {
     };
 });
 
-app.controller('catalogoControl', function ($scope, $http, administrarCatalogos, constants) {
+app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'constants' , function ($scope, $http, administrarCatalogos, constants) {
     $scope.alert = false;
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
@@ -103,7 +103,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
         }
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -156,7 +156,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
             });
     }
 
-});
+}]);
 
 app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'administrarItems', 'constants', '$anchorScroll', '$location',
     function ($scope, $http, administrarCatalogos, administrarItems, constants, $anchorScroll, $location) {
@@ -193,7 +193,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
        $scope.crud = true;
     }
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -358,7 +358,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
     };
 }]);
 
-app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
+app.controller('moduloControl', ['$scope', '$http', 'administrarCatalogos', 'administrarModulos', 'constants', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
     $scope.modulos = [];
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
@@ -446,7 +446,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
         }
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -479,7 +479,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
             }
         });
     }
-});
+}]);
 
 app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos', 'administrarFuncionalidades', 'administrarModulos', 'constants', '$anchorScroll', '$location',
     function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants, $anchorScroll, $location) {
@@ -524,7 +524,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -680,7 +680,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
 
 }]);
 
-app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
+app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 'administrarCatalogos', 'constants', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
     $scope.parametros = [];
     $scope.estadosGenerales = [];
     $scope.parametroActual = "";
@@ -770,7 +770,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -818,7 +818,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             });
     }
 
-});
+}]);
 
 
 
