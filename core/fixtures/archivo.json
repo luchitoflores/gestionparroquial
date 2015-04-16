@@ -7373,6 +7373,173 @@
 },
 {
     "fields": {
+        "tipo_parametro": 3,
+        "valor": "10",
+        "descripcion": "Maximo numero de elementos de una lista",
+        "nombre": "Maximo numero de elementos de una lista",
+        "codigo": "MAX_NUN_LISTA",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 1
+},
+{
+    "fields": {
+        "tipo_parametro": null,
+        "valor": "parametro1",
+        "descripcion": "parametro1",
+        "nombre": "parametro1",
+        "codigo": "parametro1",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 11
+},
+{
+    "fields": {
+        "tipo_parametro": null,
+        "valor": "parametro2",
+        "descripcion": "parametro2",
+        "nombre": "parametro2",
+        "codigo": "parametro2",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 12
+},
+{
+    "fields": {
+        "descripcion": "Sirve para administrar sacramentos",
+        "nombre": "Administrar Sacramentos",
+        "codigo": "adm_sacramentos",
+        "estado": "A",
+        "orden": 6
+    },
+    "model": "core.modulo",
+    "pk": 1
+},
+{
+    "fields": {
+        "descripcion": "Sirve para adminsitrar las ciudades",
+        "nombre": "Ciudades",
+        "codigo": "CIUDDS",
+        "estado": "A",
+        "orden": 11
+    },
+    "model": "core.modulo",
+    "pk": 3
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Seguridad",
+        "codigo": "Seguridad",
+        "estado": "A",
+        "orden": 10
+    },
+    "model": "core.modulo",
+    "pk": 4
+},
+{
+    "fields": {
+        "descripcion": "Parroquia",
+        "nombre": "Parroquia",
+        "codigo": "Parroquia",
+        "estado": "A",
+        "orden": 9
+    },
+    "model": "core.modulo",
+    "pk": 5
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Reportes",
+        "codigo": "REPORT",
+        "estado": "A",
+        "orden": 13
+    },
+    "model": "core.modulo",
+    "pk": 6
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Personas",
+        "codigo": "Person",
+        "estado": "A",
+        "orden": 8
+    },
+    "model": "core.modulo",
+    "pk": 7
+},
+{
+    "fields": {
+        "descripcion": "Configuraci\u00f3n",
+        "nombre": "Configuraci\u00f3n",
+        "codigo": "CONF",
+        "estado": "A",
+        "orden": 5
+    },
+    "model": "core.modulo",
+    "pk": 8
+},
+{
+    "fields": {
+        "descripcion": "modulo1",
+        "nombre": "modulo1",
+        "codigo": "modulo1",
+        "estado": "I",
+        "orden": 3
+    },
+    "model": "core.modulo",
+    "pk": 11
+},
+{
+    "fields": {
+        "descripcion": "modulo2",
+        "nombre": "modulo2",
+        "codigo": "modulo2",
+        "estado": "I",
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 12
+},
+{
+    "fields": {
+        "name": "Administrador",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Sacerdote",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "Secretaria",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "Feligres",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 4
+},
+{
+    "fields": {
         "orden": 8,
         "icono": "bbb",
         "modulo": 1,
@@ -8073,140 +8240,5 @@
     },
     "model": "core.funcionalidad",
     "pk": 67
-},
-{
-    "fields": {
-        "tipo_parametro": 3,
-        "valor": "10",
-        "descripcion": "Maximo numero de elementos de una lista",
-        "nombre": "Maximo numero de elementos de una lista",
-        "codigo": "MAX_NUN_LISTA",
-        "estado": "A"
-    },
-    "model": "core.parametro",
-    "pk": 1
-},
-{
-    "fields": {
-        "tipo_parametro": null,
-        "valor": "parametro1",
-        "descripcion": "parametro1",
-        "nombre": "parametro1",
-        "codigo": "parametro1",
-        "estado": "A"
-    },
-    "model": "core.parametro",
-    "pk": 11
-},
-{
-    "fields": {
-        "tipo_parametro": null,
-        "valor": "parametro2",
-        "descripcion": "parametro2",
-        "nombre": "parametro2",
-        "codigo": "parametro2",
-        "estado": "A"
-    },
-    "model": "core.parametro",
-    "pk": 12
-},
-{
-    "fields": {
-        "descripcion": "Sirve para administrar sacramentos",
-        "nombre": "Administrar Sacramentos",
-        "codigo": "adm_sacramentos",
-        "estado": "A",
-        "orden": 6
-    },
-    "model": "core.modulo",
-    "pk": 1
-},
-{
-    "fields": {
-        "descripcion": "Sirve para adminsitrar las ciudades",
-        "nombre": "Ciudades",
-        "codigo": "CIUDDS",
-        "estado": "A",
-        "orden": 11
-    },
-    "model": "core.modulo",
-    "pk": 3
-},
-{
-    "fields": {
-        "descripcion": "",
-        "nombre": "Seguridad",
-        "codigo": "Seguridad",
-        "estado": "A",
-        "orden": 10
-    },
-    "model": "core.modulo",
-    "pk": 4
-},
-{
-    "fields": {
-        "descripcion": "Parroquia",
-        "nombre": "Parroquia",
-        "codigo": "Parroquia",
-        "estado": "A",
-        "orden": 9
-    },
-    "model": "core.modulo",
-    "pk": 5
-},
-{
-    "fields": {
-        "descripcion": "",
-        "nombre": "Reportes",
-        "codigo": "REPORT",
-        "estado": "A",
-        "orden": 13
-    },
-    "model": "core.modulo",
-    "pk": 6
-},
-{
-    "fields": {
-        "descripcion": "",
-        "nombre": "Personas",
-        "codigo": "Person",
-        "estado": "A",
-        "orden": 8
-    },
-    "model": "core.modulo",
-    "pk": 7
-},
-{
-    "fields": {
-        "descripcion": "Configuraci\u00f3n",
-        "nombre": "Configuraci\u00f3n",
-        "codigo": "CONF",
-        "estado": "A",
-        "orden": 5
-    },
-    "model": "core.modulo",
-    "pk": 8
-},
-{
-    "fields": {
-        "descripcion": "modulo1",
-        "nombre": "modulo1",
-        "codigo": "modulo1",
-        "estado": "I",
-        "orden": 3
-    },
-    "model": "core.modulo",
-    "pk": 11
-},
-{
-    "fields": {
-        "descripcion": "modulo2",
-        "nombre": "modulo2",
-        "codigo": "modulo2",
-        "estado": "I",
-        "orden": 1
-    },
-    "model": "core.modulo",
-    "pk": 12
 }
 ]
