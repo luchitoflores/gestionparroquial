@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Catalogo, Parametro, Funcion, Funcionalidad, Modulo
+from .models import Item, Catalogo, Parametro, Funcionalidad, Modulo
 from .forms import ItemForm, CatalogoForm, ParametroForm
 from django.core.urlresolvers import reverse
 from django.forms.widgets import RadioSelect
