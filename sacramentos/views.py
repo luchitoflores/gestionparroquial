@@ -1338,8 +1338,8 @@ def parroquia_update_view(request, pk):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
         form_direccion = DireccionForm(request.POST, instance=direccion)
-        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
-        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
         if form_parroquia.is_valid() and form_direccion.is_valid():
             form_parroquia.save()
             form_direccion.save()
