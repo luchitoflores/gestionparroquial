@@ -195,8 +195,8 @@ LOGIN_REDIRECT_URL = '/home/'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ekklesialoja@gmail.com'
-EMAIL_HOST_PASSWORD = 'ekklesia'
+EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
+EMAIL_HOST_PASSWORD = '33BarFlouch$'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador
@@ -233,7 +233,7 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "sacramentos.context_processors.parametros_diocesis",
-    #"core.context_processors.menu",
+    "core.context_processors.menu",
     'django.core.context_processors.request',
 )
 

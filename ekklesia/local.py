@@ -209,7 +209,7 @@ LOGIN_REDIRECT_URL = '/home/'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
-EMAIL_HOST_PASSWORD = '33BarFlouch$'
+EMAIL_HOST_PASSWORD = '33BarFlou'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador
