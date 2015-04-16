@@ -50,7 +50,7 @@
                         <td>{[{ funcionalidad.nombre }]}</td>
                         <td>{[{ funcionalidad.url }]}</td>
                         <td>{[{ funcionalidad.modulo }]}</td>
-                        <td><i ng-class="funcionalidad.estado.codigo == 'A' ? 'icon-check' : 'icon-check-minus'"></i></td>
+                        <td><i ng-class="funcionalidad.estado == 'A' ? 'icon-check' : 'icon-check-minus'"></i></td>
                         <td><a ng-click="CargarFuncionalidad(funcionalidad.id)"><i class="icon-pencil"></i></a></td>
                            {[{funcionalidad.estado}]}
                     </tr>
