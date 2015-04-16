@@ -35,7 +35,7 @@ class ItemAdmin(admin.ModelAdmin):
 class CatalogoAdmin(admin.ModelAdmin):
     form = CatalogoForm
     list_display = ('codigo', 'nombre','descripcion', 'estado', 'padre', 'editable', 'items')
-    inlines = [ItemInline, ]
+    #inlines = [ItemInline, ]
     search_fields = ('nombre', 'codigo',)
     list_per_page = 20
 
