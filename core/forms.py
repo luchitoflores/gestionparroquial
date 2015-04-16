@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
 from .models import Catalogo, Item, Parametro
-from .constants import COD_CAT_TRANSACCIONES
+from .constants import *
 
 class ItemForm(ModelForm):
     class Meta:
@@ -30,7 +30,8 @@ class CatalogoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CatalogoForm, self).__init__(*args, **kwargs)
-        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')
+        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_ESTADOS_GENERALES)
+
         if self.instance.id:
             if self.instance.padre:
                 self.fields['padre'].queryset = Catalogo.objects.filter(id=self.instance.padre.id)

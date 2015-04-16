@@ -234,7 +234,6 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "sacramentos.context_processors.parametros_diocesis",
     #"core.context_processors.menu",
-    #"sacramentos.context_processors.menu",
     'django.core.context_processors.request',
 )
 

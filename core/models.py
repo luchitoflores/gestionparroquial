@@ -11,7 +11,8 @@ from django.db import models
 
 
 def get_limit_choices_to():
-    return {'catalogo': Catalogo.objects.get(codigo="EST").id}
+    #return {'catalogo': Catalogo.objects.get(codigo="EST").id} Esto estaba funcionando
+    return {'catalogo': Catalogo.objects.filter(codigo="EST")}
 
 
 class Catalogo(models.Model):
