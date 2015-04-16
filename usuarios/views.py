@@ -122,6 +122,7 @@ def send_email_view(request):
 			html_content = u'<p>Su nueva contraseña es:  <strong> %s </strong></p><p>Cámbiela por una que ud recuerde fácilmente</p>' % nuevo_password
 			msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
 			msg.attach_alternative(html_content, "text/html")
+
 			msg.send()
 			return HttpResponseRedirect(success_url)
 		
