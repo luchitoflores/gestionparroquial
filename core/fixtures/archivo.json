@@ -5,8 +5,8 @@
         "editable": true,
         "descripcion": "Genero",
         "nombre": "Genero",
-        "codigo": "GEN",
-        "estado": 3
+        "codigo": "GENERO",
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 1
@@ -18,7 +18,7 @@
         "descripcion": "Estado",
         "nombre": "Estado",
         "codigo": "EST_GEN",
-        "estado": 4
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 2
@@ -30,7 +30,7 @@
         "descripcion": "Estado Civil",
         "nombre": "Estado Civil",
         "codigo": "EST_CIVIL",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 3
@@ -42,7 +42,7 @@
         "descripcion": "Nacionalidad",
         "nombre": "Nacionalidad",
         "codigo": "NACIONALIDAD",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 4
@@ -54,7 +54,7 @@
         "descripcion": "Provincias",
         "nombre": "Provincias",
         "codigo": "PROVINCIA",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 5
@@ -66,7 +66,7 @@
         "descripcion": "Cantones",
         "nombre": "Cantones",
         "codigo": "CANTON",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 6
@@ -78,7 +78,7 @@
         "descripcion": "Parroquias",
         "nombre": "Parroquias",
         "codigo": "PARROQUIA",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 7
@@ -90,7 +90,7 @@
         "descripcion": "Tipo de Libro",
         "nombre": "Tipo de Libro",
         "codigo": "TIP_LIBRO",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 8
@@ -102,7 +102,7 @@
         "descripcion": "cat2",
         "nombre": "cat2",
         "codigo": "cat2",
-        "estado": 3
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 27
@@ -114,22 +114,10 @@
         "descripcion": "cat1",
         "nombre": "cat1",
         "codigo": "cat1",
-        "estado": ""
+        "estado": "A"
     },
     "model": "core.catalogo",
     "pk": 28
-},
-{
-    "fields": {
-        "padre": 6,
-        "editable": false,
-        "descripcion": null,
-        "nombre": "x",
-        "codigo": "xx",
-        "estado": ""
-    },
-    "model": "core.catalogo",
-    "pk": 29
 },
 {
     "fields": {
@@ -139,7 +127,7 @@
         "catalogo": 1,
         "nombre": "Masculino",
         "codigo": "M",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -153,7 +141,7 @@
         "catalogo": 1,
         "nombre": "Femenino",
         "codigo": "F",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -167,7 +155,7 @@
         "catalogo": 2,
         "nombre": "Activo",
         "codigo": "A",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -181,7 +169,7 @@
         "catalogo": 2,
         "nombre": "Inactivo",
         "codigo": "I",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -195,7 +183,7 @@
         "catalogo": 3,
         "nombre": "Soltero/a",
         "codigo": "SOLT",
-        "estado": 4,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -209,7 +197,7 @@
         "catalogo": 3,
         "nombre": "Casado/a",
         "codigo": "CAS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -223,7 +211,7 @@
         "catalogo": 3,
         "nombre": "Union Libre",
         "codigo": "UNION_LIBR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -237,7 +225,7 @@
         "catalogo": 3,
         "nombre": "Viudo/a",
         "codigo": "VIU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -251,7 +239,7 @@
         "catalogo": 3,
         "nombre": "Divorciado/a",
         "codigo": "DIV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -265,7 +253,7 @@
         "catalogo": 4,
         "nombre": "Afganistan",
         "codigo": "AFG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -279,7 +267,7 @@
         "catalogo": 4,
         "nombre": "Albania",
         "codigo": "ALB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -293,7 +281,7 @@
         "catalogo": 4,
         "nombre": "Alemania",
         "codigo": "DEU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -307,7 +295,7 @@
         "catalogo": 4,
         "nombre": "Andorra",
         "codigo": "AND",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -321,7 +309,7 @@
         "catalogo": 4,
         "nombre": "Angola",
         "codigo": "AGO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -335,7 +323,7 @@
         "catalogo": 4,
         "nombre": "Anguila",
         "codigo": "AIA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -349,7 +337,7 @@
         "catalogo": 4,
         "nombre": "Antartida",
         "codigo": "ATA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -363,7 +351,7 @@
         "catalogo": 4,
         "nombre": "Antigua y Barbuda",
         "codigo": "ATG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -377,7 +365,7 @@
         "catalogo": 4,
         "nombre": "Antillas Neerlandesas",
         "codigo": "ANT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -391,7 +379,7 @@
         "catalogo": 4,
         "nombre": "Arabia Saudita",
         "codigo": "SAU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -405,7 +393,7 @@
         "catalogo": 4,
         "nombre": "Argelia",
         "codigo": "DZA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -419,7 +407,7 @@
         "catalogo": 4,
         "nombre": "Argentina",
         "codigo": "ARG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -433,7 +421,7 @@
         "catalogo": 4,
         "nombre": "Armenia",
         "codigo": "ARM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -447,7 +435,7 @@
         "catalogo": 4,
         "nombre": "Aruba",
         "codigo": "ABW",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -461,7 +449,7 @@
         "catalogo": 4,
         "nombre": "Australia",
         "codigo": "AUS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -475,7 +463,7 @@
         "catalogo": 4,
         "nombre": "Austria",
         "codigo": "AUT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -489,7 +477,7 @@
         "catalogo": 4,
         "nombre": "Azerbaiyan",
         "codigo": "AZE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -503,7 +491,7 @@
         "catalogo": 4,
         "nombre": "Bahamas",
         "codigo": "BHS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -517,7 +505,7 @@
         "catalogo": 4,
         "nombre": "Bahrein",
         "codigo": "BHR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -531,7 +519,7 @@
         "catalogo": 4,
         "nombre": "Bangladesh",
         "codigo": "BGD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -545,7 +533,7 @@
         "catalogo": 4,
         "nombre": "Barbados",
         "codigo": "BRB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -559,7 +547,7 @@
         "catalogo": 4,
         "nombre": "Belarus",
         "codigo": "BLR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -573,7 +561,7 @@
         "catalogo": 4,
         "nombre": "B\u00e9lgica",
         "codigo": "BEL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -587,7 +575,7 @@
         "catalogo": 4,
         "nombre": "Belice",
         "codigo": "BLZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -601,7 +589,7 @@
         "catalogo": 4,
         "nombre": "Benin",
         "codigo": "BEN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -615,7 +603,7 @@
         "catalogo": 4,
         "nombre": "Bermudas",
         "codigo": "BMU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -629,7 +617,7 @@
         "catalogo": 4,
         "nombre": "Bhutan",
         "codigo": "BTN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -643,7 +631,7 @@
         "catalogo": 4,
         "nombre": "Birmania",
         "codigo": "BUR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -657,7 +645,7 @@
         "catalogo": 4,
         "nombre": "Bolivia",
         "codigo": "BOL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -671,7 +659,7 @@
         "catalogo": 4,
         "nombre": "Bosnia y Herzegovina",
         "codigo": "BIH",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -685,7 +673,7 @@
         "catalogo": 4,
         "nombre": "Botswana",
         "codigo": "BWA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -699,7 +687,7 @@
         "catalogo": 4,
         "nombre": "Brasil",
         "codigo": "BRA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -713,7 +701,7 @@
         "catalogo": 4,
         "nombre": "Brunei Darussalam",
         "codigo": "BRN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -727,7 +715,7 @@
         "catalogo": 4,
         "nombre": "Bulgaria",
         "codigo": "BGR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -741,7 +729,7 @@
         "catalogo": 4,
         "nombre": "Burkina Faso",
         "codigo": "BFA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -755,7 +743,7 @@
         "catalogo": 4,
         "nombre": "Burundi",
         "codigo": "BDI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -769,7 +757,7 @@
         "catalogo": 4,
         "nombre": "Cabo Verde",
         "codigo": "CPV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -783,7 +771,7 @@
         "catalogo": 4,
         "nombre": "Camboya",
         "codigo": "KHM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -797,7 +785,7 @@
         "catalogo": 4,
         "nombre": "Camer\u00fan",
         "codigo": "CMR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -811,7 +799,7 @@
         "catalogo": 4,
         "nombre": "Canada",
         "codigo": "CAN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -825,7 +813,7 @@
         "catalogo": 4,
         "nombre": "Chad",
         "codigo": "TCD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -839,7 +827,7 @@
         "catalogo": 4,
         "nombre": "Checa, Rep\u00fablica",
         "codigo": "CZE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -853,7 +841,7 @@
         "catalogo": 4,
         "nombre": "Checoslovaquia",
         "codigo": "CSK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -867,7 +855,7 @@
         "catalogo": 4,
         "nombre": "Chile",
         "codigo": "CHL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -881,7 +869,7 @@
         "catalogo": 4,
         "nombre": "China",
         "codigo": "CHN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -895,7 +883,7 @@
         "catalogo": 4,
         "nombre": "Chipre",
         "codigo": "CYP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -909,7 +897,7 @@
         "catalogo": 4,
         "nombre": "Colombia",
         "codigo": "COL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -923,7 +911,7 @@
         "catalogo": 4,
         "nombre": "Comoras",
         "codigo": "COM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -937,7 +925,7 @@
         "catalogo": 4,
         "nombre": "Congo",
         "codigo": "COD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -951,7 +939,7 @@
         "catalogo": 4,
         "nombre": "Congo",
         "codigo": "COG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -965,7 +953,7 @@
         "catalogo": 4,
         "nombre": "Costa de marfil",
         "codigo": "CIV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -979,7 +967,7 @@
         "catalogo": 4,
         "nombre": "Costa Rica",
         "codigo": "CRI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -993,7 +981,7 @@
         "catalogo": 4,
         "nombre": "Croacia",
         "codigo": "HRV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1007,7 +995,7 @@
         "catalogo": 4,
         "nombre": "Cuba",
         "codigo": "CUB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1021,7 +1009,7 @@
         "catalogo": 4,
         "nombre": "Dinamarca",
         "codigo": "DNK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1035,7 +1023,7 @@
         "catalogo": 4,
         "nombre": "Djibouti",
         "codigo": "DJI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1049,7 +1037,7 @@
         "catalogo": 4,
         "nombre": "Dominica",
         "codigo": "DMA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1063,7 +1051,7 @@
         "catalogo": 4,
         "nombre": "Ecuador",
         "codigo": "ECU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1077,7 +1065,7 @@
         "catalogo": 4,
         "nombre": "Egipto",
         "codigo": "EGY",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1091,7 +1079,7 @@
         "catalogo": 4,
         "nombre": "El salvador",
         "codigo": "SLV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1105,7 +1093,7 @@
         "catalogo": 4,
         "nombre": "Emiratos arabes unidos",
         "codigo": "ARE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1119,7 +1107,7 @@
         "catalogo": 4,
         "nombre": "Eslovaquia",
         "codigo": "XES",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1133,7 +1121,7 @@
         "catalogo": 4,
         "nombre": "Eslovaquia, rep\u00fablica",
         "codigo": "SVK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1147,7 +1135,7 @@
         "catalogo": 4,
         "nombre": "Eslovenia",
         "codigo": "SVN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1161,7 +1149,7 @@
         "catalogo": 4,
         "nombre": "Espa\u00f1a",
         "codigo": "ESP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1175,7 +1163,7 @@
         "catalogo": 4,
         "nombre": "Estado de la cdad del vaticano",
         "codigo": "VAT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1189,7 +1177,7 @@
         "catalogo": 4,
         "nombre": "Estados unidos",
         "codigo": "USA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1203,7 +1191,7 @@
         "catalogo": 4,
         "nombre": "Estonia",
         "codigo": "EST",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1217,7 +1205,7 @@
         "catalogo": 4,
         "nombre": "Etiop\u00eda",
         "codigo": "ETH",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1231,7 +1219,7 @@
         "catalogo": 4,
         "nombre": "Federacion de Rusia",
         "codigo": "RUS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1245,7 +1233,7 @@
         "catalogo": 4,
         "nombre": "Fiji",
         "codigo": "FJI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1259,7 +1247,7 @@
         "catalogo": 4,
         "nombre": "Filipinas",
         "codigo": "PHL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1273,7 +1261,7 @@
         "catalogo": 4,
         "nombre": "Finlandia",
         "codigo": "FIN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1287,7 +1275,7 @@
         "catalogo": 4,
         "nombre": "Francia",
         "codigo": "FRA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1301,7 +1289,7 @@
         "catalogo": 4,
         "nombre": "Gab\u00f3n",
         "codigo": "GAB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1315,7 +1303,7 @@
         "catalogo": 4,
         "nombre": "Gambia",
         "codigo": "GMB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1329,7 +1317,7 @@
         "catalogo": 4,
         "nombre": "GeorGia",
         "codigo": "GEO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1343,7 +1331,7 @@
         "catalogo": 4,
         "nombre": "Ghana",
         "codigo": "GHA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1357,7 +1345,7 @@
         "catalogo": 4,
         "nombre": "Gibraltar",
         "codigo": "GIB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1371,7 +1359,7 @@
         "catalogo": 4,
         "nombre": "Granada",
         "codigo": "GRD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1385,7 +1373,7 @@
         "catalogo": 4,
         "nombre": "Grecia",
         "codigo": "GRC",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1399,7 +1387,7 @@
         "catalogo": 4,
         "nombre": "Groenlandia",
         "codigo": "GRL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1413,7 +1401,7 @@
         "catalogo": 4,
         "nombre": "Guadalupe",
         "codigo": "GLP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1427,7 +1415,7 @@
         "catalogo": 4,
         "nombre": "Guam",
         "codigo": "GUM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1441,7 +1429,7 @@
         "catalogo": 4,
         "nombre": "Guatemala",
         "codigo": "GTM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1455,7 +1443,7 @@
         "catalogo": 4,
         "nombre": "Guayana Francesa",
         "codigo": "GUF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1469,7 +1457,7 @@
         "catalogo": 4,
         "nombre": "Guinea",
         "codigo": "GIN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1483,7 +1471,7 @@
         "catalogo": 4,
         "nombre": "Guinea Ecuatorial",
         "codigo": "GNQ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1497,7 +1485,7 @@
         "catalogo": 4,
         "nombre": "Guinea-Bissau",
         "codigo": "GNB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1511,7 +1499,7 @@
         "catalogo": 4,
         "nombre": "Guyana",
         "codigo": "GUY",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1525,7 +1513,7 @@
         "catalogo": 4,
         "nombre": "Hait\u00ed",
         "codigo": "HTI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1539,7 +1527,7 @@
         "catalogo": 4,
         "nombre": "Holanda",
         "codigo": "NLD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1553,7 +1541,7 @@
         "catalogo": 4,
         "nombre": "Honduras",
         "codigo": "HND",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1567,7 +1555,7 @@
         "catalogo": 4,
         "nombre": "Hong kong",
         "codigo": "HKG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1581,7 +1569,7 @@
         "catalogo": 4,
         "nombre": "Hungr\u00eda",
         "codigo": "HUN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1595,7 +1583,7 @@
         "catalogo": 4,
         "nombre": "india",
         "codigo": "IND",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1609,7 +1597,7 @@
         "catalogo": 4,
         "nombre": "Indonesia",
         "codigo": "IDN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1623,7 +1611,7 @@
         "catalogo": 4,
         "nombre": "Ir\u00e1n, rep\u00fablica Islamica del",
         "codigo": "IRN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1637,7 +1625,7 @@
         "catalogo": 4,
         "nombre": "Iraq",
         "codigo": "IRQ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1651,7 +1639,7 @@
         "catalogo": 4,
         "nombre": "Irlanda",
         "codigo": "IRL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1665,7 +1653,7 @@
         "catalogo": 4,
         "nombre": "Isla bouvet",
         "codigo": "BVT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1679,7 +1667,7 @@
         "catalogo": 4,
         "nombre": "Isla christmas",
         "codigo": "CXR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1693,7 +1681,7 @@
         "catalogo": 4,
         "nombre": "Isla norfolk",
         "codigo": "NFK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1707,7 +1695,7 @@
         "catalogo": 4,
         "nombre": "Islandia",
         "codigo": "ISL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1721,7 +1709,7 @@
         "catalogo": 4,
         "nombre": "Islas caimanes",
         "codigo": "CYM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1735,7 +1723,7 @@
         "catalogo": 4,
         "nombre": "Islas cocos (keeling)",
         "codigo": "CCK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1749,7 +1737,7 @@
         "catalogo": 4,
         "nombre": "Islas cook",
         "codigo": "COK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1763,7 +1751,7 @@
         "catalogo": 4,
         "nombre": "Islas feroe",
         "codigo": "FRO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1777,7 +1765,7 @@
         "catalogo": 4,
         "nombre": "Islas Heard y Mcdonald",
         "codigo": "HMD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1791,7 +1779,7 @@
         "catalogo": 4,
         "nombre": "Islas Malvinas (falkland)",
         "codigo": "FLK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1805,7 +1793,7 @@
         "catalogo": 4,
         "nombre": "Islas Mar\u00edanas Septentrionales",
         "codigo": "MNP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1819,7 +1807,7 @@
         "catalogo": 4,
         "nombre": "Islas Marshall",
         "codigo": "MHL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1833,7 +1821,7 @@
         "catalogo": 4,
         "nombre": "Islas Remotas Menores de los eu",
         "codigo": "UMI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1847,7 +1835,7 @@
         "catalogo": 4,
         "nombre": "Islas Salom\u00f3n",
         "codigo": "SLB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1861,7 +1849,7 @@
         "catalogo": 4,
         "nombre": "Islas Svalbard y Jan mayen",
         "codigo": "SJM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1875,7 +1863,7 @@
         "catalogo": 4,
         "nombre": "Islas Turcas y Caicos",
         "codigo": "TCA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1889,7 +1877,7 @@
         "catalogo": 4,
         "nombre": "Islas Virgenes (Estados Unidos)",
         "codigo": "VIR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1903,7 +1891,7 @@
         "catalogo": 4,
         "nombre": "Islas Virgenes Brit\u00e1nicas",
         "codigo": "VGB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1917,7 +1905,7 @@
         "catalogo": 4,
         "nombre": "Islas Wallis y Futuna",
         "codigo": "WLF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1931,7 +1919,7 @@
         "catalogo": 4,
         "nombre": "Israel",
         "codigo": "ISR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1945,7 +1933,7 @@
         "catalogo": 4,
         "nombre": "Italia",
         "codigo": "ITA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1959,7 +1947,7 @@
         "catalogo": 4,
         "nombre": "Jamahiriya Arabe Libia",
         "codigo": "LBY",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1973,7 +1961,7 @@
         "catalogo": 4,
         "nombre": "Jamaica",
         "codigo": "JAM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -1987,7 +1975,7 @@
         "catalogo": 4,
         "nombre": "Jap\u00f3n",
         "codigo": "JPN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2001,7 +1989,7 @@
         "catalogo": 4,
         "nombre": "Jordania",
         "codigo": "JOR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2015,7 +2003,7 @@
         "catalogo": 4,
         "nombre": "Kazajstan",
         "codigo": "KAZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2029,7 +2017,7 @@
         "catalogo": 4,
         "nombre": "Kenya",
         "codigo": "KEN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2043,7 +2031,7 @@
         "catalogo": 4,
         "nombre": "Kirguistan",
         "codigo": "KGZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2057,7 +2045,7 @@
         "catalogo": 4,
         "nombre": "Kiribati",
         "codigo": "KIR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2071,7 +2059,7 @@
         "catalogo": 4,
         "nombre": "Kuwait",
         "codigo": "KWT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2085,7 +2073,7 @@
         "catalogo": 4,
         "nombre": "Lesotho",
         "codigo": "LSO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2099,7 +2087,7 @@
         "catalogo": 4,
         "nombre": "Letonia",
         "codigo": "LVA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2113,7 +2101,7 @@
         "catalogo": 4,
         "nombre": "L\u00edbano",
         "codigo": "LBN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2127,7 +2115,7 @@
         "catalogo": 4,
         "nombre": "Liberia",
         "codigo": "LBR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2141,7 +2129,7 @@
         "catalogo": 4,
         "nombre": "Liechtenstein",
         "codigo": "LIE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2155,7 +2143,7 @@
         "catalogo": 4,
         "nombre": "Lituania",
         "codigo": "LTU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2169,7 +2157,7 @@
         "catalogo": 4,
         "nombre": "Luxemburgo",
         "codigo": "LUX",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2183,7 +2171,7 @@
         "catalogo": 4,
         "nombre": "Macao",
         "codigo": "MAC",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2197,7 +2185,7 @@
         "catalogo": 4,
         "nombre": "Macedonia, rep. yugoslava",
         "codigo": "MKD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2211,7 +2199,7 @@
         "catalogo": 4,
         "nombre": "Madagascar",
         "codigo": "MDG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2225,7 +2213,7 @@
         "catalogo": 4,
         "nombre": "Malasia",
         "codigo": "MYS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2239,7 +2227,7 @@
         "catalogo": 4,
         "nombre": "Malawi",
         "codigo": "MWI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2253,7 +2241,7 @@
         "catalogo": 4,
         "nombre": "Maldivas",
         "codigo": "MDV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2267,7 +2255,7 @@
         "catalogo": 4,
         "nombre": "Mali",
         "codigo": "MLI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2281,7 +2269,7 @@
         "catalogo": 4,
         "nombre": "Malta",
         "codigo": "MLT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2295,7 +2283,7 @@
         "catalogo": 4,
         "nombre": "Marruecos",
         "codigo": "MAR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2309,7 +2297,7 @@
         "catalogo": 4,
         "nombre": "Martinica",
         "codigo": "MTQ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2323,7 +2311,7 @@
         "catalogo": 4,
         "nombre": "Mauricio",
         "codigo": "MUS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2337,7 +2325,7 @@
         "catalogo": 4,
         "nombre": "Mauritania",
         "codigo": "MRT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2351,7 +2339,7 @@
         "catalogo": 4,
         "nombre": "M\u00e9xico",
         "codigo": "MEX",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2365,7 +2353,7 @@
         "catalogo": 4,
         "nombre": "Micronesia, Estados Federados de",
         "codigo": "FSM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2379,7 +2367,7 @@
         "catalogo": 4,
         "nombre": "M\u00f3naco",
         "codigo": "MCO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2393,7 +2381,7 @@
         "catalogo": 4,
         "nombre": "Mongolia",
         "codigo": "MNG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2407,7 +2395,7 @@
         "catalogo": 4,
         "nombre": "Montserrat",
         "codigo": "MSR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2421,7 +2409,7 @@
         "catalogo": 4,
         "nombre": "Mozambique",
         "codigo": "MOZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2435,7 +2423,7 @@
         "catalogo": 4,
         "nombre": "Myanmar",
         "codigo": "MMR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2449,7 +2437,7 @@
         "catalogo": 4,
         "nombre": "Namibia",
         "codigo": "NAM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2463,7 +2451,7 @@
         "catalogo": 4,
         "nombre": "Nauru",
         "codigo": "NRU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2477,7 +2465,7 @@
         "catalogo": 4,
         "nombre": "Nepal",
         "codigo": "NPL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2491,7 +2479,7 @@
         "catalogo": 4,
         "nombre": "Nicaragua",
         "codigo": "NIC",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2505,7 +2493,7 @@
         "catalogo": 4,
         "nombre": "Niger",
         "codigo": "NER",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2519,7 +2507,7 @@
         "catalogo": 4,
         "nombre": "Nigeria",
         "codigo": "NGA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2533,7 +2521,7 @@
         "catalogo": 4,
         "nombre": "Niue",
         "codigo": "NIU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2547,7 +2535,7 @@
         "catalogo": 4,
         "nombre": "Noruega",
         "codigo": "NOR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2561,7 +2549,7 @@
         "catalogo": 4,
         "nombre": "Nueva caledonia",
         "codigo": "NCL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2575,7 +2563,7 @@
         "catalogo": 4,
         "nombre": "Nueva zelandia",
         "codigo": "NZL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2589,7 +2577,7 @@
         "catalogo": 4,
         "nombre": "Om\u00e1n",
         "codigo": "OMN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2603,7 +2591,7 @@
         "catalogo": 4,
         "nombre": "Pakist\u00e1n",
         "codigo": "PAK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2617,7 +2605,7 @@
         "catalogo": 4,
         "nombre": "Palau",
         "codigo": "PLW",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2631,7 +2619,7 @@
         "catalogo": 4,
         "nombre": "Panam\u00e1",
         "codigo": "PAN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2645,7 +2633,7 @@
         "catalogo": 4,
         "nombre": "PaPua nueva guinea",
         "codigo": "PNG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2659,7 +2647,7 @@
         "catalogo": 4,
         "nombre": "Paraguay",
         "codigo": "PRY",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2673,7 +2661,7 @@
         "catalogo": 4,
         "nombre": "Per\u00fa",
         "codigo": "PER",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2687,7 +2675,7 @@
         "catalogo": 4,
         "nombre": "Pitcairn",
         "codigo": "PCN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2701,7 +2689,7 @@
         "catalogo": 4,
         "nombre": "Polinesia Francesa",
         "codigo": "PYF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2715,7 +2703,7 @@
         "catalogo": 4,
         "nombre": "Polonia",
         "codigo": "POL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2729,7 +2717,7 @@
         "catalogo": 4,
         "nombre": "Portugal",
         "codigo": "PRT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2743,7 +2731,7 @@
         "catalogo": 4,
         "nombre": "Puerto rico",
         "codigo": "PRI",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2757,7 +2745,7 @@
         "catalogo": 4,
         "nombre": "Qatar",
         "codigo": "QAT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2771,7 +2759,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido (c. de depen. territ. brit.)",
         "codigo": "GBD",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2785,7 +2773,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido (ciudadano britanico)",
         "codigo": "GBR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2799,7 +2787,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido (subdito britanico)",
         "codigo": "GBS",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2813,7 +2801,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido(c. brit. del extranjero)",
         "codigo": "GBO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2827,7 +2815,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido(c. de nal. brit. del ext.)",
         "codigo": "GBN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2841,7 +2829,7 @@
         "catalogo": 4,
         "nombre": "Reino Unido(persona bajo protec. brit.)",
         "codigo": "GBP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2855,7 +2843,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Arabe Siria",
         "codigo": "SYR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2869,7 +2857,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Centroafricana",
         "codigo": "CAF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2883,7 +2871,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica de Corea",
         "codigo": "KOR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2897,7 +2885,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica de Moldova",
         "codigo": "MDA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2911,7 +2899,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Democr\u00e1tica Popular lao",
         "codigo": "LAO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2925,7 +2913,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Dominicana",
         "codigo": "DOM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2939,7 +2927,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Popular Democr\u00e1tica Corea",
         "codigo": "PRK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2953,7 +2941,7 @@
         "catalogo": 4,
         "nombre": "Rep\u00fablica Unida de Tanzania",
         "codigo": "TZA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2967,7 +2955,7 @@
         "catalogo": 4,
         "nombre": "Reunion",
         "codigo": "REU",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2981,7 +2969,7 @@
         "catalogo": 4,
         "nombre": "Rumania",
         "codigo": "ROM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -2995,7 +2983,7 @@
         "catalogo": 4,
         "nombre": "Rwanda",
         "codigo": "RWA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3009,7 +2997,7 @@
         "catalogo": 4,
         "nombre": "Saharaui",
         "codigo": "ESH",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3023,7 +3011,7 @@
         "catalogo": 4,
         "nombre": "Saint Kitts y Nevis",
         "codigo": "KNA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3037,7 +3025,7 @@
         "catalogo": 4,
         "nombre": "Saint Pierre y Miquelon",
         "codigo": "SPM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3051,7 +3039,7 @@
         "catalogo": 4,
         "nombre": "Samoa",
         "codigo": "WSM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3065,7 +3053,7 @@
         "catalogo": 4,
         "nombre": "Samoa Estadounidense",
         "codigo": "ASM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3079,7 +3067,7 @@
         "catalogo": 4,
         "nombre": "San Marino",
         "codigo": "SMR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3093,7 +3081,7 @@
         "catalogo": 4,
         "nombre": "San Vicente y Las Granadinas",
         "codigo": "VCT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3107,7 +3095,7 @@
         "catalogo": 4,
         "nombre": "Santa Elena",
         "codigo": "SHN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3121,7 +3109,7 @@
         "catalogo": 4,
         "nombre": "Santa Lucia",
         "codigo": "LCA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3135,7 +3123,7 @@
         "catalogo": 4,
         "nombre": "Santo Tome y Principe",
         "codigo": "STP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3149,7 +3137,7 @@
         "catalogo": 4,
         "nombre": "Senegal",
         "codigo": "SEN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3163,7 +3151,7 @@
         "catalogo": 4,
         "nombre": "Seychelles",
         "codigo": "SYC",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3177,7 +3165,7 @@
         "catalogo": 4,
         "nombre": "Sierra Leona",
         "codigo": "SLE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3191,7 +3179,7 @@
         "catalogo": 4,
         "nombre": "Singapur",
         "codigo": "SGP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3205,7 +3193,7 @@
         "catalogo": 4,
         "nombre": "Somalia",
         "codigo": "SOM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3219,7 +3207,7 @@
         "catalogo": 4,
         "nombre": "Sri lanka",
         "codigo": "LKA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3233,7 +3221,7 @@
         "catalogo": 4,
         "nombre": "Sud\u00e1frica",
         "codigo": "ZAF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3247,7 +3235,7 @@
         "catalogo": 4,
         "nombre": "Sud\u00e1n",
         "codigo": "SDN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3261,7 +3249,7 @@
         "catalogo": 4,
         "nombre": "Suecia",
         "codigo": "SWE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3275,7 +3263,7 @@
         "catalogo": 4,
         "nombre": "Suiza",
         "codigo": "CHE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3289,7 +3277,7 @@
         "catalogo": 4,
         "nombre": "Suriname",
         "codigo": "SUR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3303,7 +3291,7 @@
         "catalogo": 4,
         "nombre": "Swazilandia",
         "codigo": "SWZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3317,7 +3305,7 @@
         "catalogo": 4,
         "nombre": "Tailandia",
         "codigo": "THA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3331,7 +3319,7 @@
         "catalogo": 4,
         "nombre": "Taiwan, Provincia de China",
         "codigo": "TWN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3345,7 +3333,7 @@
         "catalogo": 4,
         "nombre": "Tayikistan",
         "codigo": "TJK",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3359,7 +3347,7 @@
         "catalogo": 4,
         "nombre": "Territorio Brit\u00e1nico del Oceano \u00cdndico",
         "codigo": "IOT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3373,7 +3361,7 @@
         "catalogo": 4,
         "nombre": "Territorios Franceses del sur",
         "codigo": "ATF",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3387,7 +3375,7 @@
         "catalogo": 4,
         "nombre": "Timor OrienTal",
         "codigo": "TMP",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3401,7 +3389,7 @@
         "catalogo": 4,
         "nombre": "Togo",
         "codigo": "TGO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3415,7 +3403,7 @@
         "catalogo": 4,
         "nombre": "Tokelau",
         "codigo": "TKL",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3429,7 +3417,7 @@
         "catalogo": 4,
         "nombre": "Tonga",
         "codigo": "TON",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3443,7 +3431,7 @@
         "catalogo": 4,
         "nombre": "Trinidad y Tobago",
         "codigo": "TTO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3457,7 +3445,7 @@
         "catalogo": 4,
         "nombre": "Tunez",
         "codigo": "TUN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3471,7 +3459,7 @@
         "catalogo": 4,
         "nombre": "Turkmenistan",
         "codigo": "TKM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3485,7 +3473,7 @@
         "catalogo": 4,
         "nombre": "Turqu\u00eda",
         "codigo": "TUR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3499,7 +3487,7 @@
         "catalogo": 4,
         "nombre": "Tuvalu",
         "codigo": "TUV",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3513,7 +3501,7 @@
         "catalogo": 4,
         "nombre": "Ucrania",
         "codigo": "UKR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3527,7 +3515,7 @@
         "catalogo": 4,
         "nombre": "Uganda",
         "codigo": "UGA",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3541,7 +3529,7 @@
         "catalogo": 4,
         "nombre": "Uruguay",
         "codigo": "URY",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3555,7 +3543,7 @@
         "catalogo": 4,
         "nombre": "Uzbekistan",
         "codigo": "UZB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3569,7 +3557,7 @@
         "catalogo": 4,
         "nombre": "Vanuatu",
         "codigo": "VUT",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3583,7 +3571,7 @@
         "catalogo": 4,
         "nombre": "Venezuela",
         "codigo": "VEN",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3597,7 +3585,7 @@
         "catalogo": 4,
         "nombre": "Viet Nam",
         "codigo": "VNM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3611,7 +3599,7 @@
         "catalogo": 4,
         "nombre": "Yemen, Rep\u00fablica del",
         "codigo": "YEM",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3625,7 +3613,7 @@
         "catalogo": 4,
         "nombre": "Yugoslavia",
         "codigo": "YUG",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3639,7 +3627,7 @@
         "catalogo": 4,
         "nombre": "Zaire",
         "codigo": "ZAR",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3653,7 +3641,7 @@
         "catalogo": 4,
         "nombre": "Zambia",
         "codigo": "ZMB",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3667,7 +3655,7 @@
         "catalogo": 4,
         "nombre": "Zimbabwe",
         "codigo": "ZWE",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3681,7 +3669,7 @@
         "catalogo": 4,
         "nombre": "Zona neutral",
         "codigo": "NTZ",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3695,7 +3683,7 @@
         "catalogo": 5,
         "nombre": "Azuay",
         "codigo": "1",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3709,7 +3697,7 @@
         "catalogo": 5,
         "nombre": "Bolivar",
         "codigo": "2",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3723,7 +3711,7 @@
         "catalogo": 5,
         "nombre": "Ca\u00f1ar",
         "codigo": "3",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3737,7 +3725,7 @@
         "catalogo": 5,
         "nombre": "Carchi",
         "codigo": "4",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3751,7 +3739,7 @@
         "catalogo": 5,
         "nombre": "Cotopaxi",
         "codigo": "5",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3765,7 +3753,7 @@
         "catalogo": 5,
         "nombre": "Chimborazo",
         "codigo": "6",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3779,7 +3767,7 @@
         "catalogo": 5,
         "nombre": "El Oro",
         "codigo": "7",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3793,7 +3781,7 @@
         "catalogo": 5,
         "nombre": "Esmeraldas",
         "codigo": "8",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3807,7 +3795,7 @@
         "catalogo": 5,
         "nombre": "Guayas",
         "codigo": "9",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3821,7 +3809,7 @@
         "catalogo": 5,
         "nombre": "Imbabura",
         "codigo": "10",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3835,7 +3823,7 @@
         "catalogo": 5,
         "nombre": "Loja",
         "codigo": "11",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3849,7 +3837,7 @@
         "catalogo": 5,
         "nombre": "Los Rios",
         "codigo": "12",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3863,7 +3851,7 @@
         "catalogo": 5,
         "nombre": "Manabi",
         "codigo": "13",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3877,7 +3865,7 @@
         "catalogo": 5,
         "nombre": "Morona Santiago",
         "codigo": "14",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3891,7 +3879,7 @@
         "catalogo": 5,
         "nombre": "Napo",
         "codigo": "15",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3905,7 +3893,7 @@
         "catalogo": 5,
         "nombre": "Pastaza",
         "codigo": "16",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3919,7 +3907,7 @@
         "catalogo": 5,
         "nombre": "Pichincha",
         "codigo": "17",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3933,7 +3921,7 @@
         "catalogo": 5,
         "nombre": "Tungurahua",
         "codigo": "18",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3947,7 +3935,7 @@
         "catalogo": 5,
         "nombre": "Zamora Chinchipe",
         "codigo": "19",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3961,7 +3949,7 @@
         "catalogo": 5,
         "nombre": "Galapagos",
         "codigo": "20",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3975,7 +3963,7 @@
         "catalogo": 5,
         "nombre": "Sucumbios",
         "codigo": "21",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -3989,7 +3977,7 @@
         "catalogo": 5,
         "nombre": "Orellana",
         "codigo": "22",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4003,7 +3991,7 @@
         "catalogo": 5,
         "nombre": "Santo Domingo De Los Tsachilas",
         "codigo": "23",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4017,7 +4005,7 @@
         "catalogo": 5,
         "nombre": "Santa Elena",
         "codigo": "24",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4031,7 +4019,7 @@
         "catalogo": 6,
         "nombre": "Cuenca",
         "codigo": "1",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4045,7 +4033,7 @@
         "catalogo": 6,
         "nombre": "Gir\u00f3n",
         "codigo": "2",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4059,7 +4047,7 @@
         "catalogo": 6,
         "nombre": "Gualaceo",
         "codigo": "3",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4073,7 +4061,7 @@
         "catalogo": 6,
         "nombre": "Nab\u00f3n",
         "codigo": "4",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4087,7 +4075,7 @@
         "catalogo": 6,
         "nombre": "Paute",
         "codigo": "5",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4101,7 +4089,7 @@
         "catalogo": 6,
         "nombre": "Pucara",
         "codigo": "6",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4115,7 +4103,7 @@
         "catalogo": 6,
         "nombre": "San Fernando",
         "codigo": "7",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4129,7 +4117,7 @@
         "catalogo": 6,
         "nombre": "Santa Isabel",
         "codigo": "8",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4143,7 +4131,7 @@
         "catalogo": 6,
         "nombre": "Sigsig",
         "codigo": "9",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4157,7 +4145,7 @@
         "catalogo": 6,
         "nombre": "O\u00f1a",
         "codigo": "10",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4171,7 +4159,7 @@
         "catalogo": 6,
         "nombre": "Chordeleg",
         "codigo": "11",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4185,7 +4173,7 @@
         "catalogo": 6,
         "nombre": "El Pan",
         "codigo": "12",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4199,7 +4187,7 @@
         "catalogo": 6,
         "nombre": "Sevilla De Oro",
         "codigo": "13",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4213,7 +4201,7 @@
         "catalogo": 6,
         "nombre": "Guachapala",
         "codigo": "14",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4227,7 +4215,7 @@
         "catalogo": 6,
         "nombre": "Camilo Ponce Enr\u00edquez",
         "codigo": "15",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4241,7 +4229,7 @@
         "catalogo": 6,
         "nombre": "Guaranda",
         "codigo": "16",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4255,7 +4243,7 @@
         "catalogo": 6,
         "nombre": "Chillanes",
         "codigo": "17",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4269,7 +4257,7 @@
         "catalogo": 6,
         "nombre": "Chimbo",
         "codigo": "18",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4283,7 +4271,7 @@
         "catalogo": 6,
         "nombre": "Echeand\u00eda",
         "codigo": "19",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4297,7 +4285,7 @@
         "catalogo": 6,
         "nombre": "San Miguel",
         "codigo": "20",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4311,7 +4299,7 @@
         "catalogo": 6,
         "nombre": "Caluma",
         "codigo": "21",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4325,7 +4313,7 @@
         "catalogo": 6,
         "nombre": "Las Naves",
         "codigo": "22",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4339,7 +4327,7 @@
         "catalogo": 6,
         "nombre": "Azogues",
         "codigo": "23",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4353,7 +4341,7 @@
         "catalogo": 6,
         "nombre": "Bibli\u00e1n",
         "codigo": "24",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4367,7 +4355,7 @@
         "catalogo": 6,
         "nombre": "Ca\u00f1ar",
         "codigo": "25",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4381,7 +4369,7 @@
         "catalogo": 6,
         "nombre": "La Troncal",
         "codigo": "26",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4395,7 +4383,7 @@
         "catalogo": 6,
         "nombre": "El Tambo",
         "codigo": "27",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4409,7 +4397,7 @@
         "catalogo": 6,
         "nombre": "D\u00e9leg",
         "codigo": "28",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4423,7 +4411,7 @@
         "catalogo": 6,
         "nombre": "Suscal",
         "codigo": "29",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4437,7 +4425,7 @@
         "catalogo": 6,
         "nombre": "Tulc\u00e1n",
         "codigo": "30",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4451,7 +4439,7 @@
         "catalogo": 6,
         "nombre": "Bol\u00edvar",
         "codigo": "31",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4465,7 +4453,7 @@
         "catalogo": 6,
         "nombre": "Espejo",
         "codigo": "32",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4479,7 +4467,7 @@
         "catalogo": 6,
         "nombre": "Mira",
         "codigo": "33",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4493,7 +4481,7 @@
         "catalogo": 6,
         "nombre": "Mont\u00fafar",
         "codigo": "34",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4507,7 +4495,7 @@
         "catalogo": 6,
         "nombre": "San Pedro De Huaca",
         "codigo": "35",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4521,7 +4509,7 @@
         "catalogo": 6,
         "nombre": "Latacunga",
         "codigo": "36",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4535,7 +4523,7 @@
         "catalogo": 6,
         "nombre": "La Man\u00e1",
         "codigo": "37",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4549,7 +4537,7 @@
         "catalogo": 6,
         "nombre": "Pangua",
         "codigo": "38",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4563,7 +4551,7 @@
         "catalogo": 6,
         "nombre": "Pujili",
         "codigo": "39",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4577,7 +4565,7 @@
         "catalogo": 6,
         "nombre": "Salcedo",
         "codigo": "40",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4591,7 +4579,7 @@
         "catalogo": 6,
         "nombre": "Saquisil\u00ed",
         "codigo": "41",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4605,7 +4593,7 @@
         "catalogo": 6,
         "nombre": "Sigchos",
         "codigo": "42",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4619,7 +4607,7 @@
         "catalogo": 6,
         "nombre": "Riobamba",
         "codigo": "43",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4633,7 +4621,7 @@
         "catalogo": 6,
         "nombre": "Alausi",
         "codigo": "44",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4647,7 +4635,7 @@
         "catalogo": 6,
         "nombre": "Colta",
         "codigo": "45",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4661,7 +4649,7 @@
         "catalogo": 6,
         "nombre": "Chambo",
         "codigo": "46",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4675,7 +4663,7 @@
         "catalogo": 6,
         "nombre": "Chunchi",
         "codigo": "47",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4689,7 +4677,7 @@
         "catalogo": 6,
         "nombre": "Guamote",
         "codigo": "48",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4703,7 +4691,7 @@
         "catalogo": 6,
         "nombre": "Guano",
         "codigo": "49",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4717,7 +4705,7 @@
         "catalogo": 6,
         "nombre": "Pallatanga",
         "codigo": "50",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4731,7 +4719,7 @@
         "catalogo": 6,
         "nombre": "Penipe",
         "codigo": "51",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4745,7 +4733,7 @@
         "catalogo": 6,
         "nombre": "Cumand\u00e1",
         "codigo": "52",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4759,7 +4747,7 @@
         "catalogo": 6,
         "nombre": "Machala",
         "codigo": "53",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4773,7 +4761,7 @@
         "catalogo": 6,
         "nombre": "Arenillas",
         "codigo": "54",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4787,7 +4775,7 @@
         "catalogo": 6,
         "nombre": "Atahualpa",
         "codigo": "55",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4801,7 +4789,7 @@
         "catalogo": 6,
         "nombre": "Balsas",
         "codigo": "56",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4815,7 +4803,7 @@
         "catalogo": 6,
         "nombre": "Chilla",
         "codigo": "57",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4829,7 +4817,7 @@
         "catalogo": 6,
         "nombre": "El Guabo",
         "codigo": "58",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4843,7 +4831,7 @@
         "catalogo": 6,
         "nombre": "Huaquillas",
         "codigo": "59",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4857,7 +4845,7 @@
         "catalogo": 6,
         "nombre": "Marcabel\u00ed",
         "codigo": "60",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4871,7 +4859,7 @@
         "catalogo": 6,
         "nombre": "Pasaje",
         "codigo": "61",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4885,7 +4873,7 @@
         "catalogo": 6,
         "nombre": "Pi\u00f1as",
         "codigo": "62",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4899,7 +4887,7 @@
         "catalogo": 6,
         "nombre": "Portovelo",
         "codigo": "63",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4913,7 +4901,7 @@
         "catalogo": 6,
         "nombre": "Santa Rosa",
         "codigo": "64",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4927,7 +4915,7 @@
         "catalogo": 6,
         "nombre": "Zaruma",
         "codigo": "65",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4941,7 +4929,7 @@
         "catalogo": 6,
         "nombre": "Las Lajas",
         "codigo": "66",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4955,7 +4943,7 @@
         "catalogo": 6,
         "nombre": "Esmeraldas",
         "codigo": "67",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4969,7 +4957,7 @@
         "catalogo": 6,
         "nombre": "Eloy Alfaro",
         "codigo": "68",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4983,7 +4971,7 @@
         "catalogo": 6,
         "nombre": "Muisne",
         "codigo": "69",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -4997,7 +4985,7 @@
         "catalogo": 6,
         "nombre": "Quinind\u00e9",
         "codigo": "70",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5011,7 +4999,7 @@
         "catalogo": 6,
         "nombre": "San Lorenzo",
         "codigo": "71",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5025,7 +5013,7 @@
         "catalogo": 6,
         "nombre": "Atacames",
         "codigo": "72",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5039,7 +5027,7 @@
         "catalogo": 6,
         "nombre": "Rioverde",
         "codigo": "73",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5053,7 +5041,7 @@
         "catalogo": 6,
         "nombre": "La Concordia",
         "codigo": "74",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5067,7 +5055,7 @@
         "catalogo": 6,
         "nombre": "Guayaquil",
         "codigo": "75",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5081,7 +5069,7 @@
         "catalogo": 6,
         "nombre": "Alfredo Baquerizo Moreno (juj\u00e1n)",
         "codigo": "76",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5095,7 +5083,7 @@
         "catalogo": 6,
         "nombre": "Balao",
         "codigo": "77",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5109,7 +5097,7 @@
         "catalogo": 6,
         "nombre": "Balzar",
         "codigo": "78",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5123,7 +5111,7 @@
         "catalogo": 6,
         "nombre": "Colimes",
         "codigo": "79",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5137,7 +5125,7 @@
         "catalogo": 6,
         "nombre": "Daule",
         "codigo": "80",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5151,7 +5139,7 @@
         "catalogo": 6,
         "nombre": "Dur\u00e1n",
         "codigo": "81",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5165,7 +5153,7 @@
         "catalogo": 6,
         "nombre": "El Empalme",
         "codigo": "82",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5179,7 +5167,7 @@
         "catalogo": 6,
         "nombre": "El Triunfo",
         "codigo": "83",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5193,7 +5181,7 @@
         "catalogo": 6,
         "nombre": "Milagro",
         "codigo": "84",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5207,7 +5195,7 @@
         "catalogo": 6,
         "nombre": "Naranjal",
         "codigo": "85",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5221,7 +5209,7 @@
         "catalogo": 6,
         "nombre": "Naranjito",
         "codigo": "86",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5235,7 +5223,7 @@
         "catalogo": 6,
         "nombre": "Palestina",
         "codigo": "87",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5249,7 +5237,7 @@
         "catalogo": 6,
         "nombre": "Pedro Carbo",
         "codigo": "88",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5263,7 +5251,7 @@
         "catalogo": 6,
         "nombre": "Samborond\u00f3n",
         "codigo": "89",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5277,7 +5265,7 @@
         "catalogo": 6,
         "nombre": "Santa Luc\u00eda",
         "codigo": "90",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5291,7 +5279,7 @@
         "catalogo": 6,
         "nombre": "Salitre (urbina Jado)",
         "codigo": "91",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5305,7 +5293,7 @@
         "catalogo": 6,
         "nombre": "San Jacinto De Yaguachi",
         "codigo": "92",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5319,7 +5307,7 @@
         "catalogo": 6,
         "nombre": "Playas",
         "codigo": "93",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5333,7 +5321,7 @@
         "catalogo": 6,
         "nombre": "Sim\u00f3n Bol\u00edvar",
         "codigo": "94",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5347,7 +5335,7 @@
         "catalogo": 6,
         "nombre": "Coronel Marcelino Maridue\u00f1a",
         "codigo": "95",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5361,7 +5349,7 @@
         "catalogo": 6,
         "nombre": "Lomas De Sargentillo",
         "codigo": "96",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5375,7 +5363,7 @@
         "catalogo": 6,
         "nombre": "Nobol",
         "codigo": "97",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5389,7 +5377,7 @@
         "catalogo": 6,
         "nombre": "General Antonio Elizalde",
         "codigo": "98",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5403,7 +5391,7 @@
         "catalogo": 6,
         "nombre": "Isidro Ayora",
         "codigo": "99",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5417,7 +5405,7 @@
         "catalogo": 6,
         "nombre": "Ibarra",
         "codigo": "100",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5431,7 +5419,7 @@
         "catalogo": 6,
         "nombre": "Antonio Ante",
         "codigo": "101",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5445,7 +5433,7 @@
         "catalogo": 6,
         "nombre": "Cotacachi",
         "codigo": "102",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5459,7 +5447,7 @@
         "catalogo": 6,
         "nombre": "Otavalo",
         "codigo": "103",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5473,7 +5461,7 @@
         "catalogo": 6,
         "nombre": "Pimampiro",
         "codigo": "104",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5487,7 +5475,7 @@
         "catalogo": 6,
         "nombre": "San Miguel De Urcuqu\u00ed",
         "codigo": "105",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5501,7 +5489,7 @@
         "catalogo": 6,
         "nombre": "Loja",
         "codigo": "106",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5515,7 +5503,7 @@
         "catalogo": 6,
         "nombre": "Calvas",
         "codigo": "107",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5529,7 +5517,7 @@
         "catalogo": 6,
         "nombre": "Catamayo",
         "codigo": "108",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5543,7 +5531,7 @@
         "catalogo": 6,
         "nombre": "Celica",
         "codigo": "109",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5557,7 +5545,7 @@
         "catalogo": 6,
         "nombre": "Chaguarpamba",
         "codigo": "110",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5571,7 +5559,7 @@
         "catalogo": 6,
         "nombre": "Esp\u00edndola",
         "codigo": "111",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5585,7 +5573,7 @@
         "catalogo": 6,
         "nombre": "Gonzanam\u00e1",
         "codigo": "112",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5599,7 +5587,7 @@
         "catalogo": 6,
         "nombre": "Macar\u00e1",
         "codigo": "113",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5613,7 +5601,7 @@
         "catalogo": 6,
         "nombre": "Paltas",
         "codigo": "114",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5627,7 +5615,7 @@
         "catalogo": 6,
         "nombre": "Puyango",
         "codigo": "115",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5641,7 +5629,7 @@
         "catalogo": 6,
         "nombre": "Saraguro",
         "codigo": "116",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5655,7 +5643,7 @@
         "catalogo": 6,
         "nombre": "Sozoranga",
         "codigo": "117",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5669,7 +5657,7 @@
         "catalogo": 6,
         "nombre": "Zapotillo",
         "codigo": "118",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5683,7 +5671,7 @@
         "catalogo": 6,
         "nombre": "Pindal",
         "codigo": "119",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5697,7 +5685,7 @@
         "catalogo": 6,
         "nombre": "Quilanga",
         "codigo": "120",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5711,7 +5699,7 @@
         "catalogo": 6,
         "nombre": "Olmedo",
         "codigo": "121",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5725,7 +5713,7 @@
         "catalogo": 6,
         "nombre": "Babahoyo",
         "codigo": "122",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5739,7 +5727,7 @@
         "catalogo": 6,
         "nombre": "Baba",
         "codigo": "123",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5753,7 +5741,7 @@
         "catalogo": 6,
         "nombre": "Montalvo",
         "codigo": "124",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5767,7 +5755,7 @@
         "catalogo": 6,
         "nombre": "Puebloviejo",
         "codigo": "125",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5781,7 +5769,7 @@
         "catalogo": 6,
         "nombre": "Quevedo",
         "codigo": "126",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5795,7 +5783,7 @@
         "catalogo": 6,
         "nombre": "Urdaneta",
         "codigo": "127",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5809,7 +5797,7 @@
         "catalogo": 6,
         "nombre": "Ventanas",
         "codigo": "128",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5823,7 +5811,7 @@
         "catalogo": 6,
         "nombre": "V\u00ednces",
         "codigo": "129",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5837,7 +5825,7 @@
         "catalogo": 6,
         "nombre": "Palenque",
         "codigo": "130",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5851,7 +5839,7 @@
         "catalogo": 6,
         "nombre": "Buena F\u00e9",
         "codigo": "131",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5865,7 +5853,7 @@
         "catalogo": 6,
         "nombre": "Valencia",
         "codigo": "132",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5879,7 +5867,7 @@
         "catalogo": 6,
         "nombre": "Mocache",
         "codigo": "133",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5893,7 +5881,7 @@
         "catalogo": 6,
         "nombre": "Quinsaloma",
         "codigo": "134",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5907,7 +5895,7 @@
         "catalogo": 6,
         "nombre": "Portoviejo",
         "codigo": "135",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5921,7 +5909,7 @@
         "catalogo": 6,
         "nombre": "Bol\u00edvar",
         "codigo": "136",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5935,7 +5923,7 @@
         "catalogo": 6,
         "nombre": "Chone",
         "codigo": "137",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5949,7 +5937,7 @@
         "catalogo": 6,
         "nombre": "El Carmen",
         "codigo": "138",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5963,7 +5951,7 @@
         "catalogo": 6,
         "nombre": "Flavio Alfaro",
         "codigo": "139",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5977,7 +5965,7 @@
         "catalogo": 6,
         "nombre": "Jipijapa",
         "codigo": "140",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -5991,7 +5979,7 @@
         "catalogo": 6,
         "nombre": "Jun\u00edn",
         "codigo": "141",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6005,7 +5993,7 @@
         "catalogo": 6,
         "nombre": "Manta",
         "codigo": "142",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6019,7 +6007,7 @@
         "catalogo": 6,
         "nombre": "Montecristi",
         "codigo": "143",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6033,7 +6021,7 @@
         "catalogo": 6,
         "nombre": "Paj\u00e1n",
         "codigo": "144",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6047,7 +6035,7 @@
         "catalogo": 6,
         "nombre": "Pichincha",
         "codigo": "145",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6061,7 +6049,7 @@
         "catalogo": 6,
         "nombre": "Rocafuerte",
         "codigo": "146",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6075,7 +6063,7 @@
         "catalogo": 6,
         "nombre": "Santa Ana",
         "codigo": "147",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6089,7 +6077,7 @@
         "catalogo": 6,
         "nombre": "Sucre",
         "codigo": "148",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6103,7 +6091,7 @@
         "catalogo": 6,
         "nombre": "Tosagua",
         "codigo": "149",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6117,7 +6105,7 @@
         "catalogo": 6,
         "nombre": "24 De Mayo",
         "codigo": "150",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6131,7 +6119,7 @@
         "catalogo": 6,
         "nombre": "Pedernales",
         "codigo": "151",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6145,7 +6133,7 @@
         "catalogo": 6,
         "nombre": "Olmedo",
         "codigo": "152",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6159,7 +6147,7 @@
         "catalogo": 6,
         "nombre": "Puerto L\u00f3pez",
         "codigo": "153",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6173,7 +6161,7 @@
         "catalogo": 6,
         "nombre": "Jama",
         "codigo": "154",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6187,7 +6175,7 @@
         "catalogo": 6,
         "nombre": "Jaramij\u00f3",
         "codigo": "155",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6201,7 +6189,7 @@
         "catalogo": 6,
         "nombre": "San Vicente",
         "codigo": "156",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6215,7 +6203,7 @@
         "catalogo": 6,
         "nombre": "Morona",
         "codigo": "157",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6229,7 +6217,7 @@
         "catalogo": 6,
         "nombre": "Gualaquiza",
         "codigo": "158",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6243,7 +6231,7 @@
         "catalogo": 6,
         "nombre": "Lim\u00f3n Indanza",
         "codigo": "159",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6257,7 +6245,7 @@
         "catalogo": 6,
         "nombre": "Palora",
         "codigo": "160",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6271,7 +6259,7 @@
         "catalogo": 6,
         "nombre": "Santiago",
         "codigo": "161",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6285,7 +6273,7 @@
         "catalogo": 6,
         "nombre": "Suc\u00faa",
         "codigo": "162",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6299,7 +6287,7 @@
         "catalogo": 6,
         "nombre": "Huamboya",
         "codigo": "163",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6313,7 +6301,7 @@
         "catalogo": 6,
         "nombre": "San Juan Bosco",
         "codigo": "164",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6327,7 +6315,7 @@
         "catalogo": 6,
         "nombre": "Taisha",
         "codigo": "165",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6341,7 +6329,7 @@
         "catalogo": 6,
         "nombre": "Logro\u00f1o",
         "codigo": "166",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6355,7 +6343,7 @@
         "catalogo": 6,
         "nombre": "Pablo Sexto",
         "codigo": "167",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6369,7 +6357,7 @@
         "catalogo": 6,
         "nombre": "Tiwintza",
         "codigo": "168",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6383,7 +6371,7 @@
         "catalogo": 6,
         "nombre": "Tena",
         "codigo": "169",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6397,7 +6385,7 @@
         "catalogo": 6,
         "nombre": "Archidona",
         "codigo": "170",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6411,7 +6399,7 @@
         "catalogo": 6,
         "nombre": "El Chaco",
         "codigo": "171",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6425,7 +6413,7 @@
         "catalogo": 6,
         "nombre": "Quijos",
         "codigo": "172",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6439,7 +6427,7 @@
         "catalogo": 6,
         "nombre": "Carlos Julio Arosemena Tola",
         "codigo": "173",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6453,7 +6441,7 @@
         "catalogo": 6,
         "nombre": "Pastaza",
         "codigo": "174",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6467,7 +6455,7 @@
         "catalogo": 6,
         "nombre": "Mera",
         "codigo": "175",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6481,7 +6469,7 @@
         "catalogo": 6,
         "nombre": "Santa Clara",
         "codigo": "176",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6495,7 +6483,7 @@
         "catalogo": 6,
         "nombre": "Arajuno",
         "codigo": "177",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6509,7 +6497,7 @@
         "catalogo": 6,
         "nombre": "Quito",
         "codigo": "178",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6523,7 +6511,7 @@
         "catalogo": 6,
         "nombre": "Cayambe",
         "codigo": "179",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6537,7 +6525,7 @@
         "catalogo": 6,
         "nombre": "Mejia",
         "codigo": "180",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6551,7 +6539,7 @@
         "catalogo": 6,
         "nombre": "Pedro Moncayo",
         "codigo": "181",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6565,7 +6553,7 @@
         "catalogo": 6,
         "nombre": "Rumi\u00f1ahui",
         "codigo": "182",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6579,7 +6567,7 @@
         "catalogo": 6,
         "nombre": "San Miguel De Los Bancos",
         "codigo": "183",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6593,7 +6581,7 @@
         "catalogo": 6,
         "nombre": "Pedro Vicente Maldonado",
         "codigo": "184",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6607,7 +6595,7 @@
         "catalogo": 6,
         "nombre": "Puerto Quito",
         "codigo": "185",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6621,7 +6609,7 @@
         "catalogo": 6,
         "nombre": "Ambato",
         "codigo": "186",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6635,7 +6623,7 @@
         "catalogo": 6,
         "nombre": "Ba\u00f1os De Agua Santa",
         "codigo": "187",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6649,7 +6637,7 @@
         "catalogo": 6,
         "nombre": "Cevallos",
         "codigo": "188",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6663,7 +6651,7 @@
         "catalogo": 6,
         "nombre": "Mocha",
         "codigo": "189",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6677,7 +6665,7 @@
         "catalogo": 6,
         "nombre": "Patate",
         "codigo": "190",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6691,7 +6679,7 @@
         "catalogo": 6,
         "nombre": "Quero",
         "codigo": "191",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6705,7 +6693,7 @@
         "catalogo": 6,
         "nombre": "San Pedro De Pelileo",
         "codigo": "192",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6719,7 +6707,7 @@
         "catalogo": 6,
         "nombre": "Santiago De P\u00edllaro",
         "codigo": "193",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6733,7 +6721,7 @@
         "catalogo": 6,
         "nombre": "Tisaleo",
         "codigo": "194",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6747,7 +6735,7 @@
         "catalogo": 6,
         "nombre": "Zamora",
         "codigo": "195",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6761,7 +6749,7 @@
         "catalogo": 6,
         "nombre": "Chinchipe",
         "codigo": "196",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6775,7 +6763,7 @@
         "catalogo": 6,
         "nombre": "Nangaritza",
         "codigo": "197",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6789,7 +6777,7 @@
         "catalogo": 6,
         "nombre": "Yacuambi",
         "codigo": "198",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6803,7 +6791,7 @@
         "catalogo": 6,
         "nombre": "Yantzaza (yanzatza)",
         "codigo": "199",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6817,7 +6805,7 @@
         "catalogo": 6,
         "nombre": "El Pangui",
         "codigo": "200",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6831,7 +6819,7 @@
         "catalogo": 6,
         "nombre": "Centinela Del C\u00f3ndor",
         "codigo": "201",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6845,7 +6833,7 @@
         "catalogo": 6,
         "nombre": "Palanda",
         "codigo": "202",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6859,7 +6847,7 @@
         "catalogo": 6,
         "nombre": "Paquisha",
         "codigo": "203",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6873,7 +6861,7 @@
         "catalogo": 6,
         "nombre": "San Crist\u00f3bal",
         "codigo": "204",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6887,7 +6875,7 @@
         "catalogo": 6,
         "nombre": "Isabela",
         "codigo": "205",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6901,7 +6889,7 @@
         "catalogo": 6,
         "nombre": "Santa Cruz",
         "codigo": "206",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6915,7 +6903,7 @@
         "catalogo": 6,
         "nombre": "Lago Agrio",
         "codigo": "207",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6929,7 +6917,7 @@
         "catalogo": 6,
         "nombre": "Gonzalo Pizarro",
         "codigo": "208",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6943,7 +6931,7 @@
         "catalogo": 6,
         "nombre": "Putumayo",
         "codigo": "209",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6957,7 +6945,7 @@
         "catalogo": 6,
         "nombre": "Shushufindi",
         "codigo": "210",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6971,7 +6959,7 @@
         "catalogo": 6,
         "nombre": "Sucumb\u00edos",
         "codigo": "211",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6985,7 +6973,7 @@
         "catalogo": 6,
         "nombre": "Cascales",
         "codigo": "212",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -6999,7 +6987,7 @@
         "catalogo": 6,
         "nombre": "Cuyabeno",
         "codigo": "213",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7013,7 +7001,7 @@
         "catalogo": 6,
         "nombre": "Orellana",
         "codigo": "214",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7027,7 +7015,7 @@
         "catalogo": 6,
         "nombre": "Aguarico",
         "codigo": "215",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7041,7 +7029,7 @@
         "catalogo": 6,
         "nombre": "La Joya De Los Sachas",
         "codigo": "216",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7055,7 +7043,7 @@
         "catalogo": 6,
         "nombre": "Loreto",
         "codigo": "217",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7069,7 +7057,7 @@
         "catalogo": 6,
         "nombre": "Santo Domingo",
         "codigo": "218",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7083,7 +7071,7 @@
         "catalogo": 6,
         "nombre": "Santa Elena",
         "codigo": "219",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7097,7 +7085,7 @@
         "catalogo": 6,
         "nombre": "La Libertad",
         "codigo": "220",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7111,7 +7099,7 @@
         "catalogo": 6,
         "nombre": "Salinas",
         "codigo": "221",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7125,7 +7113,7 @@
         "catalogo": 7,
         "nombre": "Bellavista",
         "codigo": "707",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7139,7 +7127,7 @@
         "catalogo": 7,
         "nombre": "Jimbura",
         "codigo": "708",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7153,7 +7141,7 @@
         "catalogo": 7,
         "nombre": "Santa Teresita",
         "codigo": "709",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7167,7 +7155,7 @@
         "catalogo": 7,
         "nombre": "27 De Abril (cab. En La Naranja)",
         "codigo": "710",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7181,7 +7169,7 @@
         "catalogo": 7,
         "nombre": "El Ingenio",
         "codigo": "711",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7195,7 +7183,7 @@
         "catalogo": 7,
         "nombre": "El Airo",
         "codigo": "712",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7209,7 +7197,7 @@
         "catalogo": 8,
         "nombre": "Bautismo",
         "codigo": "BAUTISMO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7223,7 +7211,7 @@
         "catalogo": 8,
         "nombre": "Primera Comuni\u00f3n",
         "codigo": "PRI_COMUNION",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7237,7 +7225,7 @@
         "catalogo": 8,
         "nombre": "Confirmaci\u00f3n",
         "codigo": "CONFIRMACION",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7251,7 +7239,7 @@
         "catalogo": 8,
         "nombre": "Matrimonio",
         "codigo": "MATRIMONIO",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7265,7 +7253,7 @@
         "catalogo": 1,
         "nombre": "homo",
         "codigo": "homo",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -7279,7 +7267,7 @@
         "catalogo": 1,
         "nombre": "homo",
         "codigo": "homos",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -7287,13 +7275,13 @@
 },
 {
     "fields": {
-        "padre": 1,
+        "padre": null,
         "descripcion": "homo",
         "valor": "homo",
         "catalogo": 1,
         "nombre": "homo",
         "codigo": "homose",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -7307,7 +7295,7 @@
         "catalogo": 7,
         "nombre": "Amaluza",
         "codigo": "cod-a",
-        "estado": 3,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -7321,7 +7309,7 @@
         "catalogo": 28,
         "nombre": "item1",
         "codigo": "item1",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7335,7 +7323,7 @@
         "catalogo": 28,
         "nombre": "item2",
         "codigo": "item2",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7349,7 +7337,7 @@
         "catalogo": 27,
         "nombre": "itemcat2",
         "codigo": "itemcat2",
-        "estado": 4,
+        "estado": "A",
         "principal": true
     },
     "model": "core.item",
@@ -7363,7 +7351,7 @@
         "catalogo": 28,
         "nombre": "cccc",
         "codigo": "ccccc",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
@@ -7377,10 +7365,848 @@
         "catalogo": 28,
         "nombre": "item1",
         "codigo": "item3",
-        "estado": 3,
+        "estado": "A",
         "principal": false
     },
     "model": "core.item",
     "pk": 762
+},
+{
+    "fields": {
+        "orden": 8,
+        "icono": "bbb",
+        "modulo": 1,
+        "url": "confirmacion_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "es para administrar",
+        "nombre": "Confirmaciones",
+        "codigo": "ENNWL1",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 1
+},
+{
+    "fields": {
+        "orden": 10,
+        "icono": "",
+        "modulo": 1,
+        "url": "matrimonio_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Matrimonio",
+        "codigo": "ENNWL2",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 2
+},
+{
+    "fields": {
+        "orden": 6,
+        "icono": "sas",
+        "modulo": 1,
+        "url": "bautismo_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Bautismo",
+        "codigo": "ENNWL3",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 3
+},
+{
+    "fields": {
+        "orden": 7,
+        "icono": "sassa",
+        "modulo": 1,
+        "url": "eucaristia_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "assa",
+        "nombre": "Primera comunion",
+        "codigo": "ENNWL4",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 4
+},
+{
+    "fields": {
+        "orden": 1,
+        "icono": "wqwwq",
+        "modulo": 3,
+        "url": "provincia_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Provincia",
+        "codigo": "ENNWL5",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 5
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 3,
+        "url": "canton_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Canton",
+        "codigo": "ENNWL6",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 6
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 3,
+        "url": "parroquiacivil_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Parroquia Civil",
+        "codigo": "ENNWL7",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 7
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 4,
+        "url": "configuracion_inicial",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Configuraciones Iniciales",
+        "codigo": "ENNWL8",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 8
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 4,
+        "url": "log_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Logs del sistema",
+        "codigo": "ENNWL9",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 9
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 4,
+        "url": "group_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Grupos y permisos",
+        "codigo": "ENNWL10",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 10
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "iglesia_list",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Iglesias",
+        "codigo": "ENNWL11",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 11
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "libro_list",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Libros",
+        "codigo": "ENNWL12",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 12
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "intencion_list",
+        "grupos": [
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Intenciones",
+        "codigo": "ENNWL13",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 13
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "directorio_parroquias",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Directorio de Parroquias",
+        "codigo": "ENNWL14",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 14
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "parroquia_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Parroquia Eclesiastica",
+        "codigo": "ENNWL15",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 15
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 6,
+        "url": "reporte_anual",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte Anual de Sacramentos",
+        "codigo": "ENNWL16",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 16
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 6,
+        "url": "reporte_intenciones",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte de Intenciones",
+        "codigo": "ENNWL17",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 17
+},
+{
+    "fields": {
+        "orden": 9,
+        "icono": "",
+        "modulo": 6,
+        "url": "reporte_permiso",
+        "grupos": [
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Reporte de Permisos",
+        "codigo": "ENNWL18",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 18
+},
+{
+    "fields": {
+        "orden": 6,
+        "icono": "",
+        "modulo": 7,
+        "url": "usuario_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ],
+            [
+                "Feligres"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Feligres",
+        "codigo": "ENNWL19",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 19
+},
+{
+    "fields": {
+        "orden": 4,
+        "icono": "icon-flag",
+        "modulo": 7,
+        "url": "sacerdote_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Sacerdote",
+        "codigo": "ENNWL20",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 20
+},
+{
+    "fields": {
+        "orden": 10,
+        "icono": "",
+        "modulo": 7,
+        "url": "asignar_secretaria_list",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Sacerdote"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Secretaria",
+        "codigo": "FUN_SECRET",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 21
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 7,
+        "url": "administrador_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Administrador",
+        "codigo": "ENNWL22",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 22
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "icon-repeat",
+        "modulo": 8,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Catalogos",
+        "codigo": "ENNWL23",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 23
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 8,
+        "url": "item",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Item Cat\u00e1logos",
+        "codigo": "ENNWL24",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 24
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 8,
+        "url": "parametros",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Parametros",
+        "codigo": "ENNWL25",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 25
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 8,
+        "url": "modulo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "Modulos",
+        "codigo": "ENNWL26",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 26
+},
+{
+    "fields": {
+        "orden": 5,
+        "icono": "",
+        "modulo": 8,
+        "url": "funcionalidad",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "funcionalidad",
+        "nombre": "Funcionalidad",
+        "codigo": "funcionalidad",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 38
+},
+{
+    "fields": {
+        "orden": 2,
+        "icono": "",
+        "modulo": 12,
+        "url": "libro_list",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "funcionalidad1",
+        "nombre": "funcionalidad3",
+        "codigo": "funcionalidad4",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 61
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 11,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "funcionalidad1",
+        "nombre": "funcionalidad1",
+        "codigo": "funcionalidad1",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 62
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 11,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "funcionalidad2",
+        "nombre": "funcionalidad2",
+        "codigo": "funcionalidad2",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 63
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 12,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "d",
+        "nombre": "d",
+        "codigo": "d",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 64
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 12,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "e",
+        "nombre": "e",
+        "codigo": "e",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 65
+},
+{
+    "fields": {
+        "orden": 1,
+        "icono": "",
+        "modulo": 12,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "fun2",
+        "nombre": "fun2",
+        "codigo": "fun2",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 66
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": null,
+        "modulo": 11,
+        "url": "catalogo",
+        "grupos": [
+            [
+                "Administrador"
+            ]
+        ],
+        "descripcion": "",
+        "nombre": "funcionalidad6",
+        "codigo": "funcionalidad6",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 67
+},
+{
+    "fields": {
+        "tipo_parametro": 3,
+        "valor": "10",
+        "descripcion": "Maximo numero de elementos de una lista",
+        "nombre": "Maximo numero de elementos de una lista",
+        "codigo": "MAX_NUN_LISTA",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 1
+},
+{
+    "fields": {
+        "tipo_parametro": null,
+        "valor": "parametro1",
+        "descripcion": "parametro1",
+        "nombre": "parametro1",
+        "codigo": "parametro1",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 11
+},
+{
+    "fields": {
+        "tipo_parametro": null,
+        "valor": "parametro2",
+        "descripcion": "parametro2",
+        "nombre": "parametro2",
+        "codigo": "parametro2",
+        "estado": "A"
+    },
+    "model": "core.parametro",
+    "pk": 12
+},
+{
+    "fields": {
+        "descripcion": "Sirve para administrar sacramentos",
+        "nombre": "Administrar Sacramentos",
+        "codigo": "adm_sacramentos",
+        "estado": "A",
+        "orden": 6
+    },
+    "model": "core.modulo",
+    "pk": 1
+},
+{
+    "fields": {
+        "descripcion": "Sirve para adminsitrar las ciudades",
+        "nombre": "Ciudades",
+        "codigo": "CIUDDS",
+        "estado": "A",
+        "orden": 11
+    },
+    "model": "core.modulo",
+    "pk": 3
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Seguridad",
+        "codigo": "Seguridad",
+        "estado": "A",
+        "orden": 10
+    },
+    "model": "core.modulo",
+    "pk": 4
+},
+{
+    "fields": {
+        "descripcion": "Parroquia",
+        "nombre": "Parroquia",
+        "codigo": "Parroquia",
+        "estado": "A",
+        "orden": 9
+    },
+    "model": "core.modulo",
+    "pk": 5
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Reportes",
+        "codigo": "REPORT",
+        "estado": "A",
+        "orden": 13
+    },
+    "model": "core.modulo",
+    "pk": 6
+},
+{
+    "fields": {
+        "descripcion": "",
+        "nombre": "Personas",
+        "codigo": "Person",
+        "estado": "A",
+        "orden": 8
+    },
+    "model": "core.modulo",
+    "pk": 7
+},
+{
+    "fields": {
+        "descripcion": "Configuraci\u00f3n",
+        "nombre": "Configuraci\u00f3n",
+        "codigo": "CONF",
+        "estado": "A",
+        "orden": 5
+    },
+    "model": "core.modulo",
+    "pk": 8
+},
+{
+    "fields": {
+        "descripcion": "modulo1",
+        "nombre": "modulo1",
+        "codigo": "modulo1",
+        "estado": "I",
+        "orden": 3
+    },
+    "model": "core.modulo",
+    "pk": 11
+},
+{
+    "fields": {
+        "descripcion": "modulo2",
+        "nombre": "modulo2",
+        "codigo": "modulo2",
+        "estado": "I",
+        "orden": 1
+    },
+    "model": "core.modulo",
+    "pk": 12
 }
 ]
