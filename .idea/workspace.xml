@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0002_auto_20150416_1007.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0003_auto_20150416_1008.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0004_auto_20150416_1013.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\0005_auto_20150416_1037.py" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\sistemas\PycharmProjects\gestionparroquiasdiocesis\core\migrations\__init__.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ekklesia/settings.py" afterPath="$PROJECT_DIR$/ekklesia/settings.py" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,6 +36,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ekklesia/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.9264069" vertical-offset="3822" max-vertical-offset="4352">
+              <caret line="250" column="1" selection-start-line="250" selection-start-column="1" selection-end-line="250" selection-end-column="1" />
+              <folding>
+                <element signature="e#63#72#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -53,11 +60,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="archivo.json" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="archivo.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/fixtures/archivo.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.25431" vertical-offset="3366" max-vertical-offset="139706">
+            <state vertical-scroll-proportion="129.46153" vertical-offset="3366" max-vertical-offset="139706">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="local.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ekklesia/local.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4062" max-vertical-offset="4573">
+              <caret line="252" column="64" selection-start-line="252" selection-start-column="64" selection-end-line="252" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="produccion.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ekklesia/produccion.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2241" max-vertical-offset="4335">
+              <caret line="150" column="57" selection-start-line="0" selection-start-column="0" selection-end-line="250" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -172,7 +199,6 @@
         <option value="$PROJECT_DIR$/core/constants.py" />
         <option value="$PROJECT_DIR$/static/js/constants.js" />
         <option value="$PROJECT_DIR$/ekklesia/produccion.py" />
-        <option value="$PROJECT_DIR$/ekklesia/settings.py" />
         <option value="$PROJECT_DIR$/core/models.py" />
         <option value="$PROJECT_DIR$/core/admin.py" />
         <option value="$PROJECT_DIR$/core/managers.py" />
@@ -182,6 +208,7 @@
         <option value="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
         <option value="$PROJECT_DIR$/static/js/controllers.js" />
+        <option value="$PROJECT_DIR$/ekklesia/settings.py" />
       </list>
     </option>
   </component>
@@ -232,6 +259,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gestionparroquiasdiocesis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ekklesialoja" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gestionparroquiasdiocesis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ekklesia" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -549,15 +590,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="80" y="-9" width="1529" height="918" extended-state="7" />
-    <editor active="false" />
+    <frame x="80" y="-9" width="1529" height="918" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32077923" sideWeight="0.49965778" order="6" side_tool="false" content_ui="tabs" x="187" y="387" width="1366" height="216" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580423" sideWeight="0.49965778" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930756" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26009583" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26009583" sideWeight="0.6683087" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39314845" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32463294" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1006,14 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ekklesia/produccion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2241" max-vertical-offset="4335">
-          <caret line="143" column="4" selection-start-line="143" selection-start-column="4" selection-end-line="143" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2618">
@@ -1021,22 +1054,6 @@
           <folding>
             <element signature="e#0#28#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ekklesia/local.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4062" max-vertical-offset="4573">
-          <caret line="252" column="64" selection-start-line="252" selection-start-column="64" selection-end-line="252" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ekklesia/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4573">
-          <caret line="157" column="4" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1118,9 +1135,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/fixtures/archivo.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.25431" vertical-offset="3366" max-vertical-offset="139706">
+        <state vertical-scroll-proportion="129.46153" vertical-offset="3366" max-vertical-offset="139706">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ekklesia/produccion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2241" max-vertical-offset="4335">
+          <caret line="150" column="57" selection-start-line="0" selection-start-column="0" selection-end-line="250" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ekklesia/local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4062" max-vertical-offset="4573">
+          <caret line="252" column="64" selection-start-line="252" selection-start-column="64" selection-end-line="252" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ekklesia/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9264069" vertical-offset="3822" max-vertical-offset="4352">
+          <caret line="250" column="1" selection-start-line="250" selection-start-column="1" selection-end-line="250" selection-end-column="1" />
+          <folding>
+            <element signature="e#63#72#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
