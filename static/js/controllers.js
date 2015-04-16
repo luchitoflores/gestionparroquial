@@ -145,7 +145,7 @@ app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'c
         });
 
         $scope.items = [];
-        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
+        $http.get('/api-auth/item/?catalogo=' + codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data;
             }).
@@ -790,7 +790,7 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
         });
 
         $scope.items = [];
-        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
+        $http.get('/api-auth/item/?catalogo=' + codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data;
             }).
