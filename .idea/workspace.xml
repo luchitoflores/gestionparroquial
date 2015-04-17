@@ -7,6 +7,7 @@
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/fixtures/archivo_inicial.json" afterPath="$PROJECT_DIR$/core/fixtures/archivo_inicial.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/documentos/comandos" afterPath="$PROJECT_DIR$/core/documentos/comandos" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -110,21 +111,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comandos" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="comandos" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/documentos/comandos">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="86" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="archivo_inicial.json" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="archivo_inicial.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/fixtures/archivo_inicial.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22340426" vertical-offset="138020" max-vertical-offset="466157">
-              <caret line="8125" column="45" selection-start-line="8125" selection-start-column="45" selection-end-line="8125" selection-end-column="45" />
+            <state vertical-scroll-proportion="-1.779661" vertical-offset="427428" max-vertical-offset="466157">
+              <caret line="25149" column="40" selection-start-line="25149" selection-start-column="40" selection-end-line="25149" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -206,9 +207,9 @@
         <option value="$PROJECT_DIR$/sacramentos/models.py" />
         <option value="$PROJECT_DIR$/sacramentos/views.py" />
         <option value="$PROJECT_DIR$/sacramentos/templates/usuario/usuario_list.html" />
-        <option value="$PROJECT_DIR$/core/documentos/comandos" />
         <option value="$PROJECT_DIR$/core/fixtures/archivo.json" />
         <option value="$PROJECT_DIR$/core/fixtures/archivo_inicial.json" />
+        <option value="$PROJECT_DIR$/core/documentos/comandos" />
       </list>
     </option>
   </component>
@@ -663,10 +664,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="80" y="-9" width="1529" height="918" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23376623" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="187" y="387" width="1366" height="216" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23376623" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="187" y="387" width="1366" height="216" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580423" sideWeight="0.49965778" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930756" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1269,14 +1270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/documentos/comandos">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/fixtures/archivo.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="466157">
@@ -1287,8 +1280,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/fixtures/archivo_inicial.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22340426" vertical-offset="138020" max-vertical-offset="466157">
-          <caret line="8125" column="45" selection-start-line="8125" selection-start-column="45" selection-end-line="8125" selection-end-column="45" />
+        <state vertical-scroll-proportion="-1.779661" vertical-offset="427428" max-vertical-offset="466157">
+          <caret line="25149" column="40" selection-start-line="25149" selection-start-column="40" selection-end-line="25149" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/documentos/comandos">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="86" />
           <folding />
         </state>
       </provider>

@@ -25144,10 +25144,10 @@
 {
     "fields": {
         "padre": 1211,
-        "descripcion": "ISLA SANTA MAR\u00cdA (FLOREANA) (CAB. EN PTO. VELASCO IBARRA)",
-        "valor": "ISLA SANTA MAR\u00cdA (FLOREANA) (CAB. EN PTO. VELASCO IBARRA)",
+        "descripcion": "ISLA SANTA MAR\u00cdA",
+        "valor": "ISLA SANTA MAR\u00cdA",
         "catalogo": 32,
-        "nombre": "ISLA SANTA MAR\u00cdA (FLOREANA) (CAB. EN PTO. VELASCO IBARRA)",
+        "nombre": "ISLA SANTA MAR\u00cdA",
         "codigo": "PRRQ_1287",
         "estado": "A",
         "principal": false

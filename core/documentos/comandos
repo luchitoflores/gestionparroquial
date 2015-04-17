@@ -1,6 +1,6 @@
 python manage.py makemigrations --settings=ekklesia.local
 python manage.py migrate --settings=ekklesia.local
-python manage.py dumpdata --indent=4 --natural --format=json --settings=ekklesia.local core auth.group > core/fixtures/archivo_inicial.json
-python manage.py loaddata core/fixtures/archivo_inicial.json
+python manage.py dumpdata --indent=4 --natural --format=json core auth.group > core/fixtures/archivo_inicial.json --settings=ekklesia.local
+python manage.py loaddata core/fixtures/archivo_inicial.json --settings=ekklesia.local
 
 heroku pg:reset DATABASE_URL
