@@ -8120,10 +8120,10 @@
 {
     "fields": {
         "padre": 1013,
-        "descripcion": "CAMILO PONCE ENR\u00cdQUEZ (CAB. EN R\u00cdO 7 DE MOLLEPONGO)",
-        "valor": "CAMILO PONCE ENR\u00cdQUEZ (CAB. EN R\u00cdO 7 DE MOLLEPONGO)",
+        "descripcion": "CAMILO PONCE ENR\u00cdQUEZ",
+        "valor": "CAMILO PONCE ENR\u00cdQUEZ",
         "catalogo": 32,
-        "nombre": "CAMILO PONCE ENR\u00cdQUEZ (CAB. EN R\u00cdO 7 DE MOLLEPONGO)",
+        "nombre": "CAMILO PONCE ENR\u00cdQUEZ",
         "codigo": "PRRQ_71",
         "estado": "A",
         "principal": false
