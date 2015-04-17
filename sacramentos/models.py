@@ -14,8 +14,7 @@ from django.utils import six
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
 
-from ciudades.models import Direccion
-from core.models import Item
+from core.models import Item, Direccion
 from sacramentos.managers import PersonaManager, LibroManager, PeriodoAsignacionManager
 
 

@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import Group
 from django.contrib.admin.models import LogEntry
@@ -146,3 +147,20 @@ class Modulo(models.Model):
 
 class LogDetail(models.Model):
     log = models.ForeignKey(LogEntry)
+
+
+class Direccion(models.Model):
+    domicilio = models.CharField('Calles *', max_length=100,
+                                 help_text='Ingrese las calles. Ej: 10 agosto 10-04, Bernardo Valdivieso')
+    provincia = models.ForeignKey(Item, related_name=u'direccion_provincia')
+    canton = models.ForeignKey(Item, related_name=u'direccion_canton')
+    parroquia = models.ForeignKey(Item, related_name=u'direccion_parroquia')
+    telefono = models.CharField('Teléfono', max_length=10, blank=True, null=True)
+
+    class Meta:
+        verbose_name = u'Dirección'
+        verbose_name_plural = u'Direcciones'
+        ordering = ['provincia__nombre', 'canton__nombre', 'parroquia__nombre']
+
+    def __unicode__(self):
+        return u'%s' % (self.domicilio)

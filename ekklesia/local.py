@@ -155,7 +155,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'ciudades',
+    #'ciudades',
     'core',
     'home',
     'sacramentos',

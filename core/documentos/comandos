@@ -1,0 +1,2 @@
+python manage.py makemigrations --settings=ekklesia.local
+python manage.py migrate --settings=ekklesia.local

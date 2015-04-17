@@ -1,9 +1,11 @@
+# -*- coding:utf-8 -*-
+
 __author__ = 'lucho'
 
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
-from .models import Catalogo, Item, Parametro
+from .models import Catalogo, Item, Parametro, Direccion
 from .constants import *
 
 class ItemForm(ModelForm):
@@ -55,3 +57,24 @@ class SearchLogsForm(forms.Form):
     fecha_inicial = forms.DateField()
     fecha_final = forms.DateField()
     transaccion = forms.ModelChoiceField(queryset=Item.objects.items_por_catalogo_cod(COD_CAT_TRANSACCIONES))
+
+# Forms para dirección
+class DireccionForm(ModelForm):
+    class Meta:
+        model = Direccion
+        fields = ('domicilio', 'provincia', 'canton', 'parroquia', 'telefono')
+        widgets = {
+            'domicilio': forms.TextInput(attrs={'required': ''}),
+            'provincia': forms.Select(attrs={'required': ''}),
+            'canton': forms.Select(attrs={'required': '', 'disabled': ''}),
+            'parroquia': forms.Select(attrs={'required': '', 'disabled': ''}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(DireccionForm, self).__init__(*args, **kwargs)
+        self.fields['provincia'].empty_label = '-- Seleccione --'
+        self.fields['provincia'].queryset = Item.objects.provincias()
+        self.fields['canton'].queryset = Item.objects.none()
+        self.fields['canton'].empty_label = '-- Seleccione --'
+        self.fields['parroquia'].queryset = Item.objects.none()
+        self.fields['parroquia'].empty_label = '-- Seleccione --'
