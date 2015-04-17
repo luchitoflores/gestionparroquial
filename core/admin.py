@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from .models import Item, Catalogo, Parametro, Funcionalidad, Modulo
 from .forms import ItemForm, CatalogoForm, ParametroForm
 from django.core.urlresolvers import reverse
@@ -6,6 +7,7 @@ from django.forms.widgets import RadioSelect
 from django.db import models
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
+from sacramentos.models import PerfilUsuario
 
 
 admin.AdminSite.site_header = 'Administrador de la Aplicacion'
@@ -82,4 +84,13 @@ class ModuloAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'codigo',)
     list_per_page = 20
 
+admin.site.unregister(User)
 
+class PerfilUsuarioInline(admin.StackedInline):
+    model = PerfilUsuario
+    extra = 0
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    inlines = [PerfilUsuarioInline, ]
