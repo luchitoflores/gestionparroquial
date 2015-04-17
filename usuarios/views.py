@@ -41,7 +41,7 @@ def login_view(request):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
-            print 'imprimiendo meta: %s' % redirect_to
+
             if user is not None and user.is_active and user.is_staff:
                 login(request, user)
                 try:
@@ -49,7 +49,9 @@ def login_view(request):
                     if parroquia:
                         request.session["parroquia"] = parroquia
                         logger.error("Entré al login")
-                        logger.info("parroquia: %s" % parroquia )
+                        logger.info("parroquia: %s" % parroquia)
+                        print 'Entré al login'
+                        print parroquia
                 except ObjectDoesNotExist:
                     pass
                 if redirect_to:
