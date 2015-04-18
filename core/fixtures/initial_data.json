@@ -27411,5 +27411,27 @@
     },
     "model": "core.funcionalidad",
     "pk": 38
+},
+{
+    "fields": {
+        "orden": null,
+        "icono": "",
+        "modulo": 5,
+        "url": "parametriza_create",
+        "grupos": [
+            [
+                "Administrador"
+            ],
+            [
+                "Secretaria"
+            ]
+        ],
+        "descripcion": "Diocesis",
+        "nombre": "Diocesis",
+        "codigo": "DCSS",
+        "estado": "A"
+    },
+    "model": "core.funcionalidad",
+    "pk": 38
 }
 ]
