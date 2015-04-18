@@ -61,11 +61,11 @@ ParametrizaDiocesisForm, ParametrizaParroquiaForm,
 ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
 )
 
+from ciudades.forms import DireccionForm
 from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
 from core.constants import *
 from core.models import Item
-from core.forms import DireccionForm
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
     raise ImportError("Reportlab Version 2.1+ is needed!")
@@ -2128,8 +2128,8 @@ def parametriza_diocesis_create(request):
         else:
             form_parametriza = ParametrizaDiocesisForm(request.POST)
             form_direccion = DireccionForm(request.POST)
-        form_direccion.fields['canton'].queryset = Canton.objects.all()
-        form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
 
         if form_parametriza.is_valid() and form_direccion.is_valid():
             parametriza = form_parametriza.save(commit=False)
@@ -2153,8 +2153,8 @@ def parametriza_diocesis_create(request):
         if objeto:
             form_parametriza = ParametrizaDiocesisForm(instance=objeto)
             form_direccion = DireccionForm(instance=objeto.direccion)
-            form_direccion.fields['canton'].queryset = Canton.objects.filter(provincia=objeto.direccion.provincia)
-            form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.filter(canton=objeto.direccion.canton)
+            form_direccion.fields['canton'].queryset = Item.objects.cantones().filter(padre=objeto.direccion.provincia)
+            form_direccion.fields['parroquia'].queryset = Item.objects.parroquias().filter(padre=objeto.direccion.canton)
         else:
             form_parametriza = ParametrizaDiocesisForm()
             form_direccion = DireccionForm()
