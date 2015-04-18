@@ -82,23 +82,6 @@
 				</div>
 			</li>
 			{%endif%}
-			{%if perms.ciudades%}
-			<li class="span3">				
-				<div style='text-align: center'>
-					<span class="icon-stack icon-4x">
-						<i class="icon-circle icon-stack-base icon-muted"></i>
-						<!--<i class="icon-renren"></i>-->
-						<i class="icon-globe"></i>
-					</span>
-					<h3>Ciudades</h3>
-					<div class="caption">
-						<p>Ud. puede agregar provincias, cantones y parroquias que pertenezcan a un País.
-						</p>
-						<p><a class='btn btn-primary' href="{%url 'ciudades'%}">Ir</a></p>
-					</div>
-				</div>
-			</li>
-			{%endif%}
 			{%if perms.sacramentos.change_parametrizadiocesis or perms.sacramentos.change_parametrizaparroquia or perms.sacramentos.add_parametrizadiocesis or perms.sacramentos.add_parametrizaparroquia%}
 			<li class="span3">
 				<div style='text-align: center'>

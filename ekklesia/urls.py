@@ -4,7 +4,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from sacramentos import urls as sacramentos_urls 
 from usuarios import urls as usuarios_urls
-from ciudades import urls as ciudades_urls
 from core import urls as core_urls
 from django.utils.functional import curry
 from django.views.defaults import *
@@ -35,7 +34,6 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework') ),
     url(r'^', include(sacramentos_urls)),
     url(r'^', include(usuarios_urls)),
-    url(r'^', include(ciudades_urls)),
     url(r'^', include(core_urls)),
 )
 

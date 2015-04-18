@@ -2,6 +2,7 @@ from django.conf.urls import url, patterns
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.views.generic import TemplateView
+from core.rest import seleccionar_ciudades
 
 from sacramentos.views import buscar_sacramentos_view
 from .views import LogListView
@@ -44,4 +45,5 @@ urlpatterns = patterns('',
                        url(r'^accesibilidad/$', login_required(TemplateView.as_view(template_name='accesibilidad.html'),login_url='/login/'), name='accesibilidad'),
                        url(r'^about/$', TemplateView.as_view(template_name="about.html"), name='about'),
                        url(r'^buscar/$', buscar_sacramentos_view, name='buscar'),
+                       url(r'^api/ciudades/select/$', seleccionar_ciudades),
 )

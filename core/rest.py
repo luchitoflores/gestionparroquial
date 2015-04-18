@@ -3,35 +3,9 @@ import json
 # from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from ciudades.models import (
-    Provincia, Canton, Parroquia
-)
-from ciudades.forms import DireccionForm
+
+from core.forms import DireccionForm
 from core.models import Item
-
-
-class ProvinciaCreateRead(ListCreateAPIView):
-    model = Provincia
-
-
-class ProvinciaCreateReadUpdateDelete(ListCreateAPIView):
-    model = Provincia
-
-
-class CantonCreateRead(ListCreateAPIView):
-    model = Canton
-
-
-class CantonCreateReadUpdateDelete(ListCreateAPIView):
-    model = Canton
-
-
-class ParroquiaCreateRead(ListCreateAPIView):
-    model = Parroquia
-
-
-class ParroquiaCreateReadUpdateDelete(ListCreateAPIView):
-    model = Parroquia
 
 
 def seleccionar_ciudades(request):

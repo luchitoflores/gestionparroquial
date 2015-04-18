@@ -62,7 +62,6 @@ from sacramentos.forms import (
 )
 
 from core.forms import DireccionForm
-from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
 from core.constants import *
 from core.models import Item

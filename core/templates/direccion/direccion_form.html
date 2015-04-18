@@ -1,0 +1,8 @@
+{%csrf_token%}
+{% for f in form_direccion%}
+<div class="control-group">
+	<label class="control-label">{{f.label}}</label>
+	<div class="controls">{{f}}</div>
+	<div class="controls">{{f.help_text}}</div>
+</div>
+{%endfor%}
