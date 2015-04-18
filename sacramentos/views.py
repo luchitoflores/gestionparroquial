@@ -19,7 +19,7 @@ from django.forms.util import ErrorList
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.utils.decorators import method_decorator
 from django.utils.html import format_html, mark_safe
 from django.views.generic import ListView
@@ -40,25 +40,25 @@ from sacramentos.models import (PerfilUsuario,
                                 AsignacionParroquia, PeriodoAsignacionParroquia,
                                 ParametrizaDiocesis, ParametrizaParroquia,
                                 Iglesia
-                                )
+)
 
 from sacramentos.forms import (
-UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
-PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
-EmailForm,
-MatrimonioForm, MatrimonioForm,
-BautismoForm,
-EucaristiaForm, EucaristiaForm,
-ConfirmacionForm, ConfirmacionForm,
-LibroForm, LibroBaseForm, NotaMarginalForm,
-DivErrorList,
-IntencionForm,
-ParroquiaForm,
-IglesiaForm,
-AsignarParroquiaForm, PeriodoAsignacionParroquiaForm,
-AsignarSecretariaForm,
-ParametrizaDiocesisForm, ParametrizaParroquiaForm,
-ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
+    UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
+    PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
+    EmailForm,
+    MatrimonioForm, MatrimonioForm,
+    BautismoForm,
+    EucaristiaForm, EucaristiaForm,
+    ConfirmacionForm, ConfirmacionForm,
+    LibroForm, LibroBaseForm, NotaMarginalForm,
+    DivErrorList,
+    IntencionForm,
+    ParroquiaForm,
+    IglesiaForm,
+    AsignarParroquiaForm, PeriodoAsignacionParroquiaForm,
+    AsignarSecretariaForm,
+    ParametrizaDiocesisForm, ParametrizaParroquiaForm,
+    ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
 )
 
 from core.forms import DireccionForm
@@ -66,6 +66,7 @@ from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
 from core.constants import *
 from core.models import Item
+
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
     raise ImportError("Reportlab Version 2.1+ is needed!")
@@ -82,11 +83,11 @@ def configuracion_inicial_view(request):
     confirmacion = Libro.objects.filter(tipo_libro='confirmacion', principal=True).exists()
     matrimonio = Libro.objects.filter(tipo_libro='matrimonio', principal=True).exists()
     ctx = {
-    'iglesia': iglesia,
-    'libro_bautismo': bautismo,
-    'libro_eucaristia': eucaristia,
-    'libro_confirmacion': confirmacion,
-    'libro_matrimonio': matrimonio
+        'iglesia': iglesia,
+        'libro_bautismo': bautismo,
+        'libro_eucaristia': eucaristia,
+        'libro_confirmacion': confirmacion,
+        'libro_matrimonio': matrimonio
     }
     return render(request, template_name, ctx)
 
@@ -159,7 +160,7 @@ def edit_usuario_view(request, pk):
     user = perfil.user
 
     # if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
-    # 	raise Http404
+    # raise Http404
 
     if perfil.user.groups.filter(name='Sacerdote').exists():
         raise Http404
@@ -351,7 +352,7 @@ def administrador_update_view(request, pk):
             usuario = form_usuario.save()
             perfil = form_perfil.save()
             if not usuario.is_staff:
-                #Esta linea de código permite desloguear a un usuario de manera remota
+                # Esta linea de código permite desloguear a un usuario de manera remota
                 [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == usuario.id]
             LogEntry.objects.log_action(
                 user_id=request.user.id,
@@ -648,6 +649,7 @@ class LibroListView(PaginacionMixin, ListView):
     def dispatch(self, *args, **kwargs):
         return super(LibroListView, self).dispatch(*args, **kwargs)
 
+
 # VISTAS PARA ADMIN DE BAUTISMO
 
 @login_required(login_url='/login/')
@@ -679,7 +681,7 @@ def bautismo_create_view(request):
             # bautismo.numero_acta=num+1
 
             # if bautismo.numero_acta%2 == 0:
-            # 	bautismo.pagina=pagina
+            # bautismo.pagina=pagina
             # else:
             # 	bautismo.pagina=pagina+1
 
@@ -709,6 +711,7 @@ def bautismo_create_view(request):
         formBautismo = BautismoForm(request)
     ctx = {'formBautismo': formBautismo, 'tipo_sacramento': 'bautismo'}
     return render(request, 'bautismo/bautismo_form.html', ctx)
+
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_bautismo', login_url='/login/', raise_exception=permission_required)
@@ -806,7 +809,7 @@ def eucaristia_create_view(request):
             # pagina=ultimo_eucaristia.pagina
             # eucaristia.numero_acta=num+1
             # if eucaristia.numero_acta%2 == 0:
-            # 	eucaristia.pagina=pagina
+            # eucaristia.pagina=pagina
             # else:
             # 	eucaristia.pagina=pagina+1
 
@@ -905,6 +908,7 @@ class EucaristiaListView(PaginacionMixin, ListView):
     def dispatch(self, *args, **kwargs):
         return super(EucaristiaListView, self).dispatch(*args, **kwargs)
 
+
 # VISTAS PARA ADMIN DE CONFIRMACION
 
 @login_required(login_url='/login/')
@@ -939,7 +943,7 @@ def confirmacion_create_view(request):
             # confirmacion.numero_acta=num+1
             # pagina=ultima_confirmacion.pagina
             # if confirmacion.numero_acta%2 == 0:
-            # 	confirmacion.pagina=pagina
+            # confirmacion.pagina=pagina
             # else:
             # 	confirmacion.pagina=pagina+1
 
@@ -1238,7 +1242,7 @@ class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
         return super(MatrimonioNoVigenteListView, self).dispatch(*args, **kwargs)
 
 
-#Preguntar si esta función es ajax
+# Preguntar si esta función es ajax
 @login_required(login_url='/login/')
 @permission_required('sacramentos.delete_matrimonio', login_url='/login/',
                      raise_exception=permission_required)
@@ -1282,6 +1286,7 @@ def matrimonio_ajax_view(request):
         list_matrimonios.append({'id': m.pk, 'novio': novio, 'novia': novia})
     ctx = {'list_matrimonios': list_matrimonios, 'exito': exito}
     return HttpResponse(json.dumps(ctx), content_type='application/json')
+
 
 #Vistas para crear una parroquia
 @login_required(login_url='/login/')
@@ -1454,7 +1459,7 @@ def intencion_create_view(request):
         except ObjectDoesNotExist:
             mensaje = 'No tiene configurada una Iglesia principal. Configurela '
             msg = mark_safe(u"%s %s" % (
-            mensaje, '<a class="btn btn-primary" href="#id_modal_iglesia" data-toggle="modal">aqui</a>'))
+                mensaje, '<a class="btn btn-primary" href="#id_modal_iglesia" data-toggle="modal">aqui</a>'))
             messages.info(request, msg)
         ctx = {'form': form_intencion}
         return render(request, template_name, ctx)
@@ -1481,9 +1486,9 @@ def intencion_edit_view(request, pk):
             hora = request.POST.get('hora')
             individual = request.POST.get('individual')
             intencion_unica = Intencion.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia,
-                                                         individual=True).exclude(pk=pk)
+                                                       individual=True).exclude(pk=pk)
             intenciones_colectivas = Intencion.objects.filter(fecha=fecha, hora=hora,
-                                                                parroquia=intencion.parroquia).exclude(pk=pk)
+                                                              parroquia=intencion.parroquia).exclude(pk=pk)
             if intencion_unica:
                 messages.error(request, MENSAJE_ERROR)
                 form_intencion.errors['individual'] = ErrorList([
@@ -1529,7 +1534,7 @@ class IntencionListView(BusquedaMixin, ListView):
             name = self.request.GET.get('q', '')
             if (name != ''):
                 return Intencion.objects.filter(oferente__icontains=name, parroquia=parroquia).order_by('-fecha',
-                                                                                                          'hora')
+                                                                                                        'hora')
             else:
                 return Intencion.objects.filter(parroquia=parroquia).order_by('-fecha', 'hora')
         else:
@@ -1598,7 +1603,7 @@ def asignar_parroquia_create(request):
         else:
             messages.error(request, MENSAJE_ERROR)
             ctx = {'form': form, 'form_periodo': form_periodo}
-        # return render(request, template_name, ctx)
+            # return render(request, template_name, ctx)
     else:
         form_periodo = PeriodoAsignacionParroquiaForm()
         form = AsignarParroquiaForm()
@@ -1703,7 +1708,7 @@ def asignar_parroquia_update(request, pk):
         else:
             messages.error(request, MENSAJE_ERROR)
             ctx = {'form': form, 'form_periodo': form_periodo, 'object': asignacion.parroquia}
-        # return render(request, template_name, ctx)
+            # return render(request, template_name, ctx)
     else:
         form_periodo = periodos
         form = AsignarParroquiaForm(instance=asignacion)
@@ -1930,7 +1935,7 @@ def asignar_secretaria_create(request):
                                                                             asignacion__parroquia=parroquia)
                         mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
                         msg = mark_safe(u"%s %s" % (
-                        mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
+                            mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
                         form.errors["persona"] = ErrorList([msg])
                         messages.error(request, MENSAJE_ERROR)
                         ctx = {'form': form, 'form_periodo': form_periodo}
@@ -1984,6 +1989,7 @@ def asignar_secretaria_create(request):
         return render(request, template_name, ctx)
     except ObjectDoesNotExist:
         raise PermissionDenied
+
 
 #El parámetro pk es el id de un periodo
 @login_required(login_url='/login/')
@@ -2154,7 +2160,8 @@ def parametriza_diocesis_create(request):
             form_parametriza = ParametrizaDiocesisForm(instance=objeto)
             form_direccion = DireccionForm(instance=objeto.direccion)
             form_direccion.fields['canton'].queryset = Item.objects.cantones().filter(padre=objeto.direccion.provincia)
-            form_direccion.fields['parroquia'].queryset = Item.objects.parroquias().filter(padre=objeto.direccion.canton)
+            form_direccion.fields['parroquia'].queryset = Item.objects.parroquias().filter(
+                padre=objeto.direccion.canton)
         else:
             form_parametriza = ParametrizaDiocesisForm()
             form_direccion = DireccionForm()
@@ -2468,7 +2475,7 @@ def reporte_anual_sacramentos(request):
                 else:
                     messages.error(request, MENSAJE_ERROR)
                     ctx = {'form': form}
-                # return render(request, template_name, ctx)
+                    # return render(request, template_name, ctx)
             else:
                 messages.error(request, 'No hay sacramentos en este año')
                 ctx = {'form': form}
@@ -2571,7 +2578,7 @@ def reporte_intenciones(request):
             end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
 
             intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date],
-                                                     parroquia=parroquia).order_by('hora')
+                                                   parroquia=parroquia).order_by('hora')
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
@@ -2606,7 +2613,7 @@ def reporte_intenciones(request):
             end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
 
             intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date], hora=hora,
-                                                     parroquia=parroquia).order_by('hora')
+                                                   parroquia=parroquia).order_by('hora')
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
@@ -2636,9 +2643,9 @@ def reporte_intenciones(request):
             except ObjectDoesNotExist:
                 raise PermissionDenied
             intenciones = Intencion.objects.filter(fecha__year=anio,
-                                                     parroquia=parroquia).order_by('hora')
+                                                   parroquia=parroquia).order_by('hora')
             suma = Intencion.objects.filter(fecha__year=anio,
-                                              parroquia=parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
+                                            parroquia=parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
@@ -2864,6 +2871,7 @@ def exportar_csv_logs(request):
                          log.action_flag, encode(log.change_message)])
     return response
 
+
 # para poder exportar a csv con utf-8
 
 def encode(text):
@@ -2972,6 +2980,41 @@ class IglesiaUpdateView(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, MENSAJE_ERROR)
         return super(IglesiaUpdateView, self).form_invalid(form)
+
+
+def buscar_sacramentos_view(request):
+    if not request.user.is_authenticated():
+        query = request.GET.get('q', '')
+        results1 = ''
+        results2 = ''
+        results3 = ''
+        results4 = ''
+        results5 = ''
+        if query:
+            try:
+                f = PerfilUsuario.objects.get(dni=query)
+                results1 = Bautismo.objects.filter(bautizado=f)
+                results2 = Eucaristia.objects.filter(feligres=f)
+                results3 = Confirmacion.objects.filter(confirmado=f)
+
+                if f.sexo == 'm':
+                    results4 = Matrimonio.objects.filter(novio=f)
+                else:
+                    results5 = Matrimonio.objects.filter(novia=f)
+            except ObjectDoesNotExist:
+                return render_to_response("buscar.html", {"results1": results1, "results2": results2,
+                                                          "results3": results3, "results4": results4,
+                                                          "results5": results5})
+        else:
+            results1 = []
+            results2 = []
+            results3 = []
+            results4 = []
+            results5 = []
+        return render_to_response("buscar.html", {"results1": results1, "results2": results2, "results3": results3,
+                                                  "results4": results4, "results5": results5})
+    else:
+        return HttpResponseRedirect('/home/')
 
 
 
