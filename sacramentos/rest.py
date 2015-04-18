@@ -607,14 +607,12 @@ def buscar_sacerdotes(request):
 
         if cedula:
             try:
-                perfil = PerfilUsuario.objects.get(dni=cedula, profesion='Sacerdote').order_by('user__last_name',
-                                                                                               'user__first_name')
+                perfil = PerfilUsuario.objects.get(dni=cedula, user__groups__name='Sacerdote')
                 bandera = True
                 full_name = perfil.user.get_full_name()
                 lista.append({'id': perfil.id, 'dni': perfil.dni,
                               'full_name': '<a class="id_click" href="javascript:prueba3()">%s</a>' % full_name,
-                              'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion': perfil.profesion,
-                              'estado_civil': perfil.estado_civil, 'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                              'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion': perfil.profesion, "DT_RowId": perfil.id,
                               'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                 # lista.append({'id': perfil.id , 'dni': perfil.dni, 'link': '<a class="id_click" href=".">'+perfil.user.first_name+'</a>', 'nombres': perfil.user.first_name, 'apellidos': perfil.user.last_name, 'lugar_nacimiento': perfil.lugar_nacimiento, 'profesion':perfil.profesion, 'estado_civil': perfil.estado_civil, "DT_RowId":perfil.id})
                 ctx = {'perfiles': lista, 'bandera': bandera}
@@ -639,8 +637,7 @@ def buscar_sacerdotes(request):
                         lista.append({'id': perfil.id, 'dni': perfil.dni,
                                       'full_name': '<a class="id_click" href="javascript:prueba3('"'%s'"')">%s</a>' % (
                                           perfil.id, full_name), 'lugar_nacimiento': perfil.lugar_nacimiento,
-                                      'profesion': perfil.profesion, 'estado_civil': perfil.estado_civil,
-                                      'sexo': perfil.sexo, "DT_RowId": perfil.id,
+                                      'profesion': perfil.profesion, "DT_RowId": perfil.id,
                                       'fecha_nacimiento': str(perfil.fecha_nacimiento)})
                     ctx = {'perfiles': lista, 'bandera': bandera}
                 else:
