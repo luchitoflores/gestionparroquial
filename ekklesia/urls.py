@@ -3,7 +3,6 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from sacramentos import urls as sacramentos_urls 
-from home import urls as home_urls
 from usuarios import urls as usuarios_urls
 from ciudades import urls as ciudades_urls
 from core import urls as core_urls
