@@ -97,8 +97,10 @@
 
                 {% if parametros %}
                     <h5>{{ parametros.diocesis }}</h5>
-                    <p> {{ parametros.direccion.domicilio }} | {{ parametros.direccion.parroquia.nombre }} - ECUADOR |
-                        Teléfono: {{ parametros.direccion.telefono }}</p>
+                    <p> {{ parametros.direccion.domicilio }} | {{ parametros.direccion.parroquia.nombre }} - ECUADOR {% if  parametros.direccion.telefono %}|
+                        Teléfono: {{ parametros.direccion.telefono }}
+                        {% endif %}
+                        </p>
                 {% endif %}
 
                 <!--<div style='text-align: right'>
