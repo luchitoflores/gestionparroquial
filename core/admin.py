@@ -1,11 +1,13 @@
 from django.contrib import admin
-from .models import Item, Catalogo, Parametro, Funcion, Funcionalidad, Modulo
+from django.contrib.auth.models import User
+from .models import Item, Catalogo, Parametro, Funcionalidad, Modulo
 from .forms import ItemForm, CatalogoForm, ParametroForm
 from django.core.urlresolvers import reverse
 from django.forms.widgets import RadioSelect
 from django.db import models
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
+from sacramentos.models import PerfilUsuario
 
 
 admin.AdminSite.site_header = 'Administrador de la Aplicacion'
@@ -26,7 +28,7 @@ class ItemAdmin(admin.ModelAdmin):
     form = ItemForm
     list_display = ('codigo','nombre','valor', 'estado', 'padre', 'principal')
     search_fields = ('nombre', 'codigo',)
-    list_filter = ('catalogo', )
+    list_filter = ('catalogo', 'estado', )
     change_list_filter_template = "admin/filter_listing.html"
     list_per_page = 20
 
@@ -35,7 +37,7 @@ class ItemAdmin(admin.ModelAdmin):
 class CatalogoAdmin(admin.ModelAdmin):
     form = CatalogoForm
     list_display = ('codigo', 'nombre','descripcion', 'estado', 'padre', 'editable', 'items')
-    inlines = [ItemInline, ]
+    #inlines = [ItemInline, ]
     search_fields = ('nombre', 'codigo',)
     list_per_page = 20
 
@@ -82,4 +84,13 @@ class ModuloAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'codigo',)
     list_per_page = 20
 
+admin.site.unregister(User)
 
+class PerfilUsuarioInline(admin.StackedInline):
+    model = PerfilUsuario
+    extra = 0
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    inlines = [PerfilUsuarioInline, ]

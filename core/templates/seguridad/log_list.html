@@ -1,56 +1,63 @@
-{%extends 'base.html'%}
-{%block title%}{%block content_title%}Lista de Logs{%endblock%}{%endblock%}
+{% extends 'base.html' %}
+{% block title %}{% block content_title %}Lista de Logs{% endblock %}{% endblock %}
 
 {% block breadcrumbs %}
-{{ block.super }}
-<span class="divider">»</span>
-<li class='active'>Logs</li>
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li class='active'>Logs</li>
 {% endblock %}
 
-{%block content%}
+{% block content %}
     {{ form }}
-{% include 'includes/buscar_logs_form.html' %}
-<a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a CSV</a>
+    {% include 'includes/buscar_logs_form.html' %}
 
-<table id='id_table_log' class='table table-bordered table-striped'>
-	<thead>
-		<tr>
-			<th>Usuario</th>
-			<th>Objeto</th>
-			<th>Transaccion</th>
-			<th data-hide='phone'>Mensaje</th>
-			<th data-hide='phone'>Fecha</th>
-			
-		</tr>
-	</thead>
-	<tbody>
+    <div class="pull-right">
+        <a href="{% url 'logs_csv' %}" class='btn'>Exportar a CSV</a>
+    </div>
 
-		{%for o in object_list%}
-		<tr>
-			<td>{{o.user}}</td>
-			<td>{{o.object_repr}}</td>
-			{%if o.action_flag == 1%}
-			
-			<td>{{'Creacion'}}</td>
-			{%endif%}
-			{%if o.action_flag == 2%}
-			
-			<td>{{'Actualizacion'}}</td>
-			{%endif%}
-			{%if o.action_flag == 3%}
-			
-			<td>{{'Dar de Baja'}}</td>
-			{%endif%}
-			
-			<td>{{o.change_message}}</td>
-			<td>{{o.action_time}}</td>
-			
-		</tr>
-		{%endfor%}
-	</tbody>
-</table>
-{% include 'includes/paginacion.html' %}
-<!--{%if user.is_superuser%}
+    <div style="margin-top: 3em">
+     <table id='id_table_log' class='table table-bordered table-striped'>
+        <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Objeto</th>
+            <th>Transaccion</th>
+            <th data-hide='phone'>Mensaje</th>
+            <th data-hide='phone'>Fecha</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for o in object_list %}
+            <tr>
+                <td>{{ o.user }}</td>
+                <td>{{ o.object_repr }}</td>
+                {% if o.action_flag == 1 %}
+
+                    <td>{{ 'Creacion' }}</td>
+                {% endif %}
+                {% if o.action_flag == 2 %}
+
+                    <td>{{ 'Actualizacion' }}</td>
+                {% endif %}
+                {% if o.action_flag == 3 %}
+
+                    <td>{{ 'Dar de Baja' }}</td>
+                {% endif %}
+
+                <td>{{ o.change_message }}</td>
+                <td>{{ o.action_time }}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'includes/paginacion_logs.html' %}
+    </div>
+
+
+    <!--{%if user.is_superuser%}
 <a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a Csv</a>
 {%endif%}-->
 
@@ -58,4 +65,4 @@
 
 
 
-{%endblock%}
+{% endblock %}

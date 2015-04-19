@@ -97,8 +97,10 @@
 
                 {% if parametros %}
                     <h5>{{ parametros.diocesis }}</h5>
-                    <p> {{ parametros.direccion.domicilio }} | {{ parametros.direccion.parroquia.nombre }} - ECUADOR |
-                        Teléfono: {{ parametros.direccion.telefono }}</p>
+                    <p> {{ parametros.direccion.domicilio }} | {{ parametros.direccion.parroquia.nombre }} - ECUADOR {% if  parametros.direccion.telefono %}|
+                        Teléfono: {{ parametros.direccion.telefono }}
+                        {% endif %}
+                        </p>
                 {% endif %}
 
                 <!--<div style='text-align: right'>
@@ -125,7 +127,6 @@
 <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'js/jquery.multi-select.js' %}"></script>
 <script src="{% static 'js/django-admin.multiselect.js' %}"></script>
-<script src="{% static 'js/sacramentos.js' %}"></script>
 <script src="{% static 'js/footable.js' %}"></script>
 <script src="{% static 'js/modernizr.js' %}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -136,7 +137,7 @@
 <script src="{% static 'js/services.js' %}"></script>
 <script src="{% static 'js/controllers.js' %}"></script>
 <script src="{% static 'js/constants.js' %}"></script>
-
+<script src="{% static 'js/sacramentos.js' %}"></script>
 <script>
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
@@ -145,6 +146,14 @@
             }
         }
     });
+</script>
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+<!-- polyfiller file to detect and load polyfills -->
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+<script>
+  webshims.setOptions('waitReady', false);
+  webshims.setOptions('forms-ext', {types: 'date'});
+  webshims.polyfill('forms forms-ext');
 </script>
 
 {% block extrascript %}{% endblock %}

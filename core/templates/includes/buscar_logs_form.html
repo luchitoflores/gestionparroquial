@@ -1,24 +1,22 @@
-<form id='id_form_buscar' class="form-horizontal">
+<form id='id_form_buscar' class="form-inline" action=".">
     <div class="panel panel-default">
-        <div class="panel-heading">Criterios de Búsqueda</div>
+        <div class="panel-heading">Filtros de Búsqueda</div>
         <div class="panel-body">
-
-            <label for="">Usuario</label>
-            <select name="" id="" ng-model="estado" ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
+            <input id="id_hidden_action_flag" type="hidden" value="{{ action_flag }}">
+            <input name="username" type='text' placeholder="username" title="Filtrar por username" value="{{ username }}"/>
+            <select id="id_action_flag" name="action_flag" id="" title="Filtrar por transacción">
                 <option value="">-- Seleccione --</option>
+                <option value="1">Creación</option>
+                <option value="2">Actualización</option>
+                <option value="3">Dar de baja</option>
+                <! --selected="{%  if action_flag == 3 %}true{% else %}false{% endif %}" -->
             </select>
-            <label for="">Transacción</label>
-            <select name="" id="" ng-model="estado" ng-options="estado.nombre for estado in estadosGenerales track by estado.id">
-                <option value="">-- Seleccione --</option>
-            </select>
-            <label for="">Fecha Inicial</label>
-            <input type='date'/>
-            <label for="">Fecha Final</label>
-            <input type='date'/>
-
-            <button class="btn btn-primary">Buscar</button>
+            <input name="start_date" type='date' placeholder="Fecha Inicial" title="Filtrar por fecha inicial" value="{{ start_date }}" required/>
+            <input name="end_date" type='date' placeholder="Fecha Final" title="Filtrar por fecha final" value="{{ end_date }}" required/>
+            <button class="btn"><i class="icon-search"></i> Buscar</button>
+            <button type="button" class="btn" data-toggle="popover" data-placement="top" title="Ayuda Filtros" data-content="Para una búsqueda más exacta es necesario ingresar un rango de fechas de manera obligatoria, la primera fecha corresponde a la fecha inicial y la segunda a la fecha final. "><i class="icon-question"></i></button>
         </div>
     </div>
-	<!--<input type='submit' value='Buscar' class="btn btn-primary" />-->
+
 </form>
 <!--<a href="/crear/{{modelo}}" class='btn btn-primary'>Nueva Provincia</a>-->

@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import Group
 from django.contrib.admin.models import LogEntry
@@ -11,14 +12,21 @@ from django.db import models
 
 
 def get_limit_choices_to():
-    return {'catalogo': Catalogo.objects.get(codigo="EST").id}
+    #return {'catalogo': Catalogo.objects.get(codigo="EST").id} Esto estaba funcionando
+    return {'catalogo': Catalogo.objects.filter(codigo="EST")}
 
 
 class Catalogo(models.Model):
+
+    ESTADOS_GENERALES = (
+        ('A', 'Activo'),
+        ('I', 'Inactivo')
+    )
+
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50, unique=True)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
-    estado = models.ForeignKey('Item', related_name='estado_item', limit_choices_to=get_limit_choices_to)
+    estado = models.CharField(max_length=1, choices=ESTADOS_GENERALES)
     padre = models.ForeignKey('self', blank=True, null=True)
     editable = models.BooleanField(default=False)
 
@@ -30,12 +38,16 @@ class Catalogo(models.Model):
 
 
 class Item(models.Model):
+    ESTADOS_GENERALES = (
+        ('A', 'Activo'),
+        ('I', 'Inactivo')
+    )
     catalogo = models.ForeignKey(Catalogo)
     codigo = models.CharField(max_length=50)
     nombre = models.CharField(max_length=50)
     valor = models.CharField(max_length=50, null=True, blank=True)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
-    estado = models.ForeignKey('self')
+    estado = models.CharField(max_length=1, choices=ESTADOS_GENERALES)
     padre = models.ForeignKey('self',related_name='item_padre', blank=True, null=True)
     principal = models.BooleanField(default=False)
     objects = ItemManager()
@@ -48,27 +60,18 @@ class Item(models.Model):
         return self.nombre
 
 
-class Funcion(models.Model):
-    codigo = models.CharField(max_length=50)
-    nombre = models.CharField(max_length=50)
-    descripcion = models.TextField(max_length=200, null=True, blank=True)
-    estado = models.BooleanField(default=False)
-    eliminada = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name_plural = u'Funciones'
-
-    def __unicode__(self):
-        return self.nombre
-
 class Funcionalidad(models.Model):
+    ESTADOS_GENERALES = (
+        ('A', 'Activo'),
+        ('I', 'Inactivo')
+    )
     nombre = models.CharField(max_length=50)
     url = models.CharField(max_length=50, validators=[validate_url_name])  # tiene que ser el mismo nombre de la url
     codigo = models.CharField(max_length=20, unique=True)
     modulo = models.ForeignKey('Modulo')
     grupos = models.ManyToManyField(Group)
     #estado = models.BooleanField(default=False)
-    estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
+    estado = models.CharField(max_length=1, choices=ESTADOS_GENERALES)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
     orden = models.PositiveIntegerField(null=True, blank=True)
     icono = models.CharField(max_length=20, null=True, blank=True)
@@ -96,11 +99,15 @@ class Funcionalidad(models.Model):
 
 
 class Parametro(models.Model):
+    ESTADOS_GENERALES = (
+        ('A', 'Activo'),
+        ('I', 'Inactivo')
+    )
     codigo = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=50)
     valor = models.CharField(max_length=50)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
-    estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
+    estado = models.CharField(max_length=1, choices=ESTADOS_GENERALES)
     tipo_parametro = models.ForeignKey(Item, related_name='tipo_parametro', blank=True, null=True)
 
     class Meta:
@@ -111,10 +118,14 @@ class Parametro(models.Model):
 
 
 class Modulo(models.Model):
+    ESTADOS_GENERALES = (
+        ('A', 'Activo'),
+        ('I', 'Inactivo')
+    )
     codigo = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(max_length=200, null=True, blank=True)
-    estado = models.ForeignKey(Item, limit_choices_to=get_limit_choices_to)
+    estado = models.CharField(max_length=1, choices=ESTADOS_GENERALES)
     orden = models.PositiveIntegerField(null=True, blank=True);
     objects = ModuloManager()
 
@@ -136,3 +147,20 @@ class Modulo(models.Model):
 
 class LogDetail(models.Model):
     log = models.ForeignKey(LogEntry)
+
+
+class Direccion(models.Model):
+    domicilio = models.CharField('Calles *', max_length=100,
+                                 help_text='Ingrese las calles. Ej: 10 agosto 10-04, Bernardo Valdivieso')
+    provincia = models.ForeignKey(Item, related_name=u'direccion_provincia')
+    canton = models.ForeignKey(Item, related_name=u'direccion_canton')
+    parroquia = models.ForeignKey(Item, related_name=u'direccion_parroquia')
+    telefono = models.CharField('Teléfono', max_length=10, blank=True, null=True)
+
+    class Meta:
+        verbose_name = u'Dirección'
+        verbose_name_plural = u'Direcciones'
+        ordering = ['provincia__nombre', 'canton__nombre', 'parroquia__nombre']
+
+    def __unicode__(self):
+        return u'%s' % (self.domicilio)

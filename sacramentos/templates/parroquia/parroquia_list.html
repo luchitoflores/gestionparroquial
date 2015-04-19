@@ -38,7 +38,7 @@ Lista de Parroquias Eclesiásticas
 			<td>{{o}}</td>
 			<td>{{o.direccion.parroquia}}</td>
 			<td>{{o.direccion.domicilio}}</td>
-			<td>{{o.direccion.telefono}}</td>
+			<td>{% if o.direccion.telefono %}{{o.direccion.telefono}}{% else %}<i class="icon-ellipsis-horizontal"></i>{% endif %}</td>
 			<td>
                 <a href="{{o.get_absolute_url}}" data-toggle="tooltip" data-placement="top" title="Editar parroquia"><i class="icon-pencil"></i></a>
 				|

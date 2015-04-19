@@ -129,47 +129,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
+    #'grappelli',
     'django.contrib.admin',
-    'sacramentos',
-    'ciudades',
-    'core',
-    'home',
-    'usuarios',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+)
+
+THIRD_PARTY_APPS = (
     'django_extensions',
-    'gunicorn',
+    'rest_framework',
+    'mockups',
+)
 
-    )
-# DJANGO_APPS = (
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.sites',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     # Uncomment the next line to enable the admin:
-#     'django.contrib.admin',
-#     # Uncomment the next line to enable admin documentation:
-#     'django.contrib.admindocs',
-# )
+LOCAL_APPS = (
+    'core',
+    'sacramentos',
+    'usuarios',
+)
 
-# THIRD_PARTY_APPS = (
-#     'django_extensions',
-#     'gunicorn',
-# )
-
-# LOCAL_APPS = (
-#     'ciudades',
-#     'home',
-#     'sacramentos',
-#     'usuarios',
-# )
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-# INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-########## END APP CONFIGURATION
+INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -216,8 +193,8 @@ LOGIN_REDIRECT_URL = '/home/'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ekklesialoja@gmail.com'
-EMAIL_HOST_PASSWORD = 'ekklesia'
+EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
+EMAIL_HOST_PASSWORD = '33BarFlouch$'
 EMAIL_USE_TLS = True
 
 #Sirve para expirar la sesion al cerrar el navegador
@@ -245,3 +222,28 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 #     '%m/%d/%y %H:%M',        # '10/25/06 14:30'
 #     '%m/%d/%y',              # '10/25/06'
 #     )
+
+
+# El siguiente código permite añadir nuevos procesadores de contexto
+# a los que vienen por defecto en Django
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    "sacramentos.context_processors.parametros_diocesis",
+    "core.context_processors.menu",
+    'django.core.context_processors.request',
+)
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+#Habilita los tipos de authenticacion para django rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    #'PAGINATE_BY': 10
+}

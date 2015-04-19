@@ -12,7 +12,7 @@ app.controller('menuControl', function ($scope) {
     };
 });
 
-app.controller('catalogoControl', function ($scope, $http, administrarCatalogos, constants) {
+app.controller('catalogoControl', ['$scope', '$http', 'administrarCatalogos', 'constants' , function ($scope, $http, administrarCatalogos, constants) {
     $scope.alert = false;
     $scope.catalogos = [];
     $scope.estadosGenerales = [];
@@ -25,7 +25,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
         $scope.descripcion = "";
         $scope.editable = false;
         $scope.padre = $scope.catalogos;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -42,7 +42,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                 "codigo": $scope.codigo,
                 "nombre": $scope.nombre,
                 "editable": $scope.editable,
-                "estado": $scope.estado.id,
+                "estado": $scope.estado,
                 "descripcion": $scope.descripcion
                };
 
@@ -103,7 +103,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
         }
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -139,15 +139,13 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
                     $scope.padre = $scope.catalogos[ident];
                 }
             });
-            $scope.estadosGenerales.forEach(function (ele, ident) {
-                if (ele.id == c.estado) {
-                    $scope.estado = $scope.estadosGenerales[ident];
-                }
-            });
+
+            $scope.estado = c.estado;
+
         });
 
         $scope.items = [];
-        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
+        $http.get('/api-auth/item/?catalogo=' + codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data;
             }).
@@ -156,7 +154,7 @@ app.controller('catalogoControl', function ($scope, $http, administrarCatalogos,
             });
     }
 
-});
+}]);
 
 app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'administrarItems', 'constants', '$anchorScroll', '$location',
     function ($scope, $http, administrarCatalogos, administrarItems, constants, $anchorScroll, $location) {
@@ -177,7 +175,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
         $scope.valor = "";
         $scope.descripcion = "";
         $scope.principal = false;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
         $scope.padre = $scope.itemsPadre;
 
         //limpiar errores
@@ -193,7 +191,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
        $scope.crud = true;
     }
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -267,12 +265,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
                 $scope.valor = e.valor;
                 $scope.descripcion = e.descripcion;
                 $scope.principal = e.principal;
-                $scope.estadosGenerales.forEach(function (ele, ident) {
-                    if (ele.id == e.estado) {
-                        $scope.estado = $scope.estadosGenerales[ident];
-                    }
-                });
-
+                $scope.estado = e.estado;
                 $scope.itemsPadre.forEach(function (ele, ident) {
                     if (ele.id == e.padre) {
                         $scope.padre = $scope.itemsPadre[ident];
@@ -295,7 +288,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
             "valor": $scope.valor,
             "descripcion": $scope.descripcion,
             "principal": $scope.principal,
-            "estado": $scope.estado.id
+            "estado": $scope.estado
         };
 
         if( $scope.padre != null){
@@ -358,7 +351,7 @@ app.controller('itemControl', ['$scope', '$http', 'administrarCatalogos', 'admin
     };
 }]);
 
-app.controller('moduloControl', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
+app.controller('moduloControl', ['$scope', '$http', 'administrarCatalogos', 'administrarModulos', 'constants', function ($scope, $http, administrarCatalogos, administrarModulos, constants) {
     $scope.modulos = [];
     $scope.estadosGenerales = [];
     $scope.moduloActual = "";
@@ -368,7 +361,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
         $scope.codigo = "";
         $scope.descripcion = "";
         $scope.orden = "";
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -387,7 +380,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
                 "codigo": $scope.codigo,
                 "descripcion": $scope.descripcion,
                 "orden": $scope.orden,
-                "estado": $scope.estado.id
+                "estado": $scope.estado
             }
 
         if ($scope.id) {
@@ -446,7 +439,7 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
         }
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -473,13 +466,10 @@ app.controller('moduloControl', function ($scope, $http, administrarCatalogos, a
         $scope.codigo = $scope.moduloActual[0].codigo;
         $scope.descripcion = $scope.moduloActual[0].descripcion;
         $scope.orden = $scope.moduloActual[0].orden;
-        $scope.estadosGenerales.forEach(function (ele, ident) {
-            if (ele.id == $scope.moduloActual[0].estado) {
-                $scope.estado = $scope.estadosGenerales[ident];
-            }
-        });
+        $scope.estado = $scope.moduloActual[0].estado;
+
     }
-});
+}]);
 
 app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos', 'administrarFuncionalidades', 'administrarModulos', 'constants', '$anchorScroll', '$location',
     function ($scope, $http, administrarCatalogos, administrarFuncionalidades, administrarModulos, constants, $anchorScroll, $location) {
@@ -498,7 +488,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
         $scope.grupos = "";
         $scope.orden = null;
         $scope.icono = null;
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
         $scope.modulo = $scope.modulos;
 
         //Limpiar errores
@@ -524,7 +514,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -572,7 +562,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
             "descripcion": $scope.descripcion,
             //"grupos": $scope.grupos,
             "grupos": $scope.gruposActuales,
-            "estado": $scope.estado.id,
+            "estado": $scope.estado,
             "orden": $scope.orden,
             "icono": $scope.icono
         };
@@ -656,11 +646,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
                 $scope.descripcion = e.descripcion;
                 $scope.orden = e.orden;
                 $scope.icono = e.icono;
-                $scope.estadosGenerales.forEach(function (ele, ident) {
-                    if (ele.id == e.estado) {
-                        $scope.estado = $scope.estadosGenerales[ident];
-                    }
-                });
+                $scope.estado = e.estado;
                 $scope.modulos.forEach(function (ele, ident) {
                     if (ele.id == e.modulo) {
                         $scope.modulo = $scope.modulos[ident];
@@ -680,7 +666,7 @@ app.controller('funcionalidadControl', ['$scope', '$http', 'administrarCatalogos
 
 }]);
 
-app.controller('ParametroControl', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
+app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 'administrarCatalogos', 'constants', function ($scope, $http, administrarParametros, administrarCatalogos, constants) {
     $scope.parametros = [];
     $scope.estadosGenerales = [];
     $scope.parametroActual = "";
@@ -691,7 +677,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
         $scope.nombre = "";
         $scope.descripcion = "";
         $scope.valor = "";
-        $scope.estado = $scope.estadosGenerales;
+        $scope.estado = "";
 
         //limpiar errores
         $scope.limpiarErrores();
@@ -710,7 +696,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             "nombre": $scope.nombre,
             "valor": $scope.valor,
             "descripcion": $scope.descripcion,
-            "estado": $scope.estado.id
+            "estado": $scope.estado
         }
 
         if ($scope.id) {
@@ -770,7 +756,7 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
 
     };
 
-    administrarCatalogos.getItemsPorCatalogo("EST")
+    administrarCatalogos.getItemsPorCatalogo(constants.CAT_ESTADOS_GENERALES)
         .success(function (data) {
             $scope.estadosGenerales = data;
         })
@@ -800,16 +786,11 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             $scope.codigo = c.codigo;
             $scope.valor = c.valor;
             $scope.descripcion = c.descripcion;
-
-            $scope.estadosGenerales.forEach(function (ele, ident) {
-                if (ele.id == c.estado) {
-                    $scope.estado = $scope.estadosGenerales[ident];
-                }
-            });
+            $scope.estado = c.estado;
         });
 
         $scope.items = [];
-        $http.get('http://127.0.0.1:666/api-auth/item/?catalogo=' + codigo).
+        $http.get('/api-auth/item/?catalogo=' + codigo).
             success(function (data, status, headers, config) {
                 $scope.items = data;
             }).
@@ -818,7 +799,63 @@ app.controller('ParametroControl', function ($scope, $http, administrarParametro
             });
     }
 
-});
+}]);
+
+app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants', function ($scope,AdministrarAgenda, constants) {
+    $scope.dia = true;
+    $scope.semana = false;
+    $scope.mes = false;
+    $scope.rango = 'dia'
+    $scope.contador = 0;
+    var fecha = new Date();
+    var fechaVariable = new Date();
+    $scope.fechaActual = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+
+    $scope.getEventos = function(){
+       /* if(rango == "dia"){
+            $scope.rango = 'dia'
+            $scope.dia = true;
+            $scope.semana = false;
+            $scope.mes = false;
+        } else if(rango == "semana"){
+            $scope.rango = 'semana'
+            $scope.dia = false;
+            $scope.semana = true;
+            $scope.mes = false;
+        }else if(rango == "mes"){
+            $scope.rango = 'mes'
+            $scope.dia = false;
+            $scope.semana = false;
+            $scope.mes = true;
+        }*/
+        AdministrarAgenda.getEventos("fecha="+$scope.fechaActual+"&rango="+$scope.rango+"&contador="+$scope.contador)
+    .      success(function (data, status, headers, config) {
+                 $scope.eventos = data.agenda;
+                 $scope.textoCabeceraAgenda = data.textoCabeceraAgenda;
+                console.log(data);
+            }).
+            error(function (errors) {
+                console.log(errors);
+            });
+    };
+
+    $scope.eventos = $scope.getEventos();
+
+    $scope.getEventosActuales = function(){
+            $scope.contador = 0;
+            $scope.eventos = $scope.getEventos();
+    }
+
+    $scope.fechaAnterior = function(){
+        $scope.contador = $scope.contador - 1;
+        $scope.eventos = $scope.getEventos();
+    }
+
+    $scope.fechaSiguiente = function(){
+        $scope.contador = $scope.contador + 1;
+        $scope.eventos = $scope.getEventos();
+    }
+}]);
 
 
 

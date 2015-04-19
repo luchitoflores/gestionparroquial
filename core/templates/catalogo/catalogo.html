@@ -54,10 +54,10 @@
                                 <option value="">-- Seleccione --</option>
                             </select>
                             <label for="">Estado</label>
-                            <select name="estado" id="" ng-model="estado"
-                                    ng-options="estado.nombre for estado in estadosGenerales track by estado.id"
-                                    required>
+                            <select name="estado" id="" ng-model="estado" required>
                                 <option value="">-- Seleccione --</option>
+                                <option value="A">Activo</option>
+                                <option value="I">Inactivo</option>
                             </select>
                             <span ng-show="catalogoForm.estado.$invalid && !catalogoForm.estado.$pristine" class="help-block">El estado es requerido.</span>
 

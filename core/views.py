@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+
+import datetime
 import unicodedata
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.contrib.auth.decorators import login_required, permission_required
@@ -32,6 +34,33 @@ class PaginacionMixin(object):
             context['rango'] = [x for x in range(1,numero_paginas+1)]
 
         context['q'] = self.request.GET.get('q', '')
+        return context
+
+
+class PaginacionLogsMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(PaginacionLogsMixin, self).get_context_data(**kwargs)
+        numero_paginas = context['paginator'].num_pages
+        pagina_actual = context['page_obj'].number
+
+        if numero_paginas > 5 :
+            resta = numero_paginas - pagina_actual
+
+            if pagina_actual <= 2:
+                context['rango'] = [x for x in range(1,6)]
+            else:
+                if resta > 1:
+                    context['rango'] = [pagina_actual-2, pagina_actual-1, pagina_actual, pagina_actual+1, pagina_actual+2]
+                elif resta <= 1:
+                    context['rango'] = [x for x in range(numero_paginas-4,numero_paginas+1)]
+        elif numero_paginas <= 5:
+            context['rango'] = [x for x in range(1,numero_paginas+1)]
+
+        context['username'] = self.request.GET.get('username', '')
+        context['action_flag'] = self.request.GET.get('action_flag', '')
+        context['start_date'] = self.request.GET.get('start_date', '')
+        context['end_date'] = self.request.GET.get('end_date', '')
         return context
 
 
@@ -166,16 +195,32 @@ def catalogo_view(request):
     return HttpResponseRedirect('/catalogo/')
 
 
-class LogListView(PaginacionMixin, ListView):
+class LogListView(PaginacionLogsMixin, ListView):
     model = LogEntry
     template_name = 'seguridad/log_list.html'
     paginate_by = 10
 
     def get_queryset(self):
-        name = self.request.GET.get('q', '')
-        if name != '':
-            name = ''.join((c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
-            return LogEntry.objects.filter(user__username__icontains=name).order_by('user__username', '-action_time')
+        username = self.request.GET.get('username', '')
+        action_flag = self.request.GET.get('action_flag', '')
+        start_date = self.request.GET.get('start_date', '')
+        end_date = self.request.GET.get('end_date', '')
+
+        if start_date and end_date:
+            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+            start_datetime = datetime.datetime.combine(start_date, datetime.time.min)
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+            end_datetime = datetime.datetime.combine(end_date, datetime.time.max)
+            queryset = LogEntry.objects.filter(action_time__range=[start_datetime, end_datetime])
+
+            if username:
+                username = ''.join((c for c in unicodedata.normalize('NFD', unicode(username)) if unicodedata.category(c) != 'Mn'))
+                queryset = queryset.filter(user__username__icontains=username)
+            if action_flag:
+                queryset = queryset.filter(action_flag=action_flag)
+
+            return queryset.order_by('user__username', '-action_time')
+
         else:
             return LogEntry.objects.all().order_by('user__username', '-action_time')
 
@@ -184,3 +229,10 @@ class LogListView(PaginacionMixin, ListView):
                                           raise_exception=permission_required))
     def dispatch(self, *args, **kwargs):
         return super(LogListView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(LogListView, self).get_context_data(**kwargs)
+        # Add in the publisher
+        context['publisher'] = "prueba"
+        return context

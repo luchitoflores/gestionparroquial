@@ -1,10 +1,12 @@
+# -*- coding:utf-8 -*-
+
 __author__ = 'lucho'
 
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
-from .models import Catalogo, Item, Parametro
-from .constants import COD_CAT_TRANSACCIONES
+from .models import Catalogo, Item, Parametro, Direccion
+from .constants import *
 
 class ItemForm(ModelForm):
     class Meta:
@@ -30,7 +32,8 @@ class CatalogoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CatalogoForm, self).__init__(*args, **kwargs)
-        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod('EST')
+        self.fields['estado'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_ESTADOS_GENERALES)
+
         if self.instance.id:
             if self.instance.padre:
                 self.fields['padre'].queryset = Catalogo.objects.filter(id=self.instance.padre.id)
@@ -54,3 +57,24 @@ class SearchLogsForm(forms.Form):
     fecha_inicial = forms.DateField()
     fecha_final = forms.DateField()
     transaccion = forms.ModelChoiceField(queryset=Item.objects.items_por_catalogo_cod(COD_CAT_TRANSACCIONES))
+
+# Forms para dirección
+class DireccionForm(ModelForm):
+    class Meta:
+        model = Direccion
+        fields = ('domicilio', 'provincia', 'canton', 'parroquia', 'telefono')
+        widgets = {
+            'domicilio': forms.TextInput(attrs={'required': ''}),
+            'provincia': forms.Select(attrs={'required': ''}),
+            'canton': forms.Select(attrs={'required': '', 'disabled': ''}),
+            'parroquia': forms.Select(attrs={'required': '', 'disabled': ''}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(DireccionForm, self).__init__(*args, **kwargs)
+        self.fields['provincia'].empty_label = '-- Seleccione --'
+        self.fields['provincia'].queryset = Item.objects.provincias()
+        self.fields['canton'].queryset = Item.objects.none()
+        self.fields['canton'].empty_label = '-- Seleccione --'
+        self.fields['parroquia'].queryset = Item.objects.none()
+        self.fields['parroquia'].empty_label = '-- Seleccione --'

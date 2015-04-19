@@ -2,11 +2,18 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio() {
+
+  var windowWidth = $(window).width();
+  if(windowWidth <= 767) {//for iPad & smaller devices
+     $('.accordion-body').removeClass('in')}
+
     detectar_navegador();
+    cargar_accion_logs();
     tabla_vacia();
     cancelar_modal();
     var map = '';
     var map2 = '';
+    reporte_intenciones();
     crear_feligres('#id_crear_padre', '#id_padre', '#id_modal_padre');
     crear_feligres('#id_crear_madre', '#id_madre', '#id_modal_madre');
     crear_feligres('#id_crear_novio', '#id_novio', '#id_modal_padre');
@@ -53,9 +60,10 @@ function inicio() {
     controles_intenciones();
     controles_provincias();
     acordeon();
-    $(".dateinput").datepicker();
+
     //Inicializar todos los tooltips
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+    $('[data-toggle="popover"]').popover();
 
     /*jQuery.each($("select[multiple]"), function () {
         // "Locations" can be any label you want
@@ -66,6 +74,12 @@ function inicio() {
     /*modelo_tablas('#id_table_asignar_parroquia');*/
 
 }
+
+function cargar_accion_logs(){
+    var action_flag = $('#id_hidden_action_flag').val();
+    $("#id_action_flag").val(action_flag);
+}
+
 
 //Mantener la eleccion del acordeon
 function acordeon() {
@@ -981,13 +995,46 @@ function verificar_select_seleccionado() {
 function seleccionar_hora() {
     $('#id_tipo').on('change', function (e) {
         console.log('Change de tipo')
-        if ($('#id_tipo option:selected').text() == 'Diario') {
+        if ($('#id_tipo option:selected').val() == 'h') {
             e.preventDefault();
-            console.log('Entre al If de cambio');
             ($('#id_div_hora')).css('display', 'inline-block');
-        } else {
+            ($('#id_div_anio')).css('display', 'none');
+            $('#id_fecha').val("");
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'r') {
             ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'none');
+            $('#id_hora').val("");
+            $('#id_anio').val("");
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'a'){
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'none');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            $('#id_fecha').val("");
+            $('#id_fecha_final').val("");
+            $('#id_hora').val("");
+            ($('#id_div_anio')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'd') {
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'none');
+            $('#id_fecha_final').val("");
+            $('#id_hora').val("");
+            $('#id_anio').val("");
+        } else {
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_hora')).css('display', 'inline-block');
+            ($('#id_div_anio')).css('display', 'none');
+            $('#id_fecha_final').val("");
+            $('#id_anio').val("");
         }
+
+
     });
 }
 
@@ -1044,6 +1091,43 @@ function controles_provincias() {
     ($('#id_buscar_sacramentos').numeric());
 }
 
+
+function reporte_intenciones(){
+        console.log('Change de tipo prueba')
+        console.log($('#id_tipo option:selected').val());
+        if ($('#id_tipo option:selected').val() == '') {
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'none');
+            ($('#id_div_fecha_final')).css('display', 'none');
+        } else if ($('#id_tipo option:selected').val() == 'h') {
+            e.preventDefault();
+            ($('#id_div_hora')).css('display', 'inline-block');
+            ($('#id_div_anio')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'r') {
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'a'){
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_fecha_inicial')).css('display', 'none');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'inline-block');
+        } else if($('#id_tipo option:selected').val() == 'd') {
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_hora')).css('display', 'none');
+            ($('#id_div_anio')).css('display', 'none');
+        } else {
+            ($('#id_div_fecha_inicial')).css('display', 'inline-block');
+            ($('#id_div_fecha_final')).css('display', 'none');
+            ($('#id_div_hora')).css('display', 'inline-block');
+            ($('#id_div_anio')).css('display', 'none');
+        }
+}
 
 function asignar_email() {
     $('#id_form_email').on('submit', function (e) {

@@ -20,6 +20,7 @@ from .models import (PerfilUsuario,
                      ParametrizaDiocesis, ParametrizaParroquia, )
 from core.models import Item
 from core.constants import COD_CAT_NACIONALIDAD, COD_ITC_ECUADOR
+from sacramentos.models import Agenda
 from .validators import validate_cedula
 
 
@@ -154,8 +155,7 @@ class PersonaBaseForm(ModelForm):
         fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil');
         widgets = {
             'nacionalidad': forms.Select(attrs={'required': ''}),
-            'fecha_nacimiento': forms.TextInput(attrs={'required': '', 'data-date-format':
-                'dd/mm/yyyy', 'type': 'date'}),
+            'fecha_nacimiento': forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
             'lugar_nacimiento': forms.TextInput(attrs={'required': ''}),
         }
 
@@ -310,7 +310,7 @@ class LibroBaseForm(ModelForm):
         fields = ('fecha_apertura', 'primera_pagina', 'primera_acta')
         widgets = {
             'fecha_apertura': forms.TextInput(attrs={'required': '', 'data-date-format':
-                'dd/mm/yyyy', 'class': 'dateinput'}),
+                'dd/mm/yyyy', 'class': 'dateinput', 'type': 'date'}),
             'primera_pagina': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
             'primera_acta': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
         }
@@ -744,8 +744,8 @@ class IntencionForm(ModelForm):
         widgets = {
             'intencion': forms.Textarea(attrs={'required': '', 'title': 'intencion'}),
             'oferente': forms.TextInput(attrs={'required': ''}),
-            'ofrenda': forms.TextInput(attrs={'required': ''}),
-            'fecha': forms.TextInput(attrs={'required': '', 'type': 'date'}),
+            'ofrenda': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 0, 'step': "0.01"}),
+            'fecha': forms.TextInput(attrs={'required': '', 'type': 'date', 'data-date-format': 'dd/mm/yyyy'}),
             'hora': forms.TextInput(attrs={'required': '', 'type': 'time'}),
             'iglesia': forms.Select(attrs={'required': ''}),
         }
@@ -967,17 +967,29 @@ class ParametrizaParroquiaForm(ModelForm):
 class ReporteIntencionesForm(forms.Form):
     TIPO_REPORTE = (
         ('', '--- Seleccione ---'),
-        ('d', 'Diario'),
-        ('m', 'Mensual'),
         ('a', 'Anual'),
+        ('d', 'Diario'),
+        ('dh', 'Diario por horas'),
+        ('r', 'Rango de Fechas'),
+        ('h', 'Rango de Fechas y Hora')
+
     )
+
+    anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
+                           label='Año *', widget=forms.TextInput(attrs={'type': 'number', 'min': 1, 'max': 9999}))
+
     tipo = forms.TypedChoiceField(label=u'Tipo Reporte *',
                                   help_text='Seleccione un tipo de reporte Ej: Diario', choices=TIPO_REPORTE,
                                   required=True, widget=forms.Select(attrs={'required': ''}))
 
     fecha = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
-                            required=True, label='Fecha *',
-                            widget=forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy',
+                            label='Fecha Inicial *', required=False,
+                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
+                                                          'type': 'date'}))
+
+    fecha_final = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
+                            label='Fecha Final *', required=False,
+                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
     hora = forms.CharField(required=False, help_text='Ingrese una hora ej: 8:00 - 17:00',
@@ -1041,6 +1053,23 @@ class ReportePermisoForm(forms.Form):
         self.fields['feligres'] = forms.ModelChoiceField(label='Feligres *',
                                                          queryset=feligres, empty_label='-- Buscar o Crear --',
                                                          widget=forms.Select(attrs={'required': ''}))
-		
-		
+
+
+class EventoForm(forms.ModelForm):
+    class Meta:
+        model = Agenda
+        fields = ('evento', 'fecha', 'hora')
+        widgets = {
+            'fecha':  forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'hora': forms.TextInput(attrs={'type': 'time'}),
+        }
+
+
+
+    # def __init__(self, *args, **kwargs):
+    #     self.request = kwargs.pop('request', None)
+    #     super(EventoForm, self).__init__(*args, **kwargs)
+    #     parroquia = self.request.session.get('parroquia')
+
+
 

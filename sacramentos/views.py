@@ -19,7 +19,7 @@ from django.forms.util import ErrorList
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.utils.decorators import method_decorator
 from django.utils.html import format_html, mark_safe
 from django.views.generic import ListView
@@ -29,7 +29,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.contrib.contenttypes.models import ContentType
 
-from ho import pisa
+from xhtml2pdf import pisa
 import StringIO
 import cgi
 import reportlab
@@ -39,33 +39,32 @@ from sacramentos.models import (PerfilUsuario,
                                 Parroquia, Intencion,
                                 AsignacionParroquia, PeriodoAsignacionParroquia,
                                 ParametrizaDiocesis, ParametrizaParroquia,
-                                Iglesia
-                                )
+                                Iglesia, Agenda)
 
 from sacramentos.forms import (
-UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
-PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
-EmailForm,
-MatrimonioForm, MatrimonioForm,
-BautismoForm,
-EucaristiaForm, EucaristiaForm,
-ConfirmacionForm, ConfirmacionForm,
-LibroForm, LibroBaseForm, NotaMarginalForm,
-DivErrorList,
-IntencionForm,
-ParroquiaForm,
-IglesiaForm,
-AsignarParroquiaForm, PeriodoAsignacionParroquiaForm,
-AsignarSecretariaForm,
-ParametrizaDiocesisForm, ParametrizaParroquiaForm,
-ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
-)
+    UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
+    PerfilUsuarioForm, PadreForm, SacerdoteForm, AdministradorForm, AdminForm, SecretariaForm,
+    EmailForm,
+    MatrimonioForm, MatrimonioForm,
+    BautismoForm,
+    EucaristiaForm, EucaristiaForm,
+    ConfirmacionForm, ConfirmacionForm,
+    LibroForm, LibroBaseForm, NotaMarginalForm,
+    DivErrorList,
+    IntencionForm,
+    ParroquiaForm,
+    IglesiaForm,
+    AsignarParroquiaForm, PeriodoAsignacionParroquiaForm,
+    AsignarSecretariaForm,
+    ParametrizaDiocesisForm, ParametrizaParroquiaForm,
+    ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
+    EventoForm)
 
-from ciudades.forms import DireccionForm
-from ciudades.models import Canton, Provincia, Parroquia as ParroquiaCivil
+from core.forms import DireccionForm
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
-from core.constants import MENSAJE_ERROR, MENSAJE_EXITO_CREACION, MENSAJE_EXITO_ACTUALIZACION
+from core.constants import *
 from core.models import Item
+
 _reportlab_version = tuple(map(int, reportlab.Version.split('.')))
 if _reportlab_version < (2, 1):
     raise ImportError("Reportlab Version 2.1+ is needed!")
@@ -82,11 +81,11 @@ def configuracion_inicial_view(request):
     confirmacion = Libro.objects.filter(tipo_libro='confirmacion', principal=True).exists()
     matrimonio = Libro.objects.filter(tipo_libro='matrimonio', principal=True).exists()
     ctx = {
-    'iglesia': iglesia,
-    'libro_bautismo': bautismo,
-    'libro_eucaristia': eucaristia,
-    'libro_confirmacion': confirmacion,
-    'libro_matrimonio': matrimonio
+        'iglesia': iglesia,
+        'libro_bautismo': bautismo,
+        'libro_eucaristia': eucaristia,
+        'libro_confirmacion': confirmacion,
+        'libro_matrimonio': matrimonio
     }
     return render(request, template_name, ctx)
 
@@ -159,7 +158,7 @@ def edit_usuario_view(request, pk):
     user = perfil.user
 
     # if perfil.user.groups.filter(name='Administrador').exists() or perfil.user.groups.filter(name='Sacerdote').exists():
-    # 	raise Http404
+    # raise Http404
 
     if perfil.user.groups.filter(name='Sacerdote').exists():
         raise Http404
@@ -351,7 +350,7 @@ def administrador_update_view(request, pk):
             usuario = form_usuario.save()
             perfil = form_perfil.save()
             if not usuario.is_staff:
-                #Esta linea de código permite desloguear a un usuario de manera remota
+                # Esta linea de código permite desloguear a un usuario de manera remota
                 [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == usuario.id]
             LogEntry.objects.log_action(
                 user_id=request.user.id,
@@ -648,6 +647,7 @@ class LibroListView(PaginacionMixin, ListView):
     def dispatch(self, *args, **kwargs):
         return super(LibroListView, self).dispatch(*args, **kwargs)
 
+
 # VISTAS PARA ADMIN DE BAUTISMO
 
 @login_required(login_url='/login/')
@@ -679,7 +679,7 @@ def bautismo_create_view(request):
             # bautismo.numero_acta=num+1
 
             # if bautismo.numero_acta%2 == 0:
-            # 	bautismo.pagina=pagina
+            # bautismo.pagina=pagina
             # else:
             # 	bautismo.pagina=pagina+1
 
@@ -709,6 +709,7 @@ def bautismo_create_view(request):
         formBautismo = BautismoForm(request)
     ctx = {'formBautismo': formBautismo, 'tipo_sacramento': 'bautismo'}
     return render(request, 'bautismo/bautismo_form.html', ctx)
+
 
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_bautismo', login_url='/login/', raise_exception=permission_required)
@@ -806,7 +807,7 @@ def eucaristia_create_view(request):
             # pagina=ultimo_eucaristia.pagina
             # eucaristia.numero_acta=num+1
             # if eucaristia.numero_acta%2 == 0:
-            # 	eucaristia.pagina=pagina
+            # eucaristia.pagina=pagina
             # else:
             # 	eucaristia.pagina=pagina+1
 
@@ -905,6 +906,7 @@ class EucaristiaListView(PaginacionMixin, ListView):
     def dispatch(self, *args, **kwargs):
         return super(EucaristiaListView, self).dispatch(*args, **kwargs)
 
+
 # VISTAS PARA ADMIN DE CONFIRMACION
 
 @login_required(login_url='/login/')
@@ -939,7 +941,7 @@ def confirmacion_create_view(request):
             # confirmacion.numero_acta=num+1
             # pagina=ultima_confirmacion.pagina
             # if confirmacion.numero_acta%2 == 0:
-            # 	confirmacion.pagina=pagina
+            # confirmacion.pagina=pagina
             # else:
             # 	confirmacion.pagina=pagina+1
 
@@ -1238,7 +1240,7 @@ class MatrimonioNoVigenteListView(PaginacionMixin, ListView):
         return super(MatrimonioNoVigenteListView, self).dispatch(*args, **kwargs)
 
 
-#Preguntar si esta función es ajax
+# Preguntar si esta función es ajax
 @login_required(login_url='/login/')
 @permission_required('sacramentos.delete_matrimonio', login_url='/login/',
                      raise_exception=permission_required)
@@ -1283,6 +1285,7 @@ def matrimonio_ajax_view(request):
     ctx = {'list_matrimonios': list_matrimonios, 'exito': exito}
     return HttpResponse(json.dumps(ctx), content_type='application/json')
 
+
 #Vistas para crear una parroquia
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_parroquia', login_url='/login/',
@@ -1298,8 +1301,8 @@ def parroquia_create_view(request):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST)
         form_direccion = DireccionForm(request.POST)
-        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
-        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
         if form_parroquia.is_valid() and form_direccion.is_valid():
             parroquia = form_parroquia.save(commit=False)
             direccion = form_direccion.save()
@@ -1338,8 +1341,8 @@ def parroquia_update_view(request, pk):
     if request.method == 'POST':
         form_parroquia = ParroquiaForm(request.POST, instance=parroquia)
         form_direccion = DireccionForm(request.POST, instance=direccion)
-        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod('CANTONES')
-        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod('PARROQUIAS')
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
         if form_parroquia.is_valid() and form_direccion.is_valid():
             form_parroquia.save()
             form_direccion.save()
@@ -1454,7 +1457,7 @@ def intencion_create_view(request):
         except ObjectDoesNotExist:
             mensaje = 'No tiene configurada una Iglesia principal. Configurela '
             msg = mark_safe(u"%s %s" % (
-            mensaje, '<a class="btn btn-primary" href="#id_modal_iglesia" data-toggle="modal">aqui</a>'))
+                mensaje, '<a class="btn btn-primary" href="#id_modal_iglesia" data-toggle="modal">aqui</a>'))
             messages.info(request, msg)
         ctx = {'form': form_intencion}
         return render(request, template_name, ctx)
@@ -1481,9 +1484,9 @@ def intencion_edit_view(request, pk):
             hora = request.POST.get('hora')
             individual = request.POST.get('individual')
             intencion_unica = Intencion.objects.filter(fecha=fecha, hora=hora, parroquia=intencion.parroquia,
-                                                         individual=True).exclude(pk=pk)
+                                                       individual=True).exclude(pk=pk)
             intenciones_colectivas = Intencion.objects.filter(fecha=fecha, hora=hora,
-                                                                parroquia=intencion.parroquia).exclude(pk=pk)
+                                                              parroquia=intencion.parroquia).exclude(pk=pk)
             if intencion_unica:
                 messages.error(request, MENSAJE_ERROR)
                 form_intencion.errors['individual'] = ErrorList([
@@ -1515,6 +1518,7 @@ def intencion_edit_view(request, pk):
     else:
         form_intencion = IntencionForm(instance=intencion)
         ctx = {'form': form_intencion, 'object': intencion}
+        print form_intencion
         return render(request, template_name, ctx)
 
 
@@ -1529,7 +1533,7 @@ class IntencionListView(BusquedaMixin, ListView):
             name = self.request.GET.get('q', '')
             if (name != ''):
                 return Intencion.objects.filter(oferente__icontains=name, parroquia=parroquia).order_by('-fecha',
-                                                                                                          'hora')
+                                                                                                        'hora')
             else:
                 return Intencion.objects.filter(parroquia=parroquia).order_by('-fecha', 'hora')
         else:
@@ -1598,7 +1602,7 @@ def asignar_parroquia_create(request):
         else:
             messages.error(request, MENSAJE_ERROR)
             ctx = {'form': form, 'form_periodo': form_periodo}
-        # return render(request, template_name, ctx)
+            # return render(request, template_name, ctx)
     else:
         form_periodo = PeriodoAsignacionParroquiaForm()
         form = AsignarParroquiaForm()
@@ -1703,7 +1707,7 @@ def asignar_parroquia_update(request, pk):
         else:
             messages.error(request, MENSAJE_ERROR)
             ctx = {'form': form, 'form_periodo': form_periodo, 'object': asignacion.parroquia}
-        # return render(request, template_name, ctx)
+            # return render(request, template_name, ctx)
     else:
         form_periodo = periodos
         form = AsignarParroquiaForm(instance=asignacion)
@@ -1930,7 +1934,7 @@ def asignar_secretaria_create(request):
                                                                             asignacion__parroquia=parroquia)
                         mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
                         msg = mark_safe(u"%s %s" % (
-                        mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
+                            mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
                         form.errors["persona"] = ErrorList([msg])
                         messages.error(request, MENSAJE_ERROR)
                         ctx = {'form': form, 'form_periodo': form_periodo}
@@ -1984,6 +1988,7 @@ def asignar_secretaria_create(request):
         return render(request, template_name, ctx)
     except ObjectDoesNotExist:
         raise PermissionDenied
+
 
 #El parámetro pk es el id de un periodo
 @login_required(login_url='/login/')
@@ -2128,8 +2133,8 @@ def parametriza_diocesis_create(request):
         else:
             form_parametriza = ParametrizaDiocesisForm(request.POST)
             form_direccion = DireccionForm(request.POST)
-        form_direccion.fields['canton'].queryset = Canton.objects.all()
-        form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.all()
+        form_direccion.fields['canton'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_CANTON)
+        form_direccion.fields['parroquia'].queryset = Item.objects.items_por_catalogo_cod(COD_CAT_PARROQUIA)
 
         if form_parametriza.is_valid() and form_direccion.is_valid():
             parametriza = form_parametriza.save(commit=False)
@@ -2153,8 +2158,9 @@ def parametriza_diocesis_create(request):
         if objeto:
             form_parametriza = ParametrizaDiocesisForm(instance=objeto)
             form_direccion = DireccionForm(instance=objeto.direccion)
-            form_direccion.fields['canton'].queryset = Canton.objects.filter(provincia=objeto.direccion.provincia)
-            form_direccion.fields['parroquia'].queryset = ParroquiaCivil.objects.filter(canton=objeto.direccion.canton)
+            form_direccion.fields['canton'].queryset = Item.objects.cantones().filter(padre=objeto.direccion.provincia)
+            form_direccion.fields['parroquia'].queryset = Item.objects.parroquias().filter(
+                padre=objeto.direccion.canton)
         else:
             form_parametriza = ParametrizaDiocesisForm()
             form_direccion = DireccionForm()
@@ -2451,7 +2457,7 @@ def reporte_anual_sacramentos(request):
                                                parroquia=asignacion.parroquia).count()
             matrimonios = catolicos + mixtos
             form = ReporteSacramentosAnualForm(request.GET)
-            if (bautismos or eucaristias or confirmaciones or matrimonios):
+            if bautismos or eucaristias or confirmaciones or matrimonios:
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_anual_sacramentos.html',
                                             {'pagesize': 'A4', 'num_bautizos': num_bautizos, 'ninios1': ninios1,
@@ -2468,7 +2474,7 @@ def reporte_anual_sacramentos(request):
                 else:
                     messages.error(request, MENSAJE_ERROR)
                     ctx = {'form': form}
-                # return render(request, template_name, ctx)
+                    # return render(request, template_name, ctx)
             else:
                 messages.error(request, 'No hay sacramentos en este año')
                 ctx = {'form': form}
@@ -2489,97 +2495,99 @@ def reporte_anual_sacramentos(request):
                      raise_exception=permission_required)
 def reporte_intenciones(request):
     parroquia = request.session.get('parroquia')
+    user = request.user
     if not parroquia:
         raise PermissionDenied
     tipo = request.GET.get('tipo')
-    fecha = request.GET.get('fecha')
-    # mes=request.GET.get('fecha')
+    fecha_inicial = request.GET.get('fecha')
+    fecha_final = request.GET.get('fecha_final')
+    anio = request.GET.get('anio')
     hora = request.GET.get('hora')
     template_name = "reportes/reporte_intenciones_form.html"
-    if tipo == 'd':
-        if fecha and not hora:
+
+    if tipo == 'dh':  # reporte diario por horas
+        if fecha_inicial and hora:
+            try:
+                p = ParametrizaDiocesis.objects.all()
+            except ObjectDoesNotExist:
+                raise PermissionDenied
+            intenciones = Intencion.objects.filter(fecha=fecha_inicial, hora=hora, parroquia=parroquia).order_by('hora')
+            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+                                                   parroquia=parroquia, periodos__estado=True)
+            form = ReporteIntencionesForm(request.GET)
+
+            if intenciones:
+                suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
+
+                if form.is_valid():
+                    html = render_to_string('reportes/reporte_intenciones.html',
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
+                                            context_instance=RequestContext(request))
+                    return generar_pdf(html)
+
+                else:
+                    messages.error(request, MENSAJE_ERROR)
+                    ctx = {'form': form}
+                    return render(request, template_name, ctx)
+            else:
+                messages.error(request, 'No hay intenciones en ha fecha ingresada')
+                ctx = {'form': form}
+                return render(request, template_name, ctx)
+
+    if tipo == 'd':  # reporte diario
+        if fecha_inicial:
             p = ParametrizaDiocesis.objects.all()
-            intenciones = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha=fecha, parroquia=parroquia).aggregate(Sum('ofrenda'))[
-                'ofrenda__sum']
+            intenciones = Intencion.objects.filter(fecha=fecha_inicial, parroquia=parroquia).order_by('hora')
+            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+                                                   parroquia=parroquia, periodos__estado=True)
+            form = ReporteIntencionesForm(request.GET)
+
+            if intenciones:
+                suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
+
+                if form.is_valid():
+                    html = render_to_string('reportes/reporte_intenciones.html',
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
+                                            context_instance=RequestContext(request))
+                    return generar_pdf(html)
+
+                else:
+                    messages.error(request, MENSAJE_ERROR)
+                    ctx = {'form': form}
+                    return render(request, template_name, ctx)
+
+            else:
+                messages.error(request, 'No hay intenciones en la fecha ingresada')
+                form.fields['fecha'].widget = forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date',
+                                                                     'style': 'display:inline-block;'})
+                ctx = {'form': form}
+                return render(request, template_name, ctx)
+
+    if tipo == 'r':  # reporte por rango de fechas
+
+        if fecha_inicial and fecha_final:
+            try:
+                p = ParametrizaDiocesis.objects.all()
+            except ObjectDoesNotExist:
+                raise PermissionDenied
+
+            start_date = datetime.strptime(fecha_inicial, "%Y-%m-%d").date()
+            end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
+
+            intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date],
+                                                   parroquia=parroquia).order_by('hora')
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
                                                    parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
             if intenciones:
-
                 if form.is_valid():
+
+                    suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
                     html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
-                                            context_instance=RequestContext(request))
-                    return generar_pdf(html)
-
-
-                else:
-                    messages.error(request, MENSAJE_ERROR)
-                    ctx = {'form': form}
-                    return render(request, template_name, ctx)
-            else:
-                messages.error(request, 'No hay intenciones en la fecha ingresada')
-                ctx = {'form': form}
-                return render(request, template_name, ctx)
-
-        if fecha and hora:
-            try:
-                asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-                                                             periodos__estado=True)
-                p = ParametrizaDiocesis.objects.all()
-            except ObjectDoesNotExist:
-                raise PermissionDenied
-            intenciones = Intencion.objects.filter(fecha=fecha, hora=hora,
-                                                     parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha=fecha, hora=hora,
-                                              parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
-            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-                                                   parroquia=asignacion.parroquia, periodos__estado=True)
-            form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
-
-                if form.is_valid():
-                    html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
-                                            context_instance=RequestContext(request))
-                    return generar_pdf(html)
-
-
-                else:
-                    messages.error(request, MENSAJE_ERROR)
-                    ctx = {'form': form}
-                    return render(request, template_name, ctx)
-            else:
-                messages.error(request, 'No hay intenciones en ha fecha ingresada')
-                ctx = {'form': form}
-                return render(request, template_name, ctx)
-
-    if tipo == 'm':
-
-        if fecha:
-            mes = fecha[5:7]
-            anio = fecha[:4]
-            try:
-                asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-                                                             periodos__estado=True)
-                p = ParametrizaDiocesis.objects.all()
-            except ObjectDoesNotExist:
-                raise PermissionDenied
-            intenciones = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
-                                                     parroquia=asignacion.parroquia).order_by('hora')
-            suma = Intencion.objects.filter(fecha__year=anio, fecha__month=mes,
-                                              parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
-            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-                                                   parroquia=asignacion.parroquia, periodos__estado=True)
-            form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
-                if form.is_valid():
-                    html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
-                                             'cura': cura, 'suma': suma, 'p': p},
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
                                             context_instance=RequestContext(request))
                     return generar_pdf(html)
 
@@ -2592,31 +2600,61 @@ def reporte_intenciones(request):
                 ctx = {'form': form}
                 return render(request, template_name, ctx)
 
-    if tipo == 'a':
-        if fecha:
-            fecha = fecha
-            anio = fecha[:4]
+    if tipo == 'h':  # reporte por fecha y horas
+
+        if fecha_inicial and fecha_final and hora:
             try:
-                asignacion = AsignacionParroquia.objects.get(persona__user=request.user,
-                                                             periodos__estado=True)
+                p = ParametrizaDiocesis.objects.all()
+            except ObjectDoesNotExist:
+                raise PermissionDenied
+
+            start_date = datetime.strptime(fecha_inicial, "%Y-%m-%d").date()
+            end_date = datetime.strptime(fecha_final, "%Y-%m-%d").date()
+
+            intenciones = Intencion.objects.filter(fecha__range=[start_date, end_date], hora=hora,
+                                                   parroquia=parroquia).order_by('hora')
+            cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
+                                                   parroquia=parroquia, periodos__estado=True)
+            form = ReporteIntencionesForm(request.GET)
+            if intenciones:
+                if form.is_valid():
+
+                    suma = intenciones.aggregate(Sum('ofrenda'))['ofrenda__sum']
+                    html = render_to_string('reportes/reporte_intenciones.html',
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
+                                             'cura': cura, 'suma': suma, 'p': p, 'user': user},
+                                            context_instance=RequestContext(request))
+                    return generar_pdf(html)
+
+                else:
+                    messages.error(request, MENSAJE_ERROR)
+                    ctx = {'form': form}
+                    return render(request, template_name, ctx)
+            else:
+                messages.error(request, 'No hay intenciones en ha fecha ingresada')
+                ctx = {'form': form}
+                return render(request, template_name, ctx)
+
+    if tipo == 'a':  # reporte anual
+        if anio:
+            try:
                 p = ParametrizaDiocesis.objects.all()
             except ObjectDoesNotExist:
                 raise PermissionDenied
             intenciones = Intencion.objects.filter(fecha__year=anio,
-                                                     parroquia=asignacion.parroquia).order_by('hora')
+                                                   parroquia=parroquia).order_by('hora')
             suma = Intencion.objects.filter(fecha__year=anio,
-                                              parroquia=asignacion.parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
+                                            parroquia=parroquia).aggregate(Sum('ofrenda'))['ofrenda__sum']
             cura = AsignacionParroquia.objects.get(persona__user__groups__name='Sacerdote',
-                                                   parroquia=asignacion.parroquia, periodos__estado=True)
+                                                   parroquia=parroquia, periodos__estado=True)
             form = ReporteIntencionesForm(request.GET)
-            if (intenciones):
+            if intenciones:
                 if form.is_valid():
                     html = render_to_string('reportes/reporte_intenciones.html',
-                                            {'pagesize': 'A4', 'intenciones': intenciones, 'asignacion': asignacion,
+                                            {'pagesize': 'A4', 'intenciones': intenciones, 'parroquia': parroquia,
                                              'cura': cura, 'suma': suma, 'p': p},
                                             context_instance=RequestContext(request))
                     return generar_pdf(html)
-
 
                 else:
                     messages.error(request, MENSAJE_ERROR)
@@ -2821,7 +2859,7 @@ def reporte_sacerdotes_parroquias(request, pk):
 @permission_required('admin.change_logentry', login_url='/login/',
                      raise_exception=permission_required)
 def exportar_csv_logs(request):
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment;filename="logs.csv"'
     writer = csv.writer(response)
     logs = LogEntry.objects.all()
@@ -2831,6 +2869,7 @@ def exportar_csv_logs(request):
         writer.writerow([log.id, log.action_time, log.user, log.content_type, log.object_id, encode(log.object_repr),
                          log.action_flag, encode(log.change_message)])
     return response
+
 
 # para poder exportar a csv con utf-8
 
@@ -2942,8 +2981,81 @@ class IglesiaUpdateView(UpdateView):
         return super(IglesiaUpdateView, self).form_invalid(form)
 
 
+def buscar_sacramentos_view(request):
+    if not request.user.is_authenticated():
+        query = request.GET.get('q', '')
+        results1 = ''
+        results2 = ''
+        results3 = ''
+        results4 = ''
+        results5 = ''
+        if query:
+            try:
+                f = PerfilUsuario.objects.get(dni=query)
+                results1 = Bautismo.objects.filter(bautizado=f)
+                results2 = Eucaristia.objects.filter(feligres=f)
+                results3 = Confirmacion.objects.filter(confirmado=f)
+
+                if f.sexo == 'm':
+                    results4 = Matrimonio.objects.filter(novio=f)
+                else:
+                    results5 = Matrimonio.objects.filter(novia=f)
+            except ObjectDoesNotExist:
+                return render_to_response("buscar.html", {"results1": results1, "results2": results2,
+                                                          "results3": results3, "results4": results4,
+                                                          "results5": results5})
+        else:
+            results1 = []
+            results2 = []
+            results3 = []
+            results4 = []
+            results5 = []
+        return render_to_response("buscar.html", {"results1": results1, "results2": results2, "results3": results3,
+                                                  "results4": results4, "results5": results5})
+    else:
+        return HttpResponseRedirect('/home/')
 
 
+class EventoCreateView(CreateView):
+    model = Agenda
+    template_name = 'agenda/evento_form.html'
+    success_url = reverse_lazy('agenda_list')
+    form_class = EventoForm
+
+    def form_valid(self, form):
+        messages.success(self.request, MENSAJE_EXITO_CREACION)
+        parroquia = self.request.session.get('parroquia', '')
+        if parroquia:
+            form.instance.parroquia = parroquia
+        else:
+            raise PermissionDenied
+        return super(EventoCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, MENSAJE_ERROR)
+        return super(EventoCreateView, self).form_invalid(form)
+
+
+class EventoUpdateView(UpdateView):
+    model = Agenda
+    template_name = 'agenda/evento_form.html'
+    success_url = reverse_lazy('agenda_list')
+    form_class = EventoForm
+
+
+    def form_valid(self, form):
+        messages.success(self.request, MENSAJE_EXITO_ACTUALIZACION)
+        return super(EventoUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, MENSAJE_ERROR)
+        return super(EventoUpdateView, self).form_invalid(form)
+
+    def get_object(self, queryset=None):
+        obj = Agenda.objects.get(id=self.kwargs['pk'])
+        print obj.evento
+        print obj.fecha
+        return obj
 
 
 
