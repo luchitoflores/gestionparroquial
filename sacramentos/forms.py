@@ -20,6 +20,7 @@ from .models import (PerfilUsuario,
                      ParametrizaDiocesis, ParametrizaParroquia, )
 from core.models import Item
 from core.constants import COD_CAT_NACIONALIDAD, COD_ITC_ECUADOR
+from sacramentos.models import Agenda
 from .validators import validate_cedula
 
 
@@ -1053,6 +1054,23 @@ class ReportePermisoForm(forms.Form):
         self.fields['feligres'] = forms.ModelChoiceField(label='Feligres *',
                                                          queryset=feligres, empty_label='-- Buscar o Crear --',
                                                          widget=forms.Select(attrs={'required': ''}))
-		
-		
+
+
+class EventoForm(forms.ModelForm):
+    class Meta:
+        model = Agenda
+        fields = ('evento', 'fecha', 'hora')
+        widgets = {
+
+            'fecha':  forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
+                                                          'type': 'date'}),
+            'hora': forms.TextInput(attrs={'type': 'time'})
+        }
+
+    # def __init__(self, *args, **kwargs):
+    #     self.request = kwargs.pop('request', None)
+    #     super(EventoForm, self).__init__(*args, **kwargs)
+    #     parroquia = self.request.session.get('parroquia')
+
+
 

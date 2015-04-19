@@ -801,6 +801,62 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
 
 }]);
 
+app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants', function ($scope,AdministrarAgenda, constants) {
+    $scope.dia = true;
+    $scope.semana = false;
+    $scope.mes = false;
+    $scope.rango = 'dia'
+    $scope.contador = 0;
+    var fecha = new Date();
+    var fechaVariable = new Date();
+    $scope.fechaActual = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+
+    $scope.getEventos = function(){
+       /* if(rango == "dia"){
+            $scope.rango = 'dia'
+            $scope.dia = true;
+            $scope.semana = false;
+            $scope.mes = false;
+        } else if(rango == "semana"){
+            $scope.rango = 'semana'
+            $scope.dia = false;
+            $scope.semana = true;
+            $scope.mes = false;
+        }else if(rango == "mes"){
+            $scope.rango = 'mes'
+            $scope.dia = false;
+            $scope.semana = false;
+            $scope.mes = true;
+        }*/
+        AdministrarAgenda.getEventos("fecha="+$scope.fechaActual+"&rango="+$scope.rango+"&contador="+$scope.contador)
+    .      success(function (data, status, headers, config) {
+                 $scope.eventos = data.agenda;
+                 $scope.textoCabeceraAgenda = data.textoCabeceraAgenda;
+                console.log(data);
+            }).
+            error(function (errors) {
+                console.log(errors);
+            });
+    };
+
+    $scope.eventos = $scope.getEventos();
+
+    $scope.getEventosActuales = function(){
+            $scope.contador = 0;
+            $scope.eventos = $scope.getEventos();
+    }
+
+    $scope.fechaAnterior = function(){
+        $scope.contador = $scope.contador - 1;
+        $scope.eventos = $scope.getEventos();
+    }
+
+    $scope.fechaSiguiente = function(){
+        $scope.contador = $scope.contador + 1;
+        $scope.eventos = $scope.getEventos();
+    }
+}]);
+
 
 
 

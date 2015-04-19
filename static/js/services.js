@@ -110,3 +110,14 @@ app.factory("administrarFuncionalidades", ['$http', function ($http) {
 
     return funcionalidades;
 }]);
+
+
+app.factory("AdministrarAgenda", ['$http', function ($http) {
+    var eventos = {};
+
+    eventos.getEventos = function (queryparams) {
+        return $http.get('/api-auth/agenda/?'+queryparams);
+    };
+
+    return eventos;
+}]);

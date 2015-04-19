@@ -39,8 +39,7 @@ from sacramentos.models import (PerfilUsuario,
                                 Parroquia, Intencion,
                                 AsignacionParroquia, PeriodoAsignacionParroquia,
                                 ParametrizaDiocesis, ParametrizaParroquia,
-                                Iglesia
-)
+                                Iglesia, Agenda)
 
 from sacramentos.forms import (
     UsuarioForm, UsuarioPadreForm, UsuarioSacerdoteForm, UsuarioAdministradorForm, UsuarioSecretariaForm,
@@ -59,7 +58,7 @@ from sacramentos.forms import (
     AsignarSecretariaForm,
     ParametrizaDiocesisForm, ParametrizaParroquiaForm,
     ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
-)
+    EventoForm)
 
 from core.forms import DireccionForm
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
@@ -3016,8 +3015,46 @@ def buscar_sacramentos_view(request):
         return HttpResponseRedirect('/home/')
 
 
+class EventoCreateView(CreateView):
+    model = Agenda
+    template_name = 'agenda/evento_form.html'
+    success_url = reverse_lazy('agenda_list')
+    form_class = EventoForm
+
+    def form_valid(self, form):
+        messages.success(self.request, MENSAJE_EXITO_CREACION)
+        parroquia = self.request.session.get('parroquia', '')
+        if parroquia:
+            form.instance.parroquia = parroquia
+        else:
+            raise PermissionDenied
+        return super(EventoCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, MENSAJE_ERROR)
+        return super(EventoCreateView, self).form_invalid(form)
 
 
+class EventoUpdateView(UpdateView):
+    model = Agenda
+    template_name = 'agenda/evento_form.html'
+    success_url = reverse_lazy('agenda_list')
+    form_class = EventoForm
+
+
+    def form_valid(self, form):
+        messages.success(self.request, MENSAJE_EXITO_ACTUALIZACION)
+        return super(EventoUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, MENSAJE_ERROR)
+        return super(EventoUpdateView, self).form_invalid(form)
+
+    def get_object(self, queryset=None):
+        obj = Agenda.objects.get(id=self.kwargs['pk'])
+        print obj.evento
+        print obj.fecha
+        return obj
 
 
 

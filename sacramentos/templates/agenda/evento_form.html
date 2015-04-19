@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% block content_title %}
+        {% if object.id %}Editar Evento {% else %}Agregar un Evento{% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li><a href="{% url 'agenda_list' %}">Agenda Pastoral</a></li>
+    <span class="divider">»</span>
+    {% if object.id %}
+        <li class='active'>{{ object }}</li>{% else %}
+        <li class='active'>Nuevo Evento
+        </li>{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="id_mensaje">
+
+    </div>
+
+    <form id='id_form_evento' method='POST' class='form-horizontal' action=".">
+        {% csrf_token %}
+
+        <div class='row'>
+            <div class='span8'>
+                <fieldset class='scheduler-border'>
+                    <legend class='scheduler-border'>Datos del Sacramento</legend>
+                    {% for f in form %}
+
+
+
+                            <div class="control-group">
+                                <label for="" class="control-label">
+                                    {{ f.label }} *
+                                </label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        {{ f }}
+
+					</span>
+                                    </div>
+                                </div>
+                                <div class="controls help-text">
+                                    {{ f.help_text }}
+                                </div>
+                                <div class="controls">
+                                    <div class="errors">
+                                        {{ f.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                    {% endfor %}
+
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit" class='btn btn-primary'> Guardar</button>
+                    <a href="{% url 'agenda_list' %}" class='btn btn-danger'>Cancelar</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+
+
+{% endblock %}

@@ -20,6 +20,8 @@ ParametrizaDiocesis,ParametrizaParroquia,
 # User.__unicode__ = user_unicode
 # admin.site.unregister(User)
 # admin.site.register(User)
+from sacramentos.models import Agenda
+
 
 class LibroAdmin(admin.ModelAdmin):
 	# fields = ('nombre', 'numero_libro', 'tipo_libro', 'fecha_apertura')
@@ -44,4 +46,5 @@ admin.site.register(ParametrizaParroquia)
 admin.site.register(PerfilUsuario)
 admin.site.register(PeriodoAsignacionParroquia)
 admin.site.register(Permission)
+admin.site.register(Agenda)
 

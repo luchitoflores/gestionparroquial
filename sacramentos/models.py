@@ -546,3 +546,10 @@ class Configuracion(TimeStampedModel):
 
 class Padrino(models.Model):
     nombre = models.CharField('nombre', max_length=50)
+
+
+class Agenda(models.Model):
+    evento = models.TextField(max_length= 400, help_text="Ingrese la descripción del evento.")
+    fecha = models.DateField(help_text='Ingrese la fecha del evento.')
+    hora = models.TimeField(help_text='Ingrese la hora del evento.')
+    parroquia = models.ForeignKey(Parroquia)
