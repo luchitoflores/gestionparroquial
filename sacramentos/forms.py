@@ -155,8 +155,7 @@ class PersonaBaseForm(ModelForm):
         fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil');
         widgets = {
             'nacionalidad': forms.Select(attrs={'required': ''}),
-            'fecha_nacimiento': forms.TextInput(attrs={'required': '', 'data-date-format':
-                'dd/mm/yyyy', 'type': 'date'}),
+            'fecha_nacimiento': forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
             'lugar_nacimiento': forms.TextInput(attrs={'required': ''}),
         }
 
@@ -311,7 +310,7 @@ class LibroBaseForm(ModelForm):
         fields = ('fecha_apertura', 'primera_pagina', 'primera_acta')
         widgets = {
             'fecha_apertura': forms.TextInput(attrs={'required': '', 'data-date-format':
-                'dd/mm/yyyy', 'class': 'dateinput'}),
+                'dd/mm/yyyy', 'class': 'dateinput', 'type': 'date'}),
             'primera_pagina': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
             'primera_acta': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
         }
@@ -745,8 +744,8 @@ class IntencionForm(ModelForm):
         widgets = {
             'intencion': forms.Textarea(attrs={'required': '', 'title': 'intencion'}),
             'oferente': forms.TextInput(attrs={'required': ''}),
-            'ofrenda': forms.TextInput(attrs={'required': ''}),
-            'fecha': forms.TextInput(attrs={'required': '', 'type': 'date'}),
+            'ofrenda': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 0, 'step': "0.01"}),
+            'fecha': forms.TextInput(attrs={'required': '', 'type': 'date', 'data-date-format': 'dd/mm/yyyy'}),
             'hora': forms.TextInput(attrs={'required': '', 'type': 'time'}),
             'iglesia': forms.Select(attrs={'required': ''}),
         }
@@ -977,7 +976,7 @@ class ReporteIntencionesForm(forms.Form):
     )
 
     anio = forms.CharField(required=False, help_text='Ingrese un año, Ej: 2015',
-                           label='Año *', widget=forms.TextInput(), max_length=4)
+                           label='Año *', widget=forms.TextInput(attrs={'type': 'number', 'min': 1, 'max': 9999}))
 
     tipo = forms.TypedChoiceField(label=u'Tipo Reporte *',
                                   help_text='Seleccione un tipo de reporte Ej: Diario', choices=TIPO_REPORTE,
@@ -1061,11 +1060,11 @@ class EventoForm(forms.ModelForm):
         model = Agenda
         fields = ('evento', 'fecha', 'hora')
         widgets = {
-
-            'fecha':  forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
-                                                          'type': 'date'}),
-            'hora': forms.TextInput(attrs={'type': 'time'})
+            'fecha':  forms.TextInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'hora': forms.TextInput(attrs={'type': 'time'}),
         }
+
+
 
     # def __init__(self, *args, **kwargs):
     #     self.request = kwargs.pop('request', None)

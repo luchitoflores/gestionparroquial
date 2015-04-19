@@ -1518,6 +1518,7 @@ def intencion_edit_view(request, pk):
     else:
         form_intencion = IntencionForm(instance=intencion)
         ctx = {'form': form_intencion, 'object': intencion}
+        print form_intencion
         return render(request, template_name, ctx)
 
 

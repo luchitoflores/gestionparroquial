@@ -4,8 +4,8 @@ document.write('<script src="/static/js/tablas.js" type="text/javascript"></scri
 function inicio() {
 
   var windowWidth = $(window).width();
-  if(windowWidth <= 767) //for iPad & smaller devices
-     $('.accordion-body').removeClass('in')
+  if(windowWidth <= 767) {//for iPad & smaller devices
+     $('.accordion-body').removeClass('in')}
 
     detectar_navegador();
     cargar_accion_logs();
@@ -60,7 +60,7 @@ function inicio() {
     controles_intenciones();
     controles_provincias();
     acordeon();
-    $(".dateinput").datepicker();
+
     //Inicializar todos los tooltips
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
     $('[data-toggle="popover"]').popover();
@@ -991,11 +991,6 @@ function verificar_select_seleccionado() {
         $('#id_parroquia').prop('disabled', false);
     }
 }
-
-            $('#id_fecha').val("");
-            $('#id_fecha_final').val("");
-            $('#id_hora').val("");
-            $('#id_anio').val("");
 
 function seleccionar_hora() {
     $('#id_tipo').on('change', function (e) {
