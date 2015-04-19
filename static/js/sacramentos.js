@@ -2,6 +2,11 @@ $(document).on('ready', inicio);
 document.write('<script src="/static/js/tablas.js" type="text/javascript"></script>');
 
 function inicio() {
+
+  var windowWidth = $(window).width();
+  if(windowWidth <= 767) //for iPad & smaller devices
+     $('.accordion-body').removeClass('in')
+
     detectar_navegador();
     cargar_accion_logs();
     tabla_vacia();

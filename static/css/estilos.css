@@ -34,24 +34,7 @@ h1{
  }
 
 /*Añade una líne antes y después del título*/
-h1:after {
-    display: inline-block;
-    margin: 0 0 8px 15px;
-    height: 3px;
-    content: " ";
-    text-shadow: none;
-    background-color: #999;
-    width: 30px;
-}
-h1:before {
-    display: inline-block;
-    margin: 0 15px 8px 0;
-    height: 3px;
-    content: " ";
-    text-shadow: none;
-    background-color: #999;
-    width: 30px;
-}
+
 
 h2{
 	font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
@@ -208,26 +191,46 @@ table{
         padding-left: 4em;
 		/*border-style: none none solid none;*/
 	}
+
+    h1:after {
+    display: inline-block;
+    margin: 0 0 8px 15px;
+    height: 3px;
+    content: " ";
+    text-shadow: none;
+    background-color: #999;
+    width: 30px;
+}
+h1:before {
+    display: inline-block;
+    margin: 0 15px 8px 0;
+    height: 3px;
+    content: " ";
+    text-shadow: none;
+    background-color: #999;
+    width: 30px;
+}
 }
 
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 1200px) {
 	#id_title
 	{
-		/*background-image: url(../img/textura10.jpg);*/
-		background-color: #f0f0f0;
-		background-position:center;
+		font-size: 1em !important;
+		background-color: #f5f5f5;
+        background-position:center;
 		background-repeat:no-repeat;
 		background-size:100%;
 		-webkit-background-size: 100%;
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 2em;
 		max-height: 100%;
 		max-width: 100%;
 		padding-top: 1em;
-		padding-bottom: 1.5em; 
+		padding-bottom: 1.5em;
+        margin-top: 0em;
+        margin-bottom: 3em;
 	}
 
 	.navbar .nav>li.ocultar {
@@ -240,7 +243,8 @@ table{
 	#id_title
 	{
 		/*background-image: url(../img/textura10.jpg);*/
-		background-color: #f0f0f0;
+		font-size: 0.75em !important;
+		background-color: #f5f5f5;
 		background-position:center;
 		background-repeat:no-repeat;
 		background-size:100%;
@@ -248,11 +252,12 @@ table{
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 2em;
 		max-height: 100%;
 		max-width: 100%;
 		padding-top: 1em;
-		padding-bottom: 1.5em; 
+		padding-bottom: 1.5em;
+        margin-top: 0em;
+        margin-bottom: 3em;
 	}
 
 	.navbar .nav>li.ocultar {
@@ -260,12 +265,12 @@ table{
 	}
 }
 
-/* Landscape phones and down */
+/* Para celulares en modo vertical */
 @media (max-width: 480px) {
 	#id_title{
-		background-color: #b0c9ff; /*#f5f5f5 color plomo bajo*/
+        font-size: 0.75em !important;
+		background-color: #f5f5f5; /*#f5f5f5 color plomo bajo*/
 		font-family: 'Droid Serif',Helvetica,Arial,sans-serif;
-		font-size: 1.5em;
 		max-height: 90%;
 		max-width: 90%;
 		padding-top: .3em;
@@ -273,6 +278,8 @@ table{
 		padding-bottom:.3em; 
 		max-width: 100%;
 		margin: auto;
+        margin-top: 0em;
+        margin-bottom: 3em;
 	}
 
 	.navbar .nav>li.ocultar {
