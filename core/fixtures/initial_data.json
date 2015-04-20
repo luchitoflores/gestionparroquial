@@ -26730,17 +26730,6 @@
 },
 {
     "fields": {
-        "descripcion": "Sirve para adminsitrar las ciudades",
-        "nombre": "Ciudades",
-        "codigo": "CIUDDS",
-        "estado": "A",
-        "orden": 14
-    },
-    "model": "core.modulo",
-    "pk": 3
-},
-{
-    "fields": {
         "descripcion": "",
         "nombre": "Seguridad",
         "codigo": "SEGRDD",
@@ -26923,66 +26912,6 @@
     },
     "model": "core.funcionalidad",
     "pk": 4
-},
-{
-    "fields": {
-        "orden": 1,
-        "icono": "wqwwq",
-        "modulo": 3,
-        "url": "provincia_list",
-        "grupos": [
-            [
-                "Administrador"
-            ],
-            [
-                "Secretaria"
-            ]
-        ],
-        "descripcion": "",
-        "nombre": "Provincia",
-        "codigo": "ENNWL5",
-        "estado": "A"
-    },
-    "model": "core.funcionalidad",
-    "pk": 5
-},
-{
-    "fields": {
-        "orden": null,
-        "icono": "",
-        "modulo": 3,
-        "url": "canton_list",
-        "grupos": [
-            [
-                "Administrador"
-            ]
-        ],
-        "descripcion": "",
-        "nombre": "Canton",
-        "codigo": "ENNWL6",
-        "estado": "A"
-    },
-    "model": "core.funcionalidad",
-    "pk": 6
-},
-{
-    "fields": {
-        "orden": null,
-        "icono": "",
-        "modulo": 3,
-        "url": "parroquiacivil_list",
-        "grupos": [
-            [
-                "Administrador"
-            ]
-        ],
-        "descripcion": "",
-        "nombre": "Parroquia Civil",
-        "codigo": "ENNWL7",
-        "estado": "A"
-    },
-    "model": "core.funcionalidad",
-    "pk": 7
 },
 {
     "fields": {
