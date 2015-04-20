@@ -11,6 +11,7 @@
     {{ form }}
     {% include 'includes/buscar_logs_form.html' %}
 
+
     <div class="pull-right">
         <a href="{% url 'logs_csv' %}" class='btn'>Exportar a CSV</a>
     </div>
@@ -22,8 +23,8 @@
             <th>Usuario</th>
             <th>Objeto</th>
             <th>Transaccion</th>
-            <th data-hide='phone'>Mensaje</th>
             <th data-hide='phone'>Fecha</th>
+            <th>Acciones</th>
 
         </tr>
         </thead>
@@ -46,8 +47,9 @@
                     <td>{{ 'Dar de Baja' }}</td>
                 {% endif %}
 
-                <td>{{ o.change_message }}</td>
-                <td>{{ o.action_time }}</td>
+
+                <td>{{ o.action_time | date:'d/m/Y' }}</td>
+                <td><a title="Ver detalles del log" data-toggle="tooltip"><i class='icon-eye-open'></i></a></td>
 
             </tr>
         {% endfor %}
@@ -55,13 +57,7 @@
     </table>
     {% include 'includes/paginacion_logs.html' %}
     </div>
-
-
-    <!--{%if user.is_superuser%}
-<a href="{% url 'logs_csv' %}" class='btn btn-primary'>Exportar a Csv</a>
-{%endif%}-->
-
-
+</div>
 
 
 

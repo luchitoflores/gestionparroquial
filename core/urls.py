@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.views.generic import TemplateView
 from core.rest import seleccionar_ciudades
+from core.views import LogListView2
 
 from sacramentos.views import buscar_sacramentos_view
 from .views import LogListView
@@ -36,6 +37,7 @@ urlpatterns = patterns('',
                                           login_url='/login/'),
                            name='funcionalidad'),
                        url(r'^log/$', login_required(LogListView.as_view(), login_url='/login/'), name='log_list'),
+                       url(r'^log2/$', login_required(LogListView2.as_view(), login_url='/login/'), name='log_list2'),
                        # Urls include para angular js
                        url(r'include/messages/$', TemplateView.as_view(template_name='includes/messages.html'),
                            name='messages'),

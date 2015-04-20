@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}{% block content_title %}Lista de Logs{% endblock %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li class='active'>Logs</li>
+{% endblock %}
+
+{% block content %}
+    {{ form }}
+
+    <div class="pull-right">
+
+    </div>
+
+    <div class="row">
+        <div class="span3">
+            {% include 'includes/buscar_logs_form2.html' %}
+        </div>
+        <div class="span4">
+            <div>
+                <table id='id_table_log' class='table table-bordered table-striped'>
+                    <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Objeto</th>
+                        <th>Transaccion</th>
+                        <th data-hide='phone'>Fecha</th>
+                        <th>Acciones</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for o in object_list %}
+                        <tr>
+                            <td>{{ o.user }}</td>
+                            <td>{{ o.object_repr }}</td>
+                            {% if o.action_flag == 1 %}
+
+                                <td>{{ 'Creacion' }}</td>
+                            {% endif %}
+                            {% if o.action_flag == 2 %}
+
+                                <td>{{ 'Actualizacion' }}</td>
+                            {% endif %}
+                            {% if o.action_flag == 3 %}
+
+                                <td>{{ 'Dar de Baja' }}</td>
+                            {% endif %}
+
+                            <td>{{ o.action_time | date:'d/m/Y' }}</td>
+                            <td><a title="Ver detalles del log" data-toggle="tooltip"><i class='icon-eye-open'></i></a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% include 'includes/paginacion_logs.html' %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
