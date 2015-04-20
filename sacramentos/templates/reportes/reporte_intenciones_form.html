@@ -1,134 +1,143 @@
-{%extends 'base.html'%}
-{%block title%}{%block content_title%}
-Reporte Intenciones de Misa
-{%endblock%}{%endblock%}
+{% extends 'base.html' %}
+{% block title %}{% block content_title %}
+    Reporte Intenciones de Misa
+{% endblock %}{% endblock %}
 
 {% block breadcrumbs %}
-{{ block.super }}
-<span class="divider">»</span>
-<li class='active'>Reporte Intenciones</li>
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li class='active'>Reporte Intenciones</li>
 {% endblock %}
 
-{%block content%}
-<form id='id_form_intenciones_hora' action="." class='form-horizontal'>
-	<div class='row'>
-		<div class='span10'>
-			
-			<div class='row'>
-				<div class="span6">
-					<div class='control-group'>
-						<label class='control-label'>
-							{{form.tipo.label}}
-						</label>
-						<div class='controls'>
-							{{form.tipo}}
+{% block content %}
+    <form id='id_form_intenciones_hora' action="." class='form-horizontal'>
+        <div class='row'>
+            <div class='span10'>
 
-						</div>
-						<div class="controls help-text">
-							{{form.tipo.help_text}}
-							<div class="controls">
-								<div class="errors">								
-									{{form.tipo.errors}}
-								</div>
-							</div>
-						</div>
+                <div class='row'>
+                    <div class="span6">
+                        <div class='control-group'>
+                            <label class='control-label'>
+                                {{ form.tipo.label }}
+                            </label>
 
+                            <div class='controls'>
+                                {{ form.tipo }}
 
-					</div>
-				</div>
-                 <div id="id_div_anio" class="span6">
-					<div class='control-group'>
-						<label class='control-label'>
-							{{form.anio.label}}
-						</label>
-						<div class='controls'>
-							{{form.anio}}
-
-						</div>
-						<div class="controls help-text">
-							{{form.anio.help_text}}
-							<div class="controls">
-								<div class="errors">
-									{{form.anio.errors}}
-								</div>
-							</div>
-						</div>
+                            </div>
+                            <div class="controls help-text">
+                                {{ form.tipo.help_text }}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form.tipo.errors }}
+                                </div>
+                            </div>
 
 
-					</div>
-				</div>
-				<div id="id_div_fecha_inicial" class="span6">
-					<div class='control-group'>
-						<label class='control-label'>
-							{{form.fecha.label}}
-						</label>
-						<div class='controls'>
-							{{form.fecha}}
+                        </div>
+                    </div>
+                    <div id="id_div_anio" class="span6">
+                        <div class='control-group'>
+                            <label class='control-label'>
+                                {{ form.anio.label }}
+                            </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form.fecha.help_text}}
-							<div class="controls">
-								<div class="errors">								
-									{{form.fecha.errors}}
-								</div>
-							</div>
-						</div>
+                            <div class='controls'>
+                                {{ form.anio }}
 
+                            </div>
+                            <div class="controls help-text">
+                                {{ form.anio.help_text }}
 
-					</div>
-				</div>
-                <div id="id_div_fecha_final" class="span6">
-					<div class='control-group'>
-						<label class='control-label'>
-							{{form.fecha_final.label}}
-						</label>
-						<div class='controls'>
-							{{form.fecha_final}}
-
-						</div>
-						<div class="controls help-text">
-							{{form.fecha_final.help_text}}
-							<div class="controls">
-								<div class="errors">
-									{{form.fecha_final.errors}}
-								</div>
-							</div>
-						</div>
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form.anio.errors }}
+                                </div>
+                            </div>
 
 
-					</div>
-				</div>
-				<div id='id_div_hora' class="span6">
-					<div class='control-group'>
-						<label class='control-label'>
-							{{form.hora.label}}
-						</label>
-						<div class='controls'>
-							{{form.hora}}
+                        </div>
+                    </div>
+                    <div id="id_div_fecha_inicial" class="span6">
+                        <div class='control-group'>
+                            <label class='control-label'>
+                                {{ form.fecha.label }}
+                            </label>
 
-						</div>
-						<div class="controls help-text">
-							{{form.hora.help_text}}
-							<div class="controls">
-								<div class="errors">								
-									{{form.hora.errors}}
-								</div>
-							</div>
-						</div>
+                            <div class='controls'>
+                                {{ form.fecha }}
+
+                            </div>
+                            <div class="controls help-text">
+                                {{ form.fecha.help_text }}
+
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form.fecha.errors }}
+                                </div>
+                            </div>
 
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+                    </div>
+                    <div id="id_div_fecha_final" class="span6">
+                        <div class='control-group'>
+                            <label class='control-label'>
+                                {{ form.fecha_final.label }}
+                            </label>
 
-	<div class="form-actions">
-		<button type="submit" class='btn btn-primary'>Generar Reporte</button> 
-		<a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>
+                            <div class='controls'>
+                                {{ form.fecha_final }}
 
-	</div>
-</form>
+                            </div>
+                            <div class="controls help-text">
+                                {{ form.fecha_final.help_text }}
 
-{%endblock%}
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form.fecha_final.errors }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div id='id_div_hora' class="span6">
+                        <div class='control-group'>
+                            <label class='control-label'>
+                                {{ form.hora.label }}
+                            </label>
+
+                            <div class='controls'>
+                                {{ form.hora }}
+
+                            </div>
+                            <div class="controls help-text">
+                                {{ form.hora.help_text }}
+
+                            </div>
+                            <div class="controls">
+                                <div class="errors">
+                                    {{ form.hora.errors }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class='btn btn-primary'>Generar Reporte</button>
+            <a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>
+
+        </div>
+    </form>
+
+{% endblock %}

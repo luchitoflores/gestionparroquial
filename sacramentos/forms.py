@@ -984,7 +984,7 @@ class ReporteIntencionesForm(forms.Form):
 
     tipo = forms.TypedChoiceField(label=u'Tipo Reporte *',
                                   help_text='Seleccione un tipo de reporte Ej: Diario', choices=TIPO_REPORTE,
-                                  required=True, widget=forms.Select(attrs={'required': ''}))
+                                  required=False, widget=forms.Select(attrs={'required': ''}))
 
     fecha = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
                             label='Fecha Inicial *', required=False,
@@ -996,7 +996,7 @@ class ReporteIntencionesForm(forms.Form):
                             widget=DatePickerInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
-    hora = forms.CharField(required=False, help_text='Ingrese una hora ej: 8:00 - 17:00',
+    hora = forms.TimeField(required=False, help_text='Ingrese una hora ej: 8:00 - 17:00',
                            label='Hora', widget=forms.TimeInput(attrs={'type': 'time'}))
 
 
