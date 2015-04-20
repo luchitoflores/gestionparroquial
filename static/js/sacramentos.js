@@ -63,6 +63,7 @@ function inicio() {
 
     //Inicializar todos los tooltips
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+    $('[data-tooltip="tooltip"]').tooltip({'placement': 'top'});
     $('[data-toggle="popover"]').popover();
 
     /*jQuery.each($("select[multiple]"), function () {
@@ -302,7 +303,6 @@ function radio_button_sacerdotes() {
 
 function ocultar_tablas_aceptar(id_modal) {
     $(id_modal + ' #id_aceptar').on('click', function (e) {
-        console.log('estoy en clic aceptar')
         ocultar_tablas('#id_table_busqueda_usuarios', '#id_button_cedula', '#id_button_nombres', '#id_div_form_buscar');
         ocultar_bottom('.bottom');
         ocultar_tablas('#id_table_busqueda_hombres', '#id_button_cedula_h', '#id_button_nombres_h', '#id_div_form_buscar_h');

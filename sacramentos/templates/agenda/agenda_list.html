@@ -14,7 +14,7 @@ Agenda Pastoral
 
 <div ng-controller="ScheduleController">
 <div class="pull-left">
-    <a id='id_crear_evento' href="{% url 'evento_create' %}" class='btn' title="Añadir nuevo evento" data-toggle="tooltip"><i class="icon-plus"></i></a>
+    <a id href="#id_crear_evento" class='btn'  data-toggle="modal" data-tooltip="tooltip"><i class="icon-plus"></i></a>
     <a class="btn" ng-click="fechaAnterior()"><</a>
     <a class="btn" ng-click="fechaSiguiente()">></a>
     <a class="btn" ng-click="rango='dia'; getEventosActuales()">Hoy</a>
@@ -27,6 +27,8 @@ Agenda Pastoral
     <a class="btn" ng-class="{'btn-primary active': rango=='mes' } " ng-click="rango='mes'; getEventosActuales()">Mensual</a>
 </div>
 <br style="margin-top: 30px"/>
+
+
 <table id='id_table_agea' class='footable table table-striped' style="margin-top: 60px">
 
     <thead>
@@ -47,7 +49,7 @@ Agenda Pastoral
             <td>{[{evento.fecha}]}</td>
 			<td>{[{evento.hora | date: "shortTime"}]}</td>
             <td>{[{evento.evento}]}</td>
-            <td><a href="/evento/{[{evento.id}]}"><i class='icon-pencil'></i></a></td>
+            <td><a href="#id_crear_evento" data-toggle="modal" ng-click="getEventoActual(evento.id)"><i class='icon-pencil'></i></a></td>
 		</tr>
 
 
@@ -55,6 +57,7 @@ Agenda Pastoral
 
 </table>
 
+{%include 'includes/agenda_ajax_form.html'%}
 
 </div>
 {%endblock%}

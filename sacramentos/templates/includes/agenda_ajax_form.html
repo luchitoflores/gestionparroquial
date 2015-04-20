@@ -1,0 +1,39 @@
+<div id="id_crear_evento" class="modal hide fade" ng-class="{'hide': modal==false }" data-backdrop='static'>
+
+    <form method='POST' class='form-horizontal' ng-submit="submit();">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h3>{[{id ? 'Editar' : 'Crear'}]} Evento</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <input type="hidden" ng-model="parroquia" ng-init="parroquia='{{ request.session.parroquia.id }}'"/>
+                <div class="control-label">
+                    <label>Evento</label>
+                </div>
+                <div class="controls">
+                    <textarea cols="40" maxlength="200" name="evento" required rows="10" ng-model="evento"></textarea>
+                </div>
+
+                 <br/>
+                <div class="control-label">
+                    <label>Fecha</label>
+                </div>
+                <div class="controls">
+                    <input type="date" name='fecha' ng-model="fecha">
+                </div>
+                <br/>
+                <label class="control-label">Hora</label>
+
+                <div class="controls">
+                    <input type="time" name='hora' ng-model="hora">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="." class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>

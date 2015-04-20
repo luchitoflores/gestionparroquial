@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import routers
 
 # from sacramentos.rest import api_usuario_list
-from sacramentos.serializer import AgendaListAPIView
+from sacramentos.serializer import AgendaListAPIView, AgendaViewSet
 from sacramentos.views import (
     configuracion_inicial_view,
     usuarioCreateView, UsuarioListView, edit_usuario_view, UsuarioDetailView,
@@ -43,6 +43,7 @@ from .serializer import IntencionViewSet, PerfilUsuarioViewSet
 router = routers.DefaultRouter()
 router.register(r'intencion', IntencionViewSet)
 router.register(r'usuario', PerfilUsuarioViewSet)
+router.register(r'evento', AgendaViewSet)
 
 
 urlpatterns = patterns('',
@@ -196,7 +197,7 @@ urlpatterns = patterns('',
                        url(r'^agenda/$', TemplateView.as_view(template_name="agenda/agenda_list.html"), name='agenda_list'),
                        url(r'^crear/evento/$', EventoCreateView.as_view(), name='evento_create'),
                        url(r'^evento/(?P<pk>\d+)/$', EventoUpdateView.as_view(), name='evento_update'),
-                       url(r'^api-auth/agenda/$', AgendaListAPIView.as_view()),
+                       url(r'^api-auth/agenda/filters/$', AgendaListAPIView.as_view()),
 
 
 

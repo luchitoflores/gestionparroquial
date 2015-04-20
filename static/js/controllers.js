@@ -802,6 +802,7 @@ app.controller('ParametroControl', ['$scope', '$http', 'administrarParametros', 
 }]);
 
 app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants', function ($scope,AdministrarAgenda, constants) {
+    $scope.modal = false;
     $scope.dia = true;
     $scope.semana = false;
     $scope.mes = false;
@@ -841,6 +842,27 @@ app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants'
 
     $scope.eventos = $scope.getEventos();
 
+    $scope.getEventoActual = function(id){
+        AdministrarAgenda.getEvento(id)
+    .      success(function (data, status, headers, config) {
+                $scope.eventoActual = data;
+                $scope.evento = data.evento;
+                $scope.fecha = data.fecha;
+                $scope.hora = data.hora;
+                $scope.id  = data.id;
+                console.log(data);
+            }).
+            error(function (errors) {
+                console.log(errors);
+            });
+    };
+
+    $scope.limpiarCampos = function () {
+        $scope.evento = "";
+        $scope.fecha = "";
+        $scope.hora = "";
+    }
+
     $scope.getEventosActuales = function(){
             $scope.contador = 0;
             $scope.eventos = $scope.getEventos();
@@ -855,6 +877,67 @@ app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants'
         $scope.contador = $scope.contador + 1;
         $scope.eventos = $scope.getEventos();
     }
+
+     $scope.submit = function () {
+
+        //$scope.limpiarErrores();
+
+        var data = {
+            "fecha": $scope.fecha,
+            "hora": $scope.hora,
+            "parroquia": $scope.parroquia,
+            "evento": $scope.evento
+        }
+
+        console.log('parroquiasss');
+         console.log($scope.parroquia);
+
+
+
+        if ($scope.id) {
+            data["id"] = $scope.id;
+            AdministrarAgenda.updateEvento($scope.id, data)
+                .success(function (data) {
+                    console.log("evento actualizado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.UPDATE_SUCCESS;
+                    $scope.modal = false;
+                    $scope.getEventosActuales();
+                    $scope.limpiarCampos();
+                    $('#id_crear_evento').modal('hide');
+                })
+                .error(function (errors) {
+                    console.log("error al actualizar evento");
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.UPDATE_ERROR;
+                });
+
+        } else {
+            AdministrarAgenda.setEvento(data)
+                .success(function (data) {
+                    console.log("evento insertado correctamente");
+                    $scope.alert = true;
+                    $scope.status = constants.SUCCESS;
+                    $scope.message = constants.CREATE_SUCCESS;
+                    $scope.modal = false;
+                    $scope.getEventosActuales();
+                    $scope.limpiarCampos();
+                    $('#id_crear_evento').modal('hide');
+                })
+                .error(function (errors) {
+                    console.log("error al insertar evento");
+                    console.log(errors);
+                    $scope.alert = true;
+                    $scope.status = constants.ERROR;
+                    $scope.message = constants.CREATE_ERROR;
+
+                });
+        }
+
+    };
+
 }]);
 
 

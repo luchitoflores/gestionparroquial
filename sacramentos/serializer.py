@@ -190,7 +190,25 @@ class AgendaListaaaaAPIView(generics.ListAPIView):
         return queryset
 
 
+class AgendaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agenda
+        #fields = ('evento', 'fecha', 'hora')
 
+    # def create(self, validated_data):
+    #     parroquia= self.context['request']
+    #     evento = Agenda(
+    #         fecha=validated_data['fecha'],
+    #         hora=validated_data['hora'],
+    #         parroquia= parroquia.user
+    #     )
+    #
+    #     return evento
+
+
+class AgendaViewSet(viewsets.ModelViewSet):
+    serializer_class = AgendaSerializer
+    queryset = Agenda.objects.all()
 
 
 

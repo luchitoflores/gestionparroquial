@@ -116,7 +116,19 @@ app.factory("AdministrarAgenda", ['$http', function ($http) {
     var eventos = {};
 
     eventos.getEventos = function (queryparams) {
-        return $http.get('/api-auth/agenda/?'+queryparams);
+        return $http.get('/api-auth/agenda/filters/?'+queryparams);
+    };
+
+    eventos.getEvento = function (id) {
+        return $http.get('/api-auth/evento/'+id);
+    };
+
+    eventos.setEvento = function (data) {
+        return $http.post('/api-auth/evento/', data);
+    };
+
+    eventos.updateEvento = function (id, data) {
+        return $http.put('/api-auth/evento/' + id, data);
     };
 
     return eventos;
