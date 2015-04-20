@@ -29,20 +29,13 @@
                 <fieldset class='scheduler-border'>
                     <legend class='scheduler-border'>Datos del Sacramento</legend>
                     {% for f in form %}
-
-
-
                             <div class="control-group">
                                 <label for="" class="control-label">
                                     {{ f.label }} *
                                 </label>
 
                                 <div class="controls">
-                                    <div class="input-append">
-                                        {{ f }}
-
-					</span>
-                                    </div>
+                                        {{ f  }}
                                 </div>
                                 <div class="controls help-text">
                                     {{ f.help_text }}

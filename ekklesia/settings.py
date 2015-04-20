@@ -197,6 +197,14 @@ EMAIL_HOST_USER = 'soporte.tecnico.aplicacion'
 EMAIL_HOST_PASSWORD = '33BarFlouch$'
 EMAIL_USE_TLS = True
 
+DATETIME_INPUT_FORMATS_EXTRA = (
+    '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
+    '%b %d %Y', '%b %d, %Y',             # 'Oct 25 2006', 'Oct 25, 2006'
+    '%d %b %Y', '%d %b, %Y',             # '25 Oct 2006', '25 Oct, 2006'
+    '%B %d %Y', '%B %d, %Y',             # 'October 25 2006', 'October 25, 2006'
+    '%d %B %Y', '%d %B, %Y',             # '25 October 2006', '25 October, 2006'
+)
+
 #Sirve para expirar la sesion al cerrar el navegador
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Para que la sesión expire en una hora

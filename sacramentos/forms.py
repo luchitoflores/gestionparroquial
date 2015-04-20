@@ -9,7 +9,7 @@ from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.forms import ModelForm
 from django.forms.util import ErrorList
-from django.forms.widgets import RadioSelect
+from django.forms.widgets import RadioSelect, DateInput
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.utils.html import format_html, mark_safe
 
@@ -23,6 +23,10 @@ from core.constants import COD_CAT_NACIONALIDAD, COD_ITC_ECUADOR
 from sacramentos.models import Agenda
 from .validators import validate_cedula
 
+class DatePickerInput(DateInput):
+    # Always set input type to be "date"
+    input_type = 'date'
+    format_key = 'DATETIME_INPUT_FORMATS_EXTRA'
 
 class DivErrorList(ErrorList):
     def __unicode__(self):
@@ -155,7 +159,7 @@ class PersonaBaseForm(ModelForm):
         fields = ('nacionalidad', 'dni', 'fecha_nacimiento', 'lugar_nacimiento', 'sexo', 'estado_civil');
         widgets = {
             'nacionalidad': forms.Select(attrs={'required': ''}),
-            'fecha_nacimiento': forms.DateInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'fecha_nacimiento': DatePickerInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
             'lugar_nacimiento': forms.TextInput(attrs={'required': ''}),
         }
 
@@ -309,7 +313,7 @@ class LibroBaseForm(ModelForm):
         model = Libro
         fields = ('fecha_apertura', 'primera_pagina', 'primera_acta')
         widgets = {
-            'fecha_apertura': forms.DateInput(attrs={'required': '', 'data-date-format':
+            'fecha_apertura': DatePickerInput(attrs={'required': '', 'data-date-format':
                 'dd/mm/yyyy', 'class': 'dateinput', 'type': 'date'}),
             'primera_pagina': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
             'primera_acta': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
@@ -372,9 +376,9 @@ class LibroForm(ModelForm):
         fields = ('principal', 'tipo_libro', 'fecha_apertura', 'fecha_cierre',
                   'primera_pagina', 'primera_acta', 'es_activo')
         widgets = {
-            'fecha_apertura': forms.DateInput(attrs={'required': '', 'data-date-format':
+            'fecha_apertura': DatePickerInput(attrs={'required': '', 'data-date-format':
                 'dd/mm/yyyy', 'type': 'date'}),
-            'fecha_cierre': forms.DateInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date',
+            'fecha_cierre': DatePickerInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date',
                                                    'label': 'Fecha Cierre *'}),
             'tipo_libro': forms.Select(attrs={'required': ''}),
             'primera_pagina': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 1}),
@@ -424,7 +428,7 @@ class SacramentosForm(ModelForm):
                   'lugar_sacramento', 'padrino', 'madrina', 'iglesia')
 
         widgets = {
-            'fecha_sacramento': forms.DateInput(attrs={'required': '', 'data-date-format':
+            'fecha_sacramento': DatePickerInput(attrs={'required': '', 'data-date-format':
                 'dd/mm/yyyy', 'type': 'date'}),
             'lugar_sacramento': forms.TextInput(attrs={'required': ''}),
             'iglesia': forms.Select(attrs={'required': ''}),
@@ -745,7 +749,7 @@ class IntencionForm(ModelForm):
             'intencion': forms.Textarea(attrs={'required': '', 'title': 'intencion'}),
             'oferente': forms.TextInput(attrs={'required': ''}),
             'ofrenda': forms.TextInput(attrs={'required': '', 'type': 'number', 'min': 0, 'step': "0.01"}),
-            'fecha': forms.DateInput(attrs={'required': '', 'type': 'date', 'data-date-format': 'dd/mm/yyyy'}),
+            'fecha': DatePickerInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy'}),
             'hora': forms.TimeInput(attrs={'required': '', 'type': 'time'}),
             'iglesia': forms.Select(attrs={'required': ''}),
         }
@@ -909,8 +913,8 @@ class PeriodoAsignacionParroquiaForm(ModelForm):
         model = PeriodoAsignacionParroquia
         fields = ('inicio', 'fin', 'estado')
         widgets = {
-            'inicio': forms.DateInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
-            'fin': forms.DateInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'inicio': DatePickerInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'fin': DatePickerInput(attrs={'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
         }
 
     def clean(self):
@@ -984,12 +988,12 @@ class ReporteIntencionesForm(forms.Form):
 
     fecha = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
                             label='Fecha Inicial *', required=False,
-                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
+                            widget=DatePickerInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
     fecha_final = forms.DateField(help_text='Seleccione una fecha ej:18/07/2000',
                             label='Fecha Final *', required=False,
-                            widget=forms.TextInput(attrs={'data-date-format': 'dd/mm/yyyy',
+                            widget=DatePickerInput(attrs={'data-date-format': 'dd/mm/yyyy',
                                                           'type': 'date'}))
 
     hora = forms.CharField(required=False, help_text='Ingrese una hora ej: 8:00 - 17:00',
@@ -1060,7 +1064,7 @@ class EventoForm(forms.ModelForm):
         model = Agenda
         fields = ('evento', 'fecha', 'hora')
         widgets = {
-            'fecha':  forms.DateInput(attrs={'required': '', 'data-date-format': 'dd/mm/yyyy', 'type': 'date'}),
+            'fecha':  DatePickerInput(attrs={'data-date-format': 'yyyy-mm-dd', 'type': 'date'}),
             'hora': forms.TimeInput(attrs={'type': 'time'}),
         }
 
