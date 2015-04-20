@@ -72,11 +72,11 @@ class AgendaListAPIView(APIView):
                 for evento in Agenda.objects.filter(fecha=currentdate).order_by('fecha', 'hora'):
                     evnt = dict()
                     evnt['evento'] = evento.evento
-                    evnt['fecha'] = evento.fecha
+                    evnt['fecha'] = evento.fecha.strftime("%d/%m/%Y")
                     evnt['hora'] = evento.hora
                     evnt['id'] = evento.id
                     agenda.append(evnt)
-                textoCabeceraAgenda = currentdate.date()
+                textoCabeceraAgenda = currentdate.date().strftime("%d/%m/%Y")
 
             elif rango == 'semana':
                 currentdate.strftime('%w')
@@ -88,13 +88,13 @@ class AgendaListAPIView(APIView):
 
                 for evento in Agenda.objects.filter(fecha__range=[start, end]).order_by('fecha', 'hora'):
                     evnt = dict()
-                    evnt['fecha'] = evento.fecha
+                    evnt['fecha'] = evento.fecha.strftime("%d/%m/%Y")
                     evnt['hora'] = evento.hora
                     evnt['evento'] = evento.evento
                     evnt['id'] = evento.id
                     agenda.append(evnt)
 
-                textoCabeceraAgenda = u'%s - %s' % (start.date(), end.date())
+                textoCabeceraAgenda = u'%s  -  %s' % (start.date().strftime("%d/%m/%Y"), end.date().strftime("%d/%m/%Y"))
 
             elif rango == 'mes':
                 if contador != 0:
@@ -104,7 +104,7 @@ class AgendaListAPIView(APIView):
 
                 for evento in Agenda.objects.filter(fecha__month=currentdate.strftime('%m'), fecha__year=currentdate.year).order_by('fecha', 'hora'):
                     evnt = dict()
-                    evnt['fecha'] = evento.fecha
+                    evnt['fecha'] = evento.fecha.strftime("%d/%m/%Y")
                     evnt['hora'] = evento.hora
                     evnt['evento'] = evento.evento
                     evnt['id'] = evento.id
@@ -134,7 +134,7 @@ class AgendaListaaaaAPIView(generics.ListAPIView):
                     dias = timedelta(days=int(contador))
                     currentdate = currentdate + dias
 
-                textoCabeceraAgenda = currentdate
+                textoCabeceraAgenda = currentdate.strftime("%d/%m/%y")
             elif rango == 'semana':
                 currentdate.strftime('%w')
                 if contador:
