@@ -22,9 +22,9 @@ Agenda Pastoral
 
 </div>
 <div class="pull-right">
-    <a class="btn" ng-click="rango='dia'; getEventosActuales()">Diario</a>
-    <a class="btn" ng-click="rango='semana'; getEventosActuales()">Semanal</a>
-    <a class="btn" ng-click="rango='mes'; getEventosActuales()">Mensual</a>
+    <a class="btn" ng-class="{'btn-primary active': rango=='dia' } " ng-click="rango='dia'; getEventosActuales()">Diario</a>
+    <a class="btn" ng-class="{'btn-primary active': rango=='semana' } " ng-click="rango='semana'; getEventosActuales()">Semanal</a>
+    <a class="btn" ng-class="{'btn-primary active': rango=='mes' } " ng-click="rango='mes'; getEventosActuales()">Mensual</a>
 </div>
 <br style="margin-top: 30px"/>
 <table id='id_table_agea' class='footable table table-striped' style="margin-top: 60px">
