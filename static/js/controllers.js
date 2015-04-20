@@ -861,6 +861,7 @@ app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants'
         $scope.evento = "";
         $scope.fecha = "";
         $scope.hora = "";
+        $scope.id = "";
     }
 
     $scope.getEventosActuales = function(){
@@ -902,7 +903,6 @@ app.controller('ScheduleController', ['$scope', 'AdministrarAgenda', 'constants'
                     $scope.alert = true;
                     $scope.status = constants.SUCCESS;
                     $scope.message = constants.UPDATE_SUCCESS;
-                    $scope.modal = false;
                     $scope.getEventosActuales();
                     $scope.limpiarCampos();
                     $('#id_crear_evento').modal('hide');
