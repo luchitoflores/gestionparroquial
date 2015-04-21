@@ -36,8 +36,8 @@
         </ul>
     </header>
 
-
-<div class="container" id='id_container'>
+<div id="wrap">
+   <div class="container" id='id_container' clear-top>
 
     <div class="row">
         <div class="span12">
@@ -83,11 +83,13 @@
     </div>
 
 </div>
+</div>
+
 
 <!-- Footer -->
 {% block footer %}
-    <div id='id_footer'>
-            <footer>
+
+            <footer class="footer">
 
 
                 <!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es"><img alt="Licencia Apache 2.0" style="border-width:0" src="/static/img/apache.png" /></a>
@@ -106,7 +108,7 @@
 
                 </div>-->
         </footer>
-</div>
+
 {% endblock %}
 
 
