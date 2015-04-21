@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/modulo.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/modulo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/parametro.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html" afterPath="$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,31 +56,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="usuario_list.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sacramentos/templates/usuario/usuario_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154" vertical-offset="493" max-vertical-offset="969">
-              <caret line="38" column="150" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="150" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="funcionalidad.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="funcionalidad.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4759725" vertical-offset="2041" max-vertical-offset="2975">
-              <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
+            <state vertical-scroll-proportion="5.923077" vertical-offset="2398" max-vertical-offset="2975">
+              <caret line="132" column="81" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/urls.py">
+      <file leaf-file-name="evento_form.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/evento_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="833">
-              <caret line="39" column="66" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
+            <state vertical-scroll-proportion="-13.076923" vertical-offset="187" max-vertical-offset="1241">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="agenda_list.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/agenda_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.346154" vertical-offset="708" max-vertical-offset="1156">
+              <caret line="59" column="27" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="agenda_ajax_form.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.47597253" vertical-offset="285" max-vertical-offset="748">
+              <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -182,7 +190,6 @@
         <option value="$PROJECT_DIR$/sacramentos/templates/agenda/agenda_list.html" />
         <option value="$PROJECT_DIR$/static/js/sacramentos.js" />
         <option value="$PROJECT_DIR$/static/js/controllers.js" />
-        <option value="$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html" />
         <option value="$PROJECT_DIR$/core/templates/includes/menu.html" />
         <option value="$PROJECT_DIR$/sacramentos/context_processors.py" />
         <option value="$PROJECT_DIR$/core/fixtures/initial_data.json" />
@@ -197,6 +204,7 @@
         <option value="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/modulo.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
+        <option value="$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html" />
       </list>
     </option>
   </component>
@@ -351,39 +359,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ekklesialoja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionparroquiasdiocesis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ekklesialoja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionparroquiasdiocesis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="sacramentos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -391,7 +367,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="catalogo" />
+              <option name="myItemId" value="agenda" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -924,14 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/evento_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.076923" vertical-offset="187" max-vertical-offset="1241">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ekklesia/produccion.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3140" max-vertical-offset="4454">
@@ -1120,26 +1088,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/agenda_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.118644" vertical-offset="283" max-vertical-offset="1156">
-          <caret line="24" column="66" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14530" max-vertical-offset="16201">
           <caret line="861" column="26" selection-start-line="861" selection-start-column="26" selection-end-line="861" selection-end-column="26" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.230769" vertical-offset="338" max-vertical-offset="748">
-          <caret line="34" column="83" selection-start-line="34" selection-start-column="83" selection-end-line="34" selection-end-column="83" />
         </state>
       </provider>
     </entry>
@@ -1288,8 +1241,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4759725" vertical-offset="2041" max-vertical-offset="2975">
-          <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
+        <state vertical-scroll-proportion="5.923077" vertical-offset="2398" max-vertical-offset="2975">
+          <caret line="132" column="81" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/evento_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.076923" vertical-offset="187" max-vertical-offset="1241">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/agenda_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.346154" vertical-offset="708" max-vertical-offset="1156">
+          <caret line="59" column="27" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47597253" vertical-offset="285" max-vertical-offset="748">
+          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
           <folding />
         </state>
       </provider>
