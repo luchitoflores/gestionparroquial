@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" afterPath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/item.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/item.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/seguridad/log_list2.html" afterPath="$PROJECT_DIR$/core/templates/seguridad/log_list2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/modulo.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/modulo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/catalogo/parametro.html" afterPath="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="context_processors.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sacramentos/context_processors.py">
+      <file leaf-file-name="modulo.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/templates/catalogo/modulo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state vertical-scroll-proportion="-11.576923" vertical-offset="107" max-vertical-offset="1479">
+              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -59,25 +58,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log_list.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/templates/seguridad/log_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding>
-                <marker date="1429569980556" expanded="true" signature="356:437" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="456:471" placeholder="..." />
-                <marker date="1429569980556" expanded="false" signature="472:1595" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="546:1534" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="562:772" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="575:755" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="788:1521" placeholder="..." />
-                <marker date="1429569980556" expanded="true" signature="841:1483" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="usuario_list.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sacramentos/templates/usuario/usuario_list.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -88,21 +68,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/urls.py">
+      <file leaf-file-name="funcionalidad.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="833">
-              <caret line="39" column="66" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
+            <state vertical-scroll-proportion="1.4759725" vertical-offset="2041" max-vertical-offset="2975">
+              <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/views.py">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4692" max-vertical-offset="4862">
-              <caret line="276" column="36" selection-start-line="276" selection-start-column="36" selection-end-line="276" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="833">
+              <caret line="39" column="66" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -128,10 +108,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="item.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="item.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/catalogo/item.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9504717" vertical-offset="1977" max-vertical-offset="2771">
+            <state vertical-scroll-proportion="-15.5" vertical-offset="1977" max-vertical-offset="2771">
               <caret line="140" column="22" selection-start-line="140" selection-start-column="22" selection-end-line="140" selection-end-column="22" />
               <folding />
             </state>
@@ -166,9 +146,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sacramentos/templates/usuario/usuario_list.html" />
-        <option value="$PROJECT_DIR$/core/fixtures/archivo.json" />
-        <option value="$PROJECT_DIR$/core/admin.py" />
         <option value="$PROJECT_DIR$/sacramentos/rest.py" />
         <option value="$PROJECT_DIR$/sacramentos/tests.py" />
         <option value="$PROJECT_DIR$/home/urls.py" />
@@ -217,6 +194,9 @@
         <option value="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" />
         <option value="$PROJECT_DIR$/core/templates/seguridad/log_list2.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/item.html" />
+        <option value="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
+        <option value="$PROJECT_DIR$/core/templates/catalogo/modulo.html" />
+        <option value="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
       </list>
     </option>
   </component>
@@ -905,29 +885,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/bautismo/bautismo_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383" vertical-offset="435" max-vertical-offset="901">
-          <caret line="37" column="96" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/iglesia/iglesia_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="333" max-vertical-offset="1666">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/includes/menubar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8970" max-vertical-offset="9401">
@@ -1175,6 +1132,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14530" max-vertical-offset="16201">
           <caret line="861" column="26" selection-start-line="861" selection-start-column="26" selection-end-line="861" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1228,14 +1186,14 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
           <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding>
-            <marker date="1429569980556" expanded="true" signature="356:437" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="456:471" placeholder="..." />
-            <marker date="1429569980556" expanded="false" signature="472:1595" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="546:1534" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="562:772" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="575:755" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="788:1521" placeholder="..." />
-            <marker date="1429569980556" expanded="true" signature="841:1483" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1429569980556" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1252,14 +1210,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/fixtures/archivo_inicial.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.384615" vertical-offset="464822" max-vertical-offset="465324">
-          <caret line="27366" column="0" selection-start-line="27366" selection-start-column="0" selection-end-line="27366" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1306,8 +1256,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/catalogo/item.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9504717" vertical-offset="1977" max-vertical-offset="2771">
+        <state vertical-scroll-proportion="-15.5" vertical-offset="1977" max-vertical-offset="2771">
           <caret line="140" column="22" selection-start-line="140" selection-start-column="22" selection-end-line="140" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/catalogo/parametro.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8396226" vertical-offset="868" max-vertical-offset="1496">
+          <caret line="72" column="34" selection-start-line="72" selection-start-column="34" selection-end-line="72" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/fixtures/archivo_inicial.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.384615" vertical-offset="464822" max-vertical-offset="465324">
+          <caret line="27366" column="0" selection-start-line="27366" selection-start-column="0" selection-end-line="27366" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/catalogo/modulo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.576923" vertical-offset="107" max-vertical-offset="1479">
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4759725" vertical-offset="2041" max-vertical-offset="2975">
+          <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
           <folding />
         </state>
       </provider>

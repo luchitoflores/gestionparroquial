@@ -22,28 +22,50 @@
                     </div>
                 </div>
             </div>
-            <div class="span5">
+            <div class="span6">
                 <messages-alert></messages-alert>
                 <div class="panel panel-default">
                     <div class="panel-heading">Información del Parámetro</div>
                     <div class="panel-body">
                         <form action="" method="POST" class="form-horizontal" ng-submit="submit()">
+
                             <input type="hidden" ng-model="id"/>
-                            <label for="">Código</label>
-                            <input type="text" ng-model="codigo" required/>
-                            <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
-                            <label for="">Nombre</label>
-                            <input type="text" ng-model="nombre" required/>
-                            <label for="">Valor</label>
-                            <input type="text" ng-model="valor" required/>
-                            <label for="">Descripción</label>
-                            <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
-                            <label for="">Estado</label>
-                            <select name="estado" id="" ng-model="estado" required>
-                                <option value="">-- Seleccione --</option>
-                                <option value="A">Activo</option>
-                                <option value="I">Inactivo</option>
-                            </select>
+                            <label for="" class="control-label">Código</label>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" ng-model="codigo" required/>
+                                    <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
+                                </div>
+                            </div>
+                            <label for="" class="control-label">Nombre</label>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" ng-model="nombre" required/>
+                                </div>
+                            </div>
+                            <label for="" class="control-label">Valor</label>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" ng-model="valor" required/>
+                                </div>
+                            </div>
+                            <label for="" class="control-label">Descripción</label>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
+                                </div>
+                            </div>
+                            <label for="" class="control-label">Estado</label>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <select name="estado" id="" ng-model="estado" required>
+                                        <option value="">-- Seleccione --</option>
+                                        <option value="A">Activo</option>
+                                        <option value="I">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="form-actions">
                                 <a class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</a>
