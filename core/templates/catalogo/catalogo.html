@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{% block content_title %} Catálogos {% endblock %}{% endblock %}
 {% block breadcrumbs %}
-{{ block.super }}
-<span class="divider">»</span>
-<li class='active'>Catálogos</li>
+    {{ block.super }}
+    <span class="divider">»</span>
+    <li class='active'>Catálogos</li>
 {% endblock %}
 {% block content %}
 
@@ -14,7 +14,9 @@
                     <div class="panel-heading">Catálogos</div>
                     <div class="panel-body">
                         <div>
-                            <ul ng-repeat="catalogo in catalogos" class="remove-decoration" ng-click="MostrarInfoCatalogo(catalogo.codigo)"  ng-class="{selected: catalogo.codigo === codSelectedCatalogo}">
+                            <ul ng-repeat="catalogo in catalogos" class="remove-decoration"
+                                ng-click="MostrarInfoCatalogo(catalogo.codigo)"
+                                ng-class="{selected: catalogo.codigo === codSelectedCatalogo}">
                                 <li>{[{ catalogo.nombre }]}</li>
                             </ul>
                         </div>
@@ -22,44 +24,79 @@
                 </div>
             </div>
 
-            <div class="span5">
+            <div class="span6">
 
                 <messages-alert></messages-alert>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Información del Catálogo</div>
                     <div class="panel-body">
-                        <form action="" name="catalogoForm" method="POST" class="form-horizontal" ng-submit="catalogoForm.$valid && submit()">
+                        <form action="" name="catalogoForm" method="POST" class="form-horizontal"
+                              ng-submit="catalogoForm.$valid && submit()">
 
+                            <div class="control-group">
 
-                            <input type="hidden" ng-model="id"/>
-                            <label for="">Nombre</label>
-                            <input name="nombre" type="text" ng-model="nombre" required/>
-                            <span ng-show="catalogoForm.nombre.$invalid && !catalogoForm.nombre.$pristine" class="help-block">El nombre es requerido.</span>
+                                <input type="hidden" ng-model="id"/>
+                                <label class="control-label" for="">Nombre</label>
 
-                            <div id="name-group" class="form-group" ng-class="{ 'error' : errorCodigo }">
-                                <label for="">Código</label>
-                                <input name="codigo" type="text" ng-model="codigo" required/>
-                                <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
-                                <span ng-show="catalogoForm.codigo.$invalid && !catalogoForm.codigo.$pristine" class="help-block">El código es requerido.</span>
+                                <div class="controls">
+                                    <input name="nombre" type="text" ng-model="nombre" required/>
+                                    <span ng-show="catalogoForm.nombre.$invalid && !catalogoForm.nombre.$pristine"
+                                          class="help-block">El nombre es requerido.</span>
+                                </div>
+
+                            </div>
+                            <div class="control-group">
+                                <div id="name-group" ng-class="{ 'error' : errorCodigo }">
+                                    <label class="control-label" for="">Código</label>
+
+                                    <div class="controls">
+                                        <input name="codigo" type="text" ng-model="codigo" required/>
+                                    </div>
+                                    <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
+                                    <span ng-show="catalogoForm.codigo.$invalid && !catalogoForm.codigo.$pristine"
+                                          class="help-block">El código es requerido.</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+
+                                <label class="control-label" for="">Descripción</label>
+
+                                <div class="controls">
+                                    <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="">Es editable?</label>
+
+                                <div class="controls">
+                                    <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="">Padre</label>
+
+                                <div class="controls">
+                                    <select name="" id="" ng-model="padre"
+                                            ng-options="padre.nombre for padre in catalogos track by padre.id">
+                                        <option value="">-- Seleccione --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="">Estado</label>
+
+                                <div class="controls">
+                                    <select name="estado" id="" ng-model="estado" required>
+                                        <option value="">-- Seleccione --</option>
+                                        <option value="A">Activo</option>
+                                        <option value="I">Inactivo</option>
+                                    </select>
+                                    <span ng-show="catalogoForm.estado.$invalid && !catalogoForm.estado.$pristine"
+                                          class="help-block">El estado es requerido.</span>
+                                </div>
                             </div>
 
-                            <label for="">Descripción</label>
-                            <textarea name="" id="" cols="60" rows="5" ng-model="descripcion"></textarea>
-                            <label for="">Es editable?</label>
-                            <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}"/>
-                            <label for="">Padre</label>
-                            <select name="" id="" ng-model="padre"
-                                    ng-options="padre.nombre for padre in catalogos track by padre.id">
-                                <option value="">-- Seleccione --</option>
-                            </select>
-                            <label for="">Estado</label>
-                            <select name="estado" id="" ng-model="estado" required>
-                                <option value="">-- Seleccione --</option>
-                                <option value="A">Activo</option>
-                                <option value="I">Inactivo</option>
-                            </select>
-                            <span ng-show="catalogoForm.estado.$invalid && !catalogoForm.estado.$pristine" class="help-block">El estado es requerido.</span>
 
                             <div class="form-actions">
                                 <a class="btn btn-primary" ng_click="limpiarCampos()">Nuevo</a>
@@ -69,7 +106,7 @@
                     </div>
                 </div>
             </div>
-       </div>
+        </div>
     </div>
 
 

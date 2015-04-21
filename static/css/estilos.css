@@ -20,10 +20,10 @@
 }
 
 body {
-    background: #A9C7F3;
+    /*background: #A9C7F3; */
     font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
     font-size: 14px;
-    /*padding: 40px;*/
+
 }
 
 h1 {
@@ -88,7 +88,7 @@ li.item {
 
 #id_container {
     background: white;
-    padding-top: 4em;
+    padding-top: 2em;
     /*margin-bottom: 10em;*/
     margin-top: 0px;
 }
@@ -181,7 +181,6 @@ table {
         margin-bottom: 3em;
         /*text-transform: uppercase;*/
         text-rendering: optimizelegibility;
-        padding-left: 4em;
         /*border-style: none none solid none;*/
     }
 

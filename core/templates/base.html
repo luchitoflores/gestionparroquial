@@ -45,7 +45,7 @@
             {% include 'includes/menu.html' %}
         </div>
 
-        <div class="span8">
+        <div class="span9">
          <div class="row-fluid">
 
             <div id='id_title' class="container">
@@ -54,8 +54,7 @@
             </div>
 
         </div>
-
-                    <!-- Para mostrar mensajes del sistema-->
+            <!-- Para mostrar mensajes del sistema-->
             <div id="id_messages">
                 <aside>
                     <div>
@@ -74,11 +73,9 @@
                     </div>
                 </aside>
             </div>
-
-
             <div id='id_content'>
                 <article>
-                    <div class="container-fluid">
+                    <div>
                         {% block content %}
                         {% endblock %}
                     </div>
@@ -87,7 +84,10 @@
         </div>
     </div>
     <!-- Footer -->
-    <div id='id_footer'>
+
+</div>
+
+<div id='id_footer'>
         <footer>
             {% block footer %}
 
@@ -102,17 +102,14 @@
                         {% endif %}
                         </p>
                 {% endif %}
-
                 <!--<div style='text-align: right'>
                     <i class='icon-facebook-sign icon-2x' style='color: #ddd'></i>
                     <i class='icon-twitter-sign icon-2x' style='color: #ddd'></i>
                     <i class='icon-youtube icon-2x' style='color: #ddd'></i>
-
-                </div>-->
+                    </div>-->
             {% endblock %}
         </footer>
     </div>
-</div>
 
 
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
