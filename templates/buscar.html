@@ -1,101 +1,108 @@
-{% extends 'base_site.html'%}
-{%block title%}{%block content_title%}
-Búsqueda de Sacramentos de Feligreses
-{%endblock%}{%endblock%}
+{% extends 'base_site.html' %}
+{% block title %}{% block content_title %}
+    Búsqueda de Sacramentos de Feligreses
+{% endblock %}{% endblock %}
 
-{%block content%}
-<form action="." class="form-search" method='GET'>
-	<input id='id_buscar_sacramentos' type="text" class="input-medium search-query" name="q" required placeholder='Cedula/Pasaporte'>
-	<input id='id_buscar' type="submit" value="Buscar" class="btn btn-primary">
-</form>
-<table id='id_table_buscar' class='footable table table-bordered table-striped'>
-	<thead>
-		<tr>
-			
-			<th>Feligres</th>
-			<th>Fecha Sacramento</th>
-			<th>Parroquia</th>
-			<th data-hide='phone'>Tipo Sacramento</th>
-			<th data-hide='phone'>Libro</th>
-			<th data-hide='phone'>Página</th>
-			<th data-hide='phone'>Número Acta</th>
+{% block content %}
+    <div class='row'>
+        <div class="span9 center">
+            <form action="." class="form-search" method='GET'>
+                <input id='id_buscar_sacramentos' type="text" class="input-medium search-query" name="q" required
+                       placeholder='Cedula/Pasaporte'>
+                <input id='id_buscar' type="submit" value="Buscar" class="btn btn-primary">
+            </form>
+            <table id='id_table_buscar' class='footable table table-bordered table-striped'>
+                <thead>
+                <tr>
 
-			
-		</tr>
-		
-	</thead>
-	<tbody>
-		{% for o in results1 %}
-		<tr>
-			<td> {{o.bautizado.user.get_full_name}}</td>
-			<td>{{o.fecha_sacramento}}</td>
-			<td>{{o.parroquia.nombre}}</td>
-			<td>{{o.tipo_sacramento}}</td>
-			<td>{{o.libro.numero_libro}} </td>
-			<td>{{o.pagina}}</td>
-			<td>{{o.numero_acta}} </td>
+                    <th>Feligres</th>
+                    <th>Fecha Sacramento</th>
+                    <th>Parroquia</th>
+                    <th data-hide='phone'>Tipo Sacramento</th>
+                    <th data-hide='phone'>Libro</th>
+                    <th data-hide='phone'>Página</th>
+                    <th data-hide='phone'>Número Acta</th>
 
-		</tr>
-		{%empty%}
 
-		<tr>
-			<td colspan="7">
-				No se encontro ningun registro
-			</td>
-		</tr>
+                </tr>
 
-		{% endfor %}
-		{% for o in results2%}
-		<tr>
-			<td> {{o.feligres.user.get_full_name}}</td>
-			<td>{{o.fecha_sacramento}}</td>
-			<td>{{o.parroquia.nombre}}</td>
-			<td>{{o.tipo_sacramento}}</td>
-			<td>{{o.libro.numero_libro}} </td>
-			<td>{{o.pagina}}</td>
-			<td>{{o.numero_acta}} </td>
-		</tr>
-		
-		{% endfor %}
-		{% for o in results3 %}
-		<tr>
-			<td> {{o.confirmado.user.get_full_name}}</td>
-			<td>{{o.fecha_sacramento}}</td>
-			<td>{{o.parroquia.nombre}}</td>
-			<td>{{o.tipo_sacramento}}</td>
-			<td>{{o.libro.numero_libro}} </td>
-			<td>{{o.pagina}}</td>
-			<td>{{o.numero_acta}} </td>
-		</tr>
-		
-		{% endfor %}
-		{% for o in results4 %}
-		<tr>
-			<td> {{o.novio.user.get_full_name}}</td>
-			<td>{{o.fecha_sacramento}}</td>
-			<td>{{o.parroquia.nombre}}</td>
-			<td>{{o.tipo_sacramento}}</td>
-			<td>{{o.libro.numero_libro}} </td>
-			<td>{{o.pagina}}</td>
-			<td>{{o.numero_acta}} </td>
-		</tr>
-		
-		{% endfor %}
-		{% for o in results5 %}
-		<tr>
-			<td> {{o.novia.user.get_full_name}}</td>
-			<td>{{o.fecha_sacramento}}</td>
-			<td>{{o.parroquia.nombre}}</td>
-			<td>{{o.tipo_sacramento}}</td>
-			<td>{{o.libro.numero_libro}} </td>
-			<td>{{o.pagina}}</td>
-			<td>{{o.numero_acta}} </td>
-		</tr>
-		
-		{% endfor %}
-		
-		
-	</tbody>
+                </thead>
+                <tbody>
+                {% for o in results1 %}
+                    <tr>
+                        <td> {{ o.bautizado.user.get_full_name }}</td>
+                        <td>{{ o.fecha_sacramento }}</td>
+                        <td>{{ o.parroquia.nombre }}</td>
+                        <td>{{ o.tipo_sacramento }}</td>
+                        <td>{{ o.libro.numero_libro }} </td>
+                        <td>{{ o.pagina }}</td>
+                        <td>{{ o.numero_acta }} </td>
 
-</table>
-{%endblock%}
+                    </tr>
+                {% empty %}
+
+                    <tr>
+                        <td colspan="7">
+                            No se encontro ningun registro
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                {% for o in results2 %}
+                    <tr>
+                        <td> {{ o.feligres.user.get_full_name }}</td>
+                        <td>{{ o.fecha_sacramento }}</td>
+                        <td>{{ o.parroquia.nombre }}</td>
+                        <td>{{ o.tipo_sacramento }}</td>
+                        <td>{{ o.libro.numero_libro }} </td>
+                        <td>{{ o.pagina }}</td>
+                        <td>{{ o.numero_acta }} </td>
+                    </tr>
+
+                {% endfor %}
+                {% for o in results3 %}
+                    <tr>
+                        <td> {{ o.confirmado.user.get_full_name }}</td>
+                        <td>{{ o.fecha_sacramento }}</td>
+                        <td>{{ o.parroquia.nombre }}</td>
+                        <td>{{ o.tipo_sacramento }}</td>
+                        <td>{{ o.libro.numero_libro }} </td>
+                        <td>{{ o.pagina }}</td>
+                        <td>{{ o.numero_acta }} </td>
+                    </tr>
+
+                {% endfor %}
+                {% for o in results4 %}
+                    <tr>
+                        <td> {{ o.novio.user.get_full_name }}</td>
+                        <td>{{ o.fecha_sacramento }}</td>
+                        <td>{{ o.parroquia.nombre }}</td>
+                        <td>{{ o.tipo_sacramento }}</td>
+                        <td>{{ o.libro.numero_libro }} </td>
+                        <td>{{ o.pagina }}</td>
+                        <td>{{ o.numero_acta }} </td>
+                    </tr>
+
+                {% endfor %}
+                {% for o in results5 %}
+                    <tr>
+                        <td> {{ o.novia.user.get_full_name }}</td>
+                        <td>{{ o.fecha_sacramento }}</td>
+                        <td>{{ o.parroquia.nombre }}</td>
+                        <td>{{ o.tipo_sacramento }}</td>
+                        <td>{{ o.libro.numero_libro }} </td>
+                        <td>{{ o.pagina }}</td>
+                        <td>{{ o.numero_acta }} </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+

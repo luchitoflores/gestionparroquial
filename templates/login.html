@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="offset4 span3">
+        <div class="span3 center">
             <div class="panel panel-default" style="text-align: center">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
@@ -44,12 +44,12 @@
                                     <div class="controls errors">{{ form.password.errors }}</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-large btn-block">Iniciar Sesión
-                                </button>
-                                <a href="{% url 'index' %}" class='btn btn-danger btn-large btn-block'>Cancelar</a>
+                                </button><br/>
+{#                                <a href="{% url 'index' %}" class='btn btn-danger btn-large btn-block'>Cancelar</a>#}
                                 <a href="{% url 'send_email' %}">¿Has olvidado la contraseña?</a>
 
                             </form>
-                      
+
 
 
                 </div>
