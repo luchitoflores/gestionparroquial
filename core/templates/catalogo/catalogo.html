@@ -51,7 +51,7 @@
                                     <label class="control-label" for="">Código</label>
 
                                     <div class="controls">
-                                        <input name="codigo" type="text" ng-model="codigo" required/>
+                                        <input name="codigo" type="text" ng-model="codigo" ng-disabled="editable" required/>
                                     </div>
                                     <span class="help-block" ng-show="errorCodigo">{[{ errorCodigo }]}</span>
                                     <span ng-show="catalogoForm.codigo.$invalid && !catalogoForm.codigo.$pristine"
@@ -70,7 +70,7 @@
                                 <label class="control-label" for="">Es editable?</label>
 
                                 <div class="controls">
-                                    <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}"/>
+                                    <input type="checkbox" ng-model="editable" value="{[{ c.editable }]}" ng-disabled="editable"/>
                                 </div>
                             </div>
                             <div class="control-group">
