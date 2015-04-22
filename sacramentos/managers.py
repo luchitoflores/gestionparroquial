@@ -41,7 +41,7 @@ class PersonaManager(models.Manager):
         return self.model.objects.filter(user__groups__name='Administrador')
 
     def sacerdote(self):
-        return self.model.objects.filter(user__groups__name='Sacerdote', profesion='Sacerdote')
+        return self.model.objects.filter(user__groups__name='Sacerdote')
 
     def parroco(self, parroquia):
         return self.model.objects.filter(user__groups__name='Sacerdote', profesion='Sacerdote',

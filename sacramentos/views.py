@@ -663,6 +663,7 @@ def bautismo_create_view(request):
     if (request.method == 'POST' ):
         formBautismo = BautismoForm(request, request.POST)
         formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.feligres()
+        formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
 
         if formBautismo.is_valid():
             bautismo = formBautismo.save(commit=False)
@@ -707,6 +708,8 @@ def bautismo_create_view(request):
             return render(request, 'bautismo/bautismo_form.html', ctx)
     else:
         formBautismo = BautismoForm(request)
+        #formBautismo.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
+        #formBautismo.fields['bautizado'].queryset = PerfilUsuario.objects.feligres()
     ctx = {'formBautismo': formBautismo, 'tipo_sacramento': 'bautismo'}
     return render(request, 'bautismo/bautismo_form.html', ctx)
 
@@ -746,6 +749,8 @@ def bautismo_update_view(request, pk):
             return render(request, 'bautismo/bautismo_form.html', ctx)
     else:
         bautismo_form = BautismoForm(request, instance=bautismo)
+        bautismo_form.fields['bautizado'].queryset = PerfilUsuario.objects.filter(id=bautismo.bautizado.id)
+        bautismo_form.fields['celebrante'].queryset = PerfilUsuario.objects.filter(id=bautismo.celebrante.id)
         ctx = {'formBautismo': bautismo_form, 'notas': notas, 'object': bautismo, 'tipo_sacramento': 'bautismo'}
         return render(request, 'bautismo/bautismo_form.html', ctx)
 
@@ -852,6 +857,8 @@ def eucaristia_update_view(request, pk):
     if (request.method == 'POST'):
         form_eucaristia = EucaristiaForm(request, request.POST, instance=eucaristia)
         form_eucaristia.fields['feligres'].queryset = PerfilUsuario.objects.feligres()
+        form_eucaristia.fields['celebrante'].queryset = PerfilUsuario.objects.sacerdote()
+
         if form_eucaristia.is_valid():
             form_eucaristia.save()
             LogEntry.objects.log_action(
