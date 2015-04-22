@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="Permite hacer migraciones">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/includes/menu.html" afterPath="$PROJECT_DIR$/core/templates/includes/menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" afterPath="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,21 +87,43 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="menu.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/includes/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50292397" vertical-offset="168" max-vertical-offset="629">
+            <state vertical-scroll-proportion="-6.6153846" vertical-offset="168" max-vertical-offset="629">
               <caret line="20" column="57" selection-start-line="20" selection-start-column="57" selection-end-line="20" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="catalogo.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/templates/catalogo/catalogo.html">
+      <file leaf-file-name="item.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/templates/catalogo/item.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1802" max-vertical-offset="2023">
-              <caret line="106" column="22" selection-start-line="30" selection-start-column="16" selection-end-line="106" selection-end-column="22" />
+            <state vertical-scroll-proportion="-4.0" vertical-offset="848" max-vertical-offset="2771">
+              <caret line="56" column="31" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log_list2.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/templates/seguridad/log_list2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.384615" vertical-offset="36" max-vertical-offset="1275">
+              <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+              <folding>
+                <element signature="e#472#498#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="buscar_logs_form2.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.105919" vertical-offset="0" max-vertical-offset="527">
+              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -170,9 +193,7 @@
         <option value="$PROJECT_DIR$/core/templates/seguridad/log_list.html" />
         <option value="$PROJECT_DIR$/core/urls.py" />
         <option value="$PROJECT_DIR$/core/views.py" />
-        <option value="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" />
         <option value="$PROJECT_DIR$/core/templates/seguridad/log_list2.html" />
-        <option value="$PROJECT_DIR$/core/templates/catalogo/item.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/parametro.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/modulo.html" />
         <option value="$PROJECT_DIR$/core/templates/catalogo/funcionalidad.html" />
@@ -185,6 +206,8 @@
         <option value="$PROJECT_DIR$/core/templates/base_site.html" />
         <option value="$PROJECT_DIR$/core/templates/base.html" />
         <option value="$PROJECT_DIR$/core/templates/includes/menu.html" />
+        <option value="$PROJECT_DIR$/core/templates/catalogo/item.html" />
+        <option value="$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html" />
       </list>
     </option>
   </component>
@@ -287,7 +310,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
+              <option name="myItemId" value="seguridad" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1024,29 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.115385" vertical-offset="0" max-vertical-offset="527">
-          <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/seguridad/log_list2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.346154" vertical-offset="36" max-vertical-offset="1275">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/catalogo/item.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.5" vertical-offset="1977" max-vertical-offset="2771">
-          <caret line="140" column="22" selection-start-line="140" selection-start-column="22" selection-end-line="140" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/catalogo/parametro.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8396226" vertical-offset="868" max-vertical-offset="1496">
@@ -1167,8 +1167,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/includes/menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50292397" vertical-offset="168" max-vertical-offset="629">
+        <state vertical-scroll-proportion="-6.6153846" vertical-offset="168" max-vertical-offset="629">
           <caret line="20" column="57" selection-start-line="20" selection-start-column="57" selection-end-line="20" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/catalogo/item.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.0" vertical-offset="848" max-vertical-offset="2771">
+          <caret line="56" column="31" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/seguridad/log_list2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.384615" vertical-offset="36" max-vertical-offset="1275">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding>
+            <element signature="e#472#498#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/includes/buscar_logs_form2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.105919" vertical-offset="0" max-vertical-offset="527">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
           <folding />
         </state>
       </provider>
