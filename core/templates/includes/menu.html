@@ -19,10 +19,7 @@
                     <div id="collapse{{ m.id }}" class="accordion-body collapse in">
                         {% for s in m.submenu %}
                             <div class="accordion-inner">
-                                <span class="icon-stack menu-icons">
-                                  <i class="{{ s.icon }}"></i>
-                                </span>
-                                <a href="{{ s.url }}"> {{ s.nombre }}</a>
+                                <a href="{{ s.url }}"> {% if s.icon %}<span class="icon-stack"><i class="{{ s.icon }}"></i></span>{% endif %}{{ s.nombre }}</a>
                             </div>
                         {% endfor %}
                     </div>
