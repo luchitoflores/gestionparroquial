@@ -1,5 +1,7 @@
+# -*- coding:utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Item, Catalogo, Parametro, Funcionalidad, Modulo
 from .forms import ItemForm, CatalogoForm, ParametroForm
 from django.core.urlresolvers import reverse
@@ -94,3 +96,15 @@ class PerfilUsuarioInline(admin.StackedInline):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     inlines = [PerfilUsuarioInline, ]
+    form = UserChangeForm
+    #fields = ('username', 'password', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'groups', 'user_permissions' )
+    filter_horizontal = ('groups', 'user_permissions')
+    fieldsets = (
+        ('Información del usuario', {
+            'fields': ('username', 'password', 'first_name', 'last_name', 'email', 'is_staff', 'is_active')
+        }),
+        ('Grupos y Permisos', {
+            'fields': ('groups', 'user_permissions' )
+        }),
+
+    )
