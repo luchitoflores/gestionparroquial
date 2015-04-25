@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import User, Permission
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.fields.related import ForeignKey
 from django.utils import six
 
 
@@ -74,16 +75,16 @@ class PerfilUsuario(TimeStampedModel):
     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True,
                            help_text='Ingrese un numero de cedula ej:1101980561')
     nacionalidad = models.ForeignKey(Item, related_name='persona', help_text='Escoja la nacionalidad. Ej: Ecuador')
-    padre = models.ForeignKey('self', related_name='+', null=True, blank=True, help_text='Presione buscar, si no está en la lista, presione crear')
-    madre = models.ForeignKey('self', related_name='+', null=True, blank=True, help_text='Presione buscar, si no está en la lista, presione crear')
+    padre = models.ForeignKey('self', related_name='+', null=True, blank=True,
+                              help_text='Presione buscar, si no está en la lista, presione crear')
+    madre = models.ForeignKey('self', related_name='+', null=True, blank=True,
+                              help_text='Presione buscar, si no está en la lista, presione crear')
     fecha_nacimiento = models.DateField(null=True, blank=True,
                                         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
     lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True,
                                         help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
     sexo = models.ForeignKey(Item, related_name='genero', help_text='Elija el sexo de la persona. Ej: Masculino')
     estado_civil = models.ForeignKey(Item, related_name='estado_civil', help_text='Elija el estado civil. Ej: Soltero/a')
-    # estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default=ESTADO_CIVIL_CHOICES[0][0],
-    #                                 help_text='Elija el estado civil. Ej: Soltero/a')
     profesion = models.CharField(max_length=40, null=True, blank=True, help_text='Ingrese la profesión de la persona')
     celular = models.CharField(max_length=10, blank=True, null=True,
                                help_text='Ingrese su número celular. Ej: 0986522754')
@@ -115,7 +116,7 @@ class PerfilUsuario(TimeStampedModel):
         )
 
     def __unicode__(self):
-        if self.user.first_name == None and self.user.last_name == None:
+        if self.user.first_name is None and self.user.last_name is None:
             return self.user.username
         else:
             return '%s' % (self.user.get_full_name())
@@ -208,6 +209,22 @@ class PerfilUsuario(TimeStampedModel):
             return True
         else:
             return False
+
+
+# class Feligres(TimeStampedModel):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='feligres', null=True, blank=True)
+#     padre = models.CharField(max_length=100, blank=True, null=True)
+#     madre = models.CharField(max_length=100, blank=True, null=True)
+#     nombres_completos = models.CharField(max_length=100)
+#     dni = models.CharField('Cédula/Pasaporte', max_length=20, null=True, blank=True,
+#                            help_text='Ingrese un numero de cedula ej:1101980561')
+#     nacionalidad = models.ForeignKey(Item, help_text='Escoja la nacionalidad. Ej: Ecuador', related_name='nacionalidad_feligres')
+#     fecha_nacimiento = models.DateField(null=True, blank=True,
+#                                         help_text='Ingrese la fecha de nacimiento Ej: dd/mm/yyyy')
+#     lugar_nacimiento = models.CharField(max_length=25, null=True, blank=True,
+#                                         help_text='Ingrese el lugar de Nacimiento. Ej: Amaluza')
+#     sexo = models.ForeignKey(Item, help_text='Elija el sexo de la persona. Ej: Masculino', related_name='sexo_feligres')
+#     estado_civil = models.ForeignKey(Item, help_text='Elija el estado civil. Ej: Soltero/a', related_name='estado_civil_feligres')
 
 
 class Parroquia(TimeStampedModel):

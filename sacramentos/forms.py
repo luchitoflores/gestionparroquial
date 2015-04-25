@@ -142,14 +142,14 @@ class UsuarioSacerdoteForm(UsuarioBaseForm):
 
 class UsuarioAdministradorForm(UsuarioForm):
     class Meta(UsuarioBaseForm.Meta):
-        fields = UsuarioBaseForm.Meta.fields + ('groups', 'is_staff')
+        fields = UsuarioBaseForm.Meta.fields + ('groups', 'is_active')
 
     def __init__(self, *args, **kwargs):
         super(UsuarioAdministradorForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
         self.fields['email'].widget = forms.TextInput(attrs={'required': '', 'type': 'email'})
-        self.fields['is_staff'].label = 'Es activo?'
-        self.fields['is_staff'].help_text = 'Marque la casilla si quiere que el usuario pueda entrar al sistema'
+        self.fields['is_active'].label = 'Es activo?'
+        self.fields['is_active'].help_text = 'Marque la casilla si quiere que el usuario pueda entrar al sistema'
 
 
 #Formulario Base para todos los perfiles de usuario
@@ -297,7 +297,7 @@ class AdminForm(forms.Form):
                                            queryset=PerfilUsuario.objects.none(), required=True,
                                            empty_label='-- Buscar --',
                                            widget=forms.Select(attrs={'required': ''}))
-    is_staff = forms.BooleanField(label='Es activo?', required=False,
+    is_active = forms.BooleanField(label='Es activo?', required=False,
                                   help_text='Marque la casilla si quiere que el usuario pueda entrar al sistema')
 
 

@@ -266,15 +266,17 @@ def administrator_create_view(request):
         if not usuario.email:
             form.errors["administrador"] = ErrorList([u'El usuario no tiene correo electrónico. '])
 
-        is_staff = request.POST.get('is_staff')
+        is_active = request.POST.get('is_active')
 
         if form.is_valid():
             administrador, created = Group.objects.get_or_create(name='Administrador')
             usuario.groups.add(administrador)
-            if is_staff:
-                usuario.is_staff = True
+            if is_active:
+                #usuario.is_staff = True
+                usuario.is_active = True
             else:
-                usuario.is_staff = False
+                #usuario.is_staff = False
+                usuario.is_active = False
 
             usuario.save()
             return HttpResponseRedirect(success_url)
@@ -339,17 +341,24 @@ def administrador_update_view(request, pk):
     success_url = '/administrador/'
 
     if request.method == 'POST':
-        staff = request.POST.get('is_staff')
+        is_active = request.POST.get('is_active')
         form_perfil = AdministradorForm(request.POST, instance=perfil)
         form_usuario = UsuarioAdministradorForm(request.POST, instance=perfil.user)
 
-        if request.user == perfil.user and not staff:
-            form_usuario.errors["is_staff"] = ErrorList([u'No está permitido que Ud se desactive del sistema.'])
+        if request.user == perfil.user and not is_active:
+            form_usuario.errors["is_active"] = ErrorList([u'No está permitido que Ud se desactive del sistema.'])
 
         if form_perfil.is_valid() and form_usuario.is_valid():
-            usuario = form_usuario.save()
+            usuario = form_usuario.save(commit=False)
+            if is_active:
+                #usuario.is_staff = True
+                usuario.is_active = True
+            else:
+                #usuario.is_staff = False
+                usuario.is_active = False
+            usuario.save()
             perfil = form_perfil.save()
-            if not usuario.is_staff:
+            if not usuario.is_active:
                 # Esta linea de código permite desloguear a un usuario de manera remota
                 [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == usuario.id]
             LogEntry.objects.log_action(
@@ -1584,7 +1593,7 @@ def asignar_parroquia_create(request):
                     action_flag=ADDITION,
                     change_message="Asigno parroquia y sacerdote")
                 user = PerfilUsuario.objects.get(pk=persona).user
-                user.is_staff = True
+                #user.is_staff = True
                 user.save()
 
                 return HttpResponseRedirect(success_url)
@@ -1602,7 +1611,7 @@ def asignar_parroquia_create(request):
                     action_flag=ADDITION,
                     change_message="Asigno parroquia y sacerdote")
                 user = PerfilUsuario.objects.get(pk=persona).user
-                user.is_staff = True
+                #user.is_staff = True
                 user.save()
                 return HttpResponseRedirect(success_url)
 
@@ -1642,7 +1651,7 @@ def asignar_parroco_a_parroquia(request, pk):
                 periodo.asignacion = asignacion
                 periodo.save()
                 user = PerfilUsuario.objects.get(pk=persona).user
-                user.is_staff = True
+                #user.is_staff = True
                 user.save()
                 LogEntry.objects.log_action(
                     user_id=request.user.id,
@@ -1659,7 +1668,7 @@ def asignar_parroco_a_parroquia(request, pk):
                 periodo.asignacion = asignacion
                 periodo.save()
                 user = PerfilUsuario.objects.get(pk=persona).user
-                user.is_staff = True
+                #user.is_staff = True
                 user.save()
                 LogEntry.objects.log_action(
                     user_id=request.user.id,
@@ -1754,11 +1763,13 @@ def nuevo_periodo_asignacion(request, pk):
                 periodo.save()
                 if estado:
                     user = PerfilUsuario.objects.get(pk=periodo.asignacion.persona.id).user
-                    user.is_staff = True
+                    #user.is_staff = True
+                    user.is_active = True
                     user.save()
                 else:
                     user = PerfilUsuario.objects.get(pk=periodo.asignacion.persona.id).user
-                    user.is_staff = False
+                    #user.is_staff = False
+                    user.is_active = False
                     user.save()
                 LogEntry.objects.log_action(
                     user_id=request.user.id,
@@ -1815,11 +1826,13 @@ def parroco_periodos_asignacion_update(request, pk):
             else:
                 if estado:
                     user = PerfilUsuario.objects.get(pk=periodo.asignacion.persona.id).user
-                    user.is_staff = True
+                    #user.is_staff = True
+                    user.is_active = True
                     user.save()
                 else:
                     user = PerfilUsuario.objects.get(pk=periodo.asignacion.persona.id).user
-                    user.is_staff = False
+                    #user.is_staff = False
+                    user.is_active = False
                     user.save()
                 form.save()
                 LogEntry.objects.log_action(
@@ -1962,13 +1975,15 @@ def asignar_secretaria_create(request):
                         estado = request.POST.get('estado')
                         if estado:
                             user = PerfilUsuario.objects.get(pk=persona_id).user
-                            user.is_staff = True
+                            #user.is_staff = True
+                            user.is_active = True
                             user.save()
                             secretaria, created = Group.objects.get_or_create(name='Secretaria')
                             user.groups.add(secretaria)
                         else:
                             user = PerfilUsuario.objects.get(pk=persona_id).user
-                            user.is_staff = False
+                            #user.is_staff = False
+                            user.is_active = False
                             user.save()
                             secretaria, created = Group.objects.get_or_create(name='Secretaria')
                             user.groups.add(secretaria)
@@ -2015,7 +2030,7 @@ def asignar_secretaria_update(request, pk):
             usuario = request.user
             if request.method == 'POST':
                 persona = PerfilUsuario.objects.feligres()
-                form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff, request.POST,
+                form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active, request.POST,
                                              instance=periodo.asignacion)
                 form_periodo = PeriodoAsignacionParroquiaForm(request.POST, instance=periodo)
                 if form.is_valid() and form_periodo.is_valid():
@@ -2023,11 +2038,13 @@ def asignar_secretaria_update(request, pk):
                     estado = request.POST.get('estado')
                     if estado:
                         user = PerfilUsuario.objects.get(pk=persona_id).user
-                        user.is_staff = True
+                        #user.is_staff = True
+                        user.is_active = True
                         user.save()
                     else:
                         user = PerfilUsuario.objects.get(pk=persona_id).user
-                        user.is_staff = False
+                        #user.is_staff = False
+                        user.is_active = False
                         user.save()
                     asig = form.save()
                     periodo = form_periodo.save(commit=False)
@@ -2046,7 +2063,7 @@ def asignar_secretaria_update(request, pk):
                     if periodo.asignacion.persona:
                         messages.error(request, MENSAJE_ERROR)
                         persona = PerfilUsuario.objects.filter(user__id=periodo.asignacion.persona.user.id)
-                        form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff,
+                        form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
                                                      request.POST, instance=periodo.asignacion)
                     else:
                         messages.error(request, MENSAJE_ERROR)
@@ -2058,11 +2075,11 @@ def asignar_secretaria_update(request, pk):
             else:
                 if periodo.asignacion.persona:
                     persona = PerfilUsuario.objects.filter(user__id=periodo.asignacion.persona.user.id)
-                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff,
+                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
                                                  instance=periodo.asignacion)
                 else:
                     persona = PerfilUsuario.objects.none()
-                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_staff,
+                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
                                                  instance=periodo.asignacion)
 
                 form_periodo = PeriodoAsignacionParroquiaForm(instance=periodo)

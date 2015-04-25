@@ -225,18 +225,18 @@
 			<fieldset class="scheduler-border">
 				<legend class="scheduler-border">Grupos y Permisos</legend>
 				<div class="control-group">
-					{{form_usuario.is_staff|label_class:'control-label'}}
+					{{form_usuario.is_active|label_class:'control-label'}}
 					<div class='controls'>
-						{{form_usuario.is_staff}}
+						{{form_usuario.is_active}}
 					</div>
 					<div class='controls'>
 						<div class="help-text">
-							{{form_usuario.is_staff.help_text}}
+							{{form_usuario.is_active.help_text}}
 						</div>
 					</div>
 					<div class='controls'>
 						<div class="errors">
-							{{form_usuario.is_staff.errors}}
+							{{form_usuario.is_active.errors}}
 						</div>
 					</div>
 					

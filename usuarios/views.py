@@ -42,7 +42,7 @@ def login_view(request):
             password = request.POST['password']
             user = authenticate(username=username, password=password)
 
-            if user is not None and user.is_active and user.is_staff:
+            if user is not None and user.is_active:
                 login(request, user)
                 try:
                     parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
