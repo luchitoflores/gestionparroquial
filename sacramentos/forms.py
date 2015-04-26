@@ -873,7 +873,10 @@ class AsignarSecretariaForm(ModelForm):
         persona = cleaned_data.get("persona")
         parroquia = cleaned_data.get("parroquia")
         esta_activo_otra_parroquia = AsignacionParroquia.objects.filter(persona=persona, es_activo=True).exclude(parroquia=parroquia)
-        esta_activo = AsignacionParroquia.objects.filter(persona=persona, parroquia=parroquia)
+        if self.instance.id:
+            esta_activo = AsignacionParroquia.objects.filter(persona=persona, parroquia=parroquia).exclude(pk=self.instance.id);
+        else:
+            esta_activo = AsignacionParroquia.objects.filter(persona=persona, parroquia=parroquia)
 
         if not persona.user.email:
             mensaje = u"El usuario no tiene correo electrónico. Puede asignarle un correo mediante este "
@@ -895,14 +898,9 @@ class AsignarSecretariaForm(ModelForm):
         self.fields['persona'] = forms.ModelChoiceField(label='Secretario/a *', queryset=persona,
                                                         empty_label='-- Buscar o Crear --',
                                                         widget=forms.Select(attrs={'required': ''}))
-        try:
-            parroquia = AsignacionParroquia.objects.get(persona__user=user).parroquia
-        except ObjectDoesNotExist:
-            raise PermissionDenied
-
-        self.fields['parroquia'] = forms.ModelChoiceField(label='Parroquia *',
-                                                          queryset=Parroquia.objects.filter(id=parroquia.id),
-                                                          empty_label=None)
+        # self.fields['parroquia'] = forms.ModelChoiceField(label='Parroquia *',
+        #                                                   queryset=Parroquia.objects.filter(id=parroquia.id),
+        #                                                   empty_label=None)
 
     class Meta:
         model = AsignacionParroquia

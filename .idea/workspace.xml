@@ -6,20 +6,11 @@
   <component name="ChangeListManager">
     <list id="46f6cc50-daf8-4656-adaa-c6006a355ae9" name="Default" comment="" />
     <list default="true" id="c63428f6-58a1-463d-a6cf-aeed74fe54b3" name="Permite hacer migraciones" comment="Permite hacer migraciones">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sacramentos/templates/parroquia/seleccionar_parroquia.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_form.html" afterPath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html" afterPath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_form.html" afterPath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_form.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html" afterPath="$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html" afterPath="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/forms.py" afterPath="$PROJECT_DIR$/sacramentos/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/managers.py" afterPath="$PROJECT_DIR$/core/managers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/models.py" afterPath="$PROJECT_DIR$/sacramentos/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/sacramentos.js" afterPath="$PROJECT_DIR$/static/js/sacramentos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/serializer.py" afterPath="$PROJECT_DIR$/sacramentos/serializer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/urls.py" afterPath="$PROJECT_DIR$/sacramentos/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sacramentos/views.py" afterPath="$PROJECT_DIR$/sacramentos/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usuarios/views.py" afterPath="$PROJECT_DIR$/usuarios/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ekklesialoja.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,8 +43,8 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.48" vertical-offset="28883" max-vertical-offset="52071">
-              <caret line="1710" column="27" selection-start-line="1710" selection-start-column="27" selection-end-line="1710" selection-end-column="27" />
+            <state vertical-scroll-proportion="-5.44" vertical-offset="35428" max-vertical-offset="52105">
+              <caret line="2092" column="27" selection-start-line="2092" selection-start-column="27" selection-end-line="2092" selection-end-column="27" />
               <folding>
                 <element signature="e#23#34#0" expanded="true" />
               </folding>
@@ -61,33 +52,63 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/site-packages/django/forms/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2192" max-vertical-offset="11288">
-              <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.730769" vertical-offset="361" max-vertical-offset="1173">
-              <caret line="30" column="82" selection-start-line="30" selection-start-column="82" selection-end-line="30" selection-end-column="82" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sacramentos/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="8057" max-vertical-offset="9860">
-              <caret line="480" column="0" selection-start-line="480" selection-start-column="0" selection-end-line="480" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="8062" max-vertical-offset="9860">
+              <caret line="481" column="6" selection-start-line="481" selection-start-column="6" selection-end-line="481" selection-end-column="6" />
               <folding>
                 <element signature="e#23#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="functional.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/django/utils/functional.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="679" max-vertical-offset="7497">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="administrador_list.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.307693" vertical-offset="327" max-vertical-offset="867">
+              <caret line="35" column="101" selection-start-line="35" selection-start-column="101" selection-end-line="35" selection-end-column="101" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manager.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/django/db/models/manager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3229" max-vertical-offset="4029">
+              <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="seleccionar_parroquia.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/seleccionar_parroquia.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.65384614" vertical-offset="34" max-vertical-offset="901">
+              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+              <folding>
+                <marker date="1430015322510" expanded="true" signature="399:974" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="444:779" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="475:512" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="537:568" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="594:673" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="621:664" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="698:771" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="722:762" placeholder="..." />
+                <marker date="1430015322510" expanded="true" signature="808:965" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -96,8 +117,8 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usuarios/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.76" vertical-offset="1157" max-vertical-offset="3808">
-              <caret line="78" column="12" selection-start-line="78" selection-start-column="12" selection-end-line="78" selection-end-column="12" />
+            <state vertical-scroll-proportion="-4.28" vertical-offset="726" max-vertical-offset="3808">
+              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding>
                 <element signature="e#49#60#0" expanded="true" />
               </folding>
@@ -105,21 +126,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serializer.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sacramentos/serializer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="616" max-vertical-offset="3570">
-              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="forms.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sacramentos/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="14188" max-vertical-offset="18598">
-              <caret line="845" column="18" selection-start-line="845" selection-start-column="18" selection-end-line="845" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.3314121" vertical-offset="14743" max-vertical-offset="18564">
+              <caret line="874" column="0" selection-start-line="874" selection-start-column="0" selection-end-line="874" selection-end-column="0" />
               <folding>
                 <element signature="e#23#34#0" expanded="true" />
               </folding>
@@ -127,31 +138,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asignar_parroquia_list.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="asignar_parroquia_list.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.211838" vertical-offset="0" max-vertical-offset="714">
-              <caret line="4" column="68" selection-start-line="4" selection-start-column="68" selection-end-line="4" selection-end-column="68" />
+            <state vertical-scroll-proportion="-3.8461537" vertical-offset="325" max-vertical-offset="714">
+              <caret line="25" column="115" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="115" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asignar_parroquia_form.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_form.html">
+      <file leaf-file-name="asignar_secretaria_list.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.538462" vertical-offset="958" max-vertical-offset="1496">
-              <caret line="74" column="10" selection-start-line="74" selection-start-column="10" selection-end-line="74" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="libro_list.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sacramentos/templates/libro/libro_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5" vertical-offset="664" max-vertical-offset="1224">
-              <caret line="49" column="42" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="42" />
+            <state vertical-scroll-proportion="-6.3846154" vertical-offset="412" max-vertical-offset="935">
+              <caret line="34" column="60" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -209,10 +210,8 @@
         <option value="$PROJECT_DIR$/core/templates/catalogo/catalogo.html" />
         <option value="$PROJECT_DIR$/core/templates/base.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/usuario/administrador_form.html" />
-        <option value="$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/usuario/admin_form.html" />
         <option value="$PROJECT_DIR$/core/admin.py" />
-        <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html" />
         <option value="$PROJECT_DIR$/static/js/sacramentos.js" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/models.py" />
@@ -220,12 +219,14 @@
         <option value="$PROJECT_DIR$/sacramentos/serializer.py" />
         <option value="$PROJECT_DIR$/core/managers.py" />
         <option value="$PROJECT_DIR$/sacramentos/urls.py" />
-        <option value="$PROJECT_DIR$/sacramentos/forms.py" />
-        <option value="$PROJECT_DIR$/sacramentos/views.py" />
         <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/usuarios/views.py" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_form.html" />
         <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html" />
+        <option value="$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html" />
+        <option value="$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html" />
+        <option value="$PROJECT_DIR$/usuarios/views.py" />
+        <option value="$PROJECT_DIR$/sacramentos/views.py" />
+        <option value="$PROJECT_DIR$/sacramentos/forms.py" />
       </list>
     </option>
   </component>
@@ -931,7 +932,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2596</line>
+          <line>2598</line>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
@@ -951,17 +952,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2538</line>
+          <line>2540</line>
           <option name="timeStamp" value="152" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2971</line>
+          <line>2973</line>
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>2975</line>
+          <line>2977</line>
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
@@ -981,13 +982,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>367</line>
-          <option name="timeStamp" value="165" />
+          <line>1591</line>
+          <option name="timeStamp" value="170" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/sacramentos/views.py</url>
-          <line>1591</line>
-          <option name="timeStamp" value="170" />
+          <line>2098</line>
+          <option name="timeStamp" value="191" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/static/js/sacramentos.js</url>
@@ -1028,25 +1029,10 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="187" />
+      <option name="time" value="197" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/iglesia/iglesia_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77803206" vertical-offset="102" max-vertical-offset="850">
-          <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/includes/agenda_ajax_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47597253" vertical-offset="285" max-vertical-offset="748">
-          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/templates/agenda/agenda_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.346154" vertical-offset="708" max-vertical-offset="1156">
@@ -1212,14 +1198,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.307693" vertical-offset="327" max-vertical-offset="867">
-          <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
@@ -1278,14 +1256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3846154" vertical-offset="412" max-vertical-offset="935">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/core/handlers/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1585" max-vertical-offset="4148">
@@ -1306,14 +1276,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/seleccionar_parroquia.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.67105263" vertical-offset="0" max-vertical-offset="901">
-          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1408,16 +1370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="8057" max-vertical-offset="9860">
-          <caret line="480" column="0" selection-start-line="480" selection-start-column="0" selection-end-line="480" selection-end-column="0" />
-          <folding>
-            <element signature="e#23#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="2464" max-vertical-offset="6358">
@@ -1450,36 +1402,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.76" vertical-offset="1157" max-vertical-offset="3808">
-          <caret line="78" column="12" selection-start-line="78" selection-start-column="12" selection-end-line="78" selection-end-column="12" />
-          <folding>
-            <element signature="e#49#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14188" max-vertical-offset="18598">
-          <caret line="845" column="18" selection-start-line="845" selection-start-column="18" selection-end-line="845" selection-end-column="18" />
-          <folding>
-            <element signature="e#23#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.48" vertical-offset="28883" max-vertical-offset="52071">
-          <caret line="1710" column="27" selection-start-line="1710" selection-start-column="27" selection-end-line="1710" selection-end-column="27" />
-          <folding>
-            <element signature="e#23#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.538462" vertical-offset="958" max-vertical-offset="1496">
@@ -1488,11 +1410,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/seleccionar_parroquia.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65384614" vertical-offset="34" max-vertical-offset="901">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding>
+            <marker date="1430015322510" expanded="true" signature="399:974" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="444:779" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="475:512" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="537:568" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="594:673" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="621:664" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="698:771" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="722:762" placeholder="..." />
+            <marker date="1430015322510" expanded="true" signature="808:965" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/db/models/manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3229" max-vertical-offset="4029">
+          <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_secretaria_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3846154" vertical-offset="412" max-vertical-offset="935">
+          <caret line="34" column="60" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sacramentos/templates/parroquia/asignar_parroquia_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.211838" vertical-offset="0" max-vertical-offset="714">
-          <caret line="4" column="68" selection-start-line="4" selection-start-column="68" selection-end-line="4" selection-end-column="68" />
+        <state vertical-scroll-proportion="-3.8461537" vertical-offset="325" max-vertical-offset="714">
+          <caret line="25" column="115" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="115" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/templates/usuario/administrador_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.307693" vertical-offset="327" max-vertical-offset="867">
+          <caret line="35" column="101" selection-start-line="35" selection-start-column="101" selection-end-line="35" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.28" vertical-offset="726" max-vertical-offset="3808">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="e#49#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/utils/functional.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="679" max-vertical-offset="7497">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8062" max-vertical-offset="9860">
+          <caret line="481" column="6" selection-start-line="481" selection-start-column="6" selection-end-line="481" selection-end-column="6" />
+          <folding>
+            <element signature="e#23#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.44" vertical-offset="35428" max-vertical-offset="52105">
+          <caret line="2092" column="27" selection-start-line="2092" selection-start-column="27" selection-end-line="2092" selection-end-column="27" />
+          <folding>
+            <element signature="e#23#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sacramentos/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3314121" vertical-offset="14743" max-vertical-offset="18564">
+          <caret line="874" column="0" selection-start-line="874" selection-start-column="0" selection-end-line="874" selection-end-column="0" />
+          <folding>
+            <element signature="e#23#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

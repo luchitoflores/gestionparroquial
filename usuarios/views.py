@@ -58,7 +58,7 @@ def login_view(request):
                 except ObjectDoesNotExist:
                     administrador = Group.objects.get(name='Administrador')
                     if administrador in user.groups.all():
-                        pass
+                        login(request, user)
                     else:
                         messages.add_message(request, messages.ERROR, 'Ud. no tiene una asignación activa en la Parroquia')
                         ctx = {'form': form}

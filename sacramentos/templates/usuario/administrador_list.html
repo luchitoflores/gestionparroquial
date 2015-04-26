@@ -33,7 +33,7 @@ Lista de Administradores del Sistema
 		<td>{{o.user.get_full_name}}</td>
 		<td>{{o.dni}}</td>
 		<td>{{o.fecha_nacimiento}}</td>
-		<td>{% if o.user.is_active%} Está Activo {% else %} No está activo {% endif %}</td>
+		<td>{% if o.user.is_active%} <i class="icon-check"></i> {% else %} <i class="icon-check-minus"></i> {% endif %}</td>
         <td><a href="{{o.get_absolute_url_administrador}}"><i class="icon-pencil"></i></a></td>
 
 	</tr>

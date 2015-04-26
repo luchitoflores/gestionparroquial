@@ -78,7 +78,7 @@ def seleccionar_parroquia_view(request, pk):
         form = SeleccionarParroquiaForm(request.POST)
         form.fields['parroquia'].queryset = Parroquia.objects.filter(perfilusuario__user__id= pk, asignacionparroquia__es_activo=True)
         parroquia = request.POST.get('parroquia', '')
-        request.session["parroquia"] = parroquia
+        request.session["parroquia"] = Parroquia.objects.get(pk=parroquia)
         usuario.backend = 'django.contrib.auth.backends.ModelBackend'
         usuario.save()
 
@@ -2017,6 +2017,8 @@ def asignar_secretaria_create(request):
             return render(request, template_name, ctx)
     else:
         form = AsignarSecretariaForm(usuario)
+        form.fields['parroquia'].queryset=Parroquia.objects.filter(id=parroquia.id)
+        form.fields['parroquia'].empty_label=None
         ctx = {'form': form}
     return render(request, template_name, ctx)
 
@@ -2136,7 +2138,7 @@ class SecretariaListView(ListView):
                     Q(persona__nombres_completos__icontains=name) |
                     Q(persona__dni=name)).order_by('persona__user__last_name')
             else:
-                return AsignacionParroquia.objects.filter(persona__user__groups__name='Secretaria').order_by(
+                return AsignacionParroquia.objects.filter(persona__user__groups__name='Secretaria', parroquia=parroquia).order_by(
                     'persona__user__last_name')
         else:
             raise PermissionDenied
