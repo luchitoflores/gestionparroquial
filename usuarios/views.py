@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import Group, User
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,7 +21,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView
 
 from .forms import SendEmailForm, GruposForm
-from sacramentos.models import PeriodoAsignacionParroquia
+from sacramentos.models import PeriodoAsignacionParroquia, AsignacionParroquia
 from core.views import BusquedaMixin
 from core.constants import *
 
@@ -41,27 +41,44 @@ def login_view(request):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
+            print user.backend
+            print type(user)
 
             if user is not None and user.is_active:
-                login(request, user)
+
                 try:
-                    parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user, estado=True).asignacion.parroquia
+                    parroquia = AsignacionParroquia.objects.get(persona__user=user, es_activo=True).parroquia
                     if parroquia:
                         request.session["parroquia"] = parroquia
                         logger.error("Entré al login")
                         logger.info("parroquia: %s" % parroquia)
                         print 'Entré al login'
                         print parroquia
+                        login(request, user)
                 except ObjectDoesNotExist:
-                    pass
+                    administrador = Group.objects.get(name='Administrador')
+                    if administrador in user.groups.all():
+                        pass
+                    else:
+                        messages.add_message(request, messages.ERROR, 'Ud. no tiene una asignación activa en la Parroquia')
+                        ctx = {'form': form}
+                        return render(request, 'login.html', locals())
+
+                except MultipleObjectsReturned:
+                    return HttpResponseRedirect('/seleccionar/parroquia/%s' % user.id)
+
                 if redirect_to:
                     return HttpResponseRedirect(redirect_to)
                 else:
                     return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
             else:
                 messages.add_message(request, messages.ERROR, 'Ud. no tiene permisos para acceder al sistema')
+                ctx = {'form': form}
+                return render(request, 'login.html', locals())
         else:
-            messages.add_message(request, messages.ERROR, 'El nombre de usuario o la contraseña están incorrectos')
+            messages.add_message(request, messages.ERROR, '%s' % form.errors.get('__all__')[0])
+            ctx = {'form': form}
+            return render(request, 'login.html', locals())
     else:
         form = AuthenticationForm()
         form.fields["username"].widget = forms.TextInput(attrs={'required': '', 'maxlength': 25})

@@ -43,7 +43,7 @@ Permission.__unicode__ = permissions_new_unicode
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    es_activo = models.BooleanField('Está activo?', default=True)
+    es_activo = models.BooleanField('Está activo?', default=False)
 
     class Meta:
         abstract = True
@@ -135,6 +135,8 @@ class PerfilUsuario(TimeStampedModel):
         self.user.first_name = nombres.strip()
         self.user.last_name = apellidos.strip()
         self.nombres_completos = u'%s %s' % (self.user.first_name, self.user.last_name)
+        if not self.id:
+            self.user.is_active = False
         super(PerfilUsuario, self).save(*args, **kwargs)
 
     def crear_username(self, nombres, apellidos):

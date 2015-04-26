@@ -9,6 +9,10 @@ class ModuloManager(models.Manager):
         return self.model.objects.filter(funcionalidad__grupos__user=user,
                                          estado=COD_ITC_ACTIVO).order_by('orden').distinct()
 
+    def modulos_por_grupo(self, grupo):
+        return self.model.objects.filter(funcionalidad__grupos__name=grupo,
+                                         estado=COD_ITC_ACTIVO).order_by('orden').distinct()
+
 
 class FuncionalidadManager(models.Manager):
     def funcionalidades_por_usuario(self, user):

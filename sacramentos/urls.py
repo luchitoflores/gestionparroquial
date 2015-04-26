@@ -35,7 +35,7 @@ from sacramentos.views import (
     reporte_anual_sacramentos, reporte_intenciones, reporte_permisos, reporte_parroquias_sacerdotes,
     reporte_sacerdotes_parroquias,
     redireccionar, redireccionar_parametros,
-    EventoCreateView, EventoUpdateView)
+    EventoCreateView, EventoUpdateView, seleccionar_parroquia_view, editar_asignacion_parroco_a_parroquia)
 
 # from sacramentos.rest import ParroquiaResource
 from .serializer import IntencionViewSet, PerfilUsuarioViewSet
@@ -140,6 +140,9 @@ urlpatterns = patterns('',
                        url(r'^parroquia/$', ParroquiaListView.as_view(), name='parroquia_list'),
                        url(r'^crear/parroquia/$', parroquia_create_view, name='parroquia_create'),
                        url(r'^parroquia/(?P<pk>\d+)/$', parroquia_update_view, name='parroquia_update'),
+                       url(r'^seleccionar/parroquia/(?P<pk>\d+)/$', seleccionar_parroquia_view, name='seleccionar_parroquia'),
+
+
                        url(r'^reporte/parroquia/(?P<pk>\d+)/$', reporte_parroquias_sacerdotes,
                            name='reporte_parroquias_sacerdotes'),
                        url(r'^directorio/parroquias/$', DirectorioParroquiasListView.as_view(),
@@ -153,6 +156,9 @@ urlpatterns = patterns('',
                        # Permite agregar un párroco a una parroquia preestablecida
                        url(r'^crear/asignar/parroquia/(?P<pk>\d+)/parroco/$', asignar_parroco_a_parroquia,
                            name='asignar_parroco_a_parroquia'),
+                       # Permite editar un párroco a una parroquia preestablecida
+                       url(r'^editar/asignacion/parroquia/parroco/(?P<pk>\d+)/$', editar_asignacion_parroco_a_parroquia,
+                           name='editar_asignacion_parroco_a_parroquia'),
                        #Permite editar y ver todas las asignaciones de un sacerdote en una parroquia
                        url(r'^asignar/parroquia/parroco/(?P<pk>\d+)/$', asignar_parroquia_update,
                            name='asignar_parroco_update'),

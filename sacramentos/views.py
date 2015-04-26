@@ -5,6 +5,7 @@ import unicodedata
 from datetime import datetime
 from datetime import date
 from django import forms
+from django.contrib.auth import login, authenticate
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy
@@ -58,19 +59,38 @@ from sacramentos.forms import (
     AsignarSecretariaForm,
     ParametrizaDiocesisForm, ParametrizaParroquiaForm,
     ReporteIntencionesForm, ReporteSacramentosAnualForm, ReportePermisoForm,
-    EventoForm)
+    EventoForm, SeleccionarParroquiaForm)
 
 from core.forms import DireccionForm
 from core.views import BusquedaMixin, BusquedaPersonaMixin, PaginacionMixin
 from core.constants import *
 from core.models import Item
 
-_reportlab_version = tuple(map(int, reportlab.Version.split('.')))
-if _reportlab_version < (2, 1):
-    raise ImportError("Reportlab Version 2.1+ is needed!")
 
-REPORTLAB22 = _reportlab_version >= (2, 2)
+def seleccionar_parroquia_view(request, pk):
+    # if request.user.is_anonymous():
+    #     return HttpResponseRedirect('/home/')
+    template_name = 'parroquia/seleccionar_parroquia.html'
+    usuario = get_object_or_404(User, pk = pk)
+    #parroquias = AsignacionParroquia.objects.filter(persona__user=request.user, es_activo=True).parroquia
 
+    if request.method == 'POST':
+        form = SeleccionarParroquiaForm(request.POST)
+        form.fields['parroquia'].queryset = Parroquia.objects.filter(perfilusuario__user__id= pk, asignacionparroquia__es_activo=True)
+        parroquia = request.POST.get('parroquia', '')
+        request.session["parroquia"] = parroquia
+        usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+        usuario.save()
+
+        login(request, usuario)
+        return render(request, 'home.html')
+    else:
+        form = SeleccionarParroquiaForm()
+        form.fields['parroquia'].queryset = Parroquia.objects.filter(perfilusuario__user__id= pk, asignacionparroquia__es_activo=True)
+        ctx = {
+            'form': form
+        }
+    return render(request, template_name, ctx)
 
 @login_required(login_url='/login/')
 def configuracion_inicial_view(request):
@@ -1561,7 +1581,9 @@ class IntencionListView(BusquedaMixin, ListView):
     def dispatch(self, *args, **kwargs):
         return super(IntencionListView, self).dispatch(*args, **kwargs)
 
-
+"""
+Sirve para escoger a qué parroquia se le asigna un párroco
+"""
 @login_required(login_url='/login/')
 @permission_required('sacramentos.add_asignarsacerdote', login_url='/login/',
                      raise_exception=permission_required)
@@ -1572,7 +1594,6 @@ def asignar_parroquia_create(request):
     persona = request.POST.get('persona')
     # estado = self.request.POST.get('estado')
     # print persona
-
 
     if request.method == 'POST':
         form = AsignarParroquiaForm(request.POST)
@@ -1627,73 +1648,6 @@ def asignar_parroquia_create(request):
 
 
 @login_required(login_url='/login/')
-@permission_required('sacramentos.add_asignarsacerdote', login_url='/login/',
-                     raise_exception=permission_required)
-def asignar_parroco_a_parroquia(request, pk):
-    template_name = "parroquia/asignar_parroquia_form.html"
-    success_url = '/parrocos/parroquia/%s/' % (pk)
-    parroquia = get_object_or_404(Parroquia, pk=pk)
-    persona = request.POST.get('persona')
-    print parroquia
-    parroquias = Parroquia.objects.filter(id=pk)
-    queryset = Parroquia.objects.all()
-
-    if request.method == 'POST':
-        form = AsignarParroquiaForm(queryset, request.POST)
-        form_periodo = PeriodoAsignacionParroquiaForm(request.POST)
-        form.fields['persona'].queryset = PerfilUsuario.objects.all()
-
-        if form.is_valid() and form_periodo.is_valid():
-            try:
-                asignacion = AsignacionParroquia.objects.get(persona__id=persona,
-                                                             parroquia__id=parroquia.id)
-                periodo = form_periodo.save(commit=False)
-                periodo.asignacion = asignacion
-                periodo.save()
-                user = PerfilUsuario.objects.get(pk=persona).user
-                #user.is_staff = True
-                user.save()
-                LogEntry.objects.log_action(
-                    user_id=request.user.id,
-                    content_type_id=ContentType.objects.get_for_model(parroquia).pk,
-                    object_id=parroquia.id,
-                    object_repr=unicode(parroquia),
-                    action_flag=ADDITION,
-                    change_message="Asigno parroquia y sacerdote")
-                return HttpResponseRedirect(success_url)
-
-            except ObjectDoesNotExist:
-                asignacion = form.save()
-                periodo = form_periodo.save(commit=False)
-                periodo.asignacion = asignacion
-                periodo.save()
-                user = PerfilUsuario.objects.get(pk=persona).user
-                #user.is_staff = True
-                user.save()
-                LogEntry.objects.log_action(
-                    user_id=request.user.id,
-                    content_type_id=ContentType.objects.get_for_model(parroquia).pk,
-                    object_id=parroquia.id,
-                    object_repr=unicode(parroquia),
-                    action_flag=ADDITION,
-                    change_message="Asigno parroquia y sacerdote")
-                messages.success(request, MENSAJE_EXITO_CREACION)
-                return HttpResponseRedirect(success_url)
-
-        else:
-            messages.error(request, MENSAJE_ERROR)
-            form = AsignarParroquiaForm(parroquias, request.POST)
-            form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=persona)
-            ctx = {'form': form, 'form_periodo': form_periodo, 'object': parroquia}
-            return render(request, template_name, ctx)
-    else:
-        form = AsignarParroquiaForm(parroquias)
-        form_periodo = PeriodoAsignacionParroquiaForm()
-        ctx = {'form': form, 'form_periodo': form_periodo, 'object': parroquia}
-        return render(request, template_name, ctx)
-
-
-@login_required(login_url='/login/')
 @permission_required('sacramentos.change_asignarsacerdote', login_url='/login/',
                      raise_exception=permission_required)
 def asignar_parroquia_update(request, pk):
@@ -1729,6 +1683,92 @@ def asignar_parroquia_update(request, pk):
         form = AsignarParroquiaForm(instance=asignacion)
         ctx = {'form': form, 'form_periodo': form_periodo, 'object': asignacion.parroquia}
     return render(request, template_name, ctx)
+
+
+"""
+Dada la parroquia se le asigna un párroco
+"""
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_asignarsacerdote', login_url='/login/',
+                     raise_exception=permission_required)
+def asignar_parroco_a_parroquia(request, pk):
+    template_name = "parroquia/asignar_parroquia_form.html"
+    success_url = '/parrocos/parroquia/%s/' % (pk)
+    parroquia = get_object_or_404(Parroquia, pk=pk)
+    persona = request.POST.get('persona')
+    es_activo =  request.POST.get('es_activo')
+    parroquias = Parroquia.objects.filter(id=pk)
+    queryset = Parroquia.objects.all()
+
+    if request.method == 'POST':
+        form = AsignarParroquiaForm(queryset, request.POST)
+        form.fields['persona'].queryset = PerfilUsuario.objects.all()
+
+        if form.is_valid():
+            user = User.objects.get(id=persona)
+            if es_activo:
+                user.is_active= True
+                user.save()
+
+            form.save()
+            LogEntry.objects.log_action(
+                user_id=request.user.id,
+                content_type_id=ContentType.objects.get_for_model(parroquia).pk,
+                object_id=parroquia.id,
+                object_repr=unicode(parroquia),
+                action_flag=ADDITION,
+                change_message="Asigno parroquia y sacerdote")
+            messages.success(request, MENSAJE_EXITO_CREACION)
+            return HttpResponseRedirect(success_url)
+
+        else:
+            messages.error(request, MENSAJE_ERROR)
+            form = AsignarParroquiaForm(parroquias, request.POST)
+            form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=persona)
+            ctx = {'form': form, 'object': parroquia}
+            return render(request, template_name, ctx)
+    else:
+        form = AsignarParroquiaForm(parroquias)
+        ctx = {'form': form, 'object': parroquia}
+        return render(request, template_name, ctx)
+
+@login_required(login_url='/login/')
+@permission_required('sacramentos.add_asignarsacerdote', login_url='/login/',
+                     raise_exception=permission_required)
+def editar_asignacion_parroco_a_parroquia(request, pk):
+    template_name = "parroquia/asignar_parroquia_form.html"
+    asignacion = get_object_or_404(AsignacionParroquia, pk=pk)
+    success_url = '/parrocos/parroquia/%s/' % (asignacion.parroquia.id)
+    persona = request.POST.get('persona')
+    parroquias = Parroquia.objects.filter(id=asignacion.parroquia.id)
+
+    if request.method == 'POST':
+        form = AsignarParroquiaForm(parroquias, request.POST, instance= asignacion)
+        form.fields['persona'].queryset = PerfilUsuario.objects.sacerdote()
+
+        if form.is_valid():
+            form.save()
+            LogEntry.objects.log_action(
+                user_id=request.user.id,
+                content_type_id=ContentType.objects.get_for_model(asignacion).pk,
+                object_id=asignacion.id,
+                object_repr=unicode(asignacion),
+                action_flag=ADDITION,
+                change_message="Asigno parroquia y sacerdote")
+            messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
+            return HttpResponseRedirect(success_url)
+
+        else:
+            messages.error(request, MENSAJE_ERROR)
+            form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=persona)
+            ctx = {'form': form, 'object': asignacion}
+            return render(request, template_name, ctx)
+    else:
+        form = AsignarParroquiaForm(instance=asignacion)
+        form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=asignacion.persona.id)
+        form.fields['parroquia'].queryset = Parroquia.objects.filter(id=asignacion.parroquia.id)
+        ctx = {'form': form, 'object': asignacion}
+        return render(request, template_name, ctx)
 
 
 @login_required(login_url='/login/')
@@ -1931,85 +1971,55 @@ def asignar_secretaria_create(request):
     template_name = "parroquia/asignar_secretaria_form.html"
     success_url = '/asignar/secretaria/'
     usuario = request.user
-    try:
-        parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user,
-                                                           estado=True).asignacion.parroquia
-        if request.method == 'POST':
-            perfil = get_object_or_404(PerfilUsuario, pk=request.POST.get('persona'))
-            persona = PerfilUsuario.objects.feligres()
-            form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
-            form_periodo = PeriodoAsignacionParroquiaForm(request.POST)
-
-            if form.is_valid() and form_periodo.is_valid():
-                try:
-                    periodo_asignacion = PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado=True)
-                    form.errors["persona"] = ErrorList([u'El usuario elegido ya cuenta con una asignación activa.'])
-                    messages.error(request, MENSAJE_ERROR)
-                    form.fields['persona'].queryset = PerfilUsuario.objects.filter(id=perfil.id)
-                    ctx = {'form': form, 'form_periodo': form_periodo}
-                    return render(request, template_name, ctx)
-                except ObjectDoesNotExist:
-                    try:
-                        asignacion = PeriodoAsignacionParroquia.objects.get(asignacion__persona=perfil, estado=False,
-                                                                            asignacion__parroquia=parroquia)
-                        mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
-                        msg = mark_safe(u"%s %s" % (
-                            mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
-                        form.errors["persona"] = ErrorList([msg])
-                        messages.error(request, MENSAJE_ERROR)
-                        ctx = {'form': form, 'form_periodo': form_periodo}
-                        return render(request, template_name, ctx)
-                    except ObjectDoesNotExist:
-                        asig = form.save()
-                        periodo = form_periodo.save(commit=False)
-                        periodo.asignacion = asig
-                        periodo.save()
-                        LogEntry.objects.log_action(
-                            user_id=request.user.id,
-                            content_type_id=ContentType.objects.get_for_model(asig).pk,
-                            object_id=asig.id,
-                            object_repr=unicode(asig),
-                            action_flag=ADDITION,
-                            change_message="Asigno parroquia y secretaria")
-                        persona_id = request.POST['persona']
-                        estado = request.POST.get('estado')
-                        if estado:
-                            user = PerfilUsuario.objects.get(pk=persona_id).user
-                            #user.is_staff = True
-                            user.is_active = True
-                            user.save()
-                            secretaria, created = Group.objects.get_or_create(name='Secretaria')
-                            user.groups.add(secretaria)
-                        else:
-                            user = PerfilUsuario.objects.get(pk=persona_id).user
-                            #user.is_staff = False
-                            user.is_active = False
-                            user.save()
-                            secretaria, created = Group.objects.get_or_create(name='Secretaria')
-                            user.groups.add(secretaria)
-                        messages.success(request, MENSAJE_EXITO_CREACION)
-                        return HttpResponseRedirect(success_url)
-            else:
-                if request.POST.get('persona'):
-                    messages.error(request, MENSAJE_ERROR)
-                    form_email = EmailForm()
-                    personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
-                    form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
-                    ctx = {'form': form, 'form_periodo': form_periodo, 'form_email': form_email, 'persona': perfil}
-                else:
-                    messages.error(request, MENSAJE_ERROR)
-                    persona = PerfilUsuario.objects.none()
-                    form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
-                    ctx = {'form': form, 'form_periodo': form_periodo}
-                return render(request, template_name, ctx)
-
-        else:
-            form = AsignarSecretariaForm(usuario)
-            form_periodo = PeriodoAsignacionParroquiaForm()
-            ctx = {'form': form, 'form_periodo': form_periodo}
-        return render(request, template_name, ctx)
-    except ObjectDoesNotExist:
+    parroquia = request.session.get('parroquia', '')
+    print parroquia
+    if not parroquia:
         raise PermissionDenied
+
+    if request.method == 'POST':
+        perfil = get_object_or_404(PerfilUsuario, pk=request.POST.get('persona'))
+        persona = PerfilUsuario.objects.feligres()
+        form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
+
+        if form.is_valid():
+            # mensaje = u"El usuario elegido tiene un periodo desactivo, proceda a activarlo desde el siguiente "
+            # msg = mark_safe(u"%s %s" % (
+            #     mensaje, '<a href="/asignar/secretaria/' + str(asignacion.id) + '/" >formulario</a>'))
+            # form.errors["persona"] = ErrorList([msg])
+            asig = form.save()
+            LogEntry.objects.log_action(
+                user_id=request.user.id,
+                content_type_id=ContentType.objects.get_for_model(asig).pk,
+                object_id=asig.id,
+                object_repr=unicode(asig),
+                action_flag=ADDITION,
+                change_message="Asigno parroquia y secretaria")
+            persona_id = request.POST['persona']
+            user = PerfilUsuario.objects.get(pk=persona_id).user
+            user.is_active = True
+            user.save()
+            secretaria, created = Group.objects.get_or_create(name='Secretaria')
+            user.groups.add(secretaria)
+            messages.success(request, MENSAJE_EXITO_CREACION)
+            return HttpResponseRedirect(success_url)
+        else:
+            if request.POST.get('persona'):
+                messages.error(request, MENSAJE_ERROR)
+                form_email = EmailForm()
+                personas = PerfilUsuario.objects.filter(id=request.POST.get('persona'))
+                form = AsignarSecretariaForm(usuario, personas, request.POST.get('estado'), request.POST)
+                ctx = {'form': form, 'form_email': form_email, 'persona': perfil}
+            else:
+                messages.error(request, MENSAJE_ERROR)
+                persona = PerfilUsuario.objects.none()
+                form = AsignarSecretariaForm(usuario, persona, request.POST.get('estado'), request.POST)
+                ctx = {'form': form}
+            return render(request, template_name, ctx)
+    else:
+        form = AsignarSecretariaForm(usuario)
+        ctx = {'form': form}
+    return render(request, template_name, ctx)
+
 
 
 #El parámetro pk es el id de un periodo
@@ -2017,82 +2027,81 @@ def asignar_secretaria_create(request):
 @permission_required('sacramentos.change_asignarsecretaria', login_url='/login/',
                      raise_exception=permission_required)
 def asignar_secretaria_update(request, pk):
-    periodo = get_object_or_404(PeriodoAsignacionParroquia, pk=pk)
+    asignacion = get_object_or_404(AsignacionParroquia, pk=pk)
     template_name = "parroquia/asignar_secretaria_form.html"
     success_url = '/asignar/secretaria/'
 
-    try:
-        parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=request.user,
-                                                           estado=True).asignacion.parroquia
+    parroquia = request.session.get('parroquia', '')
+    if not parroquia:
+        raise PermissionDenied
 
-        if periodo.asignacion.parroquia == parroquia and periodo.asignacion.persona.user != request.user:
+    if asignacion.parroquia == parroquia and asignacion.persona.user != request.user:
+        usuario = request.user
+        if request.method == 'POST':
+            persona = PerfilUsuario.objects.feligres()
+            form = AsignarSecretariaForm(usuario, persona, asignacion.persona.user.is_active, request.POST,
+                                         instance=asignacion)
 
-            usuario = request.user
-            if request.method == 'POST':
-                persona = PerfilUsuario.objects.feligres()
-                form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active, request.POST,
-                                             instance=periodo.asignacion)
-                form_periodo = PeriodoAsignacionParroquiaForm(request.POST, instance=periodo)
-                if form.is_valid() and form_periodo.is_valid():
-                    persona_id = request.POST['persona']
-                    estado = request.POST.get('estado')
-                    if estado:
-                        user = PerfilUsuario.objects.get(pk=persona_id).user
-                        #user.is_staff = True
-                        user.is_active = True
-                        user.save()
-                    else:
-                        user = PerfilUsuario.objects.get(pk=persona_id).user
-                        #user.is_staff = False
-                        user.is_active = False
-                        user.save()
-                    asig = form.save()
-                    periodo = form_periodo.save(commit=False)
-                    periodo.asignacion = asig
-                    periodo.save()
-                    LogEntry.objects.log_action(
-                        user_id=request.user.id,
-                        content_type_id=ContentType.objects.get_for_model(periodo.asignacion).pk,
-                        object_id=periodo.asignacion.id,
-                        object_repr=unicode(periodo.asignacion),
-                        action_flag=ADDITION,
-                        change_message="Asignacion parroquia y secretaria actualizado")
-                    messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
-                    return HttpResponseRedirect(success_url)
+            if form.is_valid():
+                persona_id = request.POST['persona']
+                estado = request.POST.get('estado')
+                if estado:
+                    user = PerfilUsuario.objects.get(pk=persona_id).user
+                    #user.is_staff = True
+                    user.is_active = True
+                    user.save()
                 else:
-                    if periodo.asignacion.persona:
-                        messages.error(request, MENSAJE_ERROR)
-                        persona = PerfilUsuario.objects.filter(user__id=periodo.asignacion.persona.user.id)
-                        form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
-                                                     request.POST, instance=periodo.asignacion)
-                    else:
-                        messages.error(request, MENSAJE_ERROR)
-                        persona = PerfilUsuario.objects.none()
-                        form = AsignarSecretariaForm(usuario, persona, request.POST, instance=periodo.asignacion)
+                    user = PerfilUsuario.objects.get(pk=persona_id).user
+                    #user.is_staff = False
+                    user.is_active = False
+                    user.save()
+                asig = form.save()
 
-                    ctx = {'form': form, 'form_periodo': form_periodo, 'object': periodo}
-                    return render(request, template_name, ctx)
+                LogEntry.objects.log_action(
+                    user_id=request.user.id,
+                    content_type_id=ContentType.objects.get_for_model(asignacion).pk,
+                    object_id=asignacion.id,
+                    object_repr=unicode(asignacion),
+                    action_flag=ADDITION,
+                    change_message="Asignacion parroquia y secretaria actualizado")
+                messages.success(request, MENSAJE_EXITO_ACTUALIZACION)
+                return HttpResponseRedirect(success_url)
             else:
-                if periodo.asignacion.persona:
-                    persona = PerfilUsuario.objects.filter(user__id=periodo.asignacion.persona.user.id)
-                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
-                                                 instance=periodo.asignacion)
+                if asignacion.persona:
+                    messages.error(request, MENSAJE_ERROR)
+                    form_email = EmailForm()
+                    persona = PerfilUsuario.objects.filter(user__id=asignacion.persona.user.id)
+                    form = AsignarSecretariaForm(usuario, persona, asignacion.persona.user.is_active,
+                                                 request.POST, instance=asignacion)
+                    ctx = {'form': form, 'object': asignacion, 'form_email': form_email}
                 else:
+                    messages.error(request, MENSAJE_ERROR)
                     persona = PerfilUsuario.objects.none()
-                    form = AsignarSecretariaForm(usuario, persona, periodo.asignacion.persona.user.is_active,
-                                                 instance=periodo.asignacion)
+                    form = AsignarSecretariaForm(usuario, persona, request.POST, instance=asignacion)
+                    ctx = {'form': form, 'object': asignacion}
 
-                form_periodo = PeriodoAsignacionParroquiaForm(instance=periodo)
-                ctx = {'form': form, 'form_periodo': form_periodo, 'object': periodo}
                 return render(request, template_name, ctx)
         else:
-            raise PermissionDenied
+            if asignacion.persona:
+                persona = PerfilUsuario.objects.filter(user__id=asignacion.persona.user.id)
+                form = AsignarSecretariaForm(usuario, persona, asignacion.persona.user.is_active,
+                                             instance=asignacion)
+            else:
+                persona = PerfilUsuario.objects.none()
+                form = AsignarSecretariaForm(usuario, persona, asignacion.persona.user.is_active,
+                                             instance=asignacion)
 
-    except ObjectDoesNotExist:
-        messages.error(request, 'Usted no está asignado a ninguna parroquia')
-        return HttpResponseRedirect(success_url)
+            ctx = {'form': form, 'object': asignacion}
+            return render(request, template_name, ctx)
+    else:
+        raise PermissionDenied
 
 
+
+
+"""
+No se está usando esta vista
+"""
 @login_required(login_url='/login/')
 @permission_required('sacramentos.change_asignarsecretaria', login_url='/login/',
                      raise_exception=permission_required)
@@ -2111,7 +2120,7 @@ def asignar_secretaria_list(request):
 
 
 class SecretariaListView(ListView):
-    model = PerfilUsuario
+    #model = PerfilUsuario
     template_name = 'parroquia/asignar_secretaria_list.html'
     paginate_by = 10
 
@@ -2123,12 +2132,12 @@ class SecretariaListView(ListView):
                 # name = ' '.join(name.split())
                 name = ''.join(
                     (c for c in unicodedata.normalize('NFD', unicode(name)) if unicodedata.category(c) != 'Mn'))
-                return PeriodoAsignacionParroquia.objects.secretaria(parroquia).filter(
-                    Q(asignacion__persona__nombres_completos__icontains=name) |
-                    Q(asignacion__persona__dni=name)).order_by('asignacion__persona__user__last_name')
+                return AsignacionParroquia.objects.filter(parroquia=parroquia, persona__user__groups__name='Secretaria').filter(
+                    Q(persona__nombres_completos__icontains=name) |
+                    Q(persona__dni=name)).order_by('persona__user__last_name')
             else:
-                return PeriodoAsignacionParroquia.objects.secretaria(parroquia).order_by(
-                    'asignacion__persona__user__last_name')
+                return AsignacionParroquia.objects.filter(persona__user__groups__name='Secretaria').order_by(
+                    'persona__user__last_name')
         else:
             raise PermissionDenied
 
@@ -2199,13 +2208,11 @@ def parametriza_diocesis_create(request):
                      raise_exception=permission_required)
 def parametriza_parroquia_create(request):
     usuario = request.user
-    try:
-        asignacion = AsignacionParroquia.objects.get(persona__user=usuario,
-                                                     periodos__estado=True)
-    except ObjectDoesNotExist:
+    parroquia = request.session.get('parroquia')
+    if not parroquia:
         raise PermissionDenied
 
-    p = ParametrizaParroquia.objects.filter(parroquia=asignacion.parroquia)
+    p = ParametrizaParroquia.objects.filter(parroquia=parroquia)
     of = ''
     for o in p:
         of = o

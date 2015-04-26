@@ -1,0 +1,47 @@
+{% extends 'base_site.html'%}
+{%load sacramentos_tags%}
+{%block title%}{%block content_title%}
+Seleccionar Parroquia
+{%endblock%}{%endblock%}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<span class="divider">»</span>
+<li class='active'><li class='active'>Seleccionar Parroquia</li>
+{% endblock %}
+
+{%block content%}
+
+<form id='form_asignar_secretaria' action="." method='POST' class='form-horizontal'>
+	{%csrf_token%}
+	<div class="control-group">
+
+		<div class="control-label">
+			{{form.parroquia.label}}
+		</div>
+		<div class="controls">
+			{{form.parroquia}}
+		</div>
+
+		<div class="controls">
+			<div class='help-text'>
+				{{form.parroquia.help_text}}
+			</div>
+		</div>
+		<div class="controls">
+			<div class='errors'>
+				{{form.parroquia.errors}}
+			</div>
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button type='submit' class='btn btn-primary'>Guardar</button>
+		<a href="{% url 'asignar_secretaria_list'%}" class='btn btn-danger'> Cancelar</a>
+	</div>
+
+</form>
+
+{%endblock%}
+
+

@@ -1131,6 +1131,7 @@ function reporte_intenciones(){
 
 function asignar_email() {
     $('#id_form_email').on('submit', function (e) {
+        alert("Prueba");
         e.preventDefault();
         var ctx = $(this).serialize()
         var url = '/api/crear/email/'

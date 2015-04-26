@@ -2,8 +2,8 @@
 {% load sacramentos_tags%}
 
 {%block title%}{%block content_title%}
-{%if object.id%}Asignar un párroco - {{object}}
-{%else%}Agregar Asignación - {{object}}{%endif%}
+{%if object.id%}Asignar un párroco
+{%else%}Editar Asignación{%endif%}
 {%endblock%}{%endblock%}
 
 
@@ -68,8 +68,8 @@
 	<div class="form-actions">
 		<button type="submit" class='btn btn-primary'> Guardar </button>
 		
-		{%if object.id%}
-		<a href="{%url 'asignar_parroco_list' pk=object.id%}" class='btn btn-danger'>Cancelar</a>
+		{%if object.parroquia.id%}
+		<a href="{%url 'asignar_parroco_list' pk=object.parroquia.id%}" class='btn btn-danger'>Cancelar</a>
 
 		{%endif%}
 	</div>

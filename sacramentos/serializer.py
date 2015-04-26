@@ -51,6 +51,7 @@ class AgendaSerializer(serializers.ModelSerializer):
 
 class AgendaListAPIView(APIView):
     def get(self, request, format=None):
+        parroquia = request.session.get('parroquia')
         agenda = list()
         textoCabeceraAgenda = ''
         fecha = self.request.QUERY_PARAMS.get('fecha', '')
@@ -62,14 +63,14 @@ class AgendaListAPIView(APIView):
         if fecha and rango and contador:
             currentdate = datetime.datetime.strptime(fecha, "%Y-%m-%d")
             contador = int(contador)
-            queryset = Agenda.objects.filter(fecha=currentdate)
+            queryset = Agenda.objects.filter(fecha=currentdate, parroquia=parroquia)
             if rango == 'dia':
                 currentdate.strftime('%A')
                 if contador:
                     dias = timedelta(days=int(contador))
                     currentdate = currentdate + dias
 
-                for evento in Agenda.objects.filter(fecha=currentdate).order_by('fecha', 'hora'):
+                for evento in Agenda.objects.filter(fecha=currentdate, parroquia=parroquia).order_by('fecha', 'hora'):
                     evnt = dict()
                     evnt['evento'] = evento.evento
                     evnt['fecha'] = evento.fecha.strftime("%d/%m/%Y")

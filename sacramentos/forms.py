@@ -825,7 +825,7 @@ class IglesiaForm(forms.ModelForm):
 class AsignarParroquiaForm(ModelForm):
     class Meta:
         model = AsignacionParroquia
-        fields = ('persona', 'parroquia')
+        fields = ('persona', 'parroquia', 'es_activo')
         widgets = {
             'persona': forms.Select(attrs={'required': '', 'id': 'id_celebrante'})
         }
@@ -843,15 +843,14 @@ class AsignarParroquiaForm(ModelForm):
         parroquia = cleaned_data.get("parroquia")
 
         try:
-            esta_activo = PeriodoAsignacionParroquia.objects.get(asignacion__persona=persona,
-                                                                 asignacion__parroquia=parroquia, estado=True)
-            if esta_activo:
-                print esta_activo
-                msg = u"El sacerdote ya tiene un periodo activo en la parroquia elegida"
-                self._errors["persona"] = self.error_class([msg])
+            if not self.instance.id:
+                esta_activo = AsignacionParroquia.objects.get(persona=persona, parroquia=parroquia)
+                if esta_activo:
+                    print esta_activo
+                    msg = u"El sacerdote ya está asignado en la parroquia elegida"
+                    self._errors["persona"] = self.error_class([msg])
         except ObjectDoesNotExist:
-            esta_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(
-                asignacion__persona=persona, estado=True).exclude(asignacion__parroquia=parroquia)
+            esta_activo_otra_parroquia = AsignacionParroquia.objects.filter(persona=persona, es_activo=True).exclude(parroquia=parroquia)
             if esta_activo_otra_parroquia:
                 msg = u"El sacerdote ya tiene una asignación activa en otra parroquia"
                 self._errors["persona"] = self.error_class([msg])
@@ -873,9 +872,8 @@ class AsignarSecretariaForm(ModelForm):
         cleaned_data = super(AsignarSecretariaForm, self).clean()
         persona = cleaned_data.get("persona")
         parroquia = cleaned_data.get("parroquia")
-        esta_activo_otra_parroquia = PeriodoAsignacionParroquia.objects.filter(asignacion__persona=persona,
-                                                                               estado=True).exclude(
-            asignacion__parroquia=parroquia)
+        esta_activo_otra_parroquia = AsignacionParroquia.objects.filter(persona=persona, es_activo=True).exclude(parroquia=parroquia)
+        esta_activo = AsignacionParroquia.objects.filter(persona=persona, parroquia=parroquia)
 
         if not persona.user.email:
             mensaje = u"El usuario no tiene correo electrónico. Puede asignarle un correo mediante este "
@@ -886,6 +884,10 @@ class AsignarSecretariaForm(ModelForm):
             msg = u"La persona elegida ya tiene una asignación activa en otra parroquia"
             self._errors["persona"] = self.error_class([msg])
 
+        elif esta_activo:
+            msg = u"La persona elegida ya tiene una asignación activa en esta parroquia"
+            self._errors["persona"] = self.error_class([msg])
+
         return cleaned_data
 
     def __init__(self, user, persona=PerfilUsuario.objects.none(), estado=False, *args, **kwargs):
@@ -894,8 +896,7 @@ class AsignarSecretariaForm(ModelForm):
                                                         empty_label='-- Buscar o Crear --',
                                                         widget=forms.Select(attrs={'required': ''}))
         try:
-            parroquia = PeriodoAsignacionParroquia.objects.get(asignacion__persona__user=user,
-                                                               estado=True).asignacion.parroquia
+            parroquia = AsignacionParroquia.objects.get(persona__user=user).parroquia
         except ObjectDoesNotExist:
             raise PermissionDenied
 
@@ -905,7 +906,7 @@ class AsignarSecretariaForm(ModelForm):
 
     class Meta:
         model = AsignacionParroquia
-        fields = ('persona', 'parroquia')
+        fields = ('persona', 'parroquia', 'es_activo')
 
 
 class PeriodoAsignacionParroquiaForm(ModelForm):
@@ -1077,4 +1078,11 @@ class EventoForm(forms.ModelForm):
     #     parroquia = self.request.session.get('parroquia')
 
 
+class SeleccionarParroquiaForm(forms.Form):
+    parroquia = forms.ModelChoiceField(help_text="Escoja la parroquia", queryset=Parroquia.objects.all(), required=True,
+                                           empty_label='-- Seleccione --',
+                                           widget=forms.Select(attrs={'required': ''}))
 
+    def __init__(self,*args, **kwargs):
+        super(SeleccionarParroquiaForm, self).__init__(*args, **kwargs)
+        self.fields['parroquia'].queryset = Parroquia.objects.none()
